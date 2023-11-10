@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
+	<key>SUEnableDownloaderService</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/martinfekete10/Tuneful/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>QKWHklCXwSX+2xNgAy9ySM9gl7PQZZiy6a59E6sH2ag=</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.Martin-Fekete.Tuneful</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>martin-fekete-floating-music</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

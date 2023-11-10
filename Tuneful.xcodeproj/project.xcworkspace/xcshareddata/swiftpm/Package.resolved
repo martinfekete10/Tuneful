@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "issoundadditions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jbrinkman/ISSoundAdditions",
+      "state" : {
+        "branch" : "master",
+        "revision" : "faae4bec22bf048ed57529f74bc63a39cd71e88c"
+      }
+    },
+    {
+      "identity" : "launchatlogin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/LaunchAtLogin",
+      "state" : {
+        "branch" : "main",
+        "revision" : "8e28b5e5a9561ace33a26c55d78f74963fbce6f9"
+      }
+    },
+    {
+      "identity" : "sparkle",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sparkle-project/Sparkle",
+      "state" : {
+        "revision" : "1f07f4096e52f19b5e7abaa697b7fc592b7ff57c",
+        "version" : "2.5.1"
+      }
+    }
+  ],
+  "version" : 2
+}
