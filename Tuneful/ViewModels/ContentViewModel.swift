@@ -70,6 +70,9 @@ class ContentViewModel: ObservableObject {
     @Published var volume: CGFloat = CGFloat(Sound.output.volume)
     @Published var isDraggingSoundVolumeSlider = false
     
+    // Audio devices
+    @Published var audioDevices = AudioDevice.output.filter{ $0.transportType != .virtual }
+    
     // Observer
     private var observer: NSKeyValueObservation?
     
@@ -177,6 +180,7 @@ class ContentViewModel: ObservableObject {
         if !showPlayerWindow {
             self.timerStartSignal.send()
         }
+        self.audioDevices = AudioDevice.output.filter{ $0.transportType != .virtual }
         self.volume = CGFloat(Sound.output.volume)
         popoverIsShown = true
     }
@@ -503,6 +507,15 @@ class ContentViewModel: ObservableObject {
             volume = newVolume
         } catch {
             self.sendNotification(title: "Volume not set", message: "Error setting the volume for output device")
+        }
+    }
+    
+    // MARK: - Audio device
+    func setOutputDevice(audioDevice: AudioDevice) {
+        do {
+            try AudioDevice.setDefaultDevice(for: .output, device: audioDevice)
+        } catch {
+            self.sendNotification(title: "Audio device not set", message: "Error setting output device")
         }
     }
     
