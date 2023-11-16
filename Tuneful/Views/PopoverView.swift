@@ -91,8 +91,29 @@ struct PopoverView: View {
                         }
                         .opacity(0.8)
                         
-                        VolumeControlView()
-                            .padding(.top, 10)
+                        HStack {
+                            VolumeControlView()
+
+                            Menu {
+                                ForEach(contentViewModel.audioDevices) { audioDevice in
+                                    Button {
+                                        contentViewModel.setOutputDevice(audioDevice: audioDevice)
+                                    } label: {
+                                        if audioDevice == contentViewModel.audioDevices.first(where: { $0.isDefault(for: .output) }) {
+                                            Text("✓ \(audioDevice.name)")
+                                        } else {
+                                            Text(audioDevice.name)
+                                        }
+                                    }
+                                }
+                            } label: {
+                                Image(systemName: "hifispeaker.fill")
+                            }
+                            .frame(width: 20, height: 20)
+                            .menuIndicator(.hidden)
+                            .menuStyle(.borderlessButton)
+                        }
+                        .padding(.top, 10)
                     }
                     .padding(.bottom, 15)
                 }
