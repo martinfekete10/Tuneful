@@ -8,7 +8,7 @@
             <sparkle:version>0.9.0</sparkle:version>
             <sparkle:shortVersionString>0.9.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/0.9.0/Tuneful_0.9.0.dmg" length="4722197" type="application/octet-stream" sparkle:edSignature="5hKduTX69zGO+1y9bQMoeRe2PAYGLzwezRP1ekPS1p5xz5FDCIcBmMpvh8arstJ20C1LLzFZsf8moFVku1H2DQ=="/>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/0.9.0/Tuneful_0.9.0.dmg" length="4722234" type="application/octet-stream" sparkle:edSignature="4t65cc0aQVvmo1/9WkTMoUM7Ai0o7S7SjZ6mbjjAXoF9s1JvGs2M9FLSus0XBOkdeqm+HFnx/QH4A+/9QW+iCg=="/>
         </item>
     </channel>
 </rss>
