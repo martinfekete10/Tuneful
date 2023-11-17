@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PlayPauseButton: View {
     
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var playerManager: PlayerManager
     @State private var transparency: Double = 0.0
     
     let buttonSize: CGFloat
@@ -20,7 +20,7 @@ struct PlayPauseButton: View {
     
     var body: some View {
         Button(action: {
-            contentViewModel.togglePlayPause()
+            playerManager.togglePlayPause()
             transparency = 0.6
             withAnimation(.easeOut(duration: 0.2)) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -32,16 +32,16 @@ struct PlayPauseButton: View {
                 Image(systemName: "pause.circle.fill")
                     .resizable()
                     .frame(width: self.buttonSize, height: self.buttonSize)
-                    .scaleEffect(contentViewModel.isPlaying ? 1.01 : 0.09)
-                    .opacity(contentViewModel.isPlaying ? 1.01 : 0.09)
-                    .animation(.interpolatingSpring(stiffness: 150, damping: 20), value: contentViewModel.isPlaying)
+                    .scaleEffect(playerManager.isPlaying ? 1.01 : 0.09)
+                    .opacity(playerManager.isPlaying ? 1.01 : 0.09)
+                    .animation(.interpolatingSpring(stiffness: 150, damping: 20), value: playerManager.isPlaying)
                 
                 Image(systemName: "play.circle.fill")
                     .resizable()
                     .frame(width: self.buttonSize, height: self.buttonSize)
-                    .scaleEffect(contentViewModel.isPlaying ? 0.09 : 1.01)
-                    .opacity(contentViewModel.isPlaying ? 0.09 : 1.01)
-                    .animation(.interpolatingSpring(stiffness: 150, damping: 20), value: contentViewModel.isPlaying)
+                    .scaleEffect(playerManager.isPlaying ? 0.09 : 1.01)
+                    .opacity(playerManager.isPlaying ? 0.09 : 1.01)
+                    .animation(.interpolatingSpring(stiffness: 150, damping: 20), value: playerManager.isPlaying)
             }
         }
         .buttonStyle(MusicControlButtonStyle())

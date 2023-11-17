@@ -10,11 +10,11 @@ import MediaPlayer
 
 struct MiniPlayerView: View {
     
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var playerManager: PlayerManager
 
     var body: some View {
-        if !contentViewModel.isRunning {
-            Text("Please open \(contentViewModel.name) to use Tuneful")
+        if !playerManager.isRunning {
+            Text("Please open \(playerManager.name) to use Tuneful")
                 .foregroundColor(.primary.opacity(0.4))
                 .font(.system(size: 14, weight: .regular))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -23,7 +23,7 @@ struct MiniPlayerView: View {
                 .padding(.bottom, 20)
         } else {
             ZStack {
-                Image(nsImage: contentViewModel.track.albumArt)
+                Image(nsImage: playerManager.track.albumArt)
                     .resizable()
                     .scaledToFill()
                 
@@ -34,14 +34,14 @@ struct MiniPlayerView: View {
                         .padding()
                     
                     VStack(spacing: 7) {
-                        Button(action: contentViewModel.openMusicApp) {
+                        Button(action: playerManager.openMusicApp) {
                             VStack {
-                                Text(contentViewModel.track.title)
+                                Text(playerManager.track.title)
                                     .font(.body)
                                     .bold()
                                     .lineLimit(1)
                                 
-                                Text(contentViewModel.track.artist)
+                                Text(playerManager.track.artist)
                                     .font(.body)
                                     .lineLimit(1)
                             }
@@ -52,7 +52,7 @@ struct MiniPlayerView: View {
                         
                         HStack(spacing: 10) {
                             
-                            Button(action: contentViewModel.previousTrack){
+                            Button(action: playerManager.previousTrack){
                                 Image(systemName: "backward.end.fill")
                                     .resizable()
                                     .frame(width: 20, height: 20)
@@ -62,7 +62,7 @@ struct MiniPlayerView: View {
                             
                             PlayPauseButton(buttonSize: 35)
                             
-                            Button(action: contentViewModel.nextTrack) {
+                            Button(action: playerManager.nextTrack) {
                                 Image(systemName: "forward.end.fill")
                                     .resizable()
                                     .frame(width: 20, height: 20)

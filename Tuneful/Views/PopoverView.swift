@@ -9,13 +9,13 @@ import SwiftUI
 
 struct PopoverView: View {
     
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var playerManager: PlayerManager
     
     var body: some View {
         
         ZStack {
-            if !contentViewModel.isRunning {
-                Text("Please open \(contentViewModel.name) to use Tuneful")
+            if !playerManager.isRunning {
+                Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
                     .font(.system(size: 14, weight: .regular))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -30,13 +30,13 @@ struct PopoverView: View {
                             .padding(.top, 5)
 
                         // Track details
-                        Button(action: contentViewModel.openMusicApp) {
+                        Button(action: playerManager.openMusicApp) {
                             VStack(alignment: .center) {
-                                Text(contentViewModel.track.title)
+                                Text(playerManager.track.title)
                                     .foregroundColor(.primary.opacity(Constants.Opacity.primaryOpacity))
                                     .font(.system(size: 15, weight: .bold))
                                     .lineLimit(1)
-                                Text(contentViewModel.track.artist)
+                                Text(playerManager.track.artist)
                                     .font(.headline)
                                     .fontWeight(.medium)
                                     .lineLimit(1)
@@ -50,18 +50,18 @@ struct PopoverView: View {
                         PlaybackPositionView()
 
                         HStack(spacing: 15) {
-                            Button(action: contentViewModel.setShuffle){
+                            Button(action: playerManager.setShuffle){
                                 Image(systemName: "shuffle")
                                     .resizable()
                                     .frame(width: 17, height: 17)
                                     .animation(.easeInOut(duration: 2.0), value: 1)
-                                    .font(contentViewModel.shuffleIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
-                                    .opacity(contentViewModel.shuffleContextEnabled ? 1.0 : 0.45)
+                                    .font(playerManager.shuffleIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
+                                    .opacity(playerManager.shuffleContextEnabled ? 1.0 : 0.45)
                             }
                             .pressButtonStyle()
-                            .disabled(!contentViewModel.shuffleContextEnabled)
+                            .disabled(!playerManager.shuffleContextEnabled)
 
-                            Button(action: contentViewModel.previousTrack){
+                            Button(action: playerManager.previousTrack){
                                 Image(systemName: "backward.end.fill")
                                     .resizable()
                                     .frame(width: 20, height: 20)
@@ -71,7 +71,7 @@ struct PopoverView: View {
 
                             PlayPauseButton(buttonSize: 40)
 
-                            Button(action: contentViewModel.nextTrack) {
+                            Button(action: playerManager.nextTrack) {
                                 Image(systemName: "forward.end.fill")
                                     .resizable()
                                     .frame(width: 20, height: 20)
@@ -79,15 +79,15 @@ struct PopoverView: View {
                             }
                             .pressButtonStyle()
 
-                            Button(action: contentViewModel.setRepeat){
+                            Button(action: playerManager.setRepeat){
                                 Image(systemName: "repeat")
                                     .resizable()
                                     .frame(width: 15, height: 15)
-                                    .font(contentViewModel.repeatIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
-                                    .opacity(contentViewModel.repeatContextEnabled ? 1.0 : 0.45)
+                                    .font(playerManager.repeatIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
+                                    .opacity(playerManager.repeatContextEnabled ? 1.0 : 0.45)
                             }
                             .pressButtonStyle()
-                            .disabled(!contentViewModel.repeatContextEnabled)
+                            .disabled(!playerManager.repeatContextEnabled)
                         }
                         .opacity(0.8)
                         
@@ -95,11 +95,11 @@ struct PopoverView: View {
                             VolumeControlView()
 
                             Menu {
-                                ForEach(contentViewModel.audioDevices) { audioDevice in
+                                ForEach(playerManager.audioDevices) { audioDevice in
                                     Button {
-                                        contentViewModel.setOutputDevice(audioDevice: audioDevice)
+                                        playerManager.setOutputDevice(audioDevice: audioDevice)
                                     } label: {
-                                        if audioDevice == contentViewModel.audioDevices.first(where: { $0.isDefault(for: .output) }) {
+                                        if audioDevice == playerManager.audioDevices.first(where: { $0.isDefault(for: .output) }) {
                                             Text("✓ \(audioDevice.name)")
                                         } else {
                                             Text(audioDevice.name)

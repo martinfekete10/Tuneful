@@ -11,7 +11,7 @@ import SwiftUI
 
 struct NotificationView: View {
     
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var playerManager: PlayerManager
     
     @State private var isPresented = false
     @State private var title = ""
@@ -63,7 +63,7 @@ struct NotificationView: View {
         }
         .padding(.top, 7)
         .onReceive(
-            contentViewModel.notificationSubject,
+            playerManager.notificationSubject,
             perform: recieveAlert(_:)
         )
         

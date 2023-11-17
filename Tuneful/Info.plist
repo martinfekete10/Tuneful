@@ -10,18 +10,5 @@
 	<string>https://github.com/martinfekete10/Tuneful/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>QKWHklCXwSX+2xNgAy9ySM9gl7PQZZiy6a59E6sH2ag=</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.Martin-Fekete.Tuneful</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>martin-fekete-floating-music</string>
-			</array>
-		</dict>
-	</array>
 </dict>
 </plist>

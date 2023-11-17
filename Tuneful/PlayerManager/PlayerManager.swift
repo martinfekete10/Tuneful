@@ -1,5 +1,5 @@
 //
-//  ContentViewModel.swift
+//  PlayerManager.swift
 //  Tuneful
 //
 //  Created by Martin Fekete on 29/07/2023.
@@ -11,7 +11,7 @@ import SwiftUI
 import ScriptingBridge
 import ISSoundAdditions
 
-class ContentViewModel: ObservableObject {
+class PlayerManager: ObservableObject {
     
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
@@ -63,8 +63,8 @@ class ContentViewModel: ObservableObject {
   
     // Playback time
     static let noPlaybackPositionPlaceholder = "- : -"
-    var formattedDuration = ContentViewModel.noPlaybackPositionPlaceholder
-    var formattedPlaybackPosition = ContentViewModel.noPlaybackPositionPlaceholder
+    var formattedDuration = PlayerManager.noPlaybackPositionPlaceholder
+    var formattedPlaybackPosition = PlayerManager.noPlaybackPositionPlaceholder
     
     // Volume
     @Published var volume: CGFloat = CGFloat(Sound.output.volume)

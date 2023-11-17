@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AlbumArtView: View {
     
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
     
     private var imageSize: CGFloat
@@ -20,8 +20,8 @@ struct AlbumArtView: View {
     
     var body: some View {
         ZStack {
-            Button(action: contentViewModel.openMusicApp) {
-                Image(nsImage: contentViewModel.track.albumArt)
+            Button(action: playerManager.openMusicApp) {
+                Image(nsImage: playerManager.track.albumArt)
                     .resizable()
                     .scaledToFill()
                     .frame(width: self.imageSize, height: self.imageSize)
@@ -30,14 +30,14 @@ struct AlbumArtView: View {
             }
             .pressButtonStyle()
             
-            if contentViewModel.isLikeAuthorized() {
+            if playerManager.isLikeAuthorized() {
                 VStack {
                     // Like button
                     HStack(spacing: 6) {
                         Button {
-                            contentViewModel.toggleLoveTrack()
+                            playerManager.toggleLoveTrack()
                         } label: {
-                            Image(systemName: contentViewModel.isLoved ? "heart.fill" : "heart")
+                            Image(systemName: playerManager.isLoved ? "heart.fill" : "heart")
                                 .font(.system(size: 14))
                                 .foregroundColor(.primary.opacity(0.8))
                         }

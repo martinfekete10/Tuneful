@@ -13,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     
-    private var contentViewModel: ContentViewModel!
+    private var playerManager: PlayerManager!
     private var onboardingWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow!
     private var preferencesWindow: PreferencesWindow!
@@ -31,19 +31,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // Enviroment object
     @Published var popoverIsShown: Bool!
     
-    // Auto-update
-    @ObservedObject private var checkForUpdatesViewModel: CheckForUpdatesViewModel
-    private let updaterController: SPUStandardUpdaterController
-    
-    override init() {
-        updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-        checkForUpdatesViewModel = CheckForUpdatesViewModel(updater: updaterController.updater)
-    }
-    
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
-        self.contentViewModel = ContentViewModel()
+        self.playerManager = PlayerManager()
         
         // Onboarding
         if !viewedOnboarding {
@@ -131,7 +122,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if sender.state == .on {
             sender.state = .off
             showPlayerWindow = false
-            contentViewModel.timerStopSignal.send()
+            playerManager.timerStopSignal.send()
             miniPlayerWindow.close()
         } else {
             sender.state = .on
@@ -151,7 +142,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         // Initialize ContentView
         let rootView = PopoverView()
-            .environmentObject(self.contentViewModel)
+            .environmentObject(self.playerManager)
         let hostedContentView = NSHostingView(rootView: rootView)
         hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
@@ -164,7 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popover.contentViewController?.view = hostedContentView
         popover.contentViewController?.view.window?.makeKey()
         
-        contentViewModel.popoverIsShown = popover.isShown
+        playerManager.popoverIsShown = popover.isShown
     }
     
     // Toggle open and close of popover
@@ -181,7 +172,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if miniPlayerWindow == nil {
             miniPlayerWindow = MiniPlayerWindow()
             let rootView = MiniPlayerView()
-                .environmentObject(self.contentViewModel)
+                .environmentObject(self.playerManager)
             let hostedOnboardingView = NSHostingView(rootView: rootView)
             miniPlayerWindow.contentView = hostedOnboardingView
         }
@@ -189,10 +180,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         miniPlayerWindow.makeKeyAndOrderFront(nil)
         NSApplication.shared.activate(ignoringOtherApps: true)
         
-        contentViewModel.timerStartSignal.send()
+        playerManager.timerStartSignal.send()
         
         if !showPlayerWindow {
-            contentViewModel.timerStopSignal.send()
+            playerManager.timerStopSignal.send()
             miniPlayerWindow.close()
         }
     }
