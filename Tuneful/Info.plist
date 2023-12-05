@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>SUFeedURL</key>
-	<string>https://github.com/martinfekete10/Tuneful/blob/main/appcast.xml</string>
+	<string>https://martinfekete10.github.io/Tuneful/Support/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>QKWHklCXwSX+2xNgAy9ySM9gl7PQZZiy6a59E6sH2ag=</string>
 </dict>
