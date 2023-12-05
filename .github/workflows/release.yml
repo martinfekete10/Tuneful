@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  projname: testSparkleRelease
+  projname: Tuneful
   beta-channel-name: "beta"
 
 jobs:
