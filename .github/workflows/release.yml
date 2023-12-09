@@ -201,7 +201,6 @@ jobs:
       - name: Create summary # create summary for PR
         run: |
           echo "Beta Release v${{ steps.info.outputs.new_version }} created" > $GITHUB_STEP_SUMMARY
-
       - uses: actions/checkout@v3 # checkout again, directly on the main branch, as it's a prerelease
         if: success()
       - name: Remove old appcast # remove old appcast

@@ -3,6 +3,19 @@
     <channel>
         <title>Tuneful</title>
         <item>
+            <title>0.9.3</title>
+            <pubDate>Sat, 09 Dec 2023 10:22:34 +0000</pubDate>
+            <link>https://github.com/martinfekete10/Tuneful/releases</link>
+            <sparkle:version>0.9.3</sparkle:version>
+            <sparkle:shortVersionString>0.9.3</sparkle:shortVersionString>
+            <description><![CDATA[<h1>Sparkle fix maybe</h1>
+<ul>
+<li>Test Sparkle update</li>
+</ul>]]></description>
+            <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.3/Tuneful.zip" length="4826700" type="application/octet-stream"/>
+        </item>
+        <item>
             <title>0.9.2</title>
             <pubDate>Fri, 08 Dec 2023 15:34:51 +0000</pubDate>
             <link>https://github.com/martinfekete10/Tuneful/releases</link>
@@ -27,14 +40,6 @@
 </ul>]]></description>
             <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.1/Tuneful.zip" length="4826712" type="application/octet-stream"/>
-        </item>
-        <item>
-            <title>0.9.0</title>
-            <pubDate>Fri, 17 Nov 2023 11:53:45 +0100</pubDate>
-            <sparkle:version>0.9.0</sparkle:version>
-            <sparkle:shortVersionString>0.9.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/0.9.0/Tuneful_0.9.0.dmg" length="4722234" type="application/octet-stream" sparkle:edSignature="4t65cc0aQVvmo1/9WkTMoUM7Ai0o7S7SjZ6mbjjAXoF9s1JvGs2M9FLSus0XBOkdeqm+HFnx/QH4A+/9QW+iCg=="/>
         </item>
     </channel>
 </rss>
