@@ -1,3 +1,7 @@
+# 0.9.4
+* New icon
+* Minor popover UI spacing improvements
+
 # 0.9.4 - Sparkle fix v2
 * Test Sparkle update
 
