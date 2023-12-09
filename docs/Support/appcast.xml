@@ -8,12 +8,13 @@
             <link>https://github.com/martinfekete10/Tuneful/releases</link>
             <sparkle:version>0.9.4</sparkle:version>
             <sparkle:shortVersionString>0.9.4</sparkle:shortVersionString>
-            <description><![CDATA[<h1>Sparkle fix v2</h1>
+            <description><![CDATA[<h1>UI fixes</h1>
 <ul>
-<li>Test Sparkle update</li>
+<li>New icon</li>
+<li>Minor popover UI spacing improvements</li>
 </ul>]]></description>
             <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.4/Tuneful.zip" length="4826699" type="application/octet-stream" sparkle:edSignature="LKQwiWdyd/KM39VNjN4S2As9Wz216WWbZZLno/agNYfRk1Rsql2BXwy8jxkk/IWuQ1ow/5IXRPs2GkgpHaWxCQ=="/>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.4/Tuneful.zip" length="6882138" type="application/octet-stream" sparkle:edSignature="aR1Y9UtF1f/GUl3zL24xanXvjCxCz9pV1GAch4WiQdio4SMIkPtVo25IFzCX4ngKYySB2519gEpb+xH0B7NWDQ=="/>
         </item>
         <item>
             <title>0.9.3</title>
