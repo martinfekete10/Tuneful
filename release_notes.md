@@ -1,3 +1,6 @@
+# 0.9.4 - Sparkle fix v2
+* Test Sparkle update
+
 # 0.9.3 - Sparkle fix maybe
 * Test Sparkle update
 
