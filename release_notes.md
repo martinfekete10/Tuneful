@@ -1,4 +1,4 @@
-# 0.9.4 - UI fixes
+# 0.9.5 - UI fixes
 * New icon
 * Minor popover UI spacing improvements
 
