@@ -1,17 +1,29 @@
-<p align="center">
-  <img src="docs/images/icon.png" width="350">
-</p>
+<div align="center">
+  <a href="https://github.com/martinfekete10/Tuneful">
+    <img src="docs/images/icon.png" width="350">
+  </a>
 
-# Tuneful
+  <h3 align="center">Tuneful</h3>
+
+  <p align="center">
+    Tuneful is a native macOS menu bar playback control app for Spotify and Apple Music
+    <br />
+    <a href="https://github.com/martinfekete10/Tuneful/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/martinfekete10/Tuneful/issues">Request Feature</a>
+  </p>
+</div>
+
+# About
 
 Tuneful provides a convenient way to control playback for both Spotify and Apple Music right from your menu bar. Enjoy seamless control over your music, including playback, shuffle, and repeat options. Additionally, the app allows you to manage system volume, set the audio output device, and features a mini player window.
 
 <p align="center">
-  <img width="370" src="docs/images/mini-player.png">
+  <img width="400" src="docs/images/playback.png">
 </p>
 
 <p align="center">
-  <img width="400" src="docs/images/playback.png">
+  <img width="370" src="docs/images/mini-player.png">
 </p>
 
 ## Features
@@ -42,7 +54,7 @@ Your feedback is important to us. If you encounter any issues or have suggestion
 
 If you find this app useful, consider supporting its development by [donating](https://ko-fi.com/martinfekete).
 
-## Attributions
+## Acknowledgments
 
 - Project is partly based on [Jukebox](https://github.com/Jaysce/Jukebox/tree/main)
 - This project uses [Sparkle](https://sparkle-project.org) for update delivery
