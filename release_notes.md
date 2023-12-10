@@ -1,6 +1,3 @@
-# 0.9.7 - New workflow
-* Fixed "About..." menu item behaviour
-
 # 0.9.6 - Minor fixes
 * Fixed "About..." menu item behaviour
 
