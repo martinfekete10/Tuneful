@@ -132,10 +132,14 @@ jobs:
       - name: Zip app # zip .app
         run: |
           cd Release
+          ls
+          pwd
           ditto -c -k --sequesterRsrc --keepParent ${{ env.projname }}.app ${{ env.projname }}.zip # todo check perhaps cd .. missing
       - name: Dmg app # dmg .app
         run: |
           brew install create-dmg
+          ls
+          pwd
           create-dmg \
             --volname "Tuneful" \
             --background "./docs/images/installer-bg.png" \
