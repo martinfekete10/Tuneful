@@ -133,11 +133,30 @@ jobs:
         run: |
           cd Release
           ditto -c -k --sequesterRsrc --keepParent ${{ env.projname }}.app ${{ env.projname }}.zip # todo check perhaps cd .. missing
-      - name: Upload achived app
+      - name: Dmg app # dmg .app
+        run: |
+          brew install create-dmg
+          create-dmg \
+            --volname "Tuneful" \
+            --background "./docs/images/installer-bg.png" \
+            --window-pos 200 120 \
+            --window-size 835 600 \
+            --icon-size 128 \
+            --icon "Tuneful.app" 230 295 \
+            --hide-extension "Tuneful.app" \
+            --app-drop-link 593 295 \
+            "./Tuneful.dmg" \
+            "./Tuneful.app"
+      - name: Upload achived zip app
         uses: actions/upload-artifact@master
         with:
           name: app
           path: Release/${{ env.projname }}.zip
+      - name: Upload achived dmg app
+        uses: actions/upload-artifact@master
+        with:
+          name: app
+          path: Release/${{ env.projname }}.dmg
 
   pre-release:
     name: Create pre-release
