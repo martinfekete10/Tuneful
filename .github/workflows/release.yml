@@ -140,6 +140,7 @@ jobs:
           brew install create-dmg
           ls
           pwd
+          cd Release
           create-dmg \
             --volname "Tuneful" \
             --background "./docs/images/installer-bg.png" \
