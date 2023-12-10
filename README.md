@@ -29,7 +29,7 @@ Tuneful provides a convenient way to control playback for both Spotify and Apple
 ## Features
 
 ### 1. Playback Control
-Easily play, pause, skip, and go back to previous tracks without switching between applications. The app seamlessly integrates with both Spotify and Apple Music.
+Easily play, pause, skip, and go back to previous tracks without switching between applications. Tuneful seamlessly integrates with both Spotify and Apple Music.
 
 ### 2. System Volume Control
 Adjust the system volume directly from the menu bar. No need to open additional settings or apps to modify your sound preferences.
