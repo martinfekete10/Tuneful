@@ -143,7 +143,7 @@ jobs:
           cd Release
           create-dmg \
             --volname "Tuneful" \
-            --background "docs/images/installer-bg.png" \
+            --background "${{ github.workspace }}/docs/images/installer-bg.png" \
             --window-pos 200 120 \
             --window-size 835 600 \
             --icon-size 128 \
