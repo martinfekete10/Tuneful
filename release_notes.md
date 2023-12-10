@@ -1,3 +1,6 @@
+# 0.9.6 - Minor fixes
+* Fixed "About..." menu item behaviour
+
 # 0.9.5 - UI fixes
 * New icon
 * Minor popover UI spacing improvements

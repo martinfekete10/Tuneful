@@ -3,6 +3,19 @@
     <channel>
         <title>Tuneful</title>
         <item>
+            <title>0.9.6</title>
+            <pubDate>Sun, 10 Dec 2023 18:26:48 +0000</pubDate>
+            <link>https://github.com/martinfekete10/Tuneful/releases</link>
+            <sparkle:version>0.9.6</sparkle:version>
+            <sparkle:shortVersionString>0.9.6</sparkle:shortVersionString>
+            <description><![CDATA[<h1>Minor fixes</h1>
+<ul>
+<li>Fixed "About..." menu item behaviour</li>
+</ul>]]></description>
+            <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.6/Tuneful.zip" length="6882571" type="application/octet-stream" sparkle:edSignature="5K0LjWWjjPQLpomIcBX31YVtzwfU2lAaq/vCnx9T51avQzMCldcHHSSGPNRDwjqMzGOS75IzFrijojm84scCDg=="/>
+        </item>
+        <item>
             <title>0.9.5</title>
             <pubDate>Sat, 09 Dec 2023 14:18:05 +0000</pubDate>
             <link>https://github.com/martinfekete10/Tuneful/releases</link>
@@ -29,19 +42,6 @@
 </ul>]]></description>
             <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.4/Tuneful.zip" length="6882138" type="application/octet-stream" sparkle:edSignature="aR1Y9UtF1f/GUl3zL24xanXvjCxCz9pV1GAch4WiQdio4SMIkPtVo25IFzCX4ngKYySB2519gEpb+xH0B7NWDQ=="/>
-        </item>
-        <item>
-            <title>0.9.3</title>
-            <pubDate>Sat, 09 Dec 2023 10:22:34 +0000</pubDate>
-            <link>https://github.com/martinfekete10/Tuneful/releases</link>
-            <sparkle:version>0.9.3</sparkle:version>
-            <sparkle:shortVersionString>0.9.3</sparkle:shortVersionString>
-            <description><![CDATA[<h1>Sparkle fix maybe</h1>
-<ul>
-<li>Test Sparkle update</li>
-</ul>]]></description>
-            <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.3/Tuneful.zip" length="4826700" type="application/octet-stream"/>
         </item>
     </channel>
 </rss>
