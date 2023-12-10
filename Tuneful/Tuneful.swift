@@ -81,7 +81,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // TODO: add link to about page
         statusBarMenu.addItem(
             withTitle: "About...",
-            action: #selector(NSApplication.terminate),
+            action: #selector(openURL),
             keyEquivalent: ""
         )
         
@@ -129,6 +129,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             showPlayerWindow = true
             setupMiniPlayer()
         }
+    }
+
+    @IBAction func openURL(_ sender: AnyObject) {
+        let url = URL(string: "https://github.com/martinfekete10/Tuneful")
+        NSWorkspace.shared.open(url!)
     }
     
     func menuDidClose(_: NSMenu) {

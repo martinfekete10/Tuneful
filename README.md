@@ -6,31 +6,26 @@
 
 Tuneful provides a convenient way to control playback for both Spotify and Apple Music right from your menu bar. Enjoy seamless control over your music, including playback, shuffle, and repeat options. Additionally, the app allows you to manage system volume, set the audio output device, and features a mini player window.
 
-<figure style="text-align: center;">
-  <img src="docs/images/playback.png" style="width: 50%;" alt="Playback Image">
-  <figcaption>Menu bar popover</figcaption>
-</figure>
+<p align="center">
+  <img width="370" src="docs/images/mini-player.png">
+</p>
 
-<figure style="text-align: center;">
-  <img src="docs/images/mini-player.png" style="width: 50%;" alt="Mini Player Image">
-  <figcaption>Optional mini player window</figcaption>
-</figure>
+<p align="center">
+  <img width="400" src="docs/images/playback.png">
+</p>
 
 ## Features
 
 ### 1. Playback Control
 Easily play, pause, skip, and go back to previous tracks without switching between applications. The app seamlessly integrates with both Spotify and Apple Music.
 
-### 2. Shuffle and Repeat
-Take full control of your music experience with options to shuffle your playlist and repeat your favorite tracks.
-
-### 3. System Volume Control
+### 2. System Volume Control
 Adjust the system volume directly from the menu bar. No need to open additional settings or apps to modify your sound preferences.
 
-### 4. Audio Output Device
+### 3. Audio Output Device
 Choose your preferred audio output device with a single click. Switch between headphones, speakers, and other connected devices effortlessly.
 
-### 5. Mini Player Window
+### 4 . Mini Player Window
 Mini player window provides a compact view of the current track information and playback controls. Keep an eye on your music without disrupting your workflow.
 
 ## Installation
@@ -45,7 +40,7 @@ Your feedback is important to us. If you encounter any issues or have suggestion
 
 ## Support
 
-If you find this app helpful, consider supporting its development by [donating](https://ko-fi.com/martinfekete).
+If you find this app useful, consider supporting its development by [donating](https://ko-fi.com/martinfekete).
 
 ## Attributions
 
