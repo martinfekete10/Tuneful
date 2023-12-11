@@ -129,17 +129,9 @@ jobs:
         run: xcodebuild clean archive -project ${{ env.projname }}.xcodeproj -scheme ${{ env.projname }} -archivePath ${{ env.projname }}
       - name: Export app # create .app
         run: xcodebuild -exportArchive -archivePath "${{ env.projname }}.xcarchive" -exportPath Release -exportOptionsPlist "Configuration/export_options.plist"
-      - name: Zip app # zip .app
-        run: |
-          cd Release
-          ls
-          pwd
-          ditto -c -k --sequesterRsrc --keepParent ${{ env.projname }}.app ${{ env.projname }}.zip # todo check perhaps cd .. missing
       - name: Dmg app # dmg .app
         run: |
           brew install create-dmg
-          ls
-          pwd
           cd Release
           create-dmg \
             --volname "Tuneful" \
@@ -152,12 +144,7 @@ jobs:
             --app-drop-link 593 295 \
             "./Tuneful.dmg" \
             "./Tuneful.app"
-      - name: Upload achived zip app
-        uses: actions/upload-artifact@master
-        with:
-          name: app
-          path: Release/${{ env.projname }}.zip
-      - name: Upload achived dmg app
+      - name: Upload archived dmg app
         uses: actions/upload-artifact@master
         with:
           name: app
@@ -188,7 +175,7 @@ jobs:
           mv artifacts/artifact/title title
           mv artifacts/artifact/latest_changes latest_changes
           mkdir Release
-          mv artifacts/app/${{ env.projname }}.zip Release/
+          mv artifacts/app/${{ env.projname }}.dmg Release/
       - name: Prepare Sparkle update creation # Import Sparkle private key, remove unnecessary files in Release folder
         env:
           PRIVATE_SPARKLE_KEY: ${{ secrets.PRIVATE_SPARKLE_KEY }}
@@ -213,14 +200,14 @@ jobs:
         with:
           name: appcast
           path: docs/Support/appcast.xml
-      - name: Create GitHub beta release # Upload .zip to GitHub release
+      - name: Create GitHub beta release # Upload .dmg to GitHub release
         uses: softprops/action-gh-release@v1
         with:
           name: v${{ steps.info.outputs.new_version }}b - ${{ steps.info.outputs.title }}
           tag_name: v${{ steps.info.outputs.new_version }}-beta
           fail_on_unmatched_files: true
           body_path: latest_changes
-          files: Release/${{ env.projname }}.zip
+          files: Release/${{ env.projname }}.dmg
           prerelease: true
       - name: Create summary # create summary for PR
         run: |
@@ -266,7 +253,7 @@ jobs:
           mv artifacts/artifact/title title
           mv artifacts/artifact/latest_changes latest_changes
           mkdir Release
-          mv artifacts/app/${{ env.projname }}.zip Release/
+          mv artifacts/app/${{ env.projname }}.dmg Release/
       - name: Prepare Sparkle update creation # Import Sparkle private key, remove unnecessary files in Release folder
         env:
           PRIVATE_SPARKLE_KEY: ${{ secrets.PRIVATE_SPARKLE_KEY }}
@@ -289,14 +276,14 @@ jobs:
               --download-url-prefix https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases/download/v${{ steps.info.outputs.new_version }}/ \
               -o docs/Support/appcast.xml \
               Release/
-      - name: Create GitHub release # Upload .zip to GitHub release
+      - name: Create GitHub release # Upload .dmg to GitHub release
         uses: softprops/action-gh-release@v1
         with:
           name: v${{ steps.info.outputs.new_version }} - ${{ steps.info.outputs.title }}
           tag_name: v${{ steps.info.outputs.new_version }}
           fail_on_unmatched_files: true
           body_path: latest_changes
-          files: Release/${{ env.projname }}.zip
+          files: Release/${{ env.projname }}.dmg
           prerelease: ${{ steps.channel.outputs.prerelease }}
       - name: Saving changes # commits changes to branch (version bump, appcast.xml)
         uses: stefanzweifel/git-auto-commit-action@v4
