@@ -135,13 +135,14 @@ jobs:
           cd Release
           create-dmg \
             --volname "Tuneful" \
+            --volicon "${{ github.workspace }}/docs/images/icon.icns" \
             --background "${{ github.workspace }}/docs/images/installer-bg.png" \
             --window-pos 200 120 \
             --window-size 835 600 \
             --icon-size 128 \
-            --icon "Tuneful.app" 230 295 \
+            --icon "Tuneful.app" 230 285 \
             --hide-extension "Tuneful.app" \
-            --app-drop-link 593 295 \
+            --app-drop-link 593 285 \
             "./Tuneful.dmg" \
             "./Tuneful.app"
       - name: Upload archived dmg app
