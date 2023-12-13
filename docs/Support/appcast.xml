@@ -13,7 +13,7 @@
 <li>Fixed "About..." menu item behaviour</li>
 </ul>]]></description>
             <sparkle:minimumSystemVersion>13.3</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.6/Tuneful.dmg" length="6825563" type="application/octet-stream" sparkle:edSignature="M5C6aUdn4o4f+VimyEox7B9nQaNu8f+9VwOOhWRHzLLKc64ZdSC9J5314WGimDz2Os9xm/lcD9Wu5wsDN0w0DA=="/>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v0.9.6/Tuneful.dmg" length="8742978" type="application/octet-stream" sparkle:edSignature="e1IyGl8I6cRYzrWqIEJCRJRZ++094R7ZWu7r+xI50fvc+yUo6DAzFb9Eqz1nugOAmaguoTrOyOBRQhmA74bmAw=="/>
         </item>
         <item>
             <title>0.9.5</title>
