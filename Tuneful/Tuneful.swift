@@ -25,14 +25,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     static let popoverHeight: CGFloat = 370
     
     // Status bar
-    private var statusBarItem: NSStatusItem!
+    @Published var statusBarItem: NSStatusItem!
     private var statusBarMenu: NSMenu!
-    
-    // Enviroment object
-    @Published var popoverIsShown: Bool!
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateStatusBarItem),
+            name: NSNotification.Name("TrackChanged"),
+            object: nil
+        )
 
         self.playerManager = PlayerManager()
         
@@ -45,7 +49,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     private func mainSetup() {
-        // Views
         setupPopover()
         setupMiniPlayer()
         setupMenuBar()
@@ -54,11 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Menu bar
     
     private func setupMenuBar() {
-        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        
-        if let button = statusBarItem.button {
-            button.image = NSImage(systemSymbolName: "music.quarternote.3", accessibilityDescription: "Floating Music")
-        }
+        self.statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         statusBarMenu = NSMenu()
         statusBarMenu.delegate = self
@@ -88,7 +87,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let updates = NSMenuItem(
             title: "Check for updates...",
             action: #selector(SUUpdater.checkForUpdates(_:)),
-            keyEquivalent: "")
+            keyEquivalent: ""
+        )
         updates.target = SUUpdater.shared()
         statusBarMenu.addItem(updates)
         
@@ -138,6 +138,39 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     func menuDidClose(_: NSMenu) {
         statusBarItem.menu = nil
+    }
+    
+    // MARK: - Status bar item title
+    
+    @objc func updateStatusBarItem(_ notification: NSNotification) {
+        // 6 spaces are ideal for albumart/icon ("      ")
+        let title = "      \(playerManager.track.artist) • \(playerManager.track.title)".prefix(Int.max)
+        
+        let iconRootView = HStack() {
+            Image(nsImage: playerManager.track.albumArt)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 18, height: 18)
+                .cornerRadius(4)
+//            
+//            Image(systemName: "music.quarternote.3")
+//                .resizable()
+//                .scaledToFill()
+//                .frame(width: 13, height: 13)
+        }
+        
+//        let title = self.statusBarItemViewModel.getTitle()
+//        let iconRootView = self.statusBarItemViewModel.getIconRootView()
+        
+        let iconView = NSHostingView(rootView: iconRootView)
+        iconView.frame = NSRect(x: 0, y: 0, width: 20, height: 20)
+        
+        if let button = self.statusBarItem.button {
+            button.subviews.forEach { $0.removeFromSuperview() }
+            button.addSubview(iconView)
+            button.frame = iconView.frame
+            button.title = String(title)
+        }
     }
     
     // MARK: - Popover

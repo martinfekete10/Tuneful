@@ -219,12 +219,22 @@ class PlayerManager: ObservableObject {
             self.track.artist = ""
             self.track.albumArt = NSImage()
             self.trackDuration = 0
+            self.updateMenuBarText()
             return
         }
         
         self.getPlayState()
         self.updatePlayerState()
         self.updateFormattedDuration()
+        self.updateMenuBarText()
+    }
+    
+    private func updateMenuBarText() {
+        DispatchQueue.main.async { [weak self] in
+            guard let title = self?.track.title, let artist = self?.track.artist, let albumArt = self?.track.albumArt else { return }
+            let trackInfo: [String: Any] = ["title": title, "artist": artist, "albumArt": albumArt]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TrackChanged"), object: nil, userInfo: trackInfo)
+        }
     }
     
     // MARK: - Media & Playback
@@ -252,12 +262,12 @@ class PlayerManager: ObservableObject {
     
     private func sendNotification(title: String, message: String) {
         let alertTitle = NSLocalizedString(
-            title, //"Couldn't Retrieve Playback State",
+            title,
             comment: ""
         )
         let alert = AlertItem(
             title: alertTitle,
-            message: message//error.customizedLocalizedDescription
+            message: message
         )
         self.notificationSubject.send(alert)
     }
@@ -289,6 +299,7 @@ class PlayerManager: ObservableObject {
                     }
                     DispatchQueue.main.async {
                         self?.track.albumArt = NSImage(data: data) ?? NSImage()
+                        self?.updateMenuBarText()
                     }
                     
                 }.resume()
