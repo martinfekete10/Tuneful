@@ -14,11 +14,13 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     
-    public func getStatusBarTrackInfo(_ notification: NSNotification) -> String {
-        guard let trackTitle = notification.userInfo?["title"] as? String else { return "" }
-        guard let trackArtist = notification.userInfo?["artist"] as? String else { return "" }
-        // 6 spaces are ideal for albumart/icon ("      ")
-        let trackInfo = trackTitle.isEmpty && trackArtist.isEmpty ? "" : "      \(trackArtist) • \(trackTitle)".prefix(Int(trackInfoLength))
+    // 6 spaces turn out to be ideal for albumart/icon offset
+    private var iconWhiteSpaceOffset = "      "
+    
+    public func getStatusBarTrackInfo(track: Track) -> String {
+        let trackTitle = track.title
+        let trackArtist = track.artist
+        let trackInfo = "\(iconWhiteSpaceOffset)\(trackArtist) • \(trackTitle)".prefix(Int(trackInfoLength))
         
         return String(trackInfo)
     }

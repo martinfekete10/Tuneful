@@ -71,27 +71,23 @@ struct GeneralSettingsView: View {
 struct AppearanceSettingsView: View {
     
     @AppStorage("showSongInfoAppStorage") var showSongInfoAppStorage: Bool = true
-    @AppStorage("trackInfoLength") var trackInfoLength: Double = 20.0
+    @AppStorage("trackInfoLength") var trackInfoLengthAppStorage: Double = 20.0
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable showSongInfoAppStorage is updated whenever the state changes using .onChange()
     @State var showSongInfo: Bool = UserDefaults.standard.bool(forKey: "showSongInfoAppStorage")
+    @State var trackInfoLength: Double = UserDefaults.standard.double(forKey: "trackInfoLength")
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
-            // Show song info - checkbox
-            //
-            // Max length of song info (20 chars default)
-            // Dropdown - artist/song/song and artist
-            // Dropdown - Show album art/app icon/ nothing
             
             Settings.Section(title: "Show song info") {
                 Toggle(isOn: $showSongInfo) {
                     Text("")
                 }
-                .onChange(of: showSongInfo) { newValue in
+                .onChange(of: showSongInfo) { _ in
                     self.showSongInfoAppStorage = showSongInfo
                 }
                 .toggleStyle(.switch)
@@ -101,8 +97,25 @@ struct AppearanceSettingsView: View {
                 Text("Track info max length")
                     .foregroundStyle(!showSongInfo ? .tertiary : .primary)
             }) {
-                Slider(value: $trackInfoLength, in: 1...30, step: 5)
+                VStack(alignment: .center) {
+                    Slider(value: $trackInfoLength, in: 0...50, step: 5) {
+                        Text("")
+                    } minimumValueLabel: {
+                        Text("0")
+                    } maximumValueLabel: {
+                        Text("50")
+                    }
+                    .onChange(of: trackInfoLength) { newValue in
+                        self.trackInfoLengthAppStorage = trackInfoLength
+                        NSHapticFeedbackManager.defaultPerformer.perform(NSHapticFeedbackManager.FeedbackPattern.levelChange, performanceTime: .now)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TrackChanged"), object: nil, userInfo: ["title": "", "artist": "", "albumArt": ""])
+                    }
                     .disabled(!showSongInfo)
+                    
+                    Text("Max number of characters: \(Int(trackInfoLength))")
+                        .foregroundStyle(!showSongInfo ? .tertiary : .secondary)
+                        .font(.callout)
+                }
             }
             
             Settings.Section(label: {
@@ -111,6 +124,20 @@ struct AppearanceSettingsView: View {
             }) {
                 Picker("", selection: $trackInfoDetails) {
                     ForEach(StatusBarTrackDetails.allCases, id: \.self) { value in
+                        Text(value.localizedName).tag(value)
+                    }
+                }
+                .pickerStyle(.menu)
+                .frame(width: 200)
+                .disabled(!showSongInfo)
+            }
+            
+            Settings.Section(label: {
+                Text("Menu bar icon")
+                    .foregroundStyle(!showSongInfo ? .tertiary : .primary)
+            }) {
+                Picker("", selection: $statusBarIcon) {
+                    ForEach(StatusBarIcon.allCases, id: \.self) { value in
                         Text(value.localizedName).tag(value)
                     }
                 }

@@ -182,7 +182,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Status bar item title
     
     @objc func updateStatusBarItem(_ notification: NSNotification) {        
-        let title = self.statusBarItemManager.getStatusBarTrackInfo(notification)
+        let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track)
         let iconRootView = self.statusBarItemManager.getIconRootView(albumArt: playerManager.track.albumArt)
         
         let iconView = NSHostingView(rootView: iconRootView)
