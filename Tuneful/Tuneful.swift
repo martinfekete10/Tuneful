@@ -14,11 +14,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
+    @AppStorage("showSongInfoAppStorage") var showSongInfoAppStorage: Bool = true
     
     private var onboardingWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow!
-    private var preferencesWindow: PreferencesWindow!
-    private var featureRequestWindow: PreferencesWindow!
     private var popover: NSPopover!
     
     // Popover
@@ -37,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let GeneralSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .general,
-            title: "General",
+            title: "General        ",
             toolbarIcon: NSImage(systemSymbolName: "gearshape", accessibilityDescription: "General settings")!
         ) {
             GeneralSettingsView()
@@ -53,6 +52,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             toolbarIcon: NSImage(systemSymbolName: "paintbrush.pointed.fill", accessibilityDescription: "Appearance settings")!
         ) {
             AppearanceSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let AboutSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .about,
+            title: "About      ",
+            toolbarIcon: NSImage(systemSymbolName: "info.circle", accessibilityDescription: "About settings")!
+        ) {
+            AboutSettingsView()
         }
 
         return Settings.PaneHostingController(pane: paneView)
@@ -240,7 +251,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func showPreferences(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController()],
+            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), AboutSettingsViewController()],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true

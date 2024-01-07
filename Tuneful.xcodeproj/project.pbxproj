@@ -18,8 +18,6 @@
 		FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */; };
 		FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37A0322A829623006FBA5B /* MusicControl.swift */; };
 		FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */; };
-		FE3F67F92AAD01D900CCE841 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F67F82AAD01D900CCE841 /* PreferencesWindow.swift */; };
-		FE3F67FB2AAD021200CCE841 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3F67FA2AAD021200CCE841 /* PreferencesView.swift */; };
 		FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */; };
 		FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4414B72AB4999600A73246 /* Notification.Name.swift */; };
 		FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE445FE32A977D0E001CA55A /* Double+Extension.swift */; };
@@ -45,8 +43,9 @@
 		FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A742AF8010300CE4981 /* Sparkle */; };
 		FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */; };
 		FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */; };
-		FEFFE54D2B49EF97000887B5 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* GeneralSettingsView.swift */; };
+		FEFFE54D2B49EF97000887B5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* SettingsView.swift */; };
 		FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = FEFFE54F2B4AA04B000887B5 /* Settings */; };
+		FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,8 +60,6 @@
 		FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 		FE37A0322A829623006FBA5B /* MusicControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControl.swift; sourceTree = "<group>"; };
 		FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
-		FE3F67F82AAD01D900CCE841 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
-		FE3F67FA2AAD021200CCE841 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		FE4414B72AB4999600A73246 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		FE445FE02A969E8D001CA55A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FE445FE32A977D0E001CA55A /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
@@ -88,7 +85,8 @@
 		FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
 		FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarItemManager.swift; sourceTree = "<group>"; };
 		FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
-		FEFFE54C2B49EF97000887B5 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		FEFFE54C2B49EF97000887B5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarTrackDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,12 +120,11 @@
 				FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */,
 				FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */,
 				FE2AEE352A93A44B00E8D576 /* VisualEffectView.swift */,
-				FE3F67FA2AAD021200CCE841 /* PreferencesView.swift */,
 				FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */,
 				FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */,
 				FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */,
 				FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */,
-				FEFFE54C2B49EF97000887B5 /* GeneralSettingsView.swift */,
+				FEFFE54C2B49EF97000887B5 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -137,7 +134,6 @@
 			children = (
 				FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */,
 				FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */,
-				FE3F67F82AAD01D900CCE841 /* PreferencesWindow.swift */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -203,6 +199,7 @@
 				FE6BFCFA2A73A7CA00D3321F /* SupportedApps.swift */,
 				FE6BFD072A73AE5E00D3321F /* Track.swift */,
 				FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */,
+				FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -339,20 +336,19 @@
 			files = (
 				FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */,
 				FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */,
+				FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
-				FEFFE54D2B49EF97000887B5 /* GeneralSettingsView.swift in Sources */,
+				FEFFE54D2B49EF97000887B5 /* SettingsView.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
 				FE5B3CA22AB0AC700038B6E4 /* PopoverView.swift in Sources */,
 				FE6BFD0C2A73B2D400D3321F /* NSImage+Empty.swift in Sources */,
-				FE3F67F92AAD01D900CCE841 /* PreferencesWindow.swift in Sources */,
 				FE6BFD022A73AB9A00D3321F /* MusicApplication.swift in Sources */,
 				FE2AEE302A8FC76500E8D576 /* PlaybackPositionView.swift in Sources */,
 				FE6BFD032A73AB9A00D3321F /* SpotifyApplication.swift in Sources */,
-				FE3F67FB2AAD021200CCE841 /* PreferencesView.swift in Sources */,
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,
 				FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */,
 				FE6BFCFE2A73A89600D3321F /* PlayerManager.swift in Sources */,

@@ -69,9 +69,75 @@ struct GeneralSettingsView: View {
 }
 
 struct AppearanceSettingsView: View {
+    
+    @AppStorage("showSongInfoAppStorage") var showSongInfoAppStorage: Bool = true
+    @AppStorage("trackInfoLength") var trackInfoLength: Double = 20.0
+    @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
+    @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
+    
+    // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
+    // and @AppStorage variable showSongInfoAppStorage is updated whenever the state changes using .onChange()
+    @State var showSongInfo: Bool = UserDefaults.standard.bool(forKey: "showSongInfoAppStorage")
+    
+    var body: some View {
+        Settings.Container(contentWidth: 400) {
+            // Show song info - checkbox
+            //
+            // Max length of song info (20 chars default)
+            // Dropdown - artist/song/song and artist
+            // Dropdown - Show album art/app icon/ nothing
+            
+            Settings.Section(title: "Show song info") {
+                Toggle(isOn: $showSongInfo) {
+                    Text("")
+                }
+                .onChange(of: showSongInfo) { newValue in
+                    self.showSongInfoAppStorage = showSongInfo
+                }
+                .toggleStyle(.switch)
+            }
+            
+            Settings.Section(label: {
+                Text("Track info max length")
+                    .foregroundStyle(!showSongInfo ? .tertiary : .primary)
+            }) {
+                Slider(value: $trackInfoLength, in: 1...30, step: 5)
+                    .disabled(!showSongInfo)
+            }
+            
+            Settings.Section(label: {
+                Text("Track info")
+                    .foregroundStyle(!showSongInfo ? .tertiary : .primary)
+            }) {
+                Picker("", selection: $trackInfoDetails) {
+                    ForEach(StatusBarTrackDetails.allCases, id: \.self) { value in
+                        Text(value.localizedName).tag(value)
+                    }
+                }
+                .pickerStyle(.menu)
+                .frame(width: 200)
+                .disabled(!showSongInfo)
+            }
+        }
+    }
+}
+
+struct AboutSettingsView: View {
     var body: some View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
+                VStack(alignment: .center) {
+                    Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                    VStack(alignment: .leading) {
+                        Text("Tuneful").font(.headline)
+                        Text("Version \(Constants.AppInfo.appVersion ?? "?")")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
         }
     }

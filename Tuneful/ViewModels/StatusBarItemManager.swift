@@ -9,15 +9,16 @@ import SwiftUI
 
 class StatusBarItemManager: ObservableObject {
     
-    @AppStorage("showStatusBarInfo") var showStatusBarInfo: Bool = false
+    @AppStorage("showSongInfo") var showSongInfo: Bool = true
+    @AppStorage("trackInfoLength") var trackInfoLength: Double = 20.0
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
-    @AppStorage("trackInfoLength") var trackInfoLength: Int = Int.max
+    @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     
     public func getStatusBarTrackInfo(_ notification: NSNotification) -> String {
         guard let trackTitle = notification.userInfo?["title"] as? String else { return "" }
         guard let trackArtist = notification.userInfo?["artist"] as? String else { return "" }
         // 6 spaces are ideal for albumart/icon ("      ")
-        let trackInfo = trackTitle.isEmpty && trackArtist.isEmpty ? "" : "      \(trackArtist) • \(trackTitle)".prefix(trackInfoLength)
+        let trackInfo = trackTitle.isEmpty && trackArtist.isEmpty ? "" : "      \(trackArtist) • \(trackTitle)".prefix(Int(trackInfoLength))
         
         return String(trackInfo)
     }

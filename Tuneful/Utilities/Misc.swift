@@ -80,4 +80,5 @@ extension NSError {
 extension Preferences.PaneIdentifier {
     static let general = Self("general")
     static let appearance = Self("appearance")
+    static let about = Self("about")
 }
