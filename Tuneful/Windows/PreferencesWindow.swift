@@ -12,12 +12,12 @@ class PreferencesWindow: NSWindow {
     init() {
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: 400, height: 240),
-            styleMask: [.titled, .fullSizeContentView],
+            styleMask: [.closable, .titled],
             backing: .buffered,
             defer: false
         )
         
-        self.titleVisibility = .hidden
+        self.titleVisibility = .visible
         self.titlebarAppearsTransparent = true
         self.isMovableByWindowBackground = true
         self.isReleasedWhenClosed = false

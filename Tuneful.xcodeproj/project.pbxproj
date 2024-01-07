@@ -45,6 +45,8 @@
 		FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A742AF8010300CE4981 /* Sparkle */; };
 		FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */; };
 		FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */; };
+		FEFFE54D2B49EF97000887B5 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* GeneralSettingsView.swift */; };
+		FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = FEFFE54F2B4AA04B000887B5 /* Settings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +88,7 @@
 		FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
 		FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarItemManager.swift; sourceTree = "<group>"; };
 		FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
+		FEFFE54C2B49EF97000887B5 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */,
+				FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */,
 				FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */,
 				FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */,
 			);
@@ -123,6 +127,7 @@
 				FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */,
 				FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */,
 				FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */,
+				FEFFE54C2B49EF97000887B5 /* GeneralSettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */,
 				FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */,
 				FEF53A742AF8010300CE4981 /* Sparkle */,
+				FEFFE54F2B4AA04B000887B5 /* Settings */,
 			);
 			productName = Tuneful;
 			productReference = FE6BFCE32A72F37800D3321F /* Tuneful.app */;
@@ -303,6 +309,7 @@
 				FE3F67FC2AAD02D100CCE841 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 				FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */,
 				FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */,
 			);
 			productRefGroup = FE6BFCE42A72F37800D3321F /* Products */;
 			projectDirPath = "";
@@ -335,6 +342,7 @@
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
+				FEFFE54D2B49EF97000887B5 /* GeneralSettingsView.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
@@ -606,6 +614,14 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Settings";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -623,6 +639,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		FEFFE54F2B4AA04B000887B5 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */;
+			productName = Settings;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

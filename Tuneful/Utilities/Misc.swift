@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import SwiftUI
 import AppKit
+import Settings
 
 extension Comparable {
     func clamped(to range: ClosedRange<Self>) -> Self {
@@ -74,4 +75,9 @@ extension NSError {
 
         self.init(domain: NSOSStatusErrorDomain, code: Int(osstatus), userInfo: nil)
     }
+}
+
+extension Preferences.PaneIdentifier {
+    static let general = Self("general")
+    static let appearance = Self("appearance")
 }

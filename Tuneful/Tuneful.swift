@@ -8,12 +8,13 @@
 import SwiftUI
 import Sparkle
 
+import Settings
+
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     
-    private var playerManager: PlayerManager!
     private var onboardingWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow!
     private var preferencesWindow: PreferencesWindow!
@@ -25,8 +26,37 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     static let popoverHeight: CGFloat = 370
     
     // Status bar
-    @Published var statusBarItem: NSStatusItem!
+    private var statusBarItem: NSStatusItem!
     private var statusBarMenu: NSMenu!
+    
+    // ViewModels
+    private var playerManager = PlayerManager()
+    private var statusBarItemManager = StatusBarItemManager()
+    
+    // Settings
+    let GeneralSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .general,
+            title: "General",
+            toolbarIcon: NSImage(systemSymbolName: "gearshape", accessibilityDescription: "General settings")!
+        ) {
+            GeneralSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let AppearanceSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .appearance,
+            title: "Appearance",
+            toolbarIcon: NSImage(systemSymbolName: "paintbrush.pointed.fill", accessibilityDescription: "Appearance settings")!
+        ) {
+            AppearanceSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
@@ -37,8 +67,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             name: NSNotification.Name("TrackChanged"),
             object: nil
         )
-
-        self.playerManager = PlayerManager()
         
         // Onboarding
         if !viewedOnboarding {
@@ -142,25 +170,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // MARK: - Status bar item title
     
-    @objc func updateStatusBarItem(_ notification: NSNotification) {
-        // 6 spaces are ideal for albumart/icon ("      ")
-        let title = "      \(playerManager.track.artist) • \(playerManager.track.title)".prefix(Int.max)
-        
-        let iconRootView = HStack() {
-            Image(nsImage: playerManager.track.albumArt)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 18, height: 18)
-                .cornerRadius(4)
-//            
-//            Image(systemName: "music.quarternote.3")
-//                .resizable()
-//                .scaledToFill()
-//                .frame(width: 13, height: 13)
-        }
-        
-//        let title = self.statusBarItemViewModel.getTitle()
-//        let iconRootView = self.statusBarItemViewModel.getIconRootView()
+    @objc func updateStatusBarItem(_ notification: NSNotification) {        
+        let title = self.statusBarItemManager.getStatusBarTrackInfo(notification)
+        let iconRootView = self.statusBarItemManager.getIconRootView(albumArt: playerManager.track.albumArt)
         
         let iconView = NSHostingView(rootView: iconRootView)
         iconView.frame = NSRect(x: 0, y: 0, width: 20, height: 20)
@@ -227,16 +239,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @objc func showPreferences(_ sender: AnyObject) {
-        if preferencesWindow == nil {
-            preferencesWindow = PreferencesWindow()
-            let preferencesView = PreferencesView(parentWindow: preferencesWindow)
-            let hostedPrefView = NSHostingView(rootView: preferencesView)
-            preferencesWindow.contentView = hostedPrefView
-        }
-        
-        preferencesWindow.center()
-        preferencesWindow.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        SettingsWindowController(
+            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController()],
+            style: .toolbarItems,
+            animated: true,
+            hidesToolbarForSingleItem: true
+        ).show()
     }
     
     public func showOnboarding() {
