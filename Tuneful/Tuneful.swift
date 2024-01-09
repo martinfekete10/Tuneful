@@ -12,9 +12,9 @@ import Settings
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
+    @AppStorage("showSongInfo") var showSongInfo: Bool = true
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
-    @AppStorage("showSongInfoAppStorage") var showSongInfoAppStorage: Bool = true
     
     private var onboardingWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow!
@@ -181,12 +181,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // MARK: - Status bar item title
     
-    @objc func updateStatusBarItem(_ notification: NSNotification) {        
+    @objc func updateStatusBarItem(_ notification: NSNotification) {
         let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track)
         let iconRootView = self.statusBarItemManager.getIconRootView(albumArt: playerManager.track.albumArt)
         
         let iconView = NSHostingView(rootView: iconRootView)
-        iconView.frame = NSRect(x: 0, y: 0, width: 20, height: 20)
+        iconView.frame = NSRect(x: 0, y: 0, width: 25, height: 20)
         
         if let button = self.statusBarItem.button {
             button.subviews.forEach { $0.removeFromSuperview() }
