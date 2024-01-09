@@ -183,18 +183,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func updateStatusBarItem(_ notification: NSNotification) {
         let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track)
-        let iconRootView = self.statusBarItemManager.getIconRootView(albumArt: playerManager.track.albumArt)
-        
-        let iconView = NSHostingView(rootView: iconRootView)
-        iconView.frame = NSRect(x: 0, y: 0, width: 25, height: 20)
+        let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt)
         
         if let button = self.statusBarItem.button {
-            button.subviews.forEach { $0.removeFromSuperview() }
-            button.addSubview(iconView)
-            button.frame = iconView.frame
+            button.image = image
             button.title = String(title)
         }
     }
+
     
     // MARK: - Popover
     

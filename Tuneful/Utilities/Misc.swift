@@ -82,3 +82,25 @@ extension Preferences.PaneIdentifier {
     static let appearance = Self("appearance")
     static let about = Self("about")
 }
+
+extension NSImage {
+    func roundImage(withSize imageSize: NSSize, radius: CGFloat) -> NSImage {
+        let imageFrame = NSRect(origin: .zero, size: imageSize)
+
+        let newImage = NSImage(size: imageSize)
+        newImage.lockFocus()
+        NSGraphicsContext.saveGraphicsState()
+
+        let path = NSBezierPath(roundedRect: imageFrame, xRadius: radius, yRadius: radius)
+        path.addClip()
+
+        self.size = imageFrame.size
+        self.draw(in: imageFrame, from: NSZeroRect, operation: NSCompositingOperation.sourceOver, fraction: 1.0, respectFlipped: true, hints: nil)
+
+        NSGraphicsContext.restoreGraphicsState()
+
+        newImage.unlockFocus()
+
+        return newImage
+    }
+}

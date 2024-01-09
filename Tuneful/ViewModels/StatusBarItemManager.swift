@@ -15,20 +15,15 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     
-    private var iconWhiteSpaceOffset = "     "
-    
     public func getStatusBarTrackInfo(track: Track) -> String {
         if !showSongInfo {
-            return "  "
+            return ""
         }
         
         let trackTitle = track.title
         let trackArtist = track.artist
         
-        var trackInfo = ""
-        if showMenuBarIcon {
-            trackInfo = "\(iconWhiteSpaceOffset)"
-        }
+        var trackInfo = " "
         switch trackInfoDetails {
         case .artistAndSong:
             trackInfo = "\(trackInfo)\(trackArtist) • \(trackTitle)"
@@ -42,27 +37,16 @@ class StatusBarItemManager: ObservableObject {
         return trackInfo
     }
     
-    public func getIconRootView(albumArt: NSImage) -> AnyView {
-        let iconRootView = HStack() {
-            if showMenuBarIcon {
-                switch statusBarIcon {
-                case .albumArt:
-                    Image(nsImage: albumArt)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 18, height: 18)
-                        .cornerRadius(4)
-                case .appIcon:
-                    Image(systemName: "music.quarternote.3")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 13, height: 13)
-                }
-            } else {
-                EmptyView()
-            }
+    public func getImage(albumArt: NSImage) -> NSImage? {
+        if !showMenuBarIcon {
+            return nil
         }
         
-        return AnyView(iconRootView)
+        switch statusBarIcon {
+        case .albumArt:
+            return albumArt.roundImage(withSize: NSSize(width: 18, height: 18), radius: 4.0)
+        case .appIcon:
+            return NSImage(systemSymbolName: "music.quarternote.3", accessibilityDescription: "Tuneful")
+        }
     }
 }

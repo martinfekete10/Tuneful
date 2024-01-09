@@ -81,8 +81,8 @@ struct AppearanceSettingsView: View {
     @State var showSongInfo: Bool = UserDefaults.standard.bool(forKey: "showSongInfo")
     @State var showMenuBarIcon: Bool = UserDefaults.standard.bool(forKey: "showMenuBarIcon")
     @State var trackInfoLength: Double = UserDefaults.standard.double(forKey: "trackInfoLength")
-    @State var statusBarIcon: StatusBarIcon = .appIcon
-    @State var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
+    @State var statusBarIcon: StatusBarIcon = (UserDefaults.standard.object(forKey: "statusBarIcon") as? StatusBarIcon ?? .albumArt)
+    @State var trackInfoDetails: StatusBarTrackDetails = (UserDefaults.standard.object(forKey: "trackInfoDetails") as? StatusBarTrackDetails ?? .artistAndSong)
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
@@ -161,7 +161,7 @@ struct AppearanceSettingsView: View {
                     Slider(value: $trackInfoLength, in: 10...50, step: 5) {
                         Text("")
                     } minimumValueLabel: {
-                        Text("0")
+                        Text("10")
                     } maximumValueLabel: {
                         Text("50")
                     }
@@ -170,6 +170,7 @@ struct AppearanceSettingsView: View {
                         self.sendTrackChangedNotification()
                         NSHapticFeedbackManager.defaultPerformer.perform(NSHapticFeedbackManager.FeedbackPattern.levelChange, performanceTime: .now)
                     }
+                    .frame(width: 200)
                     .disabled(!showSongInfo)
                     
                     Text("Max number of characters: \(Int(trackInfoLength))")
