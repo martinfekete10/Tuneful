@@ -12,10 +12,13 @@ import Settings
 struct GeneralSettingsView: View {
     
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
+    @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = false
     
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
     @State private var showingAlert = false
+    
+    @State var showshowPlayerWindow: Bool = UserDefaults.standard.bool(forKey: "showPlayerWindow")
 
     private var name: Text {
         Text(connectedApp.localizedName)
@@ -26,8 +29,10 @@ struct GeneralSettingsView: View {
             Settings.Section(title: "") {
                 VStack(alignment: .leading) {
                     VStack(alignment: .leading) {
+                        
                         LaunchAtLogin
                             .Toggle()
+                            .toggleStyle(.switch)
                         
                         HStack {
                             Picker("Connect Tuneful to", selection: $connectedApp) {
@@ -189,20 +194,40 @@ struct AppearanceSettingsView: View {
 struct AboutSettingsView: View {
     var body: some View {
         Settings.Container(contentWidth: 400) {
-            Settings.Section(title: "") {
+            Settings.Section(title: "", verticalAlignment: .center) {
                 VStack(alignment: .center) {
                     Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 40, height: 40)
+                        .frame(width: 50, height: 50)
                     VStack(alignment: .leading) {
-                        Text("Tuneful").font(.headline)
+                        Text("Tuneful")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity, alignment: .center)
                         Text("Version \(Constants.AppInfo.appVersion ?? "?")")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    
+                    Divider()
+                    HStack {
+                        Link("GitHub", destination: URL(string: "https://github.com/martinfekete10/Tuneful")!)
+                            .buttonStyle(.bordered)
+                        Link("Donate", destination: URL(string: "https://ko-fi.com/martinfekete")!)
+                            .buttonStyle(.bordered)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
+    }
+}
+
+struct AboutSettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        AboutSettingsView()
+            .previewLayout(.sizeThatFits)
+            .padding()
     }
 }

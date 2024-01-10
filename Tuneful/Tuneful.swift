@@ -108,20 +108,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         )
         .state = showPlayerWindow ? .on : .off
         
+        statusBarMenu.addItem(.separator())
+        
         statusBarMenu.addItem(
             withTitle: "Preferences...",
             action: #selector(showPreferences),
             keyEquivalent: ""
         )
         
-        statusBarMenu.addItem(.separator())
-        
-        // TODO: add link to about page
-        statusBarMenu.addItem(
-            withTitle: "About...",
-            action: #selector(openURL),
-            keyEquivalent: ""
-        )
         
         let updates = NSMenuItem(
             title: "Check for updates...",
