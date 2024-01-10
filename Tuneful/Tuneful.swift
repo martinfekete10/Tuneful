@@ -75,7 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(updateStatusBarItem),
-            name: NSNotification.Name("TrackChanged"),
+            name: NSNotification.Name("UpdateMenuBarItem"),
             object: nil
         )
         
@@ -91,6 +91,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         setupPopover()
         setupMiniPlayer()
         setupMenuBar()
+        updateStatusBarItem(nil)
     }
     
     // MARK: - Menu bar
@@ -175,9 +176,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // MARK: - Status bar item title
     
-    @objc func updateStatusBarItem(_ notification: NSNotification) {
-        let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track)
-        let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt)
+    @objc func updateStatusBarItem(_ notification: NSNotification?) {
+        let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track, isRunning: playerManager.isRunning)
+        let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt, isRunning: playerManager.isRunning)
         
         if let button = self.statusBarItem.button {
             button.image = image

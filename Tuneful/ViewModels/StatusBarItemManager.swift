@@ -14,10 +14,16 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("trackInfoLength") var trackInfoLength: Double = 20.0
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
+    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
     
-    public func getStatusBarTrackInfo(track: Track) -> String {
+    public func getStatusBarTrackInfo(track: Track, isRunning: Bool) -> String {
+        print(isRunning)
         if !showSongInfo {
             return ""
+        }
+        
+        if !isRunning {
+            return "Open \(connectedApp.rawValue)"
         }
         
         let trackTitle = track.title
@@ -37,16 +43,15 @@ class StatusBarItemManager: ObservableObject {
         return trackInfo
     }
     
-    public func getImage(albumArt: NSImage) -> NSImage? {
+    public func getImage(albumArt: NSImage, isRunning: Bool) -> NSImage? {
         if !showMenuBarIcon {
             return nil
         }
         
-        switch statusBarIcon {
-        case .albumArt:
+        if statusBarIcon == .albumArt && isRunning {
             return albumArt.roundImage(withSize: NSSize(width: 18, height: 18), radius: 4.0)
-        case .appIcon:
-            return NSImage(systemSymbolName: "music.quarternote.3", accessibilityDescription: "Tuneful")
         }
+        
+        return NSImage(systemSymbolName: "music.quarternote.3", accessibilityDescription: "Tuneful")
     }
 }

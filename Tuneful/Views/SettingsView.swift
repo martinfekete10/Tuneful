@@ -86,8 +86,8 @@ struct AppearanceSettingsView: View {
     @State var showSongInfo: Bool = UserDefaults.standard.bool(forKey: "showSongInfo")
     @State var showMenuBarIcon: Bool = UserDefaults.standard.bool(forKey: "showMenuBarIcon")
     @State var trackInfoLength: Double = UserDefaults.standard.double(forKey: "trackInfoLength")
-    @State var statusBarIcon: StatusBarIcon = (UserDefaults.standard.object(forKey: "statusBarIcon") as? StatusBarIcon ?? .albumArt)
-    @State var trackInfoDetails: StatusBarTrackDetails = (UserDefaults.standard.object(forKey: "trackInfoDetails") as? StatusBarTrackDetails ?? .artistAndSong)
+    @State var statusBarIcon: StatusBarIcon = StatusBarIcon(rawValue: UserDefaults.standard.string(forKey: "statusBarIcon")!)!
+    @State var trackInfoDetails: StatusBarTrackDetails = StatusBarTrackDetails(rawValue: UserDefaults.standard.string(forKey: "trackInfoDetails")!)!
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
@@ -187,7 +187,7 @@ struct AppearanceSettingsView: View {
     }
     
     private func sendTrackChangedNotification() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TrackChanged"), object: nil, userInfo: [:])
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil, userInfo: [:])
     }
 }
 

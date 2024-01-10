@@ -91,8 +91,6 @@ class PlayerManager: ObservableObject {
         self.setupMusicApps()
         self.setupObservers()
         
-        // Dont check for the song if not playing
-        guard isRunning else { return }
         self.playStateOrTrackDidChange(nil)
         
         // Updating player state every 1 sec
@@ -145,7 +143,7 @@ class PlayerManager: ObservableObject {
                 object: nil,
                 suspensionBehavior: .deliverImmediately
             )
-            
+             
             self.setupMusicApps()
             self.playStateOrTrackDidChange(nil)
         }
@@ -213,27 +211,29 @@ class PlayerManager: ObservableObject {
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
         
+        let isRunningFromNotification = sender?.userInfo?["Player State"] as? String != "Stopped"
+        
         print("The play state or the currently playing track changed")
-        guard isRunning, sender?.userInfo?["Player State"] as? String != "Stopped" else {
+        guard isRunning, isRunningFromNotification else {
             self.track.title = ""
             self.track.artist = ""
             self.track.albumArt = NSImage()
             self.trackDuration = 0
-            self.updateMenuBarText()
+            self.updateMenuBarText(isRunning: isRunningFromNotification)
             return
         }
         
         self.getPlayState()
         self.updatePlayerState()
         self.updateFormattedDuration()
-        self.updateMenuBarText()
+        self.updateMenuBarText(isRunning: isRunningFromNotification)
     }
     
-    private func updateMenuBarText() {
+    private func updateMenuBarText(isRunning: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let title = self?.track.title, let artist = self?.track.artist, let albumArt = self?.track.albumArt else { return }
             let trackInfo: [String: Any] = ["title": title, "artist": artist, "albumArt": albumArt]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TrackChanged"), object: nil, userInfo: trackInfo)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil, userInfo: ["isRunning": isRunning])
         }
     }
     
@@ -299,7 +299,7 @@ class PlayerManager: ObservableObject {
                     }
                     DispatchQueue.main.async {
                         self?.track.albumArt = NSImage(data: data) ?? NSImage()
-                        self?.updateMenuBarText()
+                        self?.updateMenuBarText(isRunning: self!.isRunning)
                     }
                     
                 }.resume()
