@@ -38,7 +38,7 @@ Tuneful provides a convenient way to control music playback for both Spotify and
 Easily play, pause, skip, and go back to previous tracks without switching between applications. Tuneful seamlessly integrates with both Spotify and Apple Music.
 
 ### 2. Currently Playing Song in Menu Bar
-See currently playing song and/or artist directly in menu bar. You can customise the information displayed in the menu bar in the settings.
+See currently playing song and/or artist directly in menu bar. You can customise the information displayed in the menu bar in Tuneful settings.
 
 ### 3. System Volume Control
 Adjust the system volume directly from the menu bar. No need to open additional settings or apps to modify your sound preferences.
