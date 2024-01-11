@@ -57,8 +57,4 @@ struct AlbumArtView: View {
             }
         }
     }
-    
-    func test() {
-        NSApplication.shared.sendAction(#selector(AppDelegate.showPreferences), to: nil, from: nil)
-    }
 }

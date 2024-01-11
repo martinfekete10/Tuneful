@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "settings",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/Settings",
+      "state" : {
+        "revision" : "2f4f65eed252198be383aa0d9058bbaf8f740aa5",
+        "version" : "3.1.0"
+      }
+    },
+    {
       "identity" : "sparkle",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sparkle-project/Sparkle",

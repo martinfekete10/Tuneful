@@ -8,16 +8,16 @@
 import SwiftUI
 import Sparkle
 
+import Settings
+
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
+    @AppStorage("showSongInfo") var showSongInfo: Bool = true
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     
-    private var playerManager: PlayerManager!
     private var onboardingWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow!
-    private var preferencesWindow: PreferencesWindow!
-    private var featureRequestWindow: PreferencesWindow!
     private var popover: NSPopover!
     
     // Popover
@@ -28,13 +28,56 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusBarItem: NSStatusItem!
     private var statusBarMenu: NSMenu!
     
-    // Enviroment object
-    @Published var popoverIsShown: Bool!
+    // ViewModels
+    private var playerManager = PlayerManager()
+    private var statusBarItemManager = StatusBarItemManager()
+    
+    // Settings
+    let GeneralSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .general,
+            title: "General",
+            toolbarIcon: NSImage(systemSymbolName: "switch.2", accessibilityDescription: "General settings")!
+        ) {
+            GeneralSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let AppearanceSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .appearance,
+            title: "Appearance",
+            toolbarIcon: NSImage(systemSymbolName: "paintbrush.pointed.fill", accessibilityDescription: "Appearance settings")!
+        ) {
+            AppearanceSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let AboutSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .about,
+            title: "About",
+            toolbarIcon: NSImage(systemSymbolName: "info.circle", accessibilityDescription: "About settings")!
+        ) {
+            AboutSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
-
-        self.playerManager = PlayerManager()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateStatusBarItem),
+            name: NSNotification.Name("UpdateMenuBarItem"),
+            object: nil
+        )
         
         // Onboarding
         if !viewedOnboarding {
@@ -45,20 +88,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     private func mainSetup() {
-        // Views
         setupPopover()
         setupMiniPlayer()
         setupMenuBar()
+        updateStatusBarItem(nil)
     }
     
     // MARK: - Menu bar
     
     private func setupMenuBar() {
-        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        
-        if let button = statusBarItem.button {
-            button.image = NSImage(systemSymbolName: "music.quarternote.3", accessibilityDescription: "Floating Music")
-        }
+        self.statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         statusBarMenu = NSMenu()
         statusBarMenu.delegate = self
@@ -70,25 +109,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         )
         .state = showPlayerWindow ? .on : .off
         
-        statusBarMenu.addItem(
-            withTitle: "Preferences...",
-            action: #selector(showPreferences),
-            keyEquivalent: ""
-        )
-        
         statusBarMenu.addItem(.separator())
         
-        // TODO: add link to about page
         statusBarMenu.addItem(
-            withTitle: "About...",
-            action: #selector(openURL),
+            withTitle: "Preferences...",
+            action: #selector(openSettings),
             keyEquivalent: ""
         )
+        
         
         let updates = NSMenuItem(
             title: "Check for updates...",
             action: #selector(SUUpdater.checkForUpdates(_:)),
-            keyEquivalent: "")
+            keyEquivalent: ""
+        )
         updates.target = SUUpdater.shared()
         statusBarMenu.addItem(updates)
         
@@ -139,6 +173,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func menuDidClose(_: NSMenu) {
         statusBarItem.menu = nil
     }
+    
+    // MARK: - Status bar item title
+    
+    @objc func updateStatusBarItem(_ notification: NSNotification?) {
+        var playerAppIsRunning = playerManager.isRunning
+        if notification?.userInfo?["PlayerAppIsRunning"] != nil {
+            playerAppIsRunning = notification?.userInfo?["PlayerAppIsRunning"] as? Bool == true
+        }
+    
+        let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track, playerAppIsRunning: playerAppIsRunning)
+        let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt, playerAppIsRunning: playerAppIsRunning)
+        
+        if let button = self.statusBarItem.button {
+            button.image = image
+            button.title = String(title)
+        }
+    }
+
     
     // MARK: - Popover
     
@@ -193,17 +245,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    @objc func showPreferences(_ sender: AnyObject) {
-        if preferencesWindow == nil {
-            preferencesWindow = PreferencesWindow()
-            let preferencesView = PreferencesView(parentWindow: preferencesWindow)
-            let hostedPrefView = NSHostingView(rootView: preferencesView)
-            preferencesWindow.contentView = hostedPrefView
-        }
-        
-        preferencesWindow.center()
-        preferencesWindow.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
+    @objc func openSettings(_ sender: AnyObject) {
+        SettingsWindowController(
+            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), AboutSettingsViewController()],
+            style: .toolbarItems,
+            animated: true,
+            hidesToolbarForSingleItem: true
+        ).show()
     }
     
     public func showOnboarding() {
@@ -221,8 +269,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func finishOnboarding(_ sender: AnyObject) {
         onboardingWindow.close()
-        
-        // After finishing onboarding, we want to setup popover and mini-player window
         self.mainSetup()
     }
 }

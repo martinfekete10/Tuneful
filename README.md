@@ -16,16 +16,20 @@
 
 # About
 
-Tuneful provides a convenient way to control playback for both Spotify and Apple Music right from your menu bar. Enjoy seamless control over your music, including playback, shuffle, and repeat options. Additionally, the app allows you to manage system volume, set the audio output device, and features a mini player window.
+Tuneful provides a convenient way to control music playback for both Spotify and Apple Music, and see the currently playing song directly in the menu bar. Enjoy seamless control over your music, including playback, shuffle, and repeat options. Additionally, the app allows you to manage system volume, set the audio output device, and features a mini player window.
 
 **Tuneful requires macOS 12 Monterey or greater.**
 
 <p align="center">
-  <img width="400" src="docs/images/playback.png">
+  <img width="420" src="docs/images/playback.png">
 </p>
 
 <p align="center">
-  <img width="370" src="docs/images/mini-player.png">
+  <img width="390" src="docs/images/mini-player.png">
+</p>
+
+<p align="center">
+  <img width="410" src="docs/images/settings.png">
 </p>
 
 ## Features
@@ -33,13 +37,16 @@ Tuneful provides a convenient way to control playback for both Spotify and Apple
 ### 1. Playback Control
 Easily play, pause, skip, and go back to previous tracks without switching between applications. Tuneful seamlessly integrates with both Spotify and Apple Music.
 
-### 2. System Volume Control
+### 2. Menu bar information
+See currently playing song and/or artist directly in menu bar. You can customise the information displayed in the menu bar in the settings.
+
+### 3. System Volume Control
 Adjust the system volume directly from the menu bar. No need to open additional settings or apps to modify your sound preferences.
 
-### 3. Audio Output Device
+### 4. Audio Output Device
 Choose your preferred audio output device with a single click. Switch between headphones, speakers, and other connected devices effortlessly.
 
-### 4 . Mini Player Window
+### 5. Mini Player Window
 Mini player window provides a compact view of the current track information and playback controls. Keep an eye on your music without disrupting your workflow.
 
 ## Installation
@@ -62,6 +69,7 @@ If you find this app useful, consider supporting its development by [donating](h
 - This project uses [Sparkle](https://sparkle-project.org) for update delivery
 - This project makes use of [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
 - GitHub Actions are based on repo from [Alex Perathoner](https://github.com/AlexPerathoner/SparkleReleaseTest)
+- Settings window is using [Settings](https://github.com/sindresorhus/Settings) Swift package
 
 ---
 

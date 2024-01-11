@@ -91,8 +91,6 @@ class PlayerManager: ObservableObject {
         self.setupMusicApps()
         self.setupObservers()
         
-        // Dont check for the song if not playing
-        guard isRunning else { return }
         self.playStateOrTrackDidChange(nil)
         
         // Updating player state every 1 sec
@@ -145,7 +143,7 @@ class PlayerManager: ObservableObject {
                 object: nil,
                 suspensionBehavior: .deliverImmediately
             )
-            
+             
             self.setupMusicApps()
             self.playStateOrTrackDidChange(nil)
         }
@@ -212,19 +210,29 @@ class PlayerManager: ObservableObject {
     }
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
+
+        let isRunningFromNotification = sender?.userInfo?["Player State"] as? String != "Stopped" && isRunning
         
         print("The play state or the currently playing track changed")
-        guard isRunning, sender?.userInfo?["Player State"] as? String != "Stopped" else {
+        guard isRunningFromNotification else {
             self.track.title = ""
             self.track.artist = ""
             self.track.albumArt = NSImage()
             self.trackDuration = 0
+            self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
             return
         }
         
         self.getPlayState()
         self.updatePlayerState()
         self.updateFormattedDuration()
+        self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+    }
+    
+    private func updateMenuBarText(playerAppIsRunning: Bool) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil, userInfo: ["PlayerAppIsRunning": playerAppIsRunning])
+        }
     }
     
     // MARK: - Media & Playback
@@ -252,12 +260,12 @@ class PlayerManager: ObservableObject {
     
     private func sendNotification(title: String, message: String) {
         let alertTitle = NSLocalizedString(
-            title, //"Couldn't Retrieve Playback State",
+            title,
             comment: ""
         )
         let alert = AlertItem(
             title: alertTitle,
-            message: message//error.customizedLocalizedDescription
+            message: message
         )
         self.notificationSubject.send(alert)
     }
@@ -289,6 +297,7 @@ class PlayerManager: ObservableObject {
                     }
                     DispatchQueue.main.async {
                         self?.track.albumArt = NSImage(data: data) ?? NSImage()
+                        self?.updateMenuBarText(playerAppIsRunning: self!.isRunning)
                     }
                     
                 }.resume()
