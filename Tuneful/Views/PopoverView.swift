@@ -92,7 +92,6 @@ struct PopoverView: View {
                         .opacity(0.8)
                         
                         HStack {
-                            VolumeControlView()
 
                             Menu {
                                 ForEach(playerManager.audioDevices) { audioDevice in
@@ -112,6 +111,15 @@ struct PopoverView: View {
                             .frame(width: 20, height: 20)
                             .menuIndicator(.hidden)
                             .menuStyle(.borderlessButton)
+                            
+                            VolumeControlView()
+                            
+                            Button(action: openSettings){
+                                Image(systemName: "gear")
+                                    .resizable()
+                                    .frame(width: 15, height: 15)
+                            }
+                            .pressButtonStyle()
                         }
                         .padding(.top, 10)
                     }
@@ -125,5 +133,9 @@ struct PopoverView: View {
             width: AppDelegate.popoverWidth,
             height: AppDelegate.popoverHeight
         )
+    }
+    
+    func openSettings() {
+        NSApplication.shared.sendAction(#selector(AppDelegate.openSettings), to: nil, from: nil)
     }
 }

@@ -36,8 +36,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let GeneralSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .general,
-            title: "General        ",
-            toolbarIcon: NSImage(systemSymbolName: "gearshape", accessibilityDescription: "General settings")!
+            title: "General",
+            toolbarIcon: NSImage(systemSymbolName: "switch.2", accessibilityDescription: "General settings")!
         ) {
             GeneralSettingsView()
         }
@@ -60,7 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let AboutSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .about,
-            title: "About      ",
+            title: "About",
             toolbarIcon: NSImage(systemSymbolName: "info.circle", accessibilityDescription: "About settings")!
         ) {
             AboutSettingsView()
@@ -113,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusBarMenu.addItem(
             withTitle: "Preferences...",
-            action: #selector(showPreferences),
+            action: #selector(openSettings),
             keyEquivalent: ""
         )
         
@@ -177,8 +177,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Status bar item title
     
     @objc func updateStatusBarItem(_ notification: NSNotification?) {
-        let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track, isRunning: playerManager.isRunning)
-        let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt, isRunning: playerManager.isRunning)
+        var playerAppIsRunning = playerManager.isRunning
+        if notification?.userInfo?["PlayerAppIsRunning"] != nil {
+            playerAppIsRunning = notification?.userInfo?["PlayerAppIsRunning"] as? Bool == true
+        }
+//        let playerAppIsRunning = notification?.userInfo?["PlayerAppIsRunning"] as? Bool == true
+    
+        let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track, playerAppIsRunning: playerAppIsRunning)
+        let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
         if let button = self.statusBarItem.button {
             button.image = image
@@ -240,7 +246,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    @objc func showPreferences(_ sender: AnyObject) {
+    @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
             panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), AboutSettingsViewController()],
             style: .toolbarItems,
@@ -264,8 +270,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func finishOnboarding(_ sender: AnyObject) {
         onboardingWindow.close()
-        
-        // After finishing onboarding, we want to setup popover and mini-player window
         self.mainSetup()
     }
 }

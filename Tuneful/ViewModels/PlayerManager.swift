@@ -210,30 +210,28 @@ class PlayerManager: ObservableObject {
     }
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
-        
-        let isRunningFromNotification = sender?.userInfo?["Player State"] as? String != "Stopped"
+
+        let isRunningFromNotification = sender?.userInfo?["Player State"] as? String != "Stopped" && isRunning
         
         print("The play state or the currently playing track changed")
-        guard isRunning, isRunningFromNotification else {
+        guard isRunningFromNotification else {
             self.track.title = ""
             self.track.artist = ""
             self.track.albumArt = NSImage()
             self.trackDuration = 0
-            self.updateMenuBarText(isRunning: isRunningFromNotification)
+            self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
             return
         }
         
         self.getPlayState()
         self.updatePlayerState()
         self.updateFormattedDuration()
-        self.updateMenuBarText(isRunning: isRunningFromNotification)
+        self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
     }
     
-    private func updateMenuBarText(isRunning: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            guard let title = self?.track.title, let artist = self?.track.artist, let albumArt = self?.track.albumArt else { return }
-            let trackInfo: [String: Any] = ["title": title, "artist": artist, "albumArt": albumArt]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil, userInfo: ["isRunning": isRunning])
+    private func updateMenuBarText(playerAppIsRunning: Bool) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil, userInfo: ["PlayerAppIsRunning": playerAppIsRunning])
         }
     }
     
@@ -299,7 +297,7 @@ class PlayerManager: ObservableObject {
                     }
                     DispatchQueue.main.async {
                         self?.track.albumArt = NSImage(data: data) ?? NSImage()
-                        self?.updateMenuBarText(isRunning: self!.isRunning)
+                        self?.updateMenuBarText(playerAppIsRunning: self!.isRunning)
                     }
                     
                 }.resume()

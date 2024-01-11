@@ -16,13 +16,12 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
     
-    public func getStatusBarTrackInfo(track: Track, isRunning: Bool) -> String {
-        print(isRunning)
+    public func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool) -> String {
         if !showSongInfo {
             return ""
         }
         
-        if !isRunning {
+        if !playerAppIsRunning {
             return "Open \(connectedApp.rawValue)"
         }
         
@@ -43,12 +42,12 @@ class StatusBarItemManager: ObservableObject {
         return trackInfo
     }
     
-    public func getImage(albumArt: NSImage, isRunning: Bool) -> NSImage? {
+    public func getImage(albumArt: NSImage, playerAppIsRunning: Bool) -> NSImage? {
         if !showMenuBarIcon {
             return nil
         }
         
-        if statusBarIcon == .albumArt && isRunning {
+        if statusBarIcon == .albumArt && playerAppIsRunning {
             return albumArt.roundImage(withSize: NSSize(width: 18, height: 18), radius: 4.0)
         }
         
