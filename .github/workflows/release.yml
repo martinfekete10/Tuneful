@@ -78,7 +78,7 @@ jobs:
 
   archive:
     name: Build and export app
-    runs-on: macos-12
+    runs-on: macos-13-arm64
     needs: preparation
     steps:
       - uses: actions/download-artifact@master # download all previously generated artifacts
@@ -123,7 +123,7 @@ jobs:
           security list-keychain -d user -s $KEYCHAIN_PATH
       - name: Switch Xcode version # Force Xcode version (macOS runner has multiple Xcode versions installed)
         run: |
-          sudo xcode-select -s "/Applications/Xcode_14.2.app"
+          sudo xcode-select -s "/Applications/Xcode_15.1.app"
           /usr/bin/xcodebuild -version
       - name: Build and archive # create archive
         run: xcodebuild clean archive -project ${{ env.projname }}.xcodeproj -scheme ${{ env.projname }} -archivePath ${{ env.projname }}
