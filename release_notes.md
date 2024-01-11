@@ -1,3 +1,10 @@
+# 1.0.0 - Song information in menu bar
+* New feature to display song information directly in menu bar
+* New settings window with ability to customise information displayed in menu bar
+* Fixed a bug where progress bar and play time were not sometimes updated
+* Popover UI tweaks
+* Other minor bug fixes and improvements
+
 # 0.9.6 - Minor fixes
 * Fixed "About..." menu item behaviour
 
