@@ -78,7 +78,7 @@ jobs:
 
   archive:
     name: Build and export app
-    runs-on: macos-13-arm64
+    runs-on: macos-13
     needs: preparation
     steps:
       - uses: actions/download-artifact@master # download all previously generated artifacts
@@ -153,7 +153,7 @@ jobs:
 
   pre-release:
     name: Create pre-release
-    runs-on: macos-13-arm64
+    runs-on: macos-13
     environment: deploy-beta
     needs: archive
     if: ${{ contains(github.event.comment.body, 'beta') }}
