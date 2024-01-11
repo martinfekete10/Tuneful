@@ -110,7 +110,7 @@ struct AppearanceSettingsView: View {
                 .frame(width: 200)
             }
             
-            Settings.Section(title: "Show track info in menu bar") {
+            Settings.Section(title: "Show song info in menu bar") {
                 Toggle(isOn: $showSongInfo) {
                     Text("")
                 }
@@ -141,7 +141,7 @@ struct AppearanceSettingsView: View {
             }
             
             Settings.Section(label: {
-                Text("Track info")
+                Text("Song info details")
                     .foregroundStyle(!showSongInfo ? .tertiary : .primary)
             }) {
                 Picker("", selection: $trackInfoDetails) {
@@ -159,7 +159,7 @@ struct AppearanceSettingsView: View {
             }
             
             Settings.Section(label: {
-                Text("Track info max length")
+                Text("Song info max length")
                     .foregroundStyle(!showSongInfo ? .tertiary : .primary)
             }) {
                 VStack(alignment: .center) {
@@ -178,7 +178,7 @@ struct AppearanceSettingsView: View {
                     .frame(width: 200)
                     .disabled(!showSongInfo)
                     
-                    Text("Max number of characters: \(Int(trackInfoLength))")
+                    Text("Number of characters: \(Int(trackInfoLength))")
                         .foregroundStyle(!showSongInfo ? .tertiary : .secondary)
                         .font(.callout)
                 }

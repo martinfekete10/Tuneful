@@ -47,7 +47,6 @@
 		FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = FEFFE54F2B4AA04B000887B5 /* Settings */; };
 		FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */; };
 		FEFFE5552B4FDF96000887B5 /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5542B4FDF96000887B5 /* CGFloat+Extension.swift */; };
-		FEFFE5572B4FDFB6000887B5 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5562B4FDFB6000887B5 /* Color+Extension.swift */; };
 		FEFFE5592B4FE00D000887B5 /* NSError+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5582B4FE00D000887B5 /* NSError+Extension.swift */; };
 		FEFFE55B2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE55A2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift */; };
 		FEFFE55D2B4FE051000887B5 /* Comparable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE55C2B4FE051000887B5 /* Comparable+Extension.swift */; };
@@ -93,7 +92,6 @@
 		FEFFE54C2B49EF97000887B5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarTrackDetails.swift; sourceTree = "<group>"; };
 		FEFFE5542B4FDF96000887B5 /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
-		FEFFE5562B4FDFB6000887B5 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		FEFFE5582B4FE00D000887B5 /* NSError+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Extension.swift"; sourceTree = "<group>"; };
 		FEFFE55A2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateComponentsFormatter+Extension.swift"; sourceTree = "<group>"; };
 		FEFFE55C2B4FE051000887B5 /* Comparable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extension.swift"; sourceTree = "<group>"; };
@@ -267,7 +265,6 @@
 				FE6BFD092A73B23700D3321F /* UserDefaults+Extension.swift */,
 				FE4414B72AB4999600A73246 /* Notification.Name.swift */,
 				FEFFE5542B4FDF96000887B5 /* CGFloat+Extension.swift */,
-				FEFFE5562B4FDFB6000887B5 /* Color+Extension.swift */,
 				FEFFE5582B4FE00D000887B5 /* NSError+Extension.swift */,
 				FEFFE55A2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift */,
 				FEFFE55C2B4FE051000887B5 /* Comparable+Extension.swift */,
@@ -309,7 +306,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					FE6BFCE22A72F37800D3321F = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -358,7 +355,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */,
-				FEFFE5572B4FDFB6000887B5 /* Color+Extension.swift in Sources */,
 				FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */,
 				FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
@@ -405,6 +401,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -467,6 +464,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

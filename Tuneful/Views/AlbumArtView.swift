@@ -25,7 +25,7 @@ struct AlbumArtView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: self.imageSize, height: self.imageSize)
-                    .cornerRadius(10)
+                    .cornerRadius(8)
                     .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
             }
             .pressButtonStyle()

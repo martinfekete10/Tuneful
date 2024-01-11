@@ -181,7 +181,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if notification?.userInfo?["PlayerAppIsRunning"] != nil {
             playerAppIsRunning = notification?.userInfo?["PlayerAppIsRunning"] as? Bool == true
         }
-//        let playerAppIsRunning = notification?.userInfo?["PlayerAppIsRunning"] as? Bool == true
     
         let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track, playerAppIsRunning: playerAppIsRunning)
         let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt, playerAppIsRunning: playerAppIsRunning)
