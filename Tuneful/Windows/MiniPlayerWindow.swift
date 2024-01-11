@@ -14,7 +14,7 @@ class MiniPlayerWindow: NSWindow {
     
     init() {
         super.init(
-            contentRect: NSRect(x: 10, y: 10, width: 300, height: 145),
+            contentRect: NSRect(x: 10, y: 0, width: 300, height: 145),
             styleMask: [.borderless],
             backing: .buffered,
             defer: false
@@ -45,6 +45,10 @@ class MiniPlayerWindow: NSWindow {
 
         NSMenu.popUpContextMenu(menu, with: event, for: self.contentView!)
     }
+    
+    override var canBecomeKey: Bool {
+        return true
+    }
 
     @objc func setFullPlayer(_ sender: Any) {
         miniPlayerType = .full
@@ -54,10 +58,6 @@ class MiniPlayerWindow: NSWindow {
     @objc func setAlbumArtPlayer(_ sender: Any) {
         miniPlayerType = .minimal
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
-    }
-
-    override var canBecomeKey: Bool {
-        return true
     }
     
     @objc func hideWindow(_ sender: Any?) {
