@@ -6,72 +6,7 @@
 //
 
 import SwiftUI
-import LaunchAtLogin
 import Settings
-
-struct GeneralSettingsView: View {
-    
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
-    @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = false
-    
-    @State private var alertTitle = Text("Title")
-    @State private var alertMessage = Text("Message")
-    @State private var showingAlert = false
-    
-    @State var showshowPlayerWindow: Bool = UserDefaults.standard.bool(forKey: "showPlayerWindow")
-
-    private var name: Text {
-        Text(connectedApp.localizedName)
-    }
-    
-    var body: some View {
-        Settings.Container(contentWidth: 400) {
-            Settings.Section(title: "") {
-                VStack(alignment: .leading) {
-                    VStack(alignment: .leading) {
-                        
-                        LaunchAtLogin
-                            .Toggle()
-                            .toggleStyle(.switch)
-                        
-                        HStack {
-                            Picker("Connect Tuneful to", selection: $connectedApp) {
-                                ForEach(ConnectedApps.allCases, id: \.self) { value in
-                                    Text(value.localizedName).tag(value)
-                                }
-                            }
-                            .pickerStyle(.segmented)
-                            Button {
-                                let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
-                                switch consent {
-                                case .closed:
-                                    alertTitle = Text("\(name) is not open")
-                                    alertMessage = Text("Please open \(name) to enable permissions")
-                                case .granted:
-                                    alertTitle = Text("Permission granted for \(name)")
-                                    alertMessage = Text("Start playing a song!")
-                                case .notPrompted:
-                                    return
-                                case .denied:
-                                    alertTitle = Text("Permission denied")
-                                    alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(name) under Tuneful")
-                                }
-                                showingAlert = true
-                            } label: {
-                                Image(systemName: "person.fill.questionmark")
-                            }
-                            .buttonStyle(.borderless)
-                            .alert(isPresented: $showingAlert) {
-                                Alert(title: alertTitle, message: alertMessage, dismissButton: .default(Text("Got it!")))
-                            }
-                        }
-                    }
-                    .padding()
-                }
-            }
-        }
-    }
-}
 
 struct AppearanceSettingsView: View {
     
@@ -188,46 +123,5 @@ struct AppearanceSettingsView: View {
     
     private func sendTrackChangedNotification() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil, userInfo: [:])
-    }
-}
-
-struct AboutSettingsView: View {
-    var body: some View {
-        Settings.Container(contentWidth: 400) {
-            Settings.Section(title: "", verticalAlignment: .center) {
-                VStack(alignment: .center) {
-                    Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                    VStack(alignment: .leading) {
-                        Text("Tuneful")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        Text("Version \(Constants.AppInfo.appVersion ?? "?")")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    }
-                    
-                    Divider()
-                    HStack {
-                        Link("GitHub", destination: URL(string: "https://github.com/martinfekete10/Tuneful")!)
-                            .buttonStyle(.bordered)
-                        Link("Donate", destination: URL(string: "https://ko-fi.com/martinfekete")!)
-                            .buttonStyle(.bordered)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-            }
-        }
-    }
-}
-
-struct AboutSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AboutSettingsView()
-            .previewLayout(.sizeThatFits)
-            .padding()
     }
 }
