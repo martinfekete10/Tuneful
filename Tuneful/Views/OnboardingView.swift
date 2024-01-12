@@ -11,16 +11,14 @@ import ScriptingBridge
 struct OnboardingView: View {
 
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
+    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
     
     private enum Steps {
       case onAppPicker, onDetails
     }
     
-    // Navigation
     @State private var step: Steps = .onAppPicker
-    
-    // Onboarding alerts
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
     @State private var finishedAlert = false

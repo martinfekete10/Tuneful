@@ -36,6 +36,10 @@
 		FE6BFD0C2A73B2D400D3321F /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */; };
 		FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */; };
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
+		FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */; };
+		FEF0660C2B51907200A514F2 /* KeyboardShortcutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0660B2B51907200A514F2 /* KeyboardShortcutSettings.swift */; };
+		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
+		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
 		FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */; };
 		FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */; };
 		FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */; };
@@ -84,6 +88,9 @@
 		FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
 		FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtView.swift; sourceTree = "<group>"; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
+		FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsSetupView.swift; sourceTree = "<group>"; };
+		FEF0660B2B51907200A514F2 /* KeyboardShortcutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSettings.swift; sourceTree = "<group>"; };
+		FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extension.swift"; sourceTree = "<group>"; };
 		FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlView.swift; sourceTree = "<group>"; };
 		FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
@@ -104,6 +111,7 @@
 			files = (
 				FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */,
 				FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */,
+				FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */,
 				FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */,
 				FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */,
 			);
@@ -123,6 +131,7 @@
 		FE3189DB2A7B9D0B006B2D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FEF0660A2B51905200A514F2 /* Settings */,
 				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
 				FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */,
 				FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */,
@@ -132,7 +141,7 @@
 				FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */,
 				FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */,
 				FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */,
-				FEFFE54C2B49EF97000887B5 /* SettingsView.swift */,
+				FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,6 +265,15 @@
 			path = AudioDevices;
 			sourceTree = "<group>";
 		};
+		FEF0660A2B51905200A514F2 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFE54C2B49EF97000887B5 /* SettingsView.swift */,
+				FEF0660B2B51907200A514F2 /* KeyboardShortcutSettings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		FEFFE5532B4FDDEA000887B5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +286,7 @@
 				FEFFE5582B4FE00D000887B5 /* NSError+Extension.swift */,
 				FEFFE55A2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift */,
 				FEFFE55C2B4FE051000887B5 /* Comparable+Extension.swift */,
+				FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -293,6 +312,7 @@
 				FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */,
 				FEF53A742AF8010300CE4981 /* Sparkle */,
 				FEFFE54F2B4AA04B000887B5 /* Settings */,
+				FEF0660E2B51910700A514F2 /* KeyboardShortcuts */,
 			);
 			productName = Tuneful;
 			productReference = FE6BFCE32A72F37800D3321F /* Tuneful.app */;
@@ -327,6 +347,7 @@
 				FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */,
 				FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */,
+				FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			productRefGroup = FE6BFCE42A72F37800D3321F /* Products */;
 			projectDirPath = "";
@@ -357,10 +378,13 @@
 				FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */,
 				FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */,
 				FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */,
+				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettings.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
+				FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
 				FEFFE54D2B49EF97000887B5 /* SettingsView.swift in Sources */,
+				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
@@ -620,6 +644,14 @@
 				kind = branch;
 			};
 		};
+		FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.16.1;
+			};
+		};
 		FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jbrinkman/ISSoundAdditions";
@@ -651,6 +683,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FE3F67FC2AAD02D100CCE841 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
 			productName = LaunchAtLogin;
+		};
+		FEF0660E2B51910700A514F2 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
 		};
 		FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */ = {
 			isa = XCSwiftPackageProductDependency;

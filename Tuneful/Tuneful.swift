@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Sparkle
-
+import KeyboardShortcuts
 import Settings
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
@@ -15,8 +15,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("showSongInfo") var showSongInfo: Bool = true
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
+    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     
     private var onboardingWindow: OnboardingWindow!
+    private var shortcutsSetupWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow!
     private var popover: NSPopover!
     
@@ -57,6 +59,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
+    let KeyboardShortcutsSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .keyboard,
+            title: "Keyboard",
+            toolbarIcon: NSImage(systemSymbolName: "keyboard", accessibilityDescription: "Keyboard shortcuts settings")!
+        ) {
+            KeyboardShortcutsSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
     let AboutSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .about,
@@ -79,7 +93,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             object: nil
         )
         
-        // Onboarding
+        if !viewedShortcutsSetup {
+            self.showShortcutsSetup()
+        }
+        
         if !viewedOnboarding {
             self.showOnboarding()
         } else {
@@ -88,10 +105,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     private func mainSetup() {
-        setupPopover()
-        setupMiniPlayer()
-        setupMenuBar()
-        updateStatusBarItem(nil)
+        self.setupPopover()
+        self.setupMiniPlayer()
+        self.setupMenuBar()
+        self.updateStatusBarItem(nil)
+        self.setupKeyboardShortcuts()
+    }
+    
+    // MARK: - Keyboard shortcuts
+    
+    private func setupKeyboardShortcuts() {
+        KeyboardShortcuts.onKeyUp(for: .playPause) {
+            self.playerManager.togglePlayPause()
+        }
+        
+        KeyboardShortcuts.onKeyUp(for: .nextTrack) {
+            self.playerManager.nextTrack()
+        }
+        
+        KeyboardShortcuts.onKeyUp(for: .previousTrack) {
+            self.playerManager.previousTrack()
+        }
+        
+        KeyboardShortcuts.onKeyUp(for: .showMiniPlayer) {
+            self.toggleState(self.statusBarMenu.item(withTitle: "Show mini player")!)
+        }
     }
     
     // MARK: - Menu bar
@@ -247,7 +285,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), AboutSettingsViewController()],
+            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
@@ -270,6 +308,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func finishOnboarding(_ sender: AnyObject) {
         onboardingWindow.close()
         self.mainSetup()
+    }
+    
+    public func showShortcutsSetup() {
+        if shortcutsSetupWindow == nil {
+            shortcutsSetupWindow = OnboardingWindow()
+            let rootView = ShortcutsSetupView()
+            let hostedOnboardingView = NSHostingView(rootView: rootView)
+            shortcutsSetupWindow.contentView = hostedOnboardingView
+        }
+        
+        shortcutsSetupWindow.center()
+        shortcutsSetupWindow.makeKeyAndOrderFront(nil)
+        NSApplication.shared.activate(ignoringOtherApps: true)
+    }
+    
+    
+    @objc func finishShortcutsSetup(_ sender: AnyObject) {
+        shortcutsSetupWindow.close()
     }
 }
 
