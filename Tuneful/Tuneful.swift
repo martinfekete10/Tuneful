@@ -93,9 +93,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             object: nil
         )
         
-        if !viewedShortcutsSetup {
+//        if !viewedShortcutsSetup {
             self.showShortcutsSetup()
-        }
+//        }
+        
+        self.showOnboarding()
         
         if !viewedOnboarding {
             self.showOnboarding()

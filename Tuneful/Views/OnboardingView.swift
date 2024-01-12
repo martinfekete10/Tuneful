@@ -7,25 +7,16 @@
 
 import SwiftUI
 import ScriptingBridge
+import KeyboardShortcuts
 
 struct OnboardingView: View {
-
-    @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
-    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
     
     private enum Steps {
-      case onAppPicker, onDetails
+      case onAppPicker, onDetails, onShortcuts
     }
     
     @State private var step: Steps = .onAppPicker
-    @State private var alertTitle = Text("Title")
-    @State private var alertMessage = Text("Message")
     @State private var finishedAlert = false
-    
-    private var name: Text {
-        Text(connectedApp.localizedName)
-    }
     
     var body: some View {
         
@@ -33,41 +24,82 @@ struct OnboardingView: View {
             
             VStack(alignment: .center) {
                 VStack {
+                    VStack {
+                        Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                        
+                        if step == .onAppPicker {
+                            Text("1. Preferred Music App")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                        } else if step == .onDetails {
+                            Text("2. Permssions")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                        } else if step == .onShortcuts {
+                            Text("3. Global Keyboard Shortcuts")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                        } else {
+                            EmptyView()
+                        }
+                    }
+                    .padding(.bottom, 20)
+                    
                     if step == .onAppPicker {
-                        AppPicker(connectedApp: $connectedApp)
+                        AppPicker()
                     } else if step == .onDetails {
-                        Details(connectedApp: $connectedApp, viewedOnboarding: $viewedOnboarding)
+                        Details(finishedAlert: $finishedAlert)
+                    } else if step == .onShortcuts {
+                        Shortcuts()
                     } else {
                         EmptyView()
                     }
                 }
-                .frame(width: 300, height: 160)
+                .frame(width: 400, height: 250)
                 .padding(.horizontal, 32)
                 .animation(.spring(), value: step)
                 
                 Divider()
                 
                 HStack {
-                    Button("Back") {
-                        step = .onAppPicker
+                    if step == .onDetails {
+                        Button("Back") {
+                            step = .onAppPicker
+                        }
+                    } else if step == .onShortcuts {
+                        Button("Back") {
+                            step = .onDetails
+                        }
+                    } else {
+                        Button("Back") {
+                            step = .onAppPicker
+                        }
+                        .disabled(step == .onAppPicker)
                     }
-                    .disabled(step == .onAppPicker)
                     
                     if step == .onAppPicker {
                         Button("Continue") {
                             step = .onDetails
                         }
                         .keyboardShortcut(.defaultAction)
+                    } else if step == .onDetails {
+                        Button("Continue") {
+                            step = .onShortcuts
+                        }
+                        .keyboardShortcut(.defaultAction)
+                        .disabled(!finishedAlert)
                     } else {
                         Button("Finish") {
                             NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil)
                         }
-                        .disabled(!finishedAlert)
                     }
                 }
                 .frame(width: 150, height: 50)
             }
-            .frame(width: 250, height: 200)
+            .frame(width: 250, height: 400)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
@@ -76,12 +108,10 @@ struct OnboardingView: View {
 
 struct AppPicker: View {
     
-    @Binding var connectedApp: ConnectedApps
+    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
     
     var body: some View {
         VStack(spacing: 10) {
-            Text("Select the app you use")
-                .font(.headline)
             Picker("", selection: $connectedApp) {
                 ForEach(ConnectedApps.allCases, id: \.self) { value in
                     Text(value.localizedName).tag(value)
@@ -93,8 +123,11 @@ struct AppPicker: View {
 }
 
 struct Details: View {
-    @Binding var connectedApp: ConnectedApps
-    @Binding var viewedOnboarding: Bool
+    
+    @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
+    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
+    
+    @Binding var finishedAlert: Bool
     
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
@@ -112,7 +145,7 @@ struct Details: View {
                  
                  Open \(name) and click 'Enable permissions' below and select OK in the alert that is presented.
              """)
-            .font(.caption2)
+            .font(.caption)
             .multilineTextAlignment(.center)
             
             Button("Enable permissions") {
@@ -141,10 +174,41 @@ struct Details: View {
             .alert(isPresented: $showAlert) {
                 Alert(title: alertTitle, message: alertMessage, dismissButton: .default(Text("Got it!")) {
                     if success {
-                        NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil)
+                        finishedAlert = true
                     }
                 })
             }
         }
+    }
+}
+
+struct Shortcuts: View {
+    
+    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
+    
+    var body: some View {
+        VStack {
+            VStack(alignment: .center, content: {
+                Form {
+                    KeyboardShortcuts.Recorder("Play/pause:", name: .playPause)
+                    KeyboardShortcuts.Recorder("Next track:", name: .nextTrack)
+                    KeyboardShortcuts.Recorder("Next track:", name: .previousTrack)
+                    KeyboardShortcuts.Recorder("Toggle mini player:", name: .showMiniPlayer)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                
+                Text("You can always change these later")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.top, 5)
+            })
+            .padding(.horizontal, 50)
+        }
+        .padding(.bottom, 40)
+    }
+    
+    private func finishShortcutsSetup() {
+        self.viewedShortcutsSetup = true
+        NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil)
     }
 }
