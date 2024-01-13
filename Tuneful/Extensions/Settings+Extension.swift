@@ -1,5 +1,5 @@
 //
-//  Preferences+Extension.swift
+//  Settings+Extension.swift
 //  Tuneful
 //
 //  Created by Martin Fekete on 11/01/2023.

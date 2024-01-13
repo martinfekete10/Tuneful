@@ -15,6 +15,8 @@ struct OnboardingView: View {
       case onAppPicker, onDetails, onShortcuts
     }
     
+    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
+    
     @State private var step: Steps = .onAppPicker
     @State private var finishedAlert = false
     
@@ -93,6 +95,7 @@ struct OnboardingView: View {
                         .disabled(!finishedAlert)
                     } else {
                         Button("Finish") {
+                            self.viewedShortcutsSetup = true
                             NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil)
                         }
                     }
@@ -183,9 +186,6 @@ struct Details: View {
 }
 
 struct Shortcuts: View {
-    
-    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
-    
     var body: some View {
         VStack {
             VStack(alignment: .center, content: {
@@ -205,10 +205,5 @@ struct Shortcuts: View {
             .padding(.horizontal, 50)
         }
         .padding(.bottom, 40)
-    }
-    
-    private func finishShortcutsSetup() {
-        self.viewedShortcutsSetup = true
-        NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil)
     }
 }

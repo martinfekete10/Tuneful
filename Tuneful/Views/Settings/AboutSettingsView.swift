@@ -31,7 +31,7 @@ struct AboutSettingsView: View {
                     HStack {
                         Link("GitHub", destination: URL(string: "https://github.com/martinfekete10/Tuneful")!)
                             .buttonStyle(.bordered)
-                        Link("Donate", destination: URL(string: "https://ko-fi.com/martinfekete")!)
+                        Link("Support", destination: URL(string: "https://ko-fi.com/martinfekete")!)
                             .buttonStyle(.bordered)
                     }
                 }

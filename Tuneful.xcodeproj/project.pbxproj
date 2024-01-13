@@ -10,7 +10,7 @@
 		FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */; };
 		FE2AEE302A8FC76500E8D576 /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */; };
 		FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */; };
-		FE2AEE342A8FE0F200E8D576 /* Preferences+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE332A8FE0F200E8D576 /* Preferences+Extension.swift */; };
+		FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */; };
 		FE2AEE362A93A44B00E8D576 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE352A93A44B00E8D576 /* VisualEffectView.swift */; };
 		FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */; };
 		FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F72A7C3B1A006B2D59 /* Helper.swift */; };
@@ -62,7 +62,7 @@
 		FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerWindow.swift; sourceTree = "<group>"; };
 		FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
 		FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliderView.swift; sourceTree = "<group>"; };
-		FE2AEE332A8FE0F200E8D576 /* Preferences+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preferences+Extension.swift"; sourceTree = "<group>"; };
+		FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Extension.swift"; sourceTree = "<group>"; };
 		FE2AEE352A93A44B00E8D576 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
 		FE3189F72A7C3B1A006B2D59 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -283,7 +283,7 @@
 		FEFFE5532B4FDDEA000887B5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FE2AEE332A8FE0F200E8D576 /* Preferences+Extension.swift */,
+				FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */,
 				FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */,
 				FE445FE32A977D0E001CA55A /* Double+Extension.swift */,
 				FE6BFD092A73B23700D3321F /* UserDefaults+Extension.swift */,
@@ -418,7 +418,7 @@
 				FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */,
 				FE2AEE362A93A44B00E8D576 /* VisualEffectView.swift in Sources */,
 				FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */,
-				FE2AEE342A8FE0F200E8D576 /* Preferences+Extension.swift in Sources */,
+				FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */,
 				FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */,
 				FE6BFCFB2A73A7CA00D3321F /* SupportedApps.swift in Sources */,
 				FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */,

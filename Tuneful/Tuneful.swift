@@ -12,10 +12,15 @@ import Settings
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
-    @AppStorage("showSongInfo") var showSongInfo: Bool = true
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
+    
+    @AppStorage("showSongInfo") var showSongInfo: Bool = true
+    @AppStorage("showMenuBarIcon") var showMenuBarIcon: Bool = true
+    @AppStorage("trackInfoLength") var trackInfoLength: Double = 20.0
+    @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
+    @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     
     private var onboardingWindow: OnboardingWindow!
     private var shortcutsSetupWindow: OnboardingWindow!
@@ -86,6 +91,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
+//        if let bundleID = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+//        }
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(updateStatusBarItem),
@@ -93,11 +102,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             object: nil
         )
         
-        if !viewedShortcutsSetup {
+        if !viewedShortcutsSetup && viewedOnboarding {
             self.showShortcutsSetup()
         }
         
         if !viewedOnboarding {
+            self.setupAppStorageDefaults()
             self.showOnboarding()
         } else {
             self.mainSetup()
@@ -110,6 +120,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.setupMenuBar()
         self.updateStatusBarItem(nil)
         self.setupKeyboardShortcuts()
+    }
+    
+    private func setupAppStorageDefaults() {
+        self.showSongInfo = true
+        self.showMenuBarIcon = true
+        self.trackInfoLength = 20.0
+        self.statusBarIcon = .appIcon
+        self.trackInfoDetails = .artistAndSong
     }
     
     // MARK: - Keyboard shortcuts
@@ -150,7 +168,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         statusBarMenu.addItem(.separator())
         
         statusBarMenu.addItem(
-            withTitle: "Preferences...",
+            withTitle: "Settings...",
             action: #selector(openSettings),
             keyEquivalent: ""
         )
@@ -215,6 +233,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Status bar item title
     
     @objc func updateStatusBarItem(_ notification: NSNotification?) {
+        guard viewedOnboarding else { return }
+        
         var playerAppIsRunning = playerManager.isRunning
         if notification?.userInfo?["PlayerAppIsRunning"] != nil {
             playerAppIsRunning = notification?.userInfo?["PlayerAppIsRunning"] as? Bool == true

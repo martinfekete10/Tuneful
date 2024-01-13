@@ -11,7 +11,7 @@ import Settings
 struct AppearanceSettingsView: View {
     
     @AppStorage("showSongInfo") var showSongInfoAppStorage: Bool = true
-    @AppStorage("showMenuBarIcon") var showMenuBarIconAppStorage: Bool = false
+    @AppStorage("showMenuBarIcon") var showMenuBarIconAppStorage: Bool = true
     @AppStorage("trackInfoLength") var trackInfoLengthAppStorage: Double = 20.0
     @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .appIcon
     @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
@@ -23,7 +23,7 @@ struct AppearanceSettingsView: View {
     @State var trackInfoLength: Double = UserDefaults.standard.double(forKey: "trackInfoLength")
     @State var statusBarIcon: StatusBarIcon = StatusBarIcon(rawValue: UserDefaults.standard.string(forKey: "statusBarIcon")!)!
     @State var trackInfoDetails: StatusBarTrackDetails = StatusBarTrackDetails(rawValue: UserDefaults.standard.string(forKey: "trackInfoDetails")!)!
-    
+
     var body: some View {
         Settings.Container(contentWidth: 400) {
             
