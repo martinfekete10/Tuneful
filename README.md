@@ -29,7 +29,11 @@ Tuneful provides a convenient way to control music playback for both Spotify and
 </p>
 
 <p align="center">
-  <img width="410" src="docs/images/settings.png">
+  <img width="410" src="docs/images/appearance.png">
+</p>
+
+<p align="center">
+  <img width="410" src="docs/images/keyboard.png">
 </p>
 
 ## Features
@@ -48,6 +52,9 @@ Choose your preferred audio output device with a single click. Switch between he
 
 ### 5. Mini Player Window
 Mini player window provides a compact view of the current track information and playback controls. Keep an eye on your music without disrupting your workflow.
+
+### 6. Global Keyboard Shortcuts
+Setup global keyboard shortcuts to control your music and hide/show the mini player window.
 
 ## Installation
 

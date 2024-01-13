@@ -17,7 +17,7 @@ struct KeyboardShortcutsSettingsView: View {
                     Form {
                         KeyboardShortcuts.Recorder("Play/pause:", name: .playPause)
                         KeyboardShortcuts.Recorder("Next track:", name: .nextTrack)
-                        KeyboardShortcuts.Recorder("Next track:", name: .previousTrack)
+                        KeyboardShortcuts.Recorder("Previous track:", name: .previousTrack)
                         KeyboardShortcuts.Recorder("Toggle mini player:", name: .showMiniPlayer)
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
