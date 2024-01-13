@@ -18,11 +18,25 @@ struct AppearanceSettingsView: View {
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
-    @State var showSongInfo: Bool = UserDefaults.standard.bool(forKey: "showSongInfo")
-    @State var showMenuBarIcon: Bool = UserDefaults.standard.bool(forKey: "showMenuBarIcon")
-    @State var trackInfoLength: Double = UserDefaults.standard.double(forKey: "trackInfoLength")
-    @State var statusBarIcon: StatusBarIcon = StatusBarIcon(rawValue: UserDefaults.standard.string(forKey: "statusBarIcon")!)!
-    @State var trackInfoDetails: StatusBarTrackDetails = StatusBarTrackDetails(rawValue: UserDefaults.standard.string(forKey: "trackInfoDetails")!)!
+    @State var showSongInfo: Bool// = UserDefaults.standard.bool(forKey: "showSongInfo")
+    @State var showMenuBarIcon: Bool// = UserDefaults.standard.bool(forKey: "showMenuBarIcon")
+    @State var trackInfoLength: Double// = UserDefaults.standard.double(forKey: "trackInfoLength")
+    @State var statusBarIcon: StatusBarIcon// = StatusBarIcon(rawValue: UserDefaults.standard.string(forKey: "statusBarIcon")!)!
+    @State var trackInfoDetails: StatusBarTrackDetails// = StatusBarTrackDetails(rawValue: UserDefaults.standard.string(forKey: "trackInfoDetails")!)!
+    
+    init() {
+        @AppStorage("showSongInfo") var showSongInfoAppStorage: Bool = true
+        @AppStorage("showMenuBarIcon") var showMenuBarIconAppStorage: Bool = true
+        @AppStorage("trackInfoLength") var trackInfoLengthAppStorage: Double = 20.0
+        @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .appIcon
+        @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
+        
+        self.showSongInfo = showSongInfoAppStorage
+        self.showMenuBarIcon = showMenuBarIconAppStorage
+        self.trackInfoLength = trackInfoLengthAppStorage
+        self.statusBarIcon = statusBarIconAppStorage
+        self.trackInfoDetails = trackInfoDetailsAppStorage
+    }
 
     var body: some View {
         Settings.Container(contentWidth: 400) {

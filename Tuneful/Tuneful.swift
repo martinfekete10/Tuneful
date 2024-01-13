@@ -16,12 +16,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     
-    @AppStorage("showSongInfo") var showSongInfo: Bool = true
-    @AppStorage("showMenuBarIcon") var showMenuBarIcon: Bool = true
-    @AppStorage("trackInfoLength") var trackInfoLength: Double = 20.0
-    @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
-    @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
-    
     private var onboardingWindow: OnboardingWindow!
     private var shortcutsSetupWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow!
@@ -91,9 +85,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
-//        if let bundleID = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-//        }
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -107,7 +101,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         if !viewedOnboarding {
-            self.setupAppStorageDefaults()
             self.showOnboarding()
         } else {
             self.mainSetup()
@@ -120,14 +113,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.setupMenuBar()
         self.updateStatusBarItem(nil)
         self.setupKeyboardShortcuts()
-    }
-    
-    private func setupAppStorageDefaults() {
-        self.showSongInfo = true
-        self.showMenuBarIcon = true
-        self.trackInfoLength = 20.0
-        self.statusBarIcon = .appIcon
-        self.trackInfoDetails = .artistAndSong
     }
     
     // MARK: - Keyboard shortcuts

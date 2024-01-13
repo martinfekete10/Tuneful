@@ -10,7 +10,7 @@ import SwiftUI
 class StatusBarItemManager: ObservableObject {
     
     @AppStorage("showSongInfo") var showSongInfo: Bool = true
-    @AppStorage("showMenuBarIcon") var showMenuBarIcon: Bool = false
+    @AppStorage("showMenuBarIcon") var showMenuBarIcon: Bool = true
     @AppStorage("trackInfoLength") var trackInfoLength: Double = 20.0
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .appIcon
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
