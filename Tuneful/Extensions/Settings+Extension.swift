@@ -1,5 +1,5 @@
 //
-//  Preferences+Extension.swift
+//  Settings+Extension.swift
 //  Tuneful
 //
 //  Created by Martin Fekete on 11/01/2023.
@@ -12,6 +12,7 @@ import enum Settings.Settings
 extension Settings.PaneIdentifier {
     static let general = Self("general")
     static let appearance = Self("appearance")
+    static let keyboard = Self("keyboard")
     static let about = Self("about")
 }
 

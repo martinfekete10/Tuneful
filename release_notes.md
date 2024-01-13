@@ -1,3 +1,9 @@
+# 1.1.0 - Keyboard shortcuts
+* New feature to setup global keyboard shortcuts to control music and toggle mini player window
+* Fixed a bug where opening settings would crash the app for some users
+* Fixed a bug where the app did not open for some users
+* Other minor bug fixes and improvements
+
 # 1.0.0 - Song information in menu bar
 * New feature to display song information directly in menu bar
 * New settings window with ability to customise information displayed in menu bar

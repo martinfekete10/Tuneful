@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "keyboardshortcuts",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/KeyboardShortcuts",
+      "state" : {
+        "revision" : "c252200141e4abaecf30c14ea474dc009f56d553",
+        "version" : "1.16.1"
+      }
+    },
+    {
       "identity" : "launchatlogin",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/LaunchAtLogin",

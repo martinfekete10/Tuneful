@@ -10,7 +10,7 @@
 		FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */; };
 		FE2AEE302A8FC76500E8D576 /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */; };
 		FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */; };
-		FE2AEE342A8FE0F200E8D576 /* Preferences+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE332A8FE0F200E8D576 /* Preferences+Extension.swift */; };
+		FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */; };
 		FE2AEE362A93A44B00E8D576 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE352A93A44B00E8D576 /* VisualEffectView.swift */; };
 		FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */; };
 		FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F72A7C3B1A006B2D59 /* Helper.swift */; };
@@ -21,6 +21,8 @@
 		FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */; };
 		FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4414B72AB4999600A73246 /* Notification.Name.swift */; };
 		FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE445FE32A977D0E001CA55A /* Double+Extension.swift */; };
+		FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */; };
+		FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */; };
 		FE5B3CA22AB0AC700038B6E4 /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */; };
 		FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE62A72F37800D3321F /* Tuneful.swift */; };
 		FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */; };
@@ -36,6 +38,10 @@
 		FE6BFD0C2A73B2D400D3321F /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */; };
 		FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */; };
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
+		FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */; };
+		FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */; };
+		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
+		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
 		FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */; };
 		FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */; };
 		FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */; };
@@ -43,7 +49,7 @@
 		FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A742AF8010300CE4981 /* Sparkle */; };
 		FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */; };
 		FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */; };
-		FEFFE54D2B49EF97000887B5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* SettingsView.swift */; };
+		FEFFE54D2B49EF97000887B5 /* AppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* AppearanceSettingsView.swift */; };
 		FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = FEFFE54F2B4AA04B000887B5 /* Settings */; };
 		FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */; };
 		FEFFE5552B4FDF96000887B5 /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5542B4FDF96000887B5 /* CGFloat+Extension.swift */; };
@@ -56,7 +62,7 @@
 		FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerWindow.swift; sourceTree = "<group>"; };
 		FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
 		FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliderView.swift; sourceTree = "<group>"; };
-		FE2AEE332A8FE0F200E8D576 /* Preferences+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preferences+Extension.swift"; sourceTree = "<group>"; };
+		FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Extension.swift"; sourceTree = "<group>"; };
 		FE2AEE352A93A44B00E8D576 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
 		FE3189F72A7C3B1A006B2D59 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -67,6 +73,8 @@
 		FE4414B72AB4999600A73246 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		FE445FE02A969E8D001CA55A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FE445FE32A977D0E001CA55A /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsView.swift; sourceTree = "<group>"; };
+		FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		FE6BFCE32A72F37800D3321F /* Tuneful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuneful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6BFCE62A72F37800D3321F /* Tuneful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuneful.swift; sourceTree = "<group>"; };
@@ -84,12 +92,15 @@
 		FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
 		FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtView.swift; sourceTree = "<group>"; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
+		FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsSetupView.swift; sourceTree = "<group>"; };
+		FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSettingsView.swift; sourceTree = "<group>"; };
+		FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extension.swift"; sourceTree = "<group>"; };
 		FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlView.swift; sourceTree = "<group>"; };
 		FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
 		FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarItemManager.swift; sourceTree = "<group>"; };
 		FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
-		FEFFE54C2B49EF97000887B5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FEFFE54C2B49EF97000887B5 /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
 		FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarTrackDetails.swift; sourceTree = "<group>"; };
 		FEFFE5542B4FDF96000887B5 /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		FEFFE5582B4FE00D000887B5 /* NSError+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Extension.swift"; sourceTree = "<group>"; };
@@ -104,6 +115,7 @@
 			files = (
 				FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */,
 				FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */,
+				FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */,
 				FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */,
 				FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */,
 			);
@@ -123,6 +135,7 @@
 		FE3189DB2A7B9D0B006B2D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FEF0660A2B51905200A514F2 /* Settings */,
 				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
 				FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */,
 				FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */,
@@ -132,7 +145,7 @@
 				FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */,
 				FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */,
 				FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */,
-				FEFFE54C2B49EF97000887B5 /* SettingsView.swift */,
+				FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,10 +269,21 @@
 			path = AudioDevices;
 			sourceTree = "<group>";
 		};
+		FEF0660A2B51905200A514F2 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FEFFE54C2B49EF97000887B5 /* AppearanceSettingsView.swift */,
+				FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */,
+				FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */,
+				FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		FEFFE5532B4FDDEA000887B5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FE2AEE332A8FE0F200E8D576 /* Preferences+Extension.swift */,
+				FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */,
 				FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */,
 				FE445FE32A977D0E001CA55A /* Double+Extension.swift */,
 				FE6BFD092A73B23700D3321F /* UserDefaults+Extension.swift */,
@@ -268,6 +292,7 @@
 				FEFFE5582B4FE00D000887B5 /* NSError+Extension.swift */,
 				FEFFE55A2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift */,
 				FEFFE55C2B4FE051000887B5 /* Comparable+Extension.swift */,
+				FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -293,6 +318,7 @@
 				FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */,
 				FEF53A742AF8010300CE4981 /* Sparkle */,
 				FEFFE54F2B4AA04B000887B5 /* Settings */,
+				FEF0660E2B51910700A514F2 /* KeyboardShortcuts */,
 			);
 			productName = Tuneful;
 			productReference = FE6BFCE32A72F37800D3321F /* Tuneful.app */;
@@ -327,6 +353,7 @@
 				FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */,
 				FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */,
+				FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			productRefGroup = FE6BFCE42A72F37800D3321F /* Products */;
 			projectDirPath = "";
@@ -357,10 +384,13 @@
 				FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */,
 				FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */,
 				FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */,
+				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
+				FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
-				FEFFE54D2B49EF97000887B5 /* SettingsView.swift in Sources */,
+				FEFFE54D2B49EF97000887B5 /* AppearanceSettingsView.swift in Sources */,
+				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
@@ -379,6 +409,7 @@
 				FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */,
 				FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */,
 				FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */,
+				FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */,
 				FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */,
 				FEFFE5552B4FDF96000887B5 /* CGFloat+Extension.swift in Sources */,
 				FE6BFD0A2A73B23700D3321F /* UserDefaults+Extension.swift in Sources */,
@@ -387,7 +418,8 @@
 				FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */,
 				FE2AEE362A93A44B00E8D576 /* VisualEffectView.swift in Sources */,
 				FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */,
-				FE2AEE342A8FE0F200E8D576 /* Preferences+Extension.swift in Sources */,
+				FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */,
+				FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */,
 				FE6BFCFB2A73A7CA00D3321F /* SupportedApps.swift in Sources */,
 				FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */,
 				FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */,
@@ -620,6 +652,14 @@
 				kind = branch;
 			};
 		};
+		FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.16.1;
+			};
+		};
 		FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jbrinkman/ISSoundAdditions";
@@ -651,6 +691,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FE3F67FC2AAD02D100CCE841 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
 			productName = LaunchAtLogin;
+		};
+		FEF0660E2B51910700A514F2 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
 		};
 		FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */ = {
 			isa = XCSwiftPackageProductDependency;
