@@ -82,7 +82,9 @@ struct MiniPlayerView: View {
             .frame(width: 300, height: 120)
             .position(CGPoint(x: 150, y: 71))
             .edgesIgnoringSafeArea(.all)
-            .overlay(NotificationView())
+            .overlay(
+                NotificationView()
+            )
             .if(miniPlayerBackground == .transparent) { view in
                 view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
             }

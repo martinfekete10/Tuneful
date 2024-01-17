@@ -382,9 +382,11 @@ class PlayerManager: ObservableObject {
     }
     
     func toggleAppleMusicLove() {
-        if let isLovedTrack = appleMusicApp?.currentTrack?.favorited {
+        if let isLovedTrack = appleMusicApp?.currentTrack?.loved {
             appleMusicApp?.currentTrack?.setFavorited?(!isLovedTrack)
             self.isLoved = !isLovedTrack
+        } else {
+            self.sendNotification(title: "Error", message: "Could not save track to favorites")
         }
     }
     

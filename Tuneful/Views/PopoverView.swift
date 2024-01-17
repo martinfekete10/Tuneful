@@ -136,7 +136,10 @@ struct PopoverView: View {
                 .padding()
             }
         }
-        .overlay(NotificationView())
+        .overlay(
+            NotificationView()
+                .padding(.top, 15)
+        )
         .frame(
             width: AppDelegate.popoverWidth,
             height: AppDelegate.popoverHeight
