@@ -399,7 +399,7 @@ extension SBObject: MusicSubscriptionPlaylist {}
     @objc optional var grouping: String { get } // the grouping (piece) of the track. Generally used to denote movements within a classical work.
     @objc optional var kind: String { get } // a text description of the track
     @objc optional var longDescription: String { get } // the long description of the track
-    @objc optional var loved: Bool { get } // is this track loved?
+    @objc optional var favorited: Bool { get } // is this track loved?
     @objc optional var lyrics: String { get } // the lyrics of the track
     @objc optional var mediaKind: MusicEMdK { get } // the media kind of the track
     @objc optional var modificationDate: Date { get } // the modification date of the content of this track
@@ -460,7 +460,7 @@ extension SBObject: MusicSubscriptionPlaylist {}
     @objc optional func setGenre(_ genre: String!) // the music/audio genre (category) of the track
     @objc optional func setGrouping(_ grouping: String!) // the grouping (piece) of the track. Generally used to denote movements within a classical work.
     @objc optional func setLongDescription(_ longDescription: String!) // the long description of the track
-    @objc optional func setLoved(_ loved: Bool) // is this track loved?
+    @objc optional func setFavorited(_ loved: Bool) // is this track loved?
     @objc optional func setLyrics(_ lyrics: String!) // the lyrics of the track
     @objc optional func setMediaKind(_ mediaKind: MusicEMdK) // the media kind of the track
     @objc optional func setMovement(_ movement: String!) // the movement name of the track

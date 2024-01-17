@@ -312,7 +312,7 @@ class PlayerManager: ObservableObject {
             self.track.title = appleMusicApp?.currentTrack?.name ?? "Unknown Title"
             self.track.artist = appleMusicApp?.currentTrack?.artist ?? "Unknown Artist"
             self.track.album = appleMusicApp?.currentTrack?.album ?? "Unknown Album"
-            self.isLoved = appleMusicApp?.currentTrack?.loved ?? false
+            self.isLoved = appleMusicApp?.currentTrack?.favorited ?? false
             
             // Playback
             self.shuffleIsOn = appleMusicApp?.shuffleEnabled ?? false
@@ -382,8 +382,12 @@ class PlayerManager: ObservableObject {
     }
     
     func toggleAppleMusicLove() {
-        appleMusicApp?.currentTrack?.setLoved?(!self.isLoved)
-        self.isLoved = !self.isLoved
+//        appleMusicApp?.currentTrack?.setLoved?(!self.isLoved)
+//        self.isLoved = !self.isLoved
+        if let isLovedTrack = appleMusicApp?.currentTrack?.favorited {
+            appleMusicApp?.currentTrack?.setFavorited?(!isLovedTrack)
+            self.isLoved = !isLovedTrack
+        }
     }
     
     func setShuffle() {
