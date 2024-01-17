@@ -382,8 +382,6 @@ class PlayerManager: ObservableObject {
     }
     
     func toggleAppleMusicLove() {
-//        appleMusicApp?.currentTrack?.setLoved?(!self.isLoved)
-//        self.isLoved = !self.isLoved
         if let isLovedTrack = appleMusicApp?.currentTrack?.favorited {
             appleMusicApp?.currentTrack?.setFavorited?(!isLovedTrack)
             self.isLoved = !isLovedTrack

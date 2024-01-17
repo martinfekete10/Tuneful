@@ -300,7 +300,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     public func showOnboarding() {
         if onboardingWindow == nil {
             onboardingWindow = OnboardingWindow()
-            let rootView = OnboardingView().cornerRadius(15)
+            let rootView = OnboardingView()
             let hostedOnboardingView = NSHostingView(rootView: rootView)
             onboardingWindow.contentView = hostedOnboardingView
         }
@@ -318,7 +318,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     public func showShortcutsSetup() {
         if shortcutsSetupWindow == nil {
             shortcutsSetupWindow = OnboardingWindow()
-            let rootView = ShortcutsSetupView().cornerRadius(15)
+            let rootView = ShortcutsSetupView()
             let hostedOnboardingView = NSHostingView(rootView: rootView)
             shortcutsSetupWindow.contentView = hostedOnboardingView
         }

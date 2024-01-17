@@ -11,16 +11,14 @@ class OnboardingWindow: NSWindow {
     init() {
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: 500, height: 200),
-            styleMask: [.borderless],
+            styleMask: [.titled, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
         
-        self.collectionBehavior = [.canJoinAllSpaces, .fullScreenNone]
+        self.titlebarAppearsTransparent = true
         self.isMovableByWindowBackground = true
         self.isReleasedWhenClosed = true
         self.level = .floating
-        self.backgroundColor = NSColor.clear
-        self.hasShadow = true
     }
 }

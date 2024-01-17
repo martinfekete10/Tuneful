@@ -13,7 +13,7 @@ struct AppearanceSettingsView: View {
     @AppStorage("showSongInfo") var showSongInfoAppStorage: Bool = true
     @AppStorage("showMenuBarIcon") var showMenuBarIconAppStorage: Bool = true
     @AppStorage("trackInfoLength") var trackInfoLengthAppStorage: Double = 20.0
-    @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .appIcon
+    @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt
     @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
     @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
     @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
@@ -32,7 +32,7 @@ struct AppearanceSettingsView: View {
         @AppStorage("showSongInfo") var showSongInfoAppStorage: Bool = true
         @AppStorage("showMenuBarIcon") var showMenuBarIconAppStorage: Bool = true
         @AppStorage("trackInfoLength") var trackInfoLengthAppStorage: Double = 20.0
-        @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .appIcon
+        @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt
         @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
         @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
         @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt

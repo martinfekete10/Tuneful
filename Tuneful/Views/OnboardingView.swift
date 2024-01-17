@@ -106,7 +106,6 @@ struct OnboardingView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .edgesIgnoringSafeArea(.all)
-        .background(VisualEffectView(material: .underWindowBackground, blendingMode: .behindWindow))
     }
 }
 
