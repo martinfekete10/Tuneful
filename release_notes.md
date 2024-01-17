@@ -1,3 +1,8 @@
+# 1.2.0 - More customisation and Apple Music favorites fix
+* You can now choose if you want to have a transparent background or blurred artwork of current song as a background, both in menu bar popover and mini player window
+* Fixed a bug where songs were not being added to Apple Music favorites after clicking heart button
+* Changed Add to Favorites icon from heart to star to make it consistent with Apple Music
+
 # 1.1.0 - Keyboard shortcuts
 * New feature to setup global keyboard shortcuts to control music and toggle mini player window
 * Fixed a bug where opening settings would crash the app for some users

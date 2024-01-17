@@ -151,7 +151,7 @@ struct AppearanceSettingsView: View {
             Settings.Container(contentWidth: 400) {
                 
                 Settings.Section(label: {
-                    Text("Popover style")
+                    Text("Popover background")
                 }) {
                     Picker("", selection: $popoverBackground) {
                         ForEach(BackgroundType.allCases, id: \.self) { value in
@@ -166,7 +166,7 @@ struct AppearanceSettingsView: View {
                 }
                 
                 Settings.Section(label: {
-                    Text("Mini player style")
+                    Text("Mini player background")
                 }) {
                     Picker("", selection: $miniPlayerBackground) {
                         ForEach(BackgroundType.allCases, id: \.self) { value in
@@ -180,7 +180,7 @@ struct AppearanceSettingsView: View {
                     .frame(width: 200)
                 }
             }
-            .padding(.leading, 140)
+            .padding(.leading, 50)
         }
         .padding(.bottom, 15)
     }

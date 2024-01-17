@@ -382,7 +382,11 @@ class PlayerManager: ObservableObject {
     }
     
     func toggleAppleMusicLove() {
+        // Different versions of Apple Music use different names for starring tracksle
         if let isLovedTrack = appleMusicApp?.currentTrack?.loved {
+            appleMusicApp?.currentTrack?.setLoved?(!isLovedTrack)
+            self.isLoved = !isLovedTrack
+        } else if let isLovedTrack = appleMusicApp?.currentTrack?.favorited {
             appleMusicApp?.currentTrack?.setFavorited?(!isLovedTrack)
             self.isLoved = !isLovedTrack
         } else {
