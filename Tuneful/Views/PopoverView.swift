@@ -9,11 +9,19 @@ import SwiftUI
 
 struct PopoverView: View {
     
+    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
+    
     @EnvironmentObject var playerManager: PlayerManager
     
     var body: some View {
         
         ZStack {
+            if popoverBackground == .albumArt && playerManager.isRunning {
+                Image(nsImage: playerManager.track.albumArt)
+                    .resizable()
+                VisualEffectView(material: .popover, blendingMode: .withinWindow)
+            }
+            
             if !playerManager.isRunning {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
@@ -128,7 +136,10 @@ struct PopoverView: View {
                 .padding()
             }
         }
-        .overlay(NotificationView())
+        .overlay(
+            NotificationView()
+                .padding(.top, 15)
+        )
         .frame(
             width: AppDelegate.popoverWidth,
             height: AppDelegate.popoverHeight

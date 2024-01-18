@@ -37,7 +37,7 @@ struct AlbumArtView: View {
                         Button {
                             playerManager.toggleLoveTrack()
                         } label: {
-                            Image(systemName: playerManager.isLoved ? "heart.fill" : "heart")
+                            Image(systemName: playerManager.isLoved ? "star.fill" : "star")
                                 .font(.system(size: 14))
                                 .foregroundColor(.primary.opacity(0.8))
                         }

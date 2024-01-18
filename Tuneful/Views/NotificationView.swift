@@ -48,7 +48,7 @@ struct NotificationView: View {
                         blendingMode: .withinWindow
                     )
                 )
-                .cornerRadius(9)
+                .cornerRadius(10)
                 .padding(10)
                 .shadow(radius: 5)
                 .onHover { isHovering in
@@ -61,7 +61,6 @@ struct NotificationView: View {
                 Spacer()
             }
         }
-        .padding(.top, 7)
         .onReceive(
             playerManager.notificationSubject,
             perform: recieveAlert(_:)

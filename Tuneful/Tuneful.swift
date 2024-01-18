@@ -271,7 +271,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func setupMiniPlayer() {
         if miniPlayerWindow == nil {
             miniPlayerWindow = MiniPlayerWindow()
-            let rootView = MiniPlayerView()
+            let rootView = MiniPlayerView().cornerRadius(15)
                 .environmentObject(self.playerManager)
             let hostedOnboardingView = NSHostingView(rootView: rootView)
             miniPlayerWindow.contentView = hostedOnboardingView

@@ -10,6 +10,8 @@ import MediaPlayer
 
 struct MiniPlayerView: View {
     
+    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
+    
     @EnvironmentObject var playerManager: PlayerManager
 
     var body: some View {
@@ -23,11 +25,13 @@ struct MiniPlayerView: View {
                 .padding(.bottom, 20)
         } else {
             ZStack {
-                Image(nsImage: playerManager.track.albumArt)
-                    .resizable()
-                    .scaledToFill()
-                
-                VisualEffectView(material: .popover, blendingMode: .withinWindow)
+                if miniPlayerBackground == .albumArt && playerManager.isRunning {
+                    Image(nsImage: playerManager.track.albumArt)
+                        .resizable()
+                        .scaledToFill()
+                    
+                    VisualEffectView(material: .popover, blendingMode: .withinWindow)
+                }
                 
                 HStack(spacing: 0) {
                     AlbumArtView(imageSize: 110)
@@ -76,11 +80,14 @@ struct MiniPlayerView: View {
                 }
             }
             .frame(width: 300, height: 120)
-            .position(CGPoint(x: 150, y: 73))
+            .position(CGPoint(x: 150, y: 71))
             .edgesIgnoringSafeArea(.all)
-            .overlay(NotificationView())
-            // TODO: ideally want to have transparent window, which however flickers when switching spaces
-            //.background(VisualEffectView(material: .underWindowBackground, blendingMode: .behindWindow))
+            .overlay(
+                NotificationView()
+            )
+            .if(miniPlayerBackground == .transparent) { view in
+                view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
+            }
         }
     }
 }
