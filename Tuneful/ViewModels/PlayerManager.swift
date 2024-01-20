@@ -67,7 +67,7 @@ class PlayerManager: ObservableObject {
     var formattedPlaybackPosition = PlayerManager.noPlaybackPositionPlaceholder
     
     // Volume
-    @Published var volume: CGFloat = CGFloat(Sound.output.volume)
+    @Published var volume: CGFloat = 50.0
     @Published var isDraggingSoundVolumeSlider = false
     
     // Audio devices
@@ -102,7 +102,8 @@ class PlayerManager: ObservableObject {
             )
             .autoconnect()
             .sink { _ in
-                self.volume = CGFloat(Sound.output.volume)
+                //self.volume = CGFloat(Sound.output.volume)
+                self.getVolume()
                 self.getCurrentSeekerPosition()
             }
         }
@@ -179,7 +180,7 @@ class PlayerManager: ObservableObject {
             self.timerStartSignal.send()
         }
         self.audioDevices = AudioDevice.output.filter{ $0.transportType != .virtual }
-        self.volume = CGFloat(Sound.output.volume)
+        self.getVolume()
         popoverIsShown = true
     }
 
@@ -375,9 +376,10 @@ class PlayerManager: ObservableObject {
     func toggleLoveTrack() {
         switch connectedApp {
         case .appleMusic:
-            toggleAppleMusicLove()
+            self.toggleAppleMusicLove()
         case .spotify:
-            return
+            //return
+            self.toggleSpotifyLove()
         }
     }
     
@@ -388,6 +390,16 @@ class PlayerManager: ObservableObject {
             self.isLoved = !isLovedTrack
         } else if let isLovedTrack = appleMusicApp?.currentTrack?.favorited {
             appleMusicApp?.currentTrack?.setFavorited?(!isLovedTrack)
+            self.isLoved = !isLovedTrack
+        } else {
+            self.sendNotification(title: "Error", message: "Could not save track to favorites")
+        }
+    }
+    
+    func toggleSpotifyLove() {
+        print(spotifyApp?.currentTrack?.starred)
+        if let isLovedTrack = spotifyApp?.currentTrack?.starred {
+            spotifyApp?.currentTrack?.setStarred?(!isLovedTrack)
             self.isLoved = !isLovedTrack
         } else {
             self.sendNotification(title: "Error", message: "Could not save track to favorites")
@@ -491,43 +503,44 @@ class PlayerManager: ObservableObject {
     
     // MARK: - Volume
     
-    func setVolume(newVolume: CGFloat) {
-        do {
-            try Sound.output.setVolume(Float(newVolume))
-        } catch {
-            self.sendNotification(title: "Volume not set", message: "Error setting the volume for output device")
+    func getVolume() {
+        switch connectedApp {
+        case .spotify:
+            self.volume = CGFloat(spotifyApp?.soundVolume ?? 50)
+        case .appleMusic:
+            self.volume = CGFloat(appleMusicApp?.soundVolume ?? 50)
+        }
+    }
+    
+    func setVolume(newVolume: Int) {
+        var newVolume = newVolume
+        if newVolume > 100 { newVolume = 100 }
+        if newVolume < 0 { newVolume = 0 }
+        
+        switch connectedApp {
+        case .spotify:
+            self.spotifyApp?.setSoundVolume?(newVolume)
+        case .appleMusic:
+            self.appleMusicApp?.setSoundVolume?(newVolume)
         }
     }
     
     func increaseVolume() {
-        var newVolume = volume + 0.1
-        if newVolume > 1.0 {
-            newVolume = 1.0
-        }
+        let newVolume = Int(self.volume) + 10
         
-        do {
-            try Sound.output.setVolume(Float(newVolume))
-            volume = newVolume
-        } catch {
-            self.sendNotification(title: "Volume not set", message: "Error setting the volume for output device")
-        }
+        self.setVolume(newVolume: newVolume)
+        self.volume = CGFloat(newVolume)
     }
     
     func decreaseVolume() {
-        var newVolume = volume - 0.1
-        if newVolume < 0.0 {
-            newVolume = 0.0
-        }
+        let newVolume = Int(self.volume) - 10
         
-        do {
-            try Sound.output.setVolume(Float(newVolume))
-            volume = newVolume
-        } catch {
-            self.sendNotification(title: "Volume not set", message: "Error setting the volume for output device")
-        }
+        self.setVolume(newVolume: newVolume)
+        self.volume = CGFloat(newVolume)
     }
     
     // MARK: - Audio device
+    
     func setOutputDevice(audioDevice: AudioDevice) {
         do {
             try AudioDevice.setDefaultDevice(for: .output, device: audioDevice)
@@ -561,12 +574,22 @@ class PlayerManager: ObservableObject {
     }
     
     func isLikeAuthorized() -> Bool {
-        if connectedApp == .appleMusic {
-            return true
-        }
-        
-        return false
+//        if connectedApp == .appleMusic {
+//            return true
+//        }
+//        
+//        return false
+        return true
     }
+    
+//    func disabledControls() {
+//        switch connectedApp {
+//        case .spotify:
+//            return false
+//        case .appleMusic:
+//            appleMusicApp?.
+//        }
+//    }
     
     // MARK: - Alert
     
