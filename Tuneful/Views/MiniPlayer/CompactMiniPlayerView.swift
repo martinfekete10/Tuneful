@@ -18,6 +18,11 @@ struct CompactMiniPlayerView: View {
     private var cornerRadius: CGFloat = 10.0
     private var playbackButtonSize: CGFloat = 15.0
     private var playPauseButtonSize: CGFloat = 25.0
+    private weak var parentWindow: MiniPlayerWindow!
+    
+    init(parentWindow: MiniPlayerWindow) {
+        self.parentWindow = parentWindow
+    }
 
     var body: some View {
         if !playerManager.isRunning {
@@ -50,6 +55,12 @@ struct CompactMiniPlayerView: View {
                             self.playerManager.openMusicApp()
                         }
                     )
+                
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 16))
+                    .foregroundColor(.secondary)
+                    .offset(x: -self.imageSize / 2 + 10, y: -self.imageSize / 2 + 10)
+                    .opacity(isShowingPlaybackControls ? 1 : 0)
 
                 HStack(spacing: 8) {
                     if playerManager.isLikeAuthorized() {
@@ -87,7 +98,7 @@ struct CompactMiniPlayerView: View {
                 .cornerRadius(cornerRadius)
                 .opacity(isShowingPlaybackControls ? 1 : 0)
             }
-            .frame(width: 160, height: 160)
+            .frame(width: 155, height: 155)
             .onHover { _ in
                 withAnimation(.linear(duration: 0.1)) {
                     self.isShowingPlaybackControls.toggle()
@@ -100,13 +111,5 @@ struct CompactMiniPlayerView: View {
                 view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
             }
         }
-    }
-}
-
-struct CompactMiniPlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompactMiniPlayerView()
-            .previewLayout(.device)
-            .padding()
     }
 }

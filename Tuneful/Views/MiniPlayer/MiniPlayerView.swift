@@ -14,6 +14,11 @@ struct MiniPlayerView: View {
     @EnvironmentObject var playerManager: PlayerManager
     
     private var imageSize: CGFloat = 140.0
+    private weak var parentWindow: MiniPlayerWindow!
+    
+    init(parentWindow: MiniPlayerWindow) {
+        self.parentWindow = parentWindow
+    }
 
     var body: some View {
         if !playerManager.isRunning {
@@ -91,7 +96,7 @@ struct MiniPlayerView: View {
                     .opacity(0.8)
                 }
             }
-            .frame(width: 315, height: 160)
+            .frame(width: 310, height: 155)
             .overlay(
                 NotificationView()
             )
@@ -99,13 +104,5 @@ struct MiniPlayerView: View {
                 view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
             }
         }
-    }
-}
-
-struct MiniPlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        MiniPlayerView()
-            .previewLayout(.device)
-            .padding()
     }
 }

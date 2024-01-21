@@ -288,9 +288,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         switch miniPlayerType {
         case .full:
-            setupMiniPlayerWindow(size: NSSize(width: 300, height: 145), position: windowPosition, view: MiniPlayerView())
+            setupMiniPlayerWindow(size: NSSize(width: 300, height: 145), position: windowPosition, view: MiniPlayerView(parentWindow: miniPlayerWindow))
         case .albumArt:
-            setupMiniPlayerWindow(size: NSSize(width: 145, height: 145), position: windowPosition, view: CompactMiniPlayerView())
+            setupMiniPlayerWindow(size: NSSize(width: 145, height: 145), position: windowPosition, view: CompactMiniPlayerView(parentWindow: miniPlayerWindow))
         case .minimal:
             print("Error")
         }
