@@ -41,6 +41,7 @@
 		FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
+		FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */; };
 		FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */; };
 		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
 		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
@@ -97,6 +98,7 @@
 		FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsSetupView.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMiniPlayerView.swift; sourceTree = "<group>"; };
 		FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSettingsView.swift; sourceTree = "<group>"; };
 		FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extension.swift"; sourceTree = "<group>"; };
 		FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlView.swift; sourceTree = "<group>"; };
@@ -139,8 +141,8 @@
 		FE3189DB2A7B9D0B006B2D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FEE486E32B5D173A00AB712F /* MiniPlayer */,
 				FEF0660A2B51905200A514F2 /* Settings */,
-				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
 				FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */,
 				FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */,
 				FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */,
@@ -274,6 +276,15 @@
 			path = AudioDevices;
 			sourceTree = "<group>";
 		};
+		FEE486E32B5D173A00AB712F /* MiniPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
+				FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */,
+			);
+			path = MiniPlayer;
+			sourceTree = "<group>";
+		};
 		FEF0660A2B51905200A514F2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,6 +407,7 @@
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
 				FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
+				FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */,
 				FEFFE54D2B49EF97000887B5 /* AppearanceSettingsView.swift in Sources */,
 				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,

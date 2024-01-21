@@ -102,7 +102,6 @@ class PlayerManager: ObservableObject {
             )
             .autoconnect()
             .sink { _ in
-                //self.volume = CGFloat(Sound.output.volume)
                 self.getVolume()
                 self.getCurrentSeekerPosition()
             }
@@ -211,7 +210,7 @@ class PlayerManager: ObservableObject {
     }
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
-
+        
         let isRunningFromNotification = sender?.userInfo?["Player State"] as? String != "Stopped" && isRunning
         
         print("The play state or the currently playing track changed")
@@ -378,8 +377,7 @@ class PlayerManager: ObservableObject {
         case .appleMusic:
             self.toggleAppleMusicLove()
         case .spotify:
-            //return
-            self.toggleSpotifyLove()
+            self.sendNotification(title: "Error", message: "Adding songs to favorites is not supported for Spotify yet")
         }
     }
     
@@ -390,16 +388,6 @@ class PlayerManager: ObservableObject {
             self.isLoved = !isLovedTrack
         } else if let isLovedTrack = appleMusicApp?.currentTrack?.favorited {
             appleMusicApp?.currentTrack?.setFavorited?(!isLovedTrack)
-            self.isLoved = !isLovedTrack
-        } else {
-            self.sendNotification(title: "Error", message: "Could not save track to favorites")
-        }
-    }
-    
-    func toggleSpotifyLove() {
-        print(spotifyApp?.currentTrack?.starred)
-        if let isLovedTrack = spotifyApp?.currentTrack?.starred {
-            spotifyApp?.currentTrack?.setStarred?(!isLovedTrack)
             self.isLoved = !isLovedTrack
         } else {
             self.sendNotification(title: "Error", message: "Could not save track to favorites")
@@ -574,36 +562,11 @@ class PlayerManager: ObservableObject {
     }
     
     func isLikeAuthorized() -> Bool {
-//        if connectedApp == .appleMusic {
-//            return true
-//        }
-//        
-//        return false
-        return true
-    }
-    
-//    func disabledControls() {
-//        switch connectedApp {
-//        case .spotify:
-//            return false
-//        case .appleMusic:
-//            appleMusicApp?.
-//        }
-//    }
-    
-    // MARK: - Alert
-    
-    func showAppModalAlert(
-        title: String,
-        message: String
-    ) {
-        let alert = NSAlert()
-        alert.messageText = title
-        alert.informativeText = message
-        
-        let response = alert.runModal()
-        if response.rawValue == 0 {
-            NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil);
+        switch connectedApp {
+        case .spotify:
+            return false
+        case .appleMusic:
+            return true
         }
     }
 }

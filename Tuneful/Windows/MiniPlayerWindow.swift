@@ -8,9 +8,9 @@
 import AppKit
 
 class MiniPlayerWindow: NSWindow {
-    init() {
+    init(width: Int, height: Int) {
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 300, height: 145),
+            contentRect: NSRect(x: 0, y: 0, width: width, height: height),
             styleMask: [.borderless],
             backing: .buffered,
             defer: false
