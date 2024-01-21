@@ -83,7 +83,6 @@ struct CompactMiniPlayerView: View {
                 .opacity(isShowingPlaybackControls ? 1 : 0)
             }
             .frame(width: 160, height: 160)
-            .edgesIgnoringSafeArea(.all)
             .onHover { _ in
                 withAnimation(.linear(duration: 0.1)) {
                     self.isShowingPlaybackControls.toggle()

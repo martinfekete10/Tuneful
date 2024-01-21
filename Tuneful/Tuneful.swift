@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     private var onboardingWindow: OnboardingWindow!
     private var shortcutsSetupWindow: OnboardingWindow!
-    private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow(width: 300, height: 145)
+    private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
     private var popover: NSPopover!
     
     // Popover
@@ -280,49 +280,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSApplication.shared.activate(ignoringOtherApps: true)
     }
     
-    // MARK: - Window handlers
+    // MARK: - Mini player
     
     @objc func setupMiniPlayer() {
+        let originalWindowPosition = miniPlayerWindow.frame.origin
+        let windowPosition = CGPoint(x: originalWindowPosition.x, y: originalWindowPosition.y + 15) // Not sure why, but everytime this function is called, window moves down 15 pixels, thus this ugly workaround
+
         switch miniPlayerType {
         case .full:
-            DispatchQueue.main.async {
-                self.miniPlayerWindow.setFrame(NSRect(x: 0, y: 0, width: 300, height: 145), display: true, animate: true)
-            }
-            let rootView = MiniPlayerView()
-                .cornerRadius(15)
-                .environmentObject(self.playerManager)
-            let hostedOnboardingView = NSHostingView(rootView: rootView)
-            miniPlayerWindow.contentView = hostedOnboardingView
+            setupMiniPlayerWindow(size: NSSize(width: 300, height: 145), position: windowPosition, view: MiniPlayerView())
         case .albumArt:
-            DispatchQueue.main.async {
-                self.miniPlayerWindow.setFrame(NSRect(x: 0, y: 0, width: 145, height: 145), display: true, animate: true)
-            }
-            let rootView = CompactMiniPlayerView()
-                .cornerRadius(15)
-                .environmentObject(self.playerManager)
-            let hostedOnboardingView = NSHostingView(rootView: rootView)
-            miniPlayerWindow.contentView = hostedOnboardingView
+            setupMiniPlayerWindow(size: NSSize(width: 145, height: 145), position: windowPosition, view: CompactMiniPlayerView())
         case .minimal:
             print("Error")
         }
-//        if miniPlayerWindow == nil {
-//            miniPlayerWindow = MiniPlayerWindow(width: 145, height: 145)
-//            let rootView = CompactMiniPlayerView()
-//                .cornerRadius(15)
-//                .environmentObject(self.playerManager)
-//            let hostedOnboardingView = NSHostingView(rootView: rootView)
-//            miniPlayerWindow.contentView = hostedOnboardingView
-//        }
-//        
-//        DispatchQueue.main.async {
-//            self.miniPlayerWindow.setFrame(NSRect(x: 0, y: 0, width: 300, height: 145), display: true, animate: true)
-//        }
-//        
-//        let rootView = MiniPlayerView()
-//            .cornerRadius(15)
-//            .environmentObject(self.playerManager)
-//        let hostedOnboardingView = NSHostingView(rootView: rootView)
-//        miniPlayerWindow.contentView = hostedOnboardingView
         
         miniPlayerWindow.makeKeyAndOrderFront(nil)
         NSApplication.shared.activate(ignoringOtherApps: true)
@@ -334,6 +305,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             miniPlayerWindow.close()
         }
     }
+
+    private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
+        DispatchQueue.main.async {
+            self.miniPlayerWindow.setFrame(NSRect(origin: position, size: size), display: true, animate: true)
+        }
+        
+        let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
+        let hostedOnboardingView = NSHostingView(rootView: rootView)
+        miniPlayerWindow.contentView = hostedOnboardingView
+    }
+
+    
+    // MARK: - Settings
     
     @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
@@ -352,6 +336,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             hidesToolbarForSingleItem: true
         ).show(pane: .miniPlayerAppearance)
     }
+    
+    // MARK: - Setup
     
     public func showOnboarding() {
         if onboardingWindow == nil {

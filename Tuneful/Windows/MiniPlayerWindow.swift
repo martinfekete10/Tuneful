@@ -8,9 +8,9 @@
 import AppKit
 
 class MiniPlayerWindow: NSWindow {
-    init(width: Int, height: Int) {
+    init() {
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: width, height: height),
+            contentRect: NSRect(x: 15, y: 15, width: 300, height: 145),
             styleMask: [.borderless],
             backing: .buffered,
             defer: false
@@ -27,9 +27,13 @@ class MiniPlayerWindow: NSWindow {
     override func rightMouseDown(with event: NSEvent) {
         let menu = NSMenu()
         menu.addItem(withTitle: "Hide window", action: #selector(hideWindow(_:)), keyEquivalent: "")
-        menu.addItem(withTitle: "Customize", action: #selector(customize(_:)), keyEquivalent: "")
+        menu.addItem(withTitle: "Customize...", action: #selector(customize(_:)), keyEquivalent: "")
         
         NSMenu.popUpContextMenu(menu, with: event, for: self.contentView!)
+    }
+    
+    override var canBecomeKey: Bool {
+        return true
     }
     
     @objc func hideWindow(_ sender: Any?) {

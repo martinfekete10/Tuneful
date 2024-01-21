@@ -12,6 +12,8 @@ struct MiniPlayerView: View {
     
     @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
     @EnvironmentObject var playerManager: PlayerManager
+    
+    private var imageSize: CGFloat = 140.0
 
     var body: some View {
         if !playerManager.isRunning {
@@ -32,9 +34,14 @@ struct MiniPlayerView: View {
                     VisualEffectView(material: .popover, blendingMode: .withinWindow)
                 }
                 
-                HStack(spacing: 0) {
-                    AlbumArtView(imageSize: 110)
-                        .padding()
+                HStack {
+                    Image(nsImage: playerManager.track.albumArt)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: self.imageSize, height: self.imageSize)
+                        .cornerRadius(8)
+                        .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                        .dragWindowWithClick()
                     
                     VStack(spacing: 7) {
                         Button(action: playerManager.openMusicApp) {
@@ -78,9 +85,7 @@ struct MiniPlayerView: View {
                     .opacity(0.8)
                 }
             }
-            .frame(width: 300, height: 120)
-            .position(CGPoint(x: 150, y: 71))
-            .edgesIgnoringSafeArea(.all)
+            .frame(width: 315, height: 160)
             .overlay(
                 NotificationView()
             )
