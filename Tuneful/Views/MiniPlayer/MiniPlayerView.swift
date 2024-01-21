@@ -42,6 +42,11 @@ struct MiniPlayerView: View {
                         .cornerRadius(8)
                         .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                         .dragWindowWithClick()
+                        .gesture(
+                            TapGesture(count: 2).onEnded {
+                                self.playerManager.openMusicApp()
+                            }
+                        )
                     
                     VStack(spacing: 7) {
                         Button(action: playerManager.openMusicApp) {

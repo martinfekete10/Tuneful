@@ -45,6 +45,11 @@ struct CompactMiniPlayerView: View {
                     .cornerRadius(8)
                     .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                     .dragWindowWithClick()
+                    .gesture(
+                        TapGesture(count: 2).onEnded {
+                            self.playerManager.openMusicApp()
+                        }
+                    )
 
                 HStack(spacing: 8) {
                     if playerManager.isLikeAuthorized() {
