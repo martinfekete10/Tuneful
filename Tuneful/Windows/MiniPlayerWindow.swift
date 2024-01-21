@@ -23,4 +23,20 @@ class MiniPlayerWindow: NSWindow {
         self.backgroundColor = NSColor.clear
         self.hasShadow = true
     }
+    
+    override func rightMouseDown(with event: NSEvent) {
+        let menu = NSMenu()
+        menu.addItem(withTitle: "Hide window", action: #selector(hideWindow(_:)), keyEquivalent: "")
+        menu.addItem(withTitle: "Customize", action: #selector(customize(_:)), keyEquivalent: "")
+        
+        NSMenu.popUpContextMenu(menu, with: event, for: self.contentView!)
+    }
+    
+    @objc func hideWindow(_ sender: Any?) {
+        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
+    }
+    
+    @objc func customize(_ sender: Any?) {
+        NSApplication.shared.sendAction(#selector(AppDelegate.openCustomizeSettings), to: nil, from: nil)
+    }
 }

@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // Status bar
     private var statusBarItem: NSStatusItem!
-    private var statusBarMenu: NSMenu!
+    public var statusBarMenu: NSMenu!
     
     // ViewModels
     private var playerManager = PlayerManager()
@@ -131,7 +131,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         KeyboardShortcuts.onKeyUp(for: .showMiniPlayer) {
-            self.toggleState(self.statusBarMenu.item(withTitle: "Show mini player")!)
+            self.toggleMiniPlayer()
         }
     }
     
@@ -145,7 +145,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusBarMenu.addItem(
             withTitle: "Show mini player",
-            action: #selector(toggleState),
+            action: #selector(showHideMiniPlayer),
             keyEquivalent: ""
         )
         .state = showPlayerWindow ? .on : .off
@@ -193,7 +193,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    @IBAction func toggleState(_ sender: NSMenuItem) {
+    @objc func toggleMiniPlayer() {
+        self.showHideMiniPlayer(self.statusBarMenu.item(withTitle: "Show mini player")!)
+    }
+    
+    @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
             showPlayerWindow = false
@@ -295,6 +299,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             animated: true,
             hidesToolbarForSingleItem: true
         ).show()
+    }
+    
+    @objc func openCustomizeSettings(_ sender: AnyObject) {
+        SettingsWindowController(
+            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            style: .toolbarItems,
+            animated: true,
+            hidesToolbarForSingleItem: true
+        ).show(pane: .appearance)
     }
     
     public func showOnboarding() {
