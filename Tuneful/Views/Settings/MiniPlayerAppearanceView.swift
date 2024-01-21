@@ -85,6 +85,7 @@ struct MiniPlayerAppearanceSettingsView: View {
                     }
                     .onChange(of: miniPlayerType) { newValue in
                         self.miniPlayerTypeAppStorage = miniPlayerType
+                        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
                     }
                     .pickerStyle(.radioGroup)
                 }

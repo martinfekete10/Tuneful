@@ -15,10 +15,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
+    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .full
     
     private var onboardingWindow: OnboardingWindow!
     private var shortcutsSetupWindow: OnboardingWindow!
-    private var miniPlayerWindow: MiniPlayerWindow!
+    private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow(width: 300, height: 145)
     private var popover: NSPopover!
     
     // Popover
@@ -256,13 +257,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func setupPopover() {
         let frameSize = NSSize(width: 210, height: 310)
         
-        // Initialize ContentView
         let rootView = PopoverView()
             .environmentObject(self.playerManager)
         let hostedContentView = NSHostingView(rootView: rootView)
         hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
-        // Initialize Popover
         popover = NSPopover()
         popover.contentSize = frameSize
         popover.behavior = .transient
@@ -274,7 +273,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         playerManager.popoverIsShown = popover.isShown
     }
     
-    // Toggle open and close of popover
     @objc func showPopover(_ sender: NSStatusBarButton?) {
         guard let statusBarItemButton = sender else { return }
         
@@ -285,13 +283,46 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Window handlers
     
     @objc func setupMiniPlayer() {
-        if miniPlayerWindow == nil {
-            miniPlayerWindow = MiniPlayerWindow(width: 145, height: 145)
-            let rootView = CompactMiniPlayerView().cornerRadius(15)
+        switch miniPlayerType {
+        case .full:
+            DispatchQueue.main.async {
+                self.miniPlayerWindow.setFrame(NSRect(x: 0, y: 0, width: 300, height: 145), display: true, animate: true)
+            }
+            let rootView = MiniPlayerView()
+                .cornerRadius(15)
                 .environmentObject(self.playerManager)
             let hostedOnboardingView = NSHostingView(rootView: rootView)
             miniPlayerWindow.contentView = hostedOnboardingView
+        case .albumArt:
+            DispatchQueue.main.async {
+                self.miniPlayerWindow.setFrame(NSRect(x: 0, y: 0, width: 145, height: 145), display: true, animate: true)
+            }
+            let rootView = CompactMiniPlayerView()
+                .cornerRadius(15)
+                .environmentObject(self.playerManager)
+            let hostedOnboardingView = NSHostingView(rootView: rootView)
+            miniPlayerWindow.contentView = hostedOnboardingView
+        case .minimal:
+            print("Error")
         }
+//        if miniPlayerWindow == nil {
+//            miniPlayerWindow = MiniPlayerWindow(width: 145, height: 145)
+//            let rootView = CompactMiniPlayerView()
+//                .cornerRadius(15)
+//                .environmentObject(self.playerManager)
+//            let hostedOnboardingView = NSHostingView(rootView: rootView)
+//            miniPlayerWindow.contentView = hostedOnboardingView
+//        }
+//        
+//        DispatchQueue.main.async {
+//            self.miniPlayerWindow.setFrame(NSRect(x: 0, y: 0, width: 300, height: 145), display: true, animate: true)
+//        }
+//        
+//        let rootView = MiniPlayerView()
+//            .cornerRadius(15)
+//            .environmentObject(self.playerManager)
+//        let hostedOnboardingView = NSHostingView(rootView: rootView)
+//        miniPlayerWindow.contentView = hostedOnboardingView
         
         miniPlayerWindow.makeKeyAndOrderFront(nil)
         NSApplication.shared.activate(ignoringOtherApps: true)
