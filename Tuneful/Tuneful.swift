@@ -46,13 +46,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
-    let AppearanceSettingsViewController: () -> SettingsPane = {
+    let MenuBarAppearanceSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
-            identifier: .appearance,
-            title: "Appearance",
-            toolbarIcon: NSImage(systemSymbolName: "paintbrush.pointed.fill", accessibilityDescription: "Appearance settings")!
+            identifier: .menuBarAppearance,
+            title: "Menu bar",
+            toolbarIcon: NSImage(systemSymbolName: "paintbrush.pointed.fill", accessibilityDescription: "Menu bar appearance settings")!
         ) {
-            AppearanceSettingsView()
+            MenuBarAppearanceSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let MiniPlayerAppearanceSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .miniPlayerAppearance,
+            title: "Mini player",
+            toolbarIcon: NSImage(systemSymbolName: "theatermask.and.paintbrush.fill", accessibilityDescription: "Mini player appearance settings")!
+        ) {
+            MiniPlayerAppearanceSettingsView()
         }
 
         return Settings.PaneHostingController(pane: paneView)
@@ -200,13 +212,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
-            showPlayerWindow = false
-            playerManager.timerStopSignal.send()
-            miniPlayerWindow.close()
+            self.showPlayerWindow = false
+            self.playerManager.timerStopSignal.send()
+            self.miniPlayerWindow.close()
         } else {
             sender.state = .on
-            showPlayerWindow = true
-            setupMiniPlayer()
+            self.showPlayerWindow = true
+            self.setupMiniPlayer()
         }
     }
 
@@ -294,20 +306,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            panes: [GeneralSettingsViewController(), MenuBarAppearanceSettingsViewController(), MiniPlayerAppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
         ).show()
     }
     
-    @objc func openCustomizeSettings(_ sender: AnyObject) {
+    @objc func openMiniPlayerAppearanceSettings(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            panes: [GeneralSettingsViewController(), MenuBarAppearanceSettingsViewController(), MiniPlayerAppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
-        ).show(pane: .appearance)
+        ).show(pane: .miniPlayerAppearance)
     }
     
     public func showOnboarding() {

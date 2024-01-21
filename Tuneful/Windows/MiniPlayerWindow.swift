@@ -37,6 +37,6 @@ class MiniPlayerWindow: NSWindow {
     }
     
     @objc func customize(_ sender: Any?) {
-        NSApplication.shared.sendAction(#selector(AppDelegate.openCustomizeSettings), to: nil, from: nil)
+        NSApplication.shared.sendAction(#selector(AppDelegate.openMiniPlayerAppearanceSettings), to: nil, from: nil)
     }
 }

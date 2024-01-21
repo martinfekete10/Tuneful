@@ -1,3 +1,9 @@
+# 1.3.0 - New mini player options and volume adjustments
+* New feature to customize the look of mini player - you can now choose from more mini player designs
+* You can now hide mini player window by right-clicking and choosing Hide window option
+* Mini player is now easier to move around
+* Volume slider now adjusts Apple Music/Spotify instead of system volume
+
 # 1.2.0 - More customisation and Apple Music favorites fix
 * You can now choose if you want to have a transparent background or blurred artwork of current song as a background, both in menu bar popover and mini player window
 * Fixed a bug where songs were not being added to Apple Music favorites after clicking heart button

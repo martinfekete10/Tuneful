@@ -11,7 +11,6 @@ import MediaPlayer
 struct MiniPlayerView: View {
     
     @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
-    
     @EnvironmentObject var playerManager: PlayerManager
 
     var body: some View {

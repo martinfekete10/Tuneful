@@ -38,15 +38,13 @@ struct CompactMiniPlayerView: View {
                     VisualEffectView(material: .popover, blendingMode: .withinWindow)
                 }
                 
-                Button(action: playerManager.openMusicApp) {
-                    Image(nsImage: playerManager.track.albumArt)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: self.imageSize, height: self.imageSize)
-                        .cornerRadius(8)
-                        .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
-                }
-                .pressButtonStyle()
+                Image(nsImage: playerManager.track.albumArt)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: self.imageSize, height: self.imageSize)
+                    .cornerRadius(8)
+                    .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                    .dragWindowWithClick()
 
                 HStack(spacing: 8) {
                     if playerManager.isLikeAuthorized() {
