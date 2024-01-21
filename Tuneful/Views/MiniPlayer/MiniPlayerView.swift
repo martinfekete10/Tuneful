@@ -40,6 +40,7 @@ struct MiniPlayerView: View {
                         .scaledToFill()
                         .frame(width: self.imageSize, height: self.imageSize)
                         .cornerRadius(8)
+                        .padding(.leading, 10)
                         .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                         .dragWindowWithClick()
                         .gesture(
@@ -98,5 +99,13 @@ struct MiniPlayerView: View {
                 view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
             }
         }
+    }
+}
+
+struct MiniPlayerView_Previews: PreviewProvider {
+    static var previews: some View {
+        MiniPlayerView()
+            .previewLayout(.device)
+            .padding()
     }
 }
