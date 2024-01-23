@@ -8,7 +8,7 @@
 import SwiftUI
 import Settings
 
-struct AppearanceSettingsView: View {
+struct MenuBarAppearanceSettingsView: View {
     
     @AppStorage("showSongInfo") var showSongInfoAppStorage: Bool = true
     @AppStorage("showMenuBarIcon") var showMenuBarIconAppStorage: Bool = true
@@ -16,7 +16,6 @@ struct AppearanceSettingsView: View {
     @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt
     @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
     @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
-    @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
@@ -26,7 +25,6 @@ struct AppearanceSettingsView: View {
     @State var statusBarIcon: StatusBarIcon
     @State var trackInfoDetails: StatusBarTrackDetails
     @State var popoverBackground: BackgroundType
-    @State var miniPlayerBackground: BackgroundType
     
     init() {
         @AppStorage("showSongInfo") var showSongInfoAppStorage: Bool = true
@@ -35,7 +33,6 @@ struct AppearanceSettingsView: View {
         @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt
         @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
         @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
-        @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
         
         self.showSongInfo = showSongInfoAppStorage
         self.showMenuBarIcon = showMenuBarIconAppStorage
@@ -43,7 +40,6 @@ struct AppearanceSettingsView: View {
         self.statusBarIcon = statusBarIconAppStorage
         self.trackInfoDetails = trackInfoDetailsAppStorage
         self.popoverBackground = popoverBackgroundAppStorage
-        self.miniPlayerBackground = miniPlayerBackgroundAppStorage
     }
 
     var body: some View {
@@ -63,8 +59,23 @@ struct AppearanceSettingsView: View {
                         self.statusBarIconAppStorage = statusBarIcon
                         self.sendTrackChangedNotification()
                     }
-                    .pickerStyle(.menu)
+                    .pickerStyle(.segmented)
                     .disabled(!showMenuBarIcon)
+                    .frame(width: 200)
+                }
+                
+                Settings.Section(label: {
+                    Text("Popover background")
+                }) {
+                    Picker("", selection: $popoverBackground) {
+                        ForEach(BackgroundType.allCases, id: \.self) { value in
+                            Text(value.localizedName).tag(value)
+                        }
+                    }
+                    .onChange(of: popoverBackground) { newValue in
+                        self.popoverBackgroundAppStorage = popoverBackground
+                    }
+                    .pickerStyle(.segmented)
                     .frame(width: 200)
                 }
                 
@@ -142,47 +153,7 @@ struct AppearanceSettingsView: View {
                     }
                 }
             }
-            
-            Settings.Section(title: "") {
-                Divider()
-                    .padding(.top, -5)
-            }
-            
-            Settings.Container(contentWidth: 400) {
-                
-                Settings.Section(label: {
-                    Text("Popover background")
-                }) {
-                    Picker("", selection: $popoverBackground) {
-                        ForEach(BackgroundType.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .onChange(of: popoverBackground) { newValue in
-                        self.popoverBackgroundAppStorage = popoverBackground
-                    }
-                    .pickerStyle(.menu)
-                    .frame(width: 200)
-                }
-                
-                Settings.Section(label: {
-                    Text("Mini player background")
-                }) {
-                    Picker("", selection: $miniPlayerBackground) {
-                        ForEach(BackgroundType.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .onChange(of: miniPlayerBackground) { newValue in
-                        self.miniPlayerBackgroundAppStorage = miniPlayerBackground
-                    }
-                    .pickerStyle(.menu)
-                    .frame(width: 200)
-                }
-            }
-            .padding(.leading, 50)
         }
-        .padding(.bottom, 15)
     }
     
     private func sendTrackChangedNotification() {
@@ -190,9 +161,9 @@ struct AppearanceSettingsView: View {
     }
 }
 
-struct AppearanceSettingsView_Previews: PreviewProvider {
+struct MenuBarAppearanceSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        AppearanceSettingsView()
+        MenuBarAppearanceSettingsView()
             .previewLayout(.device)
             .padding()
     }

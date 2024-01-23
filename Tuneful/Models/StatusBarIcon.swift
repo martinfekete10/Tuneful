@@ -8,8 +8,8 @@
 import SwiftUI
 
 enum StatusBarIcon: String, Equatable, CaseIterable {
-    case albumArt = "Album Art"
-    case appIcon = "App Icon"
+    case albumArt = "Album art"
+    case appIcon = "App icon"
     
     var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
 }

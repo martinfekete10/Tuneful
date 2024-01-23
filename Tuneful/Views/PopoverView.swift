@@ -34,8 +34,11 @@ struct PopoverView: View {
                     // Media details
                     VStack(spacing: 0) {
                         
-                        AlbumArtView(imageSize: 185)
-                            .padding(.top, 12)
+                        Button(action: playerManager.openMusicApp) {
+                            AlbumArtView(imageSize: 185)
+                                .padding(.top, 12)
+                        }
+                        .pressButtonStyle()
 
                         // Track details
                         Button(action: playerManager.openMusicApp) {

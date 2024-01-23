@@ -74,6 +74,8 @@ extension SBApplication: SpotifyApplication {}
     @objc optional var albumArtist: String { get } // That album artist of the track.
     @objc optional var spotifyUrl: String { get } // The URL of the track.
     @objc optional func setSpotifyUrl(_ spotifyUrl: String!) // The URL of the track.
+    
+    @objc optional func setStarred(_ starred: Bool) // The URL of the track.
 }
 extension SBObject: SpotifyTrack {}
 

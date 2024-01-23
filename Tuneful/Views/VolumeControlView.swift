@@ -30,7 +30,7 @@ struct VolumeControlView: View {
             CustomSliderView(
                 value: $playerManager.volume,
                 isDragging: $playerManager.isDraggingSoundVolumeSlider,
-                range: 0...1,
+                range: 0...100,
                 knobDiameter: 5,
                 knobColor: .white,
                 knobScaleEffectMagnitude: 1.5,
@@ -47,7 +47,7 @@ struct VolumeControlView: View {
             .pressButtonStyle()
         }
         .onChange(of: playerManager.volume, perform: { newVolume in
-            playerManager.setVolume(newVolume: newVolume)
+            playerManager.setVolume(newVolume: Int(newVolume))
         })
         .padding(.leading, 2)
         .padding(.trailing, 2)

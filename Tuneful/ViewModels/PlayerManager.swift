@@ -67,7 +67,7 @@ class PlayerManager: ObservableObject {
     var formattedPlaybackPosition = PlayerManager.noPlaybackPositionPlaceholder
     
     // Volume
-    @Published var volume: CGFloat = CGFloat(Sound.output.volume)
+    @Published var volume: CGFloat = 50.0
     @Published var isDraggingSoundVolumeSlider = false
     
     // Audio devices
@@ -102,7 +102,7 @@ class PlayerManager: ObservableObject {
             )
             .autoconnect()
             .sink { _ in
-                self.volume = CGFloat(Sound.output.volume)
+                self.getVolume()
                 self.getCurrentSeekerPosition()
             }
         }
@@ -179,7 +179,7 @@ class PlayerManager: ObservableObject {
             self.timerStartSignal.send()
         }
         self.audioDevices = AudioDevice.output.filter{ $0.transportType != .virtual }
-        self.volume = CGFloat(Sound.output.volume)
+        self.getVolume()
         popoverIsShown = true
     }
 
@@ -210,7 +210,7 @@ class PlayerManager: ObservableObject {
     }
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
-
+        
         let isRunningFromNotification = sender?.userInfo?["Player State"] as? String != "Stopped" && isRunning
         
         print("The play state or the currently playing track changed")
@@ -375,9 +375,9 @@ class PlayerManager: ObservableObject {
     func toggleLoveTrack() {
         switch connectedApp {
         case .appleMusic:
-            toggleAppleMusicLove()
+            self.toggleAppleMusicLove()
         case .spotify:
-            return
+            self.sendNotification(title: "Error", message: "Adding songs to favorites is not supported for Spotify yet")
         }
     }
     
@@ -491,43 +491,44 @@ class PlayerManager: ObservableObject {
     
     // MARK: - Volume
     
-    func setVolume(newVolume: CGFloat) {
-        do {
-            try Sound.output.setVolume(Float(newVolume))
-        } catch {
-            self.sendNotification(title: "Volume not set", message: "Error setting the volume for output device")
+    func getVolume() {
+        switch connectedApp {
+        case .spotify:
+            self.volume = CGFloat(spotifyApp?.soundVolume ?? 50)
+        case .appleMusic:
+            self.volume = CGFloat(appleMusicApp?.soundVolume ?? 50)
+        }
+    }
+    
+    func setVolume(newVolume: Int) {
+        var newVolume = newVolume
+        if newVolume > 100 { newVolume = 100 }
+        if newVolume < 0 { newVolume = 0 }
+        
+        switch connectedApp {
+        case .spotify:
+            self.spotifyApp?.setSoundVolume?(newVolume)
+        case .appleMusic:
+            self.appleMusicApp?.setSoundVolume?(newVolume)
         }
     }
     
     func increaseVolume() {
-        var newVolume = volume + 0.1
-        if newVolume > 1.0 {
-            newVolume = 1.0
-        }
+        let newVolume = Int(self.volume) + 10
         
-        do {
-            try Sound.output.setVolume(Float(newVolume))
-            volume = newVolume
-        } catch {
-            self.sendNotification(title: "Volume not set", message: "Error setting the volume for output device")
-        }
+        self.setVolume(newVolume: newVolume)
+        self.volume = CGFloat(newVolume)
     }
     
     func decreaseVolume() {
-        var newVolume = volume - 0.1
-        if newVolume < 0.0 {
-            newVolume = 0.0
-        }
+        let newVolume = Int(self.volume) - 10
         
-        do {
-            try Sound.output.setVolume(Float(newVolume))
-            volume = newVolume
-        } catch {
-            self.sendNotification(title: "Volume not set", message: "Error setting the volume for output device")
-        }
+        self.setVolume(newVolume: newVolume)
+        self.volume = CGFloat(newVolume)
     }
     
     // MARK: - Audio device
+    
     func setOutputDevice(audioDevice: AudioDevice) {
         do {
             try AudioDevice.setDefaultDevice(for: .output, device: audioDevice)
@@ -561,26 +562,11 @@ class PlayerManager: ObservableObject {
     }
     
     func isLikeAuthorized() -> Bool {
-        if connectedApp == .appleMusic {
+        switch connectedApp {
+        case .spotify:
+            return false
+        case .appleMusic:
             return true
-        }
-        
-        return false
-    }
-    
-    // MARK: - Alert
-    
-    func showAppModalAlert(
-        title: String,
-        message: String
-    ) {
-        let alert = NSAlert()
-        alert.messageText = title
-        alert.informativeText = message
-        
-        let response = alert.runModal()
-        if response.rawValue == 0 {
-            NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil);
         }
     }
 }

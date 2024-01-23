@@ -20,4 +20,22 @@ extension View {
             self
         }
     }
+    
+    func dragWindowWithClick() -> some View {
+        self.overlay(DragWindowNSRepr())
+    }
+}
+
+fileprivate struct DragWindowNSRepr: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSView {
+        return DragWndNSView()
+    }
+    
+    func updateNSView(_ nsView: NSView, context: Context) { }
+}
+
+fileprivate class DragWndNSView: NSView {
+    override public func mouseDown(with event: NSEvent) {
+        window?.performDrag(with: event)
+    }
 }

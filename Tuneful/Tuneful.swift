@@ -15,10 +15,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
+    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     
     private var onboardingWindow: OnboardingWindow!
     private var shortcutsSetupWindow: OnboardingWindow!
-    private var miniPlayerWindow: MiniPlayerWindow!
+    private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
     private var popover: NSPopover!
     
     // Popover
@@ -27,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // Status bar
     private var statusBarItem: NSStatusItem!
-    private var statusBarMenu: NSMenu!
+    public var statusBarMenu: NSMenu!
     
     // ViewModels
     private var playerManager = PlayerManager()
@@ -46,13 +47,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
-    let AppearanceSettingsViewController: () -> SettingsPane = {
+    let MenuBarAppearanceSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
-            identifier: .appearance,
-            title: "Appearance",
-            toolbarIcon: NSImage(systemSymbolName: "paintbrush.pointed.fill", accessibilityDescription: "Appearance settings")!
+            identifier: .menuBarAppearance,
+            title: "Menu bar",
+            toolbarIcon: NSImage(systemSymbolName: "menubar.rectangle", accessibilityDescription: "Menu bar appearance settings")!
         ) {
-            AppearanceSettingsView()
+            MenuBarAppearanceSettingsView()
+        }
+
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let MiniPlayerAppearanceSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .miniPlayerAppearance,
+            title: "Mini player",
+            toolbarIcon: NSImage(systemSymbolName: "play.rectangle.on.rectangle.fill", accessibilityDescription: "Mini player appearance settings")!
+        ) {
+            MiniPlayerAppearanceSettingsView()
         }
 
         return Settings.PaneHostingController(pane: paneView)
@@ -131,7 +144,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         KeyboardShortcuts.onKeyUp(for: .showMiniPlayer) {
-            self.toggleState(self.statusBarMenu.item(withTitle: "Show mini player")!)
+            self.toggleMiniPlayer()
         }
     }
     
@@ -145,7 +158,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusBarMenu.addItem(
             withTitle: "Show mini player",
-            action: #selector(toggleState),
+            action: #selector(showHideMiniPlayer),
             keyEquivalent: ""
         )
         .state = showPlayerWindow ? .on : .off
@@ -193,16 +206,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    @IBAction func toggleState(_ sender: NSMenuItem) {
+    @objc func toggleMiniPlayer() {
+        self.showHideMiniPlayer(self.statusBarMenu.item(withTitle: "Show mini player")!)
+    }
+    
+    @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
-            showPlayerWindow = false
-            playerManager.timerStopSignal.send()
-            miniPlayerWindow.close()
+            self.showPlayerWindow = false
+            self.playerManager.timerStopSignal.send()
+            self.miniPlayerWindow.close()
         } else {
             sender.state = .on
-            showPlayerWindow = true
-            setupMiniPlayer()
+            self.showPlayerWindow = true
+            self.setupMiniPlayer()
         }
     }
 
@@ -240,13 +257,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func setupPopover() {
         let frameSize = NSSize(width: 210, height: 310)
         
-        // Initialize ContentView
         let rootView = PopoverView()
             .environmentObject(self.playerManager)
         let hostedContentView = NSHostingView(rootView: rootView)
         hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
-        // Initialize Popover
         popover = NSPopover()
         popover.contentSize = frameSize
         popover.behavior = .transient
@@ -258,7 +273,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         playerManager.popoverIsShown = popover.isShown
     }
     
-    // Toggle open and close of popover
     @objc func showPopover(_ sender: NSStatusBarButton?) {
         guard let statusBarItemButton = sender else { return }
         
@@ -266,15 +280,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSApplication.shared.activate(ignoringOtherApps: true)
     }
     
-    // MARK: - Window handlers
+    // MARK: - Mini player
     
     @objc func setupMiniPlayer() {
-        if miniPlayerWindow == nil {
-            miniPlayerWindow = MiniPlayerWindow()
-            let rootView = MiniPlayerView().cornerRadius(15)
-                .environmentObject(self.playerManager)
-            let hostedOnboardingView = NSHostingView(rootView: rootView)
-            miniPlayerWindow.contentView = hostedOnboardingView
+        let originalWindowPosition = miniPlayerWindow.frame.origin
+        let windowPosition = CGPoint(x: originalWindowPosition.x, y: originalWindowPosition.y + 10) // Not sure why, but everytime this function is called, window moves down a few pixels, thus this ugly workaround
+
+        switch miniPlayerType {
+        case .full:
+            setupMiniPlayerWindow(size: NSSize(width: 300, height: 145), position: windowPosition, view: MiniPlayerView(parentWindow: miniPlayerWindow))
+        case .minimal:
+            setupMiniPlayerWindow(size: NSSize(width: 145, height: 145), position: windowPosition, view: CompactMiniPlayerView(parentWindow: miniPlayerWindow))
         }
         
         miniPlayerWindow.makeKeyAndOrderFront(nil)
@@ -287,15 +303,39 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             miniPlayerWindow.close()
         }
     }
+
+    private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
+        DispatchQueue.main.async {
+            self.miniPlayerWindow.setFrame(NSRect(origin: position, size: size), display: true, animate: true)
+        }
+        
+        let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
+        let hostedOnboardingView = NSHostingView(rootView: rootView)
+        miniPlayerWindow.contentView = hostedOnboardingView
+    }
+
+    
+    // MARK: - Settings
     
     @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), AppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            panes: [GeneralSettingsViewController(), MenuBarAppearanceSettingsViewController(), MiniPlayerAppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
         ).show()
     }
+    
+    @objc func openMiniPlayerAppearanceSettings(_ sender: AnyObject) {
+        SettingsWindowController(
+            panes: [GeneralSettingsViewController(), MenuBarAppearanceSettingsViewController(), MiniPlayerAppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            style: .toolbarItems,
+            animated: true,
+            hidesToolbarForSingleItem: true
+        ).show(pane: .miniPlayerAppearance)
+    }
+    
+    // MARK: - Setup
     
     public func showOnboarding() {
         if onboardingWindow == nil {

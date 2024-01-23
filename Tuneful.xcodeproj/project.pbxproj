@@ -41,6 +41,9 @@
 		FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
+		FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */; };
+		FEE486E72B5D51FB00AB712F /* MiniPlayerAppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E62B5D51FB00AB712F /* MiniPlayerAppearanceView.swift */; };
+		FEE486E92B5D677400AB712F /* MiniPlayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E82B5D677400AB712F /* MiniPlayerType.swift */; };
 		FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */; };
 		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
 		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
@@ -51,7 +54,7 @@
 		FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A742AF8010300CE4981 /* Sparkle */; };
 		FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */; };
 		FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */; };
-		FEFFE54D2B49EF97000887B5 /* AppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* AppearanceSettingsView.swift */; };
+		FEFFE54D2B49EF97000887B5 /* MenuBarAppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* MenuBarAppearanceSettingsView.swift */; };
 		FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = FEFFE54F2B4AA04B000887B5 /* Settings */; };
 		FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */; };
 		FEFFE5552B4FDF96000887B5 /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5542B4FDF96000887B5 /* CGFloat+Extension.swift */; };
@@ -97,6 +100,9 @@
 		FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsSetupView.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMiniPlayerView.swift; sourceTree = "<group>"; };
+		FEE486E62B5D51FB00AB712F /* MiniPlayerAppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerAppearanceView.swift; sourceTree = "<group>"; };
+		FEE486E82B5D677400AB712F /* MiniPlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerType.swift; sourceTree = "<group>"; };
 		FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSettingsView.swift; sourceTree = "<group>"; };
 		FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extension.swift"; sourceTree = "<group>"; };
 		FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlView.swift; sourceTree = "<group>"; };
@@ -104,7 +110,7 @@
 		FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
 		FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarItemManager.swift; sourceTree = "<group>"; };
 		FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
-		FEFFE54C2B49EF97000887B5 /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
+		FEFFE54C2B49EF97000887B5 /* MenuBarAppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarAppearanceSettingsView.swift; sourceTree = "<group>"; };
 		FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarTrackDetails.swift; sourceTree = "<group>"; };
 		FEFFE5542B4FDF96000887B5 /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		FEFFE5582B4FE00D000887B5 /* NSError+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Extension.swift"; sourceTree = "<group>"; };
@@ -139,8 +145,8 @@
 		FE3189DB2A7B9D0B006B2D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FEE486E32B5D173A00AB712F /* MiniPlayer */,
 				FEF0660A2B51905200A514F2 /* Settings */,
-				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
 				FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */,
 				FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */,
 				FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */,
@@ -228,6 +234,7 @@
 				FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */,
 				FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */,
 				FEBA3D012B5824D700E25A67 /* BackgroundType.swift */,
+				FEE486E82B5D677400AB712F /* MiniPlayerType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -274,13 +281,23 @@
 			path = AudioDevices;
 			sourceTree = "<group>";
 		};
+		FEE486E32B5D173A00AB712F /* MiniPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
+				FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */,
+			);
+			path = MiniPlayer;
+			sourceTree = "<group>";
+		};
 		FEF0660A2B51905200A514F2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				FEFFE54C2B49EF97000887B5 /* AppearanceSettingsView.swift */,
+				FEFFE54C2B49EF97000887B5 /* MenuBarAppearanceSettingsView.swift */,
 				FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */,
 				FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */,
 				FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */,
+				FEE486E62B5D51FB00AB712F /* MiniPlayerAppearanceView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -396,7 +413,8 @@
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
 				FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
-				FEFFE54D2B49EF97000887B5 /* AppearanceSettingsView.swift in Sources */,
+				FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */,
+				FEFFE54D2B49EF97000887B5 /* MenuBarAppearanceSettingsView.swift in Sources */,
 				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
@@ -408,6 +426,7 @@
 				FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */,
 				FE6BFD032A73AB9A00D3321F /* SpotifyApplication.swift in Sources */,
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,
+				FEE486E72B5D51FB00AB712F /* MiniPlayerAppearanceView.swift in Sources */,
 				FEFFE5592B4FE00D000887B5 /* NSError+Extension.swift in Sources */,
 				FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */,
 				FEFFE55D2B4FE051000887B5 /* Comparable+Extension.swift in Sources */,
@@ -418,6 +437,7 @@
 				FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */,
 				FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */,
 				FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */,
+				FEE486E92B5D677400AB712F /* MiniPlayerType.swift in Sources */,
 				FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */,
 				FEFFE5552B4FDF96000887B5 /* CGFloat+Extension.swift in Sources */,
 				FE6BFD0A2A73B23700D3321F /* UserDefaults+Extension.swift in Sources */,
