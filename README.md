@@ -26,35 +26,21 @@ Tuneful provides a convenient way to control music playback for both Spotify and
 
 ## Screenshots
 
-Popover view in menu bar:
-
 <p align="center">
   <img width="420" src="docs/images/playback.png">
 </p>
 
-You can choose from 2 types of mini player window styles - full-sized one and a minimal:
-
 <p align="center">
-  <img width="390" src="docs/images/miniplayer-full.png">
+  <img height="250" src="docs/images/miniplayer-full.png">
+  <img height="250" src="docs/images/miniplayer-minimal.png">
 </p>
 
-<p align="center">
-  <img width="250" src="docs/images/miniplayer-minimal.png">
-</p>
 
 ## Settings
-Tuneful provides several ways to control your music playback and most settings are customizable.
-
 <p align="center">
-  <img width="410" src="docs/images/menu-bar-settings.png">
-</p>
-
-<p align="center">
-  <img width="410" src="docs/images/mini-player-settings.png">
-</p>
-
-<p align="center">
-  <img width="410" src="docs/images/keyboard-settings.png">
+  <img width="520" src="docs/images/menu-bar-settings.png">
+  <img width="520" src="docs/images/mini-player-settings.png">
+  <img width="520" src="docs/images/keyboard-settings.png">
 </p>
 
 ## Features
