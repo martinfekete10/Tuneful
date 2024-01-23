@@ -59,8 +59,23 @@ struct MenuBarAppearanceSettingsView: View {
                         self.statusBarIconAppStorage = statusBarIcon
                         self.sendTrackChangedNotification()
                     }
-                    .pickerStyle(.menu)
+                    .pickerStyle(.segmented)
                     .disabled(!showMenuBarIcon)
+                    .frame(width: 200)
+                }
+                
+                Settings.Section(label: {
+                    Text("Popover background")
+                }) {
+                    Picker("", selection: $popoverBackground) {
+                        ForEach(BackgroundType.allCases, id: \.self) { value in
+                            Text(value.localizedName).tag(value)
+                        }
+                    }
+                    .onChange(of: popoverBackground) { newValue in
+                        self.popoverBackgroundAppStorage = popoverBackground
+                    }
+                    .pickerStyle(.segmented)
                     .frame(width: 200)
                 }
                 
@@ -138,32 +153,7 @@ struct MenuBarAppearanceSettingsView: View {
                     }
                 }
             }
-            
-            Settings.Section(title: "") {
-                Divider()
-                    .padding(.top, -5)
-            }
-            
-            Settings.Container(contentWidth: 400) {
-                
-                Settings.Section(label: {
-                    Text("Popover background")
-                }) {
-                    Picker("", selection: $popoverBackground) {
-                        ForEach(BackgroundType.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .onChange(of: popoverBackground) { newValue in
-                        self.popoverBackgroundAppStorage = popoverBackground
-                    }
-                    .pickerStyle(.menu)
-                    .frame(width: 200)
-                }
-            }
-            .padding(.leading, 50)
         }
-        .padding(.bottom, 15)
     }
     
     private func sendTrackChangedNotification() {

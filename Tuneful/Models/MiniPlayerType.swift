@@ -10,7 +10,6 @@ import SwiftUI
 enum MiniPlayerType: String, Equatable, CaseIterable {
     
     case full = "Full"
-    case albumArt = "Album art"
     case minimal = "Minimal"
     
     var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }

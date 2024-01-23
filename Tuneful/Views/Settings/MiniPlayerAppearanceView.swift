@@ -12,7 +12,7 @@ struct MiniPlayerAppearanceSettingsView: View {
     
     @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
     @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = false
-    @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .full
+    @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .minimal
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
@@ -23,7 +23,7 @@ struct MiniPlayerAppearanceSettingsView: View {
     init() {
         @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
         @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = false
-        @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .full
+        @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .minimal
 
         self.miniPlayerBackground = miniPlayerBackgroundAppStorage
         self.showPlayerWindow = showPlayerWindowAppStorage
@@ -32,8 +32,7 @@ struct MiniPlayerAppearanceSettingsView: View {
     
     var body: some View {
         VStack {
-            Settings.Container(contentWidth: 500) {
-                
+            Settings.Container(contentWidth: 400) {
                 Settings.Section(label: {
                     Text("Show mini player window")
                 }) {
@@ -57,7 +56,7 @@ struct MiniPlayerAppearanceSettingsView: View {
                     .onChange(of: miniPlayerBackground) { newValue in
                         self.miniPlayerBackgroundAppStorage = miniPlayerBackground
                     }
-                    .pickerStyle(.menu)
+                    .pickerStyle(.segmented)
                     .frame(width: 200)
                 }
                 
@@ -65,32 +64,30 @@ struct MiniPlayerAppearanceSettingsView: View {
                     Text("Window style")
                 }) {
                     Picker(selection: $miniPlayerType, label: Text("")) {
-                        Image(.fullMiniPlayer)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 250)
-                            .tag(MiniPlayerType.full)
-                        
-                        Image(.fullMiniPlayer)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150)
-                            .tag(MiniPlayerType.albumArt)
-                        
-//                        Image(.fullMiniPlayer)
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 150)
-//                            .tag(MiniPlayerType.minimal)
+                        ForEach(MiniPlayerType.allCases, id: \.self) { value in
+                            Text(value.localizedName).tag(value)
+                        }
                     }
-                    .onChange(of: miniPlayerType) { newValue in
+                    .pickerStyle(.segmented)
+                    .frame(width: 200)
+                    .onChange(of: miniPlayerType) { _ in
                         self.miniPlayerTypeAppStorage = miniPlayerType
                         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
                     }
-                    .pickerStyle(.radioGroup)
+
                 }
             }
         }
+    }
+}
+
+struct BorderModifier: ViewModifier {
+    var selectedMiniPlayer: MiniPlayerType?
+    var miniPlayerType: MiniPlayerType
+
+    func body(content: Content) -> some View {
+        content
+            .border(selectedMiniPlayer == miniPlayerType ? Color.blue : Color.clear, width: 2)
     }
 }
 

@@ -21,31 +21,31 @@ struct MiniPlayerView: View {
     }
 
     var body: some View {
-        if !playerManager.isRunning {
-            Text("Please open \(playerManager.name) to use Tuneful")
-                .foregroundColor(.primary.opacity(0.4))
-                .font(.system(size: 14, weight: .regular))
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .multilineTextAlignment(.center)
-                .padding(15)
-                .padding(.bottom, 20)
-        } else {
-            ZStack {
-                if miniPlayerBackground == .albumArt && playerManager.isRunning {
-                    Image(nsImage: playerManager.track.albumArt)
-                        .resizable()
-                        .scaledToFill()
-                    
-                    VisualEffectView(material: .popover, blendingMode: .withinWindow)
-                }
-                
+        
+        ZStack {
+            if miniPlayerBackground == .albumArt && playerManager.isRunning {
+                Image(nsImage: playerManager.track.albumArt)
+                    .resizable()
+                    .scaledToFill()
+                VisualEffectView(material: .popover, blendingMode: .withinWindow)
+            }
+            
+            if !playerManager.isRunning {
+                Text("Please open \(playerManager.name) to use Tuneful")
+                    .foregroundColor(.primary.opacity(0.4))
+                    .font(.system(size: 14, weight: .regular))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .multilineTextAlignment(.center)
+                    .padding(15)
+                    .padding(.bottom, 20)
+            } else {
                 HStack {
                     Image(nsImage: playerManager.track.albumArt)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: self.imageSize, height: self.imageSize)
                         .cornerRadius(8)
-                        .padding(.leading, 10)
+                        .frame(width: self.imageSize, height: self.imageSize)
+                        .padding(.leading, 7)
                         .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                         .dragWindowWithClick()
                         .gesture(
@@ -96,13 +96,13 @@ struct MiniPlayerView: View {
                     .opacity(0.8)
                 }
             }
-            .frame(width: 310, height: 155)
-            .overlay(
-                NotificationView()
-            )
-            .if(miniPlayerBackground == .transparent) { view in
-                view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
-            }
+        }
+        .frame(width: 310, height: 155)
+        .overlay(
+            NotificationView()
+        )
+        .if(miniPlayerBackground == .transparent || !playerManager.isRunning) { view in
+            view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
         }
     }
 }

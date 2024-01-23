@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
-    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .full
+    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     
     private var onboardingWindow: OnboardingWindow!
     private var shortcutsSetupWindow: OnboardingWindow!
@@ -51,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let paneView = Settings.Pane(
             identifier: .menuBarAppearance,
             title: "Menu bar",
-            toolbarIcon: NSImage(systemSymbolName: "paintbrush.pointed.fill", accessibilityDescription: "Menu bar appearance settings")!
+            toolbarIcon: NSImage(systemSymbolName: "menubar.rectangle", accessibilityDescription: "Menu bar appearance settings")!
         ) {
             MenuBarAppearanceSettingsView()
         }
@@ -63,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let paneView = Settings.Pane(
             identifier: .miniPlayerAppearance,
             title: "Mini player",
-            toolbarIcon: NSImage(systemSymbolName: "theatermask.and.paintbrush.fill", accessibilityDescription: "Mini player appearance settings")!
+            toolbarIcon: NSImage(systemSymbolName: "play.rectangle.on.rectangle.fill", accessibilityDescription: "Mini player appearance settings")!
         ) {
             MiniPlayerAppearanceSettingsView()
         }
@@ -284,15 +284,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func setupMiniPlayer() {
         let originalWindowPosition = miniPlayerWindow.frame.origin
-        let windowPosition = CGPoint(x: originalWindowPosition.x, y: originalWindowPosition.y + 15) // Not sure why, but everytime this function is called, window moves down 15 pixels, thus this ugly workaround
+        let windowPosition = CGPoint(x: originalWindowPosition.x, y: originalWindowPosition.y + 10) // Not sure why, but everytime this function is called, window moves down a few pixels, thus this ugly workaround
 
         switch miniPlayerType {
         case .full:
             setupMiniPlayerWindow(size: NSSize(width: 300, height: 145), position: windowPosition, view: MiniPlayerView(parentWindow: miniPlayerWindow))
-        case .albumArt:
-            setupMiniPlayerWindow(size: NSSize(width: 145, height: 145), position: windowPosition, view: CompactMiniPlayerView(parentWindow: miniPlayerWindow))
         case .minimal:
-            print("Error")
+            setupMiniPlayerWindow(size: NSSize(width: 145, height: 145), position: windowPosition, view: CompactMiniPlayerView(parentWindow: miniPlayerWindow))
         }
         
         miniPlayerWindow.makeKeyAndOrderFront(nil)

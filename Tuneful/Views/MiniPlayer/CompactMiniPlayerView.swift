@@ -25,29 +25,28 @@ struct CompactMiniPlayerView: View {
     }
 
     var body: some View {
-        if !playerManager.isRunning {
-            Text("Please open \(playerManager.name) to use Tuneful")
-                .foregroundColor(.primary.opacity(0.4))
-                .font(.system(size: 14, weight: .regular))
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .multilineTextAlignment(.center)
-                .padding(15)
-                .padding(.bottom, 20)
-        } else {
-            ZStack {
-                if miniPlayerBackground == .albumArt && playerManager.isRunning {
-                    Image(nsImage: playerManager.track.albumArt)
-                        .resizable()
-                        .scaledToFill()
-                    
-                    VisualEffectView(material: .popover, blendingMode: .withinWindow)
-                }
-                
+        ZStack {
+            if miniPlayerBackground == .albumArt && playerManager.isRunning {
                 Image(nsImage: playerManager.track.albumArt)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: self.imageSize, height: self.imageSize)
+                VisualEffectView(material: .popover, blendingMode: .withinWindow)
+            }
+            
+            if !playerManager.isRunning {
+                Text("Please open \(playerManager.name) to use Tuneful")
+                    .foregroundColor(.primary.opacity(0.4))
+                    .font(.system(size: 14, weight: .regular))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .multilineTextAlignment(.center)
+                    .padding(15)
+                    .padding(.bottom, 20)
+            } else {
+                Image(nsImage: playerManager.track.albumArt)
+                    .resizable()
+                    .scaledToFill()
                     .cornerRadius(8)
+                    .frame(width: self.imageSize, height: self.imageSize)
                     .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                     .dragWindowWithClick()
                     .gesture(
@@ -55,12 +54,6 @@ struct CompactMiniPlayerView: View {
                             self.playerManager.openMusicApp()
                         }
                     )
-                
-                Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 16))
-                    .foregroundColor(.secondary)
-                    .offset(x: -self.imageSize / 2 + 10, y: -self.imageSize / 2 + 10)
-                    .opacity(isShowingPlaybackControls ? 1 : 0)
 
                 HStack(spacing: 8) {
                     if playerManager.isLikeAuthorized() {
@@ -98,18 +91,18 @@ struct CompactMiniPlayerView: View {
                 .cornerRadius(cornerRadius)
                 .opacity(isShowingPlaybackControls ? 1 : 0)
             }
-            .frame(width: 155, height: 155)
-            .onHover { _ in
-                withAnimation(.linear(duration: 0.1)) {
-                    self.isShowingPlaybackControls.toggle()
-                }
+        }
+        .frame(width: 155, height: 155)
+        .onHover { _ in
+            withAnimation(.linear(duration: 0.1)) {
+                self.isShowingPlaybackControls.toggle()
             }
-            .overlay(
-                NotificationView()
-            )
-            .if(miniPlayerBackground == .transparent) { view in
-                view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
-            }
+        }
+        .overlay(
+            NotificationView()
+        )
+        .if(miniPlayerBackground == .transparent || !playerManager.isRunning) { view in
+            view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
         }
     }
 }

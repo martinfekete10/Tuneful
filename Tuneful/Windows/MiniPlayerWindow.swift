@@ -10,7 +10,7 @@ import AppKit
 
 class MiniPlayerWindow: NSWindow {
     
-    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .full
+    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     
     init() {
         super.init(
@@ -37,8 +37,7 @@ class MiniPlayerWindow: NSWindow {
         let customizeMenu = NSMenu()
 
         customizeMenu.addItem(withTitle: "Full", action: #selector(setFullPlayer(_:)), keyEquivalent: "")
-        customizeMenu.addItem(withTitle: "Album art", action: #selector(setAlbumArtPlayer(_:)), keyEquivalent: "")
-        customizeMenu.addItem(withTitle: "Minimal", action: #selector(setMinimalPlayer(_:)), keyEquivalent: "")
+        customizeMenu.addItem(withTitle: "Minimal", action: #selector(setAlbumArtPlayer(_:)), keyEquivalent: "")
 
         customizeMenuItem.submenu = customizeMenu
         menu.addItem(customizeMenuItem)
@@ -53,11 +52,6 @@ class MiniPlayerWindow: NSWindow {
     }
 
     @objc func setAlbumArtPlayer(_ sender: Any) {
-        miniPlayerType = .albumArt
-        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
-    }
-    
-    @objc func setMinimalPlayer(_ sender: Any) {
         miniPlayerType = .minimal
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }

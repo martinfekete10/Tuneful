@@ -6,8 +6,12 @@
   <h3 align="center">Tuneful</h3>
 
   <p align="center">
-    Tuneful is a native macOS menu bar playback control app for Spotify and Apple Music
+    Tuneful is a native macOS menu bar playback control app for Spotify and Apple Music. Tuneful also provides a mini player window that is always visible.
     <br />
+    <a href="https://martinfekete.com/Tuneful/">Website</a>
+    ·
+    <a href="https://ko-fi.com/martinfekete">Support</a>
+    ·
     <a href="https://github.com/martinfekete10/Tuneful/issues">Report Bug</a>
     ·
     <a href="https://github.com/martinfekete10/Tuneful/issues">Request Feature</a>
@@ -16,44 +20,52 @@
 
 # About
 
-Tuneful provides a convenient way to control music playback for both Spotify and Apple Music, and see the currently playing song directly in the menu bar. Enjoy seamless control over your music, including playback, shuffle, and repeat options. Additionally, the app allows you to manage system volume, set the audio output device, and features a mini player window.
+Tuneful provides a convenient way to control music playback for both Spotify and Apple Music, and see the currently playing song directly in the menu bar. Enjoy seamless control over your music, including playback, shuffle, and repeat options. Additionally, the app allows you to manage audio player volume, set the audio output device, and features a mini player window that is always on top of your workspace.
 
 **Tuneful requires macOS 13 Ventura or greater.**
+
+## Screenshots
+
+Popover view in menu bar:
 
 <p align="center">
   <img width="420" src="docs/images/playback.png">
 </p>
 
+You can choose from 2 types of mini player window styles - full-sized one and a minimal:
+
 <p align="center">
-  <img width="390" src="docs/images/mini-player.png">
+  <img width="390" src="docs/images/miniplayer-full.png">
 </p>
 
 <p align="center">
-  <img width="410" src="docs/images/appearance.png">
+  <img width="250" src="docs/images/miniplayer-minimal.png">
+</p>
+
+## Settings
+Tuneful provides several ways to control your music playback and most settings are customizable.
+
+<p align="center">
+  <img width="410" src="docs/images/menu-bar-settings.png">
 </p>
 
 <p align="center">
-  <img width="410" src="docs/images/keyboard.png">
+  <img width="410" src="docs/images/mini-player-settings.png">
+</p>
+
+<p align="center">
+  <img width="410" src="docs/images/keyboard-settings.png">
 </p>
 
 ## Features
 
 ### 1. Playback Control
-Easily play, pause, skip, and go back to previous tracks without switching between applications. Tuneful seamlessly integrates with both Spotify and Apple Music.
+Tuneful seamlessly integrates with both Spotify and Apple Music. Easily control your music from menu bar or mini player window and see currently playing song and/or artist directly in menu bar. You can customize the look of menu bar and mini player in the settings.
 
-### 2. Currently Playing Song in Menu Bar
-See currently playing song and/or artist directly in menu bar. You can customise the information displayed in the menu bar in Tuneful settings.
+### 2. Audio settings control
+Adjust the volume of your music player directly from the menu bar. Choose your preferred audio output device with a single click. Switch between headphones, speakers, and other connected devices effortlessly.
 
-### 3. System Volume Control
-Adjust the system volume directly from the menu bar. No need to open additional settings or apps to modify your sound preferences.
-
-### 4. Audio Output Device
-Choose your preferred audio output device with a single click. Switch between headphones, speakers, and other connected devices effortlessly.
-
-### 5. Mini Player Window
-Mini player window provides a compact view of the current track information and playback controls. Keep an eye on your music without disrupting your workflow.
-
-### 6. Global Keyboard Shortcuts
+### 3. Global Keyboard Shortcuts
 Setup global keyboard shortcuts to control your music and hide/show the mini player window.
 
 ## Installation
