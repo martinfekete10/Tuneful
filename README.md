@@ -6,7 +6,7 @@
   <h3 align="center">Tuneful</h3>
 
   <p align="center">
-    Tuneful is a native macOS menu bar playback control app for Spotify and Apple Music. Tuneful also provides a mini player window that is always visible.
+    Tuneful is a native macOS playback control app for Spotify and Apple Music which provides a convenient way to control your music from menu bar and optional mini player.
     <br />
     <a href="https://martinfekete.com/Tuneful/">Website</a>
     ·
@@ -37,6 +37,7 @@ Tuneful provides a convenient way to control music playback for both Spotify and
 
 
 ## Settings
+
 <p align="center">
   <img width="520" src="docs/images/menu-bar-settings.png">
   <img width="520" src="docs/images/mini-player-settings.png">
