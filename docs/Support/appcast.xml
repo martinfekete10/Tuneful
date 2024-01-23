@@ -3,6 +3,22 @@
     <channel>
         <title>Tuneful</title>
         <item>
+            <title>1.3.0</title>
+            <pubDate>Tue, 23 Jan 2024 17:07:50 +0000</pubDate>
+            <link>https://github.com/martinfekete10/Tuneful/releases</link>
+            <sparkle:version>1.3.0</sparkle:version>
+            <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
+            <description><![CDATA[<h1>New mini player options and volume adjustments</h1>
+<ul>
+<li>New feature to customize the look of mini player - you can now choose from 2 styles</li>
+<li>You can now hide mini player window by right-clicking and choosing Hide window option</li>
+<li>Mini player is now easier to move around</li>
+<li>Volume slider now adjusts Apple Music/Spotify instead of a system volume</li>
+</ul>]]></description>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.3.0/Tuneful.dmg" length="9088851" type="application/octet-stream" sparkle:edSignature="RhZ+A7CRC2omKyKRKmDcvSPRD6eZYWEStqUika5B0TKehmJnt1jWtJtu20Kg4WxC+S6uXU2uAAPp0tZyIbfmDg=="/>
+        </item>
+        <item>
             <title>1.2.0</title>
             <pubDate>Thu, 18 Jan 2024 16:44:35 +0000</pubDate>
             <link>https://github.com/martinfekete10/Tuneful/releases</link>
@@ -32,23 +48,6 @@
 </ul>]]></description>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.1.0/Tuneful.dmg" length="9041907" type="application/octet-stream" sparkle:edSignature="NSmUovvzn/+oTOTtFz66D2FDxBFFfdNsIoQxUOM88p5fj7RebO+3ew9M3fCihFV7boznuQ/GF+JxH/P26SSLBg=="/>
-        </item>
-        <item>
-            <title>1.0.0</title>
-            <pubDate>Thu, 11 Jan 2024 23:27:15 +0000</pubDate>
-            <link>https://github.com/martinfekete10/Tuneful/releases</link>
-            <sparkle:version>1.0.0</sparkle:version>
-            <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
-            <description><![CDATA[<h1>Song information in menu bar</h1>
-<ul>
-<li>New feature to display song information directly in menu bar</li>
-<li>New settings window with ability to customise information displayed in menu bar</li>
-<li>Fixed a bug where progress bar and play time were not sometimes updated</li>
-<li>Popover UI tweaks</li>
-<li>Other minor bug fixes and improvements</li>
-</ul>]]></description>
-            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.0.0/Tuneful.dmg" length="8864453" type="application/octet-stream" sparkle:edSignature="5Qn9KsPFob5wlxvtfs5aiWRcMVDt2PA4iSk8iHIUp2goZhkaL/d69iVSWiOHItATaHheIr8GZT+ghqNKYfUyDw=="/>
         </item>
         <item>
             <title>0.9.6</title>
