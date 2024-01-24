@@ -245,9 +245,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track, playerAppIsRunning: playerAppIsRunning)
         let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
+        let iconSwiftUI = HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+            Image(nsImage: image!)
+            MarqueeText(text: title, leftFade: 2.0, rightFade: 2.0, startDelay: 0)
+        }
+        let iconView = NSHostingView(rootView: iconSwiftUI)
+        iconView.frame = NSRect(x: 0, y: 0, width: 100, height: 20)
+        
         if let button = self.statusBarItem.button {
-            button.image = image
-            button.title = String(title)
+            button.subviews.forEach { $0.removeFromSuperview() }
+            button.addSubview(iconView)
+            button.frame = iconView.frame
         }
     }
 

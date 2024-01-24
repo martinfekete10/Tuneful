@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 extension View {
     /// Applies the given transform if the given condition evaluates to `true`.
@@ -18,6 +19,16 @@ extension View {
             transform(self)
         } else {
             self
+        }
+    }
+    
+    @ViewBuilder func onValueChanged<T: Equatable>(of value: T, perform onChange: @escaping (T) -> Void) -> some View {
+        if #available(iOS 14.0, *) {
+            self.onChange(of: value, perform: onChange)
+        } else {
+            self.onReceive(Just(value)) { (value) in
+                onChange(value)
+            }
         }
     }
     
