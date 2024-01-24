@@ -1,5 +1,6 @@
-# 1.4.0 - Scrolling text in menu bar
-* Menu bar text is now scrolling if it doesn not fit the width
+# 1.4.0 - Scrolling menu bar text and new setting
+* Menu bar text is now scrolling if it does not fit the max width
+* New option to hide menu bar text when nothing is currently playing
 * Fixed an issue when incremental volume increase would break the UI on max volume
 
 # 1.3.0 - New mini player options and volume adjustments
