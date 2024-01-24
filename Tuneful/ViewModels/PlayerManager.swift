@@ -511,20 +511,20 @@ class PlayerManager: ObservableObject {
         case .appleMusic:
             self.appleMusicApp?.setSoundVolume?(newVolume)
         }
+
+        self.volume = CGFloat(newVolume)
     }
     
     func increaseVolume() {
         let newVolume = Int(self.volume) + 10
         
         self.setVolume(newVolume: newVolume)
-        self.volume = CGFloat(newVolume)
     }
     
     func decreaseVolume() {
         let newVolume = Int(self.volume) - 10
         
         self.setVolume(newVolume: newVolume)
-        self.volume = CGFloat(newVolume)
     }
     
     // MARK: - Audio device
