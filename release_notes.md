@@ -1,3 +1,7 @@
+# 1.4.0 - Scrolling text in menu bar
+* Menu bar text is now scrolling if it doesn not fit the width
+* Fixed an issue when incremental volume increase would break the UI on max volume
+
 # 1.3.0 - New mini player options and volume adjustments
 * New feature to customize the look of mini player - you can now choose from 2 styles
 * You can now hide mini player window by right-clicking and choosing Hide window option

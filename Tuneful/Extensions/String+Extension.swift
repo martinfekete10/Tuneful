@@ -9,7 +9,6 @@ import Foundation
 import AppKit
 
 extension String {
-    
     func stringWidth(with font: NSFont) -> CGFloat {
         let attributes = [ NSAttributedString.Key.font: font ]
         return self.size(withAttributes: attributes).width

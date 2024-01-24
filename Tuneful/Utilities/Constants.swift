@@ -32,4 +32,9 @@ enum Constants {
         static let bundleID = "com.apple.Music"
         static let notification = "\(bundleID).playerInfo"
     }
+    
+    enum StatusBar {
+        static let marqueeFont = NSFont.systemFont(ofSize: 13, weight: .regular)
+        static let imageWidth = 25.0
+    }
 }

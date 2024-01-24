@@ -10,14 +10,39 @@ import SwiftUI
 class StatusBarItemManager: ObservableObject {
     
     @AppStorage("showSongInfo") var showSongInfo: Bool = true
-    @AppStorage("showMenuBarIcon") var showMenuBarIcon: Bool = true
-    @AppStorage("trackInfoLength") var trackInfoLength: Double = 20.0
+    @AppStorage("menuBarItemWidth") var menuBarItemWidth: Double = 150
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .albumArt
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
+    @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.spotify
+    @AppStorage("hideSongInfoWhenNotPlaying") var hideSongInfoWhenNotPlaying: Bool = false
     
-    public func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool) -> String {
+    public func getMenuBarView(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> NSView {
+        let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
+        let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning)
+        
+        let showNoSongInfo = !self.showSongInfo || (self.hideSongInfoWhenNotPlaying && !isPlaying)
+        
+        let menuBarItemWidth = showNoSongInfo ? Constants.StatusBar.imageWidth : self.menuBarItemWidth
+        let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
+        let xOffset = isItemBiggerThanLimit ? 3.5 : (self.menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
+        
+        let menuBarIconView = HStack(alignment: .center) {
+            Image(nsImage: image)
+            MarqueeText(text: title, leftFade: 10.0, rightFade: 10.0, startDelay: 0, animating: isPlaying)
+        }
+        
+        let iconView = NSHostingView(rootView: menuBarIconView)
+        iconView.frame = NSRect(x: xOffset, y: 0, width: menuBarItemWidth, height: 20)
+        
+        return iconView
+    }
+    
+    private func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> String {
         if !showSongInfo {
+            return ""
+        }
+        
+        if hideSongInfoWhenNotPlaying && !isPlaying {
             return ""
         }
         
@@ -28,29 +53,31 @@ class StatusBarItemManager: ObservableObject {
         let trackTitle = track.title
         let trackArtist = track.artist
         
-        var trackInfo = " "
+        var trackInfo = ""
         switch trackInfoDetails {
         case .artistAndSong:
-            trackInfo = "\(trackInfo)\(trackArtist) • \(trackTitle)"
+            // In some cases either of these is missing (e.g. podcasts) which would result in "• PodcastTitle"
+            if !trackArtist.isEmpty && !trackTitle.isEmpty {
+                trackInfo = "\(trackArtist) • \(trackTitle)"
+            } else if !trackArtist.isEmpty {
+                trackInfo = "\(trackArtist)"
+            } else if !trackTitle.isEmpty {
+                trackInfo = "\(trackTitle)"
+            }
         case .artist:
-            trackInfo = "\(trackInfo)\(trackArtist)"
+            trackInfo = "\(trackArtist)"
         case .song:
-            trackInfo = "\(trackInfo)\(trackTitle)"
+            trackInfo = "\(trackTitle)"
         }
-        trackInfo = String(trackInfo.prefix(Int(trackInfoLength)))
         
         return trackInfo
     }
     
-    public func getImage(albumArt: NSImage, playerAppIsRunning: Bool) -> NSImage? {
-        if !showMenuBarIcon {
-            return nil
-        }
-        
+    private func getImage(albumArt: NSImage, playerAppIsRunning: Bool) -> NSImage {
         if statusBarIcon == .albumArt && playerAppIsRunning {
             return albumArt.roundImage(withSize: NSSize(width: 18, height: 18), radius: 4.0)
         }
         
-        return NSImage(systemSymbolName: "music.quarternote.3", accessibilityDescription: "Tuneful")
+        return NSImage(systemSymbolName: "music.quarternote.3", accessibilityDescription: "Tuneful")!
     }
 }

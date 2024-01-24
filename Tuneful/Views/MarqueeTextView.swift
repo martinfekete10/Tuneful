@@ -13,12 +13,21 @@ public struct MarqueeText : View {
     public var rightFade: CGFloat
     public var startDelay: Double
     public var alignment: Alignment
+    private var isCompact: Bool = false
     
     @State private var animate = false
-    var isCompact = false
+    
+    public init(text: String, leftFade: CGFloat, rightFade: CGFloat, startDelay: Double, alignment: Alignment? = nil, animating: Bool) {
+        self.text = text
+        self.leftFade = leftFade
+        self.rightFade = rightFade
+        self.startDelay = startDelay
+        self.alignment = alignment != nil ? alignment! : .topLeading
+        self.animate = animating
+    }
     
     public var body : some View {
-        let font = NSFont.systemFont(ofSize: 13, weight: .regular)
+        let font = Constants.StatusBar.marqueeFont
         let stringWidth = text.stringWidth(with: font)
         let stringHeight = text.stringHeight(with: font)
         
@@ -95,14 +104,6 @@ public struct MarqueeText : View {
         .frame(maxWidth: isCompact ? stringWidth : nil)
         .onDisappear { self.animate = false }
 
-    }
-    
-    public init(text: String, leftFade: CGFloat, rightFade: CGFloat, startDelay: Double, alignment: Alignment? = nil) {
-        self.text = text
-        self.leftFade = leftFade
-        self.rightFade = rightFade
-        self.startDelay = startDelay
-        self.alignment = alignment != nil ? alignment! : .topLeading
     }
 }
 

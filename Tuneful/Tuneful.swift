@@ -241,21 +241,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if notification?.userInfo?["PlayerAppIsRunning"] != nil {
             playerAppIsRunning = notification?.userInfo?["PlayerAppIsRunning"] as? Bool == true
         }
-    
-        let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track, playerAppIsRunning: playerAppIsRunning)
-        let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
-        let iconSwiftUI = HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
-            Image(nsImage: image!)
-            MarqueeText(text: title, leftFade: 2.0, rightFade: 2.0, startDelay: 0)
-        }
-        let iconView = NSHostingView(rootView: iconSwiftUI)
-        iconView.frame = NSRect(x: 0, y: 0, width: 100, height: 20)
+        let menuBarView = self.statusBarItemManager.getMenuBarView(
+            track: playerManager.track,
+            playerAppIsRunning: playerAppIsRunning,
+            isPlaying: playerManager.isPlaying
+        )
         
         if let button = self.statusBarItem.button {
             button.subviews.forEach { $0.removeFromSuperview() }
-            button.addSubview(iconView)
-            button.frame = iconView.frame
+            button.addSubview(menuBarView)
+            button.frame = menuBarView.frame
         }
     }
 
@@ -296,9 +292,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         switch miniPlayerType {
         case .full:
-            setupMiniPlayerWindow(size: NSSize(width: 300, height: 145), position: windowPosition, view: MiniPlayerView(parentWindow: miniPlayerWindow))
+            setupMiniPlayerWindow(
+                size: NSSize(width: 300, height: 145),
+                position: windowPosition,
+                view: MiniPlayerView(parentWindow: miniPlayerWindow)
+            )
         case .minimal:
-            setupMiniPlayerWindow(size: NSSize(width: 145, height: 145), position: windowPosition, view: CompactMiniPlayerView(parentWindow: miniPlayerWindow))
+            setupMiniPlayerWindow(
+                size: NSSize(width: 145, height: 145),
+                position: windowPosition,
+                view: CompactMiniPlayerView(parentWindow: miniPlayerWindow)
+            )
         }
         
         miniPlayerWindow.makeKeyAndOrderFront(nil)
@@ -327,7 +331,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), MenuBarAppearanceSettingsViewController(), MiniPlayerAppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            panes: [
+                GeneralSettingsViewController(),
+                MenuBarAppearanceSettingsViewController(),
+                MiniPlayerAppearanceSettingsViewController(),
+                KeyboardShortcutsSettingsViewController(),
+                AboutSettingsViewController()
+            ],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
@@ -336,7 +346,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func openMiniPlayerAppearanceSettings(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), MenuBarAppearanceSettingsViewController(), MiniPlayerAppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            panes: [
+                GeneralSettingsViewController(),
+                MenuBarAppearanceSettingsViewController(),
+                MiniPlayerAppearanceSettingsViewController(),
+                KeyboardShortcutsSettingsViewController(),
+                AboutSettingsViewController()
+            ],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
