@@ -12,7 +12,7 @@ import LaunchAtLogin
 struct GeneralSettingsView: View {
     
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
-    @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = false
+    @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
     
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")

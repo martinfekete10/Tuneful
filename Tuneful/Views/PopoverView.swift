@@ -10,7 +10,6 @@ import SwiftUI
 struct PopoverView: View {
     
     @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
-    
     @EnvironmentObject var playerManager: PlayerManager
     
     var body: some View {

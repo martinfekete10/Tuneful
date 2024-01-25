@@ -11,7 +11,7 @@ import Settings
 struct MiniPlayerAppearanceSettingsView: View {
     
     @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
-    @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = false
+    @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
     @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .minimal
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
@@ -22,7 +22,7 @@ struct MiniPlayerAppearanceSettingsView: View {
     
     init() {
         @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
-        @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = false
+        @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
         @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .minimal
 
         self.miniPlayerBackground = miniPlayerBackgroundAppStorage

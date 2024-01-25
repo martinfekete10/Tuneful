@@ -12,13 +12,17 @@ import Settings
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
-    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
+    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
+    @AppStorage("connectedApp") var connectedApp = ConnectedApps.spotify {
+        didSet {
+            self.updateMenuItemsState()
+        }
+    }
     
     private var onboardingWindow: OnboardingWindow!
-    private var shortcutsSetupWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
     private var popover: NSPopover!
     
@@ -43,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             GeneralSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -55,7 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             MenuBarAppearanceSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -67,7 +71,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             MiniPlayerAppearanceSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -79,7 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             KeyboardShortcutsSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -91,7 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             AboutSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -109,10 +113,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             object: nil
         )
         
-        if !viewedShortcutsSetup && viewedOnboarding {
-            self.showShortcutsSetup()
-        }
-        
         if !viewedOnboarding {
             self.showOnboarding()
         } else {
@@ -126,6 +126,45 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.setupMenuBar()
         self.updateStatusBarItem(nil)
         self.setupKeyboardShortcuts()
+    }
+    
+    // MARK: - Music player
+    
+    private func changeMusicPlayer() {
+        switch connectedApp {
+        case .spotify:
+            self.connectedApp = .appleMusic
+        case .appleMusic:
+            self.connectedApp = .spotify
+        }
+    }
+    
+    @objc private func setSpotify() {
+        if self.connectedApp == .spotify {
+            return
+        }
+        
+        self.connectedApp = .spotify
+    }
+    
+    @objc private func setAppleMusic() {
+        if self.connectedApp == .appleMusic {
+            return
+        }
+        
+        self.connectedApp = .appleMusic
+    }
+    
+    func updateMenuItemsState() {
+        if let menuItem = statusBarMenu.item(withTitle: "Music player")?.submenu {
+            if let spotifyMenuItem = menuItem.item(withTitle: "Spotify") {
+                spotifyMenuItem.state = (connectedApp == .spotify) ? .on : .off
+            }
+            
+            if let appleMusicMenuItem = menuItem.item(withTitle: "Apple Music") {
+                appleMusicMenuItem.state = (connectedApp == .appleMusic) ? .on : .off
+            }
+        }
     }
     
     // MARK: - Keyboard shortcuts
@@ -146,6 +185,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         KeyboardShortcuts.onKeyUp(for: .showMiniPlayer) {
             self.toggleMiniPlayer()
         }
+        
+        KeyboardShortcuts.onKeyUp(for: .changeMusicPlayer) {
+            self.changeMusicPlayer()
+        }
     }
     
     // MARK: - Menu bar
@@ -162,6 +205,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             keyEquivalent: ""
         )
         .state = showPlayerWindow ? .on : .off
+        
+        let switchPlayerMenuItem = NSMenuItem(title: "Music player", action: nil, keyEquivalent: "")
+        let switchPlayerMenu = NSMenu()
+        switchPlayerMenu
+            .addItem(withTitle: "Spotify", action: #selector(setSpotify), keyEquivalent: "")
+            .state = self.connectedApp == .spotify ? .on : .off
+        switchPlayerMenu
+            .addItem(withTitle: "Apple Music", action: #selector(setAppleMusic), keyEquivalent: "")
+            .state = self.connectedApp == .appleMusic ? .on : .off
+        switchPlayerMenuItem.submenu = switchPlayerMenu
+        statusBarMenu.addItem(switchPlayerMenuItem)
         
         statusBarMenu.addItem(.separator())
         
@@ -222,7 +276,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.setupMiniPlayer()
         }
     }
-
+    
     @IBAction func openURL(_ sender: AnyObject) {
         let url = URL(string: "https://github.com/martinfekete10/Tuneful")
         NSWorkspace.shared.open(url!)
@@ -241,16 +295,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if notification?.userInfo?["PlayerAppIsRunning"] != nil {
             playerAppIsRunning = notification?.userInfo?["PlayerAppIsRunning"] as? Bool == true
         }
-    
-        let title = self.statusBarItemManager.getStatusBarTrackInfo(track: playerManager.track, playerAppIsRunning: playerAppIsRunning)
-        let image = self.statusBarItemManager.getImage(albumArt: playerManager.track.albumArt, playerAppIsRunning: playerAppIsRunning)
+        
+        let menuBarView = self.statusBarItemManager.getMenuBarView(
+            track: playerManager.track,
+            playerAppIsRunning: playerAppIsRunning,
+            isPlaying: playerManager.isPlaying
+        )
         
         if let button = self.statusBarItem.button {
-            button.image = image
-            button.title = String(title)
+            button.subviews.forEach { $0.removeFromSuperview() }
+            button.addSubview(menuBarView)
+            button.frame = menuBarView.frame
         }
     }
-
+    
     
     // MARK: - Popover
     
@@ -285,12 +343,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func setupMiniPlayer() {
         let originalWindowPosition = miniPlayerWindow.frame.origin
         let windowPosition = CGPoint(x: originalWindowPosition.x, y: originalWindowPosition.y + 10) // Not sure why, but everytime this function is called, window moves down a few pixels, thus this ugly workaround
-
+        
         switch miniPlayerType {
         case .full:
-            setupMiniPlayerWindow(size: NSSize(width: 300, height: 145), position: windowPosition, view: MiniPlayerView(parentWindow: miniPlayerWindow))
+            setupMiniPlayerWindow(
+                size: NSSize(width: 300, height: 145),
+                position: windowPosition,
+                view: MiniPlayerView(parentWindow: miniPlayerWindow)
+            )
         case .minimal:
-            setupMiniPlayerWindow(size: NSSize(width: 145, height: 145), position: windowPosition, view: CompactMiniPlayerView(parentWindow: miniPlayerWindow))
+            setupMiniPlayerWindow(
+                size: NSSize(width: 145, height: 145),
+                position: windowPosition,
+                view: CompactMiniPlayerView(parentWindow: miniPlayerWindow)
+            )
         }
         
         miniPlayerWindow.makeKeyAndOrderFront(nil)
@@ -303,7 +369,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             miniPlayerWindow.close()
         }
     }
-
+    
     private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
         DispatchQueue.main.async {
             self.miniPlayerWindow.setFrame(NSRect(origin: position, size: size), display: true, animate: true)
@@ -313,13 +379,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let hostedOnboardingView = NSHostingView(rootView: rootView)
         miniPlayerWindow.contentView = hostedOnboardingView
     }
-
+    
     
     // MARK: - Settings
     
     @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), MenuBarAppearanceSettingsViewController(), MiniPlayerAppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            panes: [
+                GeneralSettingsViewController(),
+                MenuBarAppearanceSettingsViewController(),
+                MiniPlayerAppearanceSettingsViewController(),
+                KeyboardShortcutsSettingsViewController(),
+                AboutSettingsViewController()
+            ],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
@@ -328,7 +400,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func openMiniPlayerAppearanceSettings(_ sender: AnyObject) {
         SettingsWindowController(
-            panes: [GeneralSettingsViewController(), MenuBarAppearanceSettingsViewController(), MiniPlayerAppearanceSettingsViewController(), KeyboardShortcutsSettingsViewController(), AboutSettingsViewController()],
+            panes: [
+                GeneralSettingsViewController(),
+                MenuBarAppearanceSettingsViewController(),
+                MiniPlayerAppearanceSettingsViewController(),
+                KeyboardShortcutsSettingsViewController(),
+                AboutSettingsViewController()
+            ],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
@@ -353,24 +431,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func finishOnboarding(_ sender: AnyObject) {
         onboardingWindow.close()
         self.mainSetup()
-    }
-    
-    public func showShortcutsSetup() {
-        if shortcutsSetupWindow == nil {
-            shortcutsSetupWindow = OnboardingWindow()
-            let rootView = ShortcutsSetupView()
-            let hostedOnboardingView = NSHostingView(rootView: rootView)
-            shortcutsSetupWindow.contentView = hostedOnboardingView
-        }
-        
-        shortcutsSetupWindow.center()
-        shortcutsSetupWindow.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
-    }
-    
-    
-    @objc func finishShortcutsSetup(_ sender: AnyObject) {
-        shortcutsSetupWindow.close()
     }
 }
 
