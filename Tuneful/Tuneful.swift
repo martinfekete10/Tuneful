@@ -23,7 +23,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     private var onboardingWindow: OnboardingWindow!
-    private var shortcutsSetupWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
     private var popover: NSPopover!
     
@@ -48,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             GeneralSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -60,7 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             MenuBarAppearanceSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -72,7 +71,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             MiniPlayerAppearanceSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -84,7 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             KeyboardShortcutsSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
@@ -96,16 +95,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             AboutSettingsView()
         }
-
+        
         return Settings.PaneHostingController(pane: paneView)
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
-//        if let bundleID = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-//        }
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -113,10 +112,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             name: NSNotification.Name("UpdateMenuBarItem"),
             object: nil
         )
-        
-        if !viewedShortcutsSetup && viewedOnboarding {
-            self.showShortcutsSetup()
-        }
         
         if !viewedOnboarding {
             self.showOnboarding()
@@ -165,7 +160,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if let spotifyMenuItem = menuItem.item(withTitle: "Spotify") {
                 spotifyMenuItem.state = (connectedApp == .spotify) ? .on : .off
             }
-
+            
             if let appleMusicMenuItem = menuItem.item(withTitle: "Apple Music") {
                 appleMusicMenuItem.state = (connectedApp == .appleMusic) ? .on : .off
             }
@@ -281,7 +276,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.setupMiniPlayer()
         }
     }
-
+    
     @IBAction func openURL(_ sender: AnyObject) {
         let url = URL(string: "https://github.com/martinfekete10/Tuneful")
         NSWorkspace.shared.open(url!)
@@ -313,7 +308,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.frame = menuBarView.frame
         }
     }
-
+    
     
     // MARK: - Popover
     
@@ -348,7 +343,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func setupMiniPlayer() {
         let originalWindowPosition = miniPlayerWindow.frame.origin
         let windowPosition = CGPoint(x: originalWindowPosition.x, y: originalWindowPosition.y + 10) // Not sure why, but everytime this function is called, window moves down a few pixels, thus this ugly workaround
-
+        
         switch miniPlayerType {
         case .full:
             setupMiniPlayerWindow(
@@ -374,7 +369,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             miniPlayerWindow.close()
         }
     }
-
+    
     private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
         DispatchQueue.main.async {
             self.miniPlayerWindow.setFrame(NSRect(origin: position, size: size), display: true, animate: true)
@@ -384,7 +379,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let hostedOnboardingView = NSHostingView(rootView: rootView)
         miniPlayerWindow.contentView = hostedOnboardingView
     }
-
+    
     
     // MARK: - Settings
     
@@ -436,24 +431,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func finishOnboarding(_ sender: AnyObject) {
         onboardingWindow.close()
         self.mainSetup()
-    }
-    
-    public func showShortcutsSetup() {
-        if shortcutsSetupWindow == nil {
-            shortcutsSetupWindow = OnboardingWindow()
-            let rootView = ShortcutsSetupView()
-            let hostedOnboardingView = NSHostingView(rootView: rootView)
-            shortcutsSetupWindow.contentView = hostedOnboardingView
-        }
-        
-        shortcutsSetupWindow.center()
-        shortcutsSetupWindow.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
-    }
-    
-    
-    @objc func finishShortcutsSetup(_ sender: AnyObject) {
-        shortcutsSetupWindow.close()
     }
 }
 

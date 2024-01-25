@@ -41,7 +41,6 @@
 		FE6BFD0C2A73B2D400D3321F /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */; };
 		FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */; };
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
-		FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
 		FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */; };
@@ -103,7 +102,6 @@
 		FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
 		FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtView.swift; sourceTree = "<group>"; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
-		FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsSetupView.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMiniPlayerView.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */,
 				FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */,
 				FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */,
-				FEB465112B51A0A500C40452 /* ShortcutsSetupView.swift */,
 				FE4C92142B6143CC00FF79BE /* MarqueeTextView.swift */,
 			);
 			path = Views;
@@ -420,7 +417,6 @@
 				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
-				FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */,
 				FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
 				FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */,
