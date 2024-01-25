@@ -4,6 +4,7 @@
 * New keyboard shortcut to quickly switch between Spotify and Apple Music
 * Ability to switch between Spotify and Apple Music from new menu bar submenu
 * Fixed an issue when incremental volume increase would break the UI on max volume
+* Fixed an issue when progress bar would not update until the mini player window is displayed for the first time
 * Minor settings improvements
 * Minor mini player improvements
 

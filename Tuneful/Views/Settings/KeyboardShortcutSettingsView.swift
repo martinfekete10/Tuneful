@@ -19,7 +19,7 @@ struct KeyboardShortcutsSettingsView: View {
                         KeyboardShortcuts.Recorder("Next track:", name: .nextTrack)
                         KeyboardShortcuts.Recorder("Previous track:", name: .previousTrack)
                         KeyboardShortcuts.Recorder("Toggle mini player:", name: .showMiniPlayer)
-                        KeyboardShortcuts.Recorder("Switch between Spotify and Apple Music:", name: .changeMusicPlayer)
+                        KeyboardShortcuts.Recorder("Switch music player:", name: .changeMusicPlayer)
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 })

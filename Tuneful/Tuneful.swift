@@ -12,7 +12,7 @@ import Settings
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
-    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = false
+    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
@@ -102,9 +102,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
-        if let bundleID = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-        }
+//        if let bundleID = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+//        }
         
         NotificationCenter.default.addObserver(
             self,
