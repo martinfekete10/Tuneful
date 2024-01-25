@@ -10,36 +10,32 @@ import Settings
 
 struct MenuBarAppearanceSettingsView: View {
     
-    @AppStorage("showSongInfo") var showSongInfoAppStorage: Bool = true
     @AppStorage("menuBarItemWidth") var menuBarItemWidthAppStorage: Double = 150
     @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt
     @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
     @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
-    @AppStorage("hideSongInfoWhenNotPlaying") var hideSongInfoWhenNotPlayingAppStorage: Bool = false
+    @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
-    @State var showSongInfo: Bool
     @State var menuBarItemWidth: Double
     @State var statusBarIcon: StatusBarIcon
     @State var trackInfoDetails: StatusBarTrackDetails
     @State var popoverBackground: BackgroundType
-    @State var hideSongInfoWhenNotPlaying: Bool
+    @State var showStatusBarTrackInfo: ShowStatusBarTrackInfo
     
     init() {
-        @AppStorage("showSongInfo") var showSongInfoAppStorage: Bool = true
         @AppStorage("menuBarItemWidth") var menuBarItemWidthAppStorage: Double = 150
         @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt
         @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
         @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
-        @AppStorage("hideSongInfoWhenNotPlaying") var hideSongInfoWhenNotPlayingAppStorage: Bool = false
+        @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
         
-        self.showSongInfo = showSongInfoAppStorage
         self.menuBarItemWidth = menuBarItemWidthAppStorage
         self.statusBarIcon = statusBarIconAppStorage
         self.trackInfoDetails = trackInfoDetailsAppStorage
         self.popoverBackground = popoverBackgroundAppStorage
-        self.hideSongInfoWhenNotPlaying = hideSongInfoWhenNotPlayingAppStorage
+        self.showStatusBarTrackInfo = showStatusBarTrackInfoAppStorage
     }
 
     var body: some View {
@@ -77,35 +73,25 @@ struct MenuBarAppearanceSettingsView: View {
                     .frame(width: 200)
                 }
                 
-                Settings.Section(title: "Show song info in menu bar") {
-                    Toggle(isOn: $showSongInfo) {
-                        Text("")
-                    }
-                    .onChange(of: showSongInfo) { show in
-                        self.showSongInfoAppStorage = showSongInfo
-                        self.sendTrackChangedNotification()
-                    }
-                    .toggleStyle(.switch)
-                }
-                
                 Settings.Section(label: {
-                    Text("Hide song info when not playing")
-                        .foregroundStyle(!showSongInfo ? .tertiary : .primary)
+                    Text("Show song info in menu bar")
                 }) {
-                    Toggle(isOn: $hideSongInfoWhenNotPlaying) {
-                        Text("")
+                    Picker("", selection: $showStatusBarTrackInfo) {
+                        ForEach(ShowStatusBarTrackInfo.allCases, id: \.self) { value in
+                            Text(value.localizedName).tag(value)
+                        }
                     }
-                    .onChange(of: hideSongInfoWhenNotPlaying) { show in
-                        self.hideSongInfoWhenNotPlayingAppStorage = hideSongInfoWhenNotPlaying
+                    .onChange(of: showStatusBarTrackInfo) { newValue in
+                        self.showStatusBarTrackInfoAppStorage = showStatusBarTrackInfo
                         self.sendTrackChangedNotification()
                     }
-                    .toggleStyle(.switch)
-                    .disabled(!showSongInfo)
+                    .pickerStyle(.menu)
+                    .frame(width: 200)
                 }
                 
                 Settings.Section(label: {
                     Text("Song info details")
-                        .foregroundStyle(!showSongInfo ? .tertiary : .primary)
+                        .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                 }) {
                     Picker("", selection: $trackInfoDetails) {
                         ForEach(StatusBarTrackDetails.allCases, id: \.self) { value in
@@ -118,12 +104,12 @@ struct MenuBarAppearanceSettingsView: View {
                     }
                     .pickerStyle(.menu)
                     .frame(width: 200)
-                    .disabled(!showSongInfo)
+                    .disabled(self.showStatusBarTrackInfo == .never)
                 }
                 
                 Settings.Section(label: {
                     Text("Song info max length")
-                        .foregroundStyle(!showSongInfo ? .tertiary : .primary)
+                        .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                 }) {
                     VStack(alignment: .center) {
                         Slider(value: $menuBarItemWidth, in: 100...300, step: 25) {
@@ -139,10 +125,10 @@ struct MenuBarAppearanceSettingsView: View {
                             NSHapticFeedbackManager.defaultPerformer.perform(NSHapticFeedbackManager.FeedbackPattern.levelChange, performanceTime: .now)
                         }
                         .frame(width: 200)
-                        .disabled(!showSongInfo)
+                        .disabled(self.showStatusBarTrackInfo == .never)
                         
                         Text("Width: \(Int(self.menuBarItemWidth)) pixels")
-                            .foregroundStyle(!showSongInfo ? .tertiary : .secondary)
+                            .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                             .font(.callout)
                     }
                 }

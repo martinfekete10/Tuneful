@@ -1,7 +1,11 @@
-# 1.4.0 - Scrolling menu bar text and new setting
+# 1.4.0 - Scrolling menu bar text
 * Menu bar text is now scrolling if it does not fit the max width
 * New option to hide menu bar text when nothing is currently playing
+* New keyboard shortcut to quickly switch between Spotify and Apple Music
+* Ability to switch between Spotify and Apple Music from new menu bar submenu
 * Fixed an issue when incremental volume increase would break the UI on max volume
+* Minor settings improvements
+* Minor mini player improvements
 
 # 1.3.0 - New mini player options and volume adjustments
 * New feature to customize the look of mini player - you can now choose from 2 styles

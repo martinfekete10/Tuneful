@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE23689F2B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift */; };
 		FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */; };
 		FE2AEE302A8FC76500E8D576 /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */; };
 		FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE23689F2B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStatusBarTrackInfo.swift; sourceTree = "<group>"; };
 		FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerWindow.swift; sourceTree = "<group>"; };
 		FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
 		FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliderView.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				FEFFE5512B4AE2FA000887B5 /* StatusBarTrackDetails.swift */,
 				FEBA3D012B5824D700E25A67 /* BackgroundType.swift */,
 				FEE486E82B5D677400AB712F /* MiniPlayerType.swift */,
+				FE23689F2B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
 				FEB465122B51A0A500C40452 /* ShortcutsSetupView.swift in Sources */,
+				FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
 				FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */,
 				FEFFE54D2B49EF97000887B5 /* MenuBarAppearanceSettingsView.swift in Sources */,

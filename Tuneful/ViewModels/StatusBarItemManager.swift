@@ -9,20 +9,17 @@ import SwiftUI
 
 class StatusBarItemManager: ObservableObject {
     
-    @AppStorage("showSongInfo") var showSongInfo: Bool = true
     @AppStorage("menuBarItemWidth") var menuBarItemWidth: Double = 150
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .albumArt
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.spotify
-    @AppStorage("hideSongInfoWhenNotPlaying") var hideSongInfoWhenNotPlaying: Bool = false
+    @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfo: ShowStatusBarTrackInfo = .always
     
     public func getMenuBarView(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> NSView {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
         let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
-        let showNoSongInfo = !self.showSongInfo || (self.hideSongInfoWhenNotPlaying && !isPlaying)
-        
-        let menuBarItemWidth = showNoSongInfo ? Constants.StatusBar.imageWidth : self.menuBarItemWidth
+        let menuBarItemWidth = title == "" ? Constants.StatusBar.imageWidth : self.menuBarItemWidth
         let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
         let xOffset = isItemBiggerThanLimit ? 3.5 : (self.menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
         
@@ -38,11 +35,11 @@ class StatusBarItemManager: ObservableObject {
     }
     
     private func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> String {
-        if !showSongInfo {
+        if self.showStatusBarTrackInfo == .never {
             return ""
         }
         
-        if hideSongInfoWhenNotPlaying && !isPlaying {
+        if self.showStatusBarTrackInfo == .whenPlaying && !isPlaying {
             return ""
         }
         
