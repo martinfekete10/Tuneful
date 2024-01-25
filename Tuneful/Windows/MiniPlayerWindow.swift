@@ -35,11 +35,14 @@ class MiniPlayerWindow: NSWindow {
 
         let customizeMenuItem = NSMenuItem(title: "Window style", action: nil, keyEquivalent: "")
         let customizeMenu = NSMenu()
-
-        customizeMenu.addItem(withTitle: "Full", action: #selector(setFullPlayer(_:)), keyEquivalent: "")
-        customizeMenu.addItem(withTitle: "Minimal", action: #selector(setAlbumArtPlayer(_:)), keyEquivalent: "")
-
+        customizeMenu
+            .addItem(withTitle: "Full", action: #selector(setFullPlayer(_:)), keyEquivalent: "")
+            .state = self.miniPlayerType == .full ? .on : .off
+        customizeMenu
+            .addItem(withTitle: "Minimal", action: #selector(setAlbumArtPlayer(_:)), keyEquivalent: "")
+            .state = self.miniPlayerType == .minimal ? .on : .off
         customizeMenuItem.submenu = customizeMenu
+        
         menu.addItem(customizeMenuItem)
         menu.addItem(withTitle: "Settings...", action: #selector(settings(_:)), keyEquivalent: "")
 

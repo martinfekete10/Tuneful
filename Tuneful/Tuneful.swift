@@ -16,6 +16,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
+    @AppStorage("connectedApp") var connectedApp = ConnectedApps.spotify {
+        didSet {
+            self.updateMenuItemsState()
+        }
+    }
     
     private var onboardingWindow: OnboardingWindow!
     private var shortcutsSetupWindow: OnboardingWindow!
@@ -128,6 +133,45 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.setupKeyboardShortcuts()
     }
     
+    // MARK: - Music player
+    
+    private func changeMusicPlayer() {
+        switch connectedApp {
+        case .spotify:
+            self.connectedApp = .appleMusic
+        case .appleMusic:
+            self.connectedApp = .spotify
+        }
+    }
+    
+    @objc private func setSpotify() {
+        if self.connectedApp == .spotify {
+            return
+        }
+        
+        self.connectedApp = .spotify
+    }
+    
+    @objc private func setAppleMusic() {
+        if self.connectedApp == .appleMusic {
+            return
+        }
+        
+        self.connectedApp = .appleMusic
+    }
+    
+    func updateMenuItemsState() {
+        if let menuItem = statusBarMenu.item(withTitle: "Music player")?.submenu {
+            if let spotifyMenuItem = menuItem.item(withTitle: "Spotify") {
+                spotifyMenuItem.state = (connectedApp == .spotify) ? .on : .off
+            }
+
+            if let appleMusicMenuItem = menuItem.item(withTitle: "Apple Music") {
+                appleMusicMenuItem.state = (connectedApp == .appleMusic) ? .on : .off
+            }
+        }
+    }
+    
     // MARK: - Keyboard shortcuts
     
     private func setupKeyboardShortcuts() {
@@ -146,6 +190,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         KeyboardShortcuts.onKeyUp(for: .showMiniPlayer) {
             self.toggleMiniPlayer()
         }
+        
+        KeyboardShortcuts.onKeyUp(for: .changeMusicPlayer) {
+            self.changeMusicPlayer()
+        }
     }
     
     // MARK: - Menu bar
@@ -162,6 +210,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             keyEquivalent: ""
         )
         .state = showPlayerWindow ? .on : .off
+        
+        let switchPlayerMenuItem = NSMenuItem(title: "Music player", action: nil, keyEquivalent: "")
+        let switchPlayerMenu = NSMenu()
+        switchPlayerMenu
+            .addItem(withTitle: "Spotify", action: #selector(setSpotify), keyEquivalent: "")
+            .state = self.connectedApp == .spotify ? .on : .off
+        switchPlayerMenu
+            .addItem(withTitle: "Apple Music", action: #selector(setAppleMusic), keyEquivalent: "")
+            .state = self.connectedApp == .appleMusic ? .on : .off
+        switchPlayerMenuItem.submenu = switchPlayerMenu
+        statusBarMenu.addItem(switchPlayerMenuItem)
         
         statusBarMenu.addItem(.separator())
         

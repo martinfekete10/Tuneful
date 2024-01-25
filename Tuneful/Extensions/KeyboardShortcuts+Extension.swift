@@ -12,4 +12,5 @@ extension KeyboardShortcuts.Name {
     static let previousTrack = Self("previousTrack")
     static let playPause = Self("playPause")
     static let showMiniPlayer = Self("showMiniPlayer")
+    static let changeMusicPlayer = Self("changeMusicPlayer")
 }
