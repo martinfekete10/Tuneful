@@ -20,7 +20,7 @@
 
 # About
 
-Tuneful provides a convenient way to control music playback for both Spotify and Apple Music, and see the currently playing song directly in the menu bar. Enjoy seamless control over your music, including playback, shuffle, and repeat options. Additionally, the app allows you to manage audio player volume, set the audio output device, and features a mini player window that is always on top of your workspace.
+Tuneful provides a convenient way to control music playback for Spotify and Apple Music, and see the currently playing song directly in the menu bar. Tuneful allows you to manage audio player volume, set the audio output device, and features a customizable mini player that is always on top of your workspace.
 
 **Tuneful requires macOS 13 Ventura or greater.**
 
