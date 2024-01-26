@@ -35,6 +35,6 @@ enum Constants {
     
     enum StatusBar {
         static let marqueeFont = NSFont.systemFont(ofSize: 13, weight: .regular)
-        static let imageWidth = 25.0
+        static let imageWidth = 40.0
     }
 }
