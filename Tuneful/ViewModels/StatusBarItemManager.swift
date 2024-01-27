@@ -14,6 +14,64 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.spotify
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfo: ShowStatusBarTrackInfo = .always
+    @AppStorage("showMenuBarControls") var showMenuBarControls: Bool = true
+    
+    private var playerManager: PlayerManager
+    private var statusBarItem: NSStatusItem
+    
+    init(playerManager: PlayerManager) {
+        self.playerManager = playerManager
+        self.statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        
+        self.updateStatusBarVisibility()
+        self.updateStatusBarItem()
+    }
+    
+    private func updateStatusBarVisibility() {
+        statusBarItem.isVisible = self.showMenuBarControls
+    }
+
+    func toggleStatusBarVisibility() {
+        self.showMenuBarControls.toggle()
+        updateStatusBarVisibility()
+    }
+    
+    @objc func updateStatusBarItem() {
+        let menuBarView = HStack {
+            Button(action: playerManager.previousTrack){
+                Image(systemName: "backward.end.fill")
+                    .resizable()
+                    .frame(width: 10, height: 10)
+                    .animation(.easeInOut(duration: 2.0), value: 1)
+            }
+            .pressButtonStyle()
+            
+            PlayPauseButton(buttonSize: 15)
+                .environmentObject(playerManager)
+            
+            Button(action: playerManager.nextTrack) {
+                Image(systemName: "forward.end.fill")
+                    .resizable()
+                    .frame(width: 10, height: 10)
+                    .animation(.easeInOut(duration: 2.0), value: 1)
+            }
+            .pressButtonStyle()
+        }
+        .frame(width: 70, height: 22)
+        .background(
+            Color.primary.opacity(0.2),
+            in: RoundedRectangle(cornerRadius: 5)
+        )
+        
+        let iconView = NSHostingView(rootView: menuBarView)
+        iconView.frame = NSRect(x: 0, y: 1, width: 70, height: 20)
+        
+        if let button = self.statusBarItem.button {
+            button.subviews.forEach { $0.removeFromSuperview() }
+            button.addSubview(iconView)
+            button.frame = iconView.frame
+        }
+    }
     
     public func getMenuBarView(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> NSView {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
@@ -23,13 +81,18 @@ class StatusBarItemManager: ObservableObject {
         let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
         let xOffset = isItemBiggerThanLimit ? 10 : (self.menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
         
-        let menuBarIconView = HStack(alignment: .center) {
-            Image(nsImage: image)
-            MarqueeText(text: title, leftFade: 10.0, rightFade: 10.0, startDelay: 0, animating: isPlaying)
+        let menuBarIconView = 
+        VStack(alignment: .center) {
+            ZStack(alignment: .leading) {
+                HStack(alignment: .center) {
+                    Image(nsImage: image)
+                    MarqueeText(text: title, leftFade: 10.0, rightFade: 10.0, startDelay: 0, animating: isPlaying)
+                }
+            }
         }
         
         let iconView = NSHostingView(rootView: menuBarIconView)
-        iconView.frame = NSRect(x: xOffset, y: 0, width: menuBarItemWidth, height: 20)
+        iconView.frame = NSRect(x: xOffset, y: 1, width: menuBarItemWidth, height: 20)
         
         return iconView
     }

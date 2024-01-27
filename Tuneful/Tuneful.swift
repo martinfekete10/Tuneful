@@ -35,8 +35,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     public var statusBarMenu: NSMenu!
     
     // ViewModels
-    private var playerManager = PlayerManager()
-    private var statusBarItemManager = StatusBarItemManager()
+//    private var playerManager = PlayerManager()
+//    private var statusBarItemManager = StatusBarItemManager()
+    private var playerManager: PlayerManager!
+    private var statusBarItemManager: StatusBarItemManager!
     
     // Settings
     let GeneralSettingsViewController: () -> SettingsPane = {
@@ -101,6 +103,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
+        
+        self.playerManager = PlayerManager()
+        self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
         
 //        if let bundleID = Bundle.main.bundleIdentifier {
 //            UserDefaults.standard.removePersistentDomain(forName: bundleID)
