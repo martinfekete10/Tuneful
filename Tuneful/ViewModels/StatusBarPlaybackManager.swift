@@ -53,9 +53,13 @@ class StatusBarPlaybackManager: ObservableObject {
                     .animation(.easeInOut(duration: 2.0), value: 1)
             }
             .pressButtonStyle()
+            .disabled(!playerManager.isRunning)
+            .opacity(playerManager.isRunning ? 1.0 : 0.8)
             
             PlayPauseButton(buttonSize: 14)
                 .environmentObject(playerManager)
+                .disabled(!playerManager.isRunning)
+                .opacity(playerManager.isRunning ? 1.0 : 0.8)
             
             Button(action: playerManager.nextTrack) {
                 Image(systemName: "forward.end.fill")
@@ -64,6 +68,8 @@ class StatusBarPlaybackManager: ObservableObject {
                     .animation(.easeInOut(duration: 2.0), value: 1)
             }
             .pressButtonStyle()
+            .disabled(!playerManager.isRunning)
+            .opacity(playerManager.isRunning ? 1.0 : 0.8)
         }
         
         let iconView = NSHostingView(rootView: menuBarView)
