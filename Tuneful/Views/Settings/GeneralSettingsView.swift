@@ -12,7 +12,6 @@ import LaunchAtLogin
 struct GeneralSettingsView: View {
     
     @AppStorage("connectedApp") private var connectedAppAppStorage = ConnectedApps.spotify
-    @AppStorage("quitWithMusicApp") private var quitWithMusicApp: Bool = false
     
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
@@ -31,11 +30,6 @@ struct GeneralSettingsView: View {
                 LaunchAtLogin
                     .Toggle()
                     .toggleStyle(.switch)
-                
-                Toggle(isOn: $quitWithMusicApp) {
-                    Text("Quit Tuneful when quitting \(Text(connectedApp.localizedName))")
-                }
-                .toggleStyle(.switch)
                 
                 HStack {
                     Picker("Connect Tuneful to", selection: $connectedApp) {

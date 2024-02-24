@@ -15,7 +15,6 @@ class PlayerManager: ObservableObject {
     
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
     @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
-    @AppStorage("quitWithMusicApp") private var quitWithMusicApp: Bool = false
     
     var spotifyApp: SpotifyApplication?
     var appleMusicApp: MusicApplication?

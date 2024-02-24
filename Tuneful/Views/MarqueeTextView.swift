@@ -28,7 +28,7 @@ public struct MarqueeText : View {
     
     public var body : some View {
         let font = Constants.StatusBar.marqueeFont
-        let stringWidth = text.stringWidth(with: font)
+        let stringWidth = text.stringWidth(with: font) + 5
         let stringHeight = text.stringHeight(with: font)
         
         let animation = Animation
@@ -72,7 +72,6 @@ public struct MarqueeText : View {
                     .onValueChanged(of: self.text, perform: {text in
                         self.animate = geo.size.width < stringWidth
                     })
-                    
                     .offset(x: leftFade)
                     .mask(
                         HStack(spacing:0) {
