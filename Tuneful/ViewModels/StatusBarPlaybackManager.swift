@@ -21,6 +21,23 @@ class StatusBarPlaybackManager: ObservableObject {
         self.statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         self.statusBarItem.isVisible = self.showMenuBarPlaybackControls
         self.updateStatusBarPlaybackItem()
+        
+        let contextMenu = NSMenu()
+        contextMenu.addItem(
+            withTitle: "Settings...",
+            action: #selector(AppDelegate.openSettings),
+            keyEquivalent: ""
+        )
+        contextMenu.addItem(
+            .separator()
+        )
+        contextMenu.addItem(
+            withTitle: "Quit",
+            action: #selector(NSApplication.terminate),
+            keyEquivalent: ""
+        )
+        
+        self.statusBarItem.menu = contextMenu
     }
 
     func toggleStatusBarVisibility() {

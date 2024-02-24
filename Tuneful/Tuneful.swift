@@ -16,6 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
+    @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
     @AppStorage("connectedApp") var connectedApp = ConnectedApps.spotify {
         didSet {
             self.updateMenuItemsState()
@@ -379,6 +380,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
+    @objc func toggleMiniPlayerWindowLevel() {
+        if self.miniPlayerWindowOnTop {
+            self.miniPlayerWindow.level = .floating
+        } else {
+            self.miniPlayerWindow.level = .normal
+        }
+    }
+    
     private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
         DispatchQueue.main.async {
             self.miniPlayerWindow.setFrame(NSRect(origin: position, size: size), display: true, animate: true)
@@ -388,7 +397,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let hostedOnboardingView = NSHostingView(rootView: rootView)
         miniPlayerWindow.contentView = hostedOnboardingView
     }
-    
     
     // MARK: - Settings
     

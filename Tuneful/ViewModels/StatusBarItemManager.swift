@@ -19,18 +19,16 @@ class StatusBarItemManager: ObservableObject {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
         let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
-        let menuBarItemWidth = title == "" ? Constants.StatusBar.imageWidth : self.menuBarItemWidth
-        let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
-        let xOffset = isItemBiggerThanLimit ? 10.0 : (self.menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
-        
-        let menuBarIconView = VStack(alignment: .center) {
-            ZStack(alignment: .leading) {
-                HStack(alignment: .center) {
-                    Image(nsImage: image)
-                    MarqueeText(text: title, leftFade: 10.0, rightFade: 10.0, startDelay: 0, animating: isPlaying)
-                }
+        let menuBarIconView = ZStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Image(nsImage: image)
+                MarqueeText(text: title, leftFade: 10.0, rightFade: 10.0, startDelay: 0, animating: isPlaying)
             }
         }
+        
+        let menuBarItemWidth = title == "" ? Constants.StatusBar.imageWidth : self.menuBarItemWidth
+        let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
+        let xOffset = isItemBiggerThanLimit ? 5.0 : (self.menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
         
         let iconView = NSHostingView(rootView: menuBarIconView)
         iconView.frame = NSRect(x: xOffset, y: 1, width: menuBarItemWidth, height: 20)

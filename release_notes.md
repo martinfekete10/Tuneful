@@ -1,3 +1,7 @@
+# 1.5.0 - Playback controls in menu bar
+* New feature to directly show playback control buttons in menu bar
+* Ability to set behaviour of mini player window to act as a normal window
+
 # 1.4.0 - Scrolling menu bar text
 * Menu bar text is now scrolling if it does not fit the max width
 * New option to hide menu bar text when nothing is currently playing
