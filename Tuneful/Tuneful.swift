@@ -34,11 +34,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusBarItem: NSStatusItem!
     public var statusBarMenu: NSMenu!
     
-    // ViewModels
-//    private var playerManager = PlayerManager()
-//    private var statusBarItemManager = StatusBarItemManager()
+    // Managers
     private var playerManager: PlayerManager!
     private var statusBarItemManager: StatusBarItemManager!
+    private var statusBarPlaybackManager: StatusBarPlaybackManager!
     
     // Settings
     let GeneralSettingsViewController: () -> SettingsPane = {
@@ -105,7 +104,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSApp.setActivationPolicy(.accessory)
         
         self.playerManager = PlayerManager()
-        self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
+        self.statusBarItemManager = StatusBarItemManager()
+        self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
         
 //        if let bundleID = Bundle.main.bundleIdentifier {
 //            UserDefaults.standard.removePersistentDomain(forName: bundleID)
@@ -113,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(updateStatusBarItem),
+            selector: #selector(self.updateStatusBarItem),
             name: NSNotification.Name("UpdateMenuBarItem"),
             object: nil
         )
@@ -312,6 +312,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.addSubview(menuBarView)
             button.frame = menuBarView.frame
         }
+    }
+    
+    @objc func menuBarPlaybackControls() {
+        self.statusBarPlaybackManager.toggleStatusBarVisibility()
     }
     
     
