@@ -313,6 +313,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.addSubview(menuBarView)
             button.frame = menuBarView.frame
         }
+        
+        self.statusBarPlaybackManager.updateStatusBarPlaybackItem(playerAppIsRunning: playerAppIsRunning)
     }
     
     @objc func menuBarPlaybackControls() {

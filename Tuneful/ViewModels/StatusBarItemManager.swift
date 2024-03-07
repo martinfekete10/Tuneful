@@ -31,10 +31,10 @@ class StatusBarItemManager: ObservableObject {
         let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
         let xOffset = isItemBiggerThanLimit ? 10.0 : (self.menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
         
-        let iconView = NSHostingView(rootView: menuBarIconView)
-        iconView.frame = NSRect(x: xOffset, y: 1, width: menuBarItemWidth, height: 20)
+        let menuBarView = NSHostingView(rootView: menuBarIconView)
+        menuBarView.frame = NSRect(x: xOffset, y: 1, width: menuBarItemWidth, height: 20)
         
-        return iconView
+        return menuBarView
     }
     
     // MARK: - Private

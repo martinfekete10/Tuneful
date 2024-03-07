@@ -20,7 +20,7 @@ class StatusBarPlaybackManager: ObservableObject {
         // Playback buttons in meu bar
         self.statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         self.statusBarItem.isVisible = self.showMenuBarPlaybackControls
-        self.updateStatusBarPlaybackItem()
+        self.updateStatusBarPlaybackItem(playerAppIsRunning: playerManager.isRunning)
         
         let contextMenu = NSMenu()
         contextMenu.addItem(
@@ -44,7 +44,7 @@ class StatusBarPlaybackManager: ObservableObject {
         statusBarItem.isVisible = self.showMenuBarPlaybackControls
     }
     
-    @objc func updateStatusBarPlaybackItem() {
+    @objc func updateStatusBarPlaybackItem(playerAppIsRunning: Bool) {
         let menuBarView = HStack {
             Button(action: playerManager.previousTrack){
                 Image(systemName: "backward.end.fill")
@@ -53,13 +53,13 @@ class StatusBarPlaybackManager: ObservableObject {
                     .animation(.easeInOut(duration: 2.0), value: 1)
             }
             .pressButtonStyle()
-            .disabled(!playerManager.isRunning)
-            .opacity(playerManager.isRunning ? 1.0 : 0.8)
+            .disabled(!playerAppIsRunning)
+            .opacity(playerAppIsRunning ? 1.0 : 0.8)
             
             PlayPauseButton(buttonSize: 14)
                 .environmentObject(playerManager)
-                .disabled(!playerManager.isRunning)
-                .opacity(playerManager.isRunning ? 1.0 : 0.8)
+                .disabled(!playerAppIsRunning)
+                .opacity(playerAppIsRunning ? 1.0 : 0.8)
             
             Button(action: playerManager.nextTrack) {
                 Image(systemName: "forward.end.fill")
@@ -68,8 +68,8 @@ class StatusBarPlaybackManager: ObservableObject {
                     .animation(.easeInOut(duration: 2.0), value: 1)
             }
             .pressButtonStyle()
-            .disabled(!playerManager.isRunning)
-            .opacity(playerManager.isRunning ? 1.0 : 0.8)
+            .disabled(!playerAppIsRunning)
+            .opacity(playerAppIsRunning ? 1.0 : 0.8)
         }
         
         let iconView = NSHostingView(rootView: menuBarView)
