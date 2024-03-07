@@ -1,6 +1,7 @@
 # 1.5.0 - Playback controls in menu bar
 * New feature to directly show playback control buttons in menu bar
 * Ability to set behaviour of mini player window to act as a normal window
+* Menu bar item width now resizes when the song information is smaller than max width set in settings to avoid empty bezels on the sides
 
 # 1.4.0 - Scrolling menu bar text
 * Menu bar text is now scrolling if it does not fit the max width
