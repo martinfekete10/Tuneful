@@ -26,7 +26,8 @@ class StatusBarItemManager: ObservableObject {
             }
         }
         
-        let menuBarItemWidth = title == "" ? Constants.StatusBar.imageWidth : self.menuBarItemWidth
+        let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
+        let menuBarItemWidth = titleWidth == 0 ? Constants.StatusBar.imageWidth : (self.menuBarItemWidth > titleWidth ? titleWidth : self.menuBarItemWidth)
         let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
         let xOffset = isItemBiggerThanLimit ? 10.0 : (self.menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
         
