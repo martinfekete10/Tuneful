@@ -16,6 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
+    @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
     @AppStorage("connectedApp") var connectedApp = ConnectedApps.spotify {
         didSet {
             self.updateMenuItemsState()
@@ -34,9 +35,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusBarItem: NSStatusItem!
     public var statusBarMenu: NSMenu!
     
-    // ViewModels
-    private var playerManager = PlayerManager()
-    private var statusBarItemManager = StatusBarItemManager()
+    // Managers
+    private var playerManager: PlayerManager!
+    private var statusBarItemManager: StatusBarItemManager!
+    private var statusBarPlaybackManager: StatusBarPlaybackManager!
     
     // Settings
     let GeneralSettingsViewController: () -> SettingsPane = {
@@ -102,13 +104,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
+        self.playerManager = PlayerManager()
+        self.statusBarItemManager = StatusBarItemManager()
+        self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
+        
 //        if let bundleID = Bundle.main.bundleIdentifier {
 //            UserDefaults.standard.removePersistentDomain(forName: bundleID)
 //        }
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(updateStatusBarItem),
+            selector: #selector(self.updateStatusBarItem),
             name: NSNotification.Name("UpdateMenuBarItem"),
             object: nil
         )
@@ -307,6 +313,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.addSubview(menuBarView)
             button.frame = menuBarView.frame
         }
+        
+        self.statusBarPlaybackManager.updateStatusBarPlaybackItem(playerAppIsRunning: playerAppIsRunning)
+        self.statusBarPlaybackManager.toggleStatusBarVisibility()
+    }
+    
+    @objc func menuBarPlaybackControls() {
+        self.statusBarPlaybackManager.toggleStatusBarVisibility()
     }
     
     
@@ -370,6 +383,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
+    @objc func toggleMiniPlayerWindowLevel() {
+        if self.miniPlayerWindowOnTop {
+            self.miniPlayerWindow.level = .floating
+        } else {
+            self.miniPlayerWindow.level = .normal
+        }
+    }
+    
     private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
         DispatchQueue.main.async {
             self.miniPlayerWindow.setFrame(NSRect(origin: position, size: size), display: true, animate: true)
@@ -379,7 +400,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let hostedOnboardingView = NSHostingView(rootView: rootView)
         miniPlayerWindow.contentView = hostedOnboardingView
     }
-    
     
     // MARK: - Settings
     

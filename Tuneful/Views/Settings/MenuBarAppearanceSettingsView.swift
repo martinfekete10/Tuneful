@@ -15,6 +15,7 @@ struct MenuBarAppearanceSettingsView: View {
     @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
     @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
+    @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
@@ -23,6 +24,7 @@ struct MenuBarAppearanceSettingsView: View {
     @State var trackInfoDetails: StatusBarTrackDetails
     @State var popoverBackground: BackgroundType
     @State var showStatusBarTrackInfo: ShowStatusBarTrackInfo
+    @State var showMenuBarPlaybackControls: Bool
     
     init() {
         @AppStorage("menuBarItemWidth") var menuBarItemWidthAppStorage: Double = 150
@@ -30,12 +32,14 @@ struct MenuBarAppearanceSettingsView: View {
         @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
         @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
         @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
+        @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
         
         self.menuBarItemWidth = menuBarItemWidthAppStorage
         self.statusBarIcon = statusBarIconAppStorage
         self.trackInfoDetails = trackInfoDetailsAppStorage
         self.popoverBackground = popoverBackgroundAppStorage
         self.showStatusBarTrackInfo = showStatusBarTrackInfoAppStorage
+        self.showMenuBarPlaybackControls = showMenuBarPlaybackControlsAppStorage
     }
 
     var body: some View {
@@ -108,7 +112,7 @@ struct MenuBarAppearanceSettingsView: View {
                 }
                 
                 Settings.Section(label: {
-                    Text("Song info max length")
+                    Text("Song info width")
                         .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                 }) {
                     VStack(alignment: .center) {
@@ -131,6 +135,19 @@ struct MenuBarAppearanceSettingsView: View {
                             .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                             .font(.callout)
                     }
+                }
+                
+                Settings.Section(label: {
+                    Text("Show player controls")
+                }) {
+                    Toggle(isOn: $showMenuBarPlaybackControls) {
+                        Text("")
+                    }
+                    .onChange(of: showMenuBarPlaybackControls) { _ in
+                        self.showMenuBarPlaybackControlsAppStorage = showMenuBarPlaybackControls
+                        NSApplication.shared.sendAction(#selector(AppDelegate.menuBarPlaybackControls), to: nil, from: nil)
+                    }
+                    .toggleStyle(.switch)
                 }
             }
         }

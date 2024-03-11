@@ -14,7 +14,7 @@ import ISSoundAdditions
 class PlayerManager: ObservableObject {
     
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
-    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
+    @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
     
     var spotifyApp: SpotifyApplication?
     var appleMusicApp: MusicApplication?
@@ -210,10 +210,9 @@ class PlayerManager: ObservableObject {
     }
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
-        
-        let isRunningFromNotification = sender?.userInfo?["Player State"] as? String != "Stopped" && isRunning
-        
-        print("The play state or the currently playing track changed")
+        let musicAppKilled = sender?.userInfo?["Player State"] as? String == "Stopped"
+        let isRunningFromNotification = !musicAppKilled && isRunning
+    
         guard isRunningFromNotification else {
             self.track.title = ""
             self.track.artist = ""
@@ -540,18 +539,17 @@ class PlayerManager: ObservableObject {
     // MARK: - Open music app
     
     func openMusicApp() {
-        var spotifyPath: URL
+        var appPath: URL
         switch connectedApp {
         case .spotify:
-            spotifyPath = URL(fileURLWithPath: "/Applications/Spotify.app")
+            appPath = URL(fileURLWithPath: "/Applications/Spotify.app")
         case .appleMusic:
-            spotifyPath = URL(fileURLWithPath: "/System/Applications/Music.app")
+            appPath = URL(fileURLWithPath: "/System/Applications/Music.app")
         }
         
         let configuration = NSWorkspace.OpenConfiguration()
         configuration.activates = true
-        
-        NSWorkspace.shared.openApplication(at: spotifyPath, configuration: configuration)
+        NSWorkspace.shared.openApplication(at: appPath, configuration: configuration)
     }
     
     // MARK: - Helpers

@@ -19,20 +19,25 @@ class StatusBarItemManager: ObservableObject {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
         let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
-        let menuBarItemWidth = title == "" ? Constants.StatusBar.imageWidth : self.menuBarItemWidth
-        let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
-        let xOffset = isItemBiggerThanLimit ? 3.5 : (self.menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
-        
-        let menuBarIconView = HStack(alignment: .center) {
-            Image(nsImage: image)
-            MarqueeText(text: title, leftFade: 10.0, rightFade: 10.0, startDelay: 0, animating: isPlaying)
+        let menuBarIconView = ZStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Image(nsImage: image)
+                MarqueeText(text: title, leftFade: 10.0, rightFade: 10.0, startDelay: 0, animating: isPlaying)
+            }
         }
         
-        let iconView = NSHostingView(rootView: menuBarIconView)
-        iconView.frame = NSRect(x: xOffset, y: 0, width: menuBarItemWidth, height: 20)
+        let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
+        let menuBarItemWidth = titleWidth == 0 ? Constants.StatusBar.imageWidth : (self.menuBarItemWidth > titleWidth  ? titleWidth + 40 : self.menuBarItemWidth)
+        let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
+        let xOffset = isItemBiggerThanLimit ? 10.0 : (menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
         
-        return iconView
+        let menuBarView = NSHostingView(rootView: menuBarIconView)
+        menuBarView.frame = NSRect(x: xOffset, y: 1, width: menuBarItemWidth, height: 20)
+        
+        return menuBarView
     }
+    
+    // MARK: - Private
     
     private func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> String {
         if self.showStatusBarTrackInfo == .never {

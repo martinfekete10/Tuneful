@@ -13,21 +13,25 @@ struct MiniPlayerAppearanceSettingsView: View {
     @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
     @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
     @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .minimal
+    @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTopAppStorage: Bool = true
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
     @State var miniPlayerBackground: BackgroundType
     @State var showPlayerWindow: Bool
     @State var miniPlayerType: MiniPlayerType
+    @State var miniPlayerWindowOnTop: Bool
     
     init() {
         @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
         @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
         @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .minimal
+        @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTopAppStorage: Bool = true
 
         self.miniPlayerBackground = miniPlayerBackgroundAppStorage
         self.showPlayerWindow = showPlayerWindowAppStorage
         self.miniPlayerType = miniPlayerTypeAppStorage
+        self.miniPlayerWindowOnTop = miniPlayerWindowOnTopAppStorage
     }
     
     var body: some View {
@@ -41,6 +45,19 @@ struct MiniPlayerAppearanceSettingsView: View {
                     }
                     .onChange(of: showPlayerWindow) { _ in
                         NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
+                    }
+                    .toggleStyle(.switch)
+                }
+                
+                Settings.Section(label: {
+                    Text("Mini player window always on top")
+                }) {
+                    Toggle(isOn: $miniPlayerWindowOnTop) {
+                        Text("")
+                    }
+                    .onChange(of: miniPlayerWindowOnTop) { _ in
+                        self.miniPlayerWindowOnTopAppStorage = miniPlayerWindowOnTop
+                        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayerWindowLevel), to: nil, from: nil)
                     }
                     .toggleStyle(.switch)
                 }

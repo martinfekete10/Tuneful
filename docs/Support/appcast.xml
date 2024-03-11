@@ -3,6 +3,21 @@
     <channel>
         <title>Tuneful</title>
         <item>
+            <title>1.5.0</title>
+            <pubDate>Mon, 11 Mar 2024 21:05:42 +0000</pubDate>
+            <link>https://github.com/martinfekete10/Tuneful/releases</link>
+            <sparkle:version>1.5.0</sparkle:version>
+            <sparkle:shortVersionString>1.5.0</sparkle:shortVersionString>
+            <description><![CDATA[<h1>Playback controls in menu bar</h1>
+<ul>
+<li>New feature to control playback by new menu bar control buttons</li>
+<li>Ability to set behaviour of mini player window to act as a normal window</li>
+<li>Menu bar item width now resizes when the song information is smaller than max width set in settings to avoid empty bezels on the sides</li>
+</ul>]]></description>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.5.0/Tuneful.dmg" length="9102450" type="application/octet-stream" sparkle:edSignature="sT+hQ5oWk1+9mJv2316gg5vjqZVtX921zI95PlF6eC/KjZgn7gJaflDKHfGatgOFP2o3wz7A/+9++KjK40VtAw=="/>
+        </item>
+        <item>
             <title>1.4.0</title>
             <pubDate>Thu, 25 Jan 2024 21:54:06 +0000</pubDate>
             <link>https://github.com/martinfekete10/Tuneful/releases</link>
@@ -37,21 +52,6 @@
 </ul>]]></description>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.3.0/Tuneful.dmg" length="9088851" type="application/octet-stream" sparkle:edSignature="RhZ+A7CRC2omKyKRKmDcvSPRD6eZYWEStqUika5B0TKehmJnt1jWtJtu20Kg4WxC+S6uXU2uAAPp0tZyIbfmDg=="/>
-        </item>
-        <item>
-            <title>1.2.0</title>
-            <pubDate>Thu, 18 Jan 2024 16:44:35 +0000</pubDate>
-            <link>https://github.com/martinfekete10/Tuneful/releases</link>
-            <sparkle:version>1.2.0</sparkle:version>
-            <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
-            <description><![CDATA[<h1>More customisation and Apple Music favorites fix</h1>
-<ul>
-<li>You can now choose if you want to have a transparent background or blurred artwork of current song as a background, both in menu bar popover and mini player window</li>
-<li>Fixed a bug where songs were not being added to Apple Music favorites after clicking heart button</li>
-<li>Changed Add to Favorites icon from heart to star to make it consistent with Apple Music</li>
-</ul>]]></description>
-            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.2.0/Tuneful.dmg" length="9053946" type="application/octet-stream" sparkle:edSignature="YEs8zMRB1fZo3Bw/dt5opbQzlDliS+T9lkd7NymFIDQ3fbDsihhxEedkaxT1kLYX7ybSjuUxaeQvps24dpQVDg=="/>
         </item>
         <item>
             <title>0.9.6</title>
