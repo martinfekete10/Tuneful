@@ -108,9 +108,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.statusBarItemManager = StatusBarItemManager()
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
         
-//        if let bundleID = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-//        }
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -315,6 +315,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         self.statusBarPlaybackManager.updateStatusBarPlaybackItem(playerAppIsRunning: playerAppIsRunning)
+        self.statusBarPlaybackManager.toggleStatusBarVisibility()
     }
     
     @objc func menuBarPlaybackControls() {
