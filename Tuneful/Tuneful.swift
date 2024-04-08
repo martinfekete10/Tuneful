@@ -262,7 +262,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             statusBarItem.menu = statusBarMenu
             statusBarItem.button?.performClick(nil)
         default:
-            showPopover(statusBarItem.button)
+            togglePopover(statusBarItem.button)
         }
     }
     
@@ -344,11 +344,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         playerManager.popoverIsShown = popover.isShown
     }
     
-    @objc func showPopover(_ sender: NSStatusBarButton?) {
+    @objc func togglePopover(_ sender: NSStatusBarButton?) {
         guard let statusBarItemButton = sender else { return }
-        
-        popover.show(relativeTo: statusBarItemButton.bounds, of: statusBarItemButton, preferredEdge: .minY)
-        NSApplication.shared.activate(ignoringOtherApps: true)
+
+        if popover.isShown {
+            popover.close()
+        } else {
+            popover.show(relativeTo: statusBarItemButton.bounds, of: statusBarItemButton, preferredEdge: .minY)
+            NSApplication.shared.activate(ignoringOtherApps: true)
+        }
     }
     
     // MARK: - Mini player
