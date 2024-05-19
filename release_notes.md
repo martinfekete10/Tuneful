@@ -1,3 +1,6 @@
+# 1.6.0 - Fixed popover closing behaviour
+* Fixed behaviour when closing the popover by clicking on the menu bar item, which would close and re-open the popover before - huge thanks to @robbiewxyz for fixing this!
+
 # 1.5.0 - Playback controls in menu bar
 * New feature to control playback by new menu bar control buttons
 * Ability to set behaviour of mini player window to act as a normal window
