@@ -35,31 +35,21 @@ Tuneful provides a convenient way to control music playback for Spotify and Appl
   <img height="250" src="docs/images/miniplayer-minimal.png">
 </p>
 
-
-## Settings
-
 <p align="center">
   <img width="520" src="docs/images/menu-bar-settings.png">
-  <img width="520" src="docs/images/mini-player-settings.png">
-  <img width="520" src="docs/images/keyboard-settings.png">
 </p>
 
-## Features
-
-### 1. Playback Control
-Tuneful seamlessly integrates with both Spotify and Apple Music. Easily control your music from menu bar or mini player window and see currently playing song and/or artist directly in menu bar. You can customize the look of menu bar and mini player in the settings.
-
-### 2. Audio settings control
-Adjust the volume of your music player directly from the menu bar. Choose your preferred audio output device with a single click. Switch between headphones, speakers, and other connected devices effortlessly.
-
-### 3. Global Keyboard Shortcuts
-Setup global keyboard shortcuts to control your music and hide/show the mini player window.
-
 ## Installation
-
-1. Download the latest release from the [Releases](https://github.com/martinfekete10/Tuneful/releases) page.
-2. Open the downloaded `.dmg` file and drag the app to your Applications folder.
+### Tuneful can be installed using standard installation process
+1. Download the latest [releases](https://github.com/martinfekete10/Tuneful/releases/latest/download/Tuneful.dmg)
+2. Open the downloaded `.dmg` file and drag the app to your Applications folder
 3. Launch the app, select you preferred streaming service and enjoy!
+
+### or using Homebrew
+`brew install martinfekete10/tap/tuneful`
+
+> [!NOTE]  
+> This app has not been notarized by Apple, so a warning will appear when you launch Tuneful for the first time. To open Tuneful, right-click on the app icon in Finder and select "Open"
 
 ## Feedback
 
