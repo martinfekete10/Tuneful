@@ -10,7 +10,7 @@ import SwiftUI
 struct CompactPopoverView: View {
     
     @EnvironmentObject var playerManager: PlayerManager
-    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
+    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .albumArt
     @State private var isShowingPlaybackControls = false
     
     var body: some View {
@@ -90,7 +90,7 @@ struct CompactPopoverView: View {
                             .padding(.vertical, 10)
                             .frame(width: 170)
                             .background(VisualEffectView(material: .popover, blendingMode: .withinWindow))
-                            .cornerRadius(8)
+                            .cornerRadius(10)
                             .opacity(isShowingPlaybackControls ? 1 : 0)
                         }
                     }
