@@ -351,42 +351,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     
     // MARK: - Popover
-    
-//    @objc func setupPopover() {
-//        let frameSize = NSSize(width: 210, height: 310)
-//
-//        switch popoverType {
-//        case .full:
-//            <#code#>
-//        case .minimal:
-//            <#code#>
-//        }
-//        let rootView = PopoverView()
-//            .environmentObject(self.playerManager)
-//        let hostedContentView = NSHostingView(rootView: rootView)
-//        hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
-//        
-//        popover = NSPopover()
-//        popover.contentSize = frameSize
-//        popover.behavior = .transient
-//        popover.animates = true
-//        popover.contentViewController = NSViewController()
-//        popover.contentViewController?.view = hostedContentView
-//        popover.contentViewController?.view.window?.makeKey()
-//        
-//        playerManager.popoverIsShown = popover.isShown
-//    }
-    
+        
     @objc func setupPopover() {
         let frameSize: NSSize
         let rootView: AnyView
+        let popoverWidth = 210
+        let popoverHeigth = 310
         
         switch popoverType {
         case .full:
-            frameSize = NSSize(width: 210, height: 310)
+            frameSize = NSSize(width: popoverWidth, height: popoverHeigth)
             rootView = AnyView(PopoverView().environmentObject(self.playerManager))
         case .minimal:
-            frameSize = NSSize(width: 150, height: 200)
+            frameSize = NSSize(width: popoverWidth, height: popoverHeigth)
             rootView = AnyView(CompactPopoverView().environmentObject(self.playerManager))
         }
         
