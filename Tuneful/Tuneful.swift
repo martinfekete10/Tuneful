@@ -12,10 +12,11 @@ import Settings
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
+    @AppStorage("popoverType") var popoverType: PopoverType = .full
+    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
-    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlaying: Bool = false
     @AppStorage("connectedApp") var connectedApp = ConnectedApps.spotify {
@@ -54,25 +55,37 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
-    let MenuBarAppearanceSettingsViewController: () -> SettingsPane = {
+    let PopoverSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
-            identifier: .menuBarAppearance,
-            title: "Menu bar",
-            toolbarIcon: NSImage(systemSymbolName: "menubar.rectangle", accessibilityDescription: "Menu bar appearance settings")!
+            identifier: .popover,
+            title: "Popover",
+            toolbarIcon: NSImage(systemSymbolName: "rectangle.portrait", accessibilityDescription: "Popover settings")!
         ) {
-            MenuBarAppearanceSettingsView()
+            PopoverSettingsView()
         }
         
         return Settings.PaneHostingController(pane: paneView)
     }
     
-    let MiniPlayerAppearanceSettingsViewController: () -> SettingsPane = {
+    let MenuBarSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
-            identifier: .miniPlayerAppearance,
-            title: "Mini player",
-            toolbarIcon: NSImage(systemSymbolName: "play.rectangle.on.rectangle.fill", accessibilityDescription: "Mini player appearance settings")!
+            identifier: .menuBar,
+            title: "Menu bar",
+            toolbarIcon: NSImage(systemSymbolName: "menubar.rectangle", accessibilityDescription: "Menu bar settings")!
         ) {
-            MiniPlayerAppearanceSettingsView()
+            MenuBarSettingsView()
+        }
+        
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let MiniPlayerSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .miniPlayer,
+            title: "Mini player",
+            toolbarIcon: NSImage(systemSymbolName: "play.rectangle.on.rectangle.fill", accessibilityDescription: "Mini player settings")!
+        ) {
+            MiniPlayerSettingsView()
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -340,11 +353,44 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // MARK: - Popover
     
-    private func setupPopover() {
-        let frameSize = NSSize(width: 210, height: 310)
+//    @objc func setupPopover() {
+//        let frameSize = NSSize(width: 210, height: 310)
+//
+//        switch popoverType {
+//        case .full:
+//            <#code#>
+//        case .minimal:
+//            <#code#>
+//        }
+//        let rootView = PopoverView()
+//            .environmentObject(self.playerManager)
+//        let hostedContentView = NSHostingView(rootView: rootView)
+//        hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
+//        
+//        popover = NSPopover()
+//        popover.contentSize = frameSize
+//        popover.behavior = .transient
+//        popover.animates = true
+//        popover.contentViewController = NSViewController()
+//        popover.contentViewController?.view = hostedContentView
+//        popover.contentViewController?.view.window?.makeKey()
+//        
+//        playerManager.popoverIsShown = popover.isShown
+//    }
+    
+    @objc func setupPopover() {
+        let frameSize: NSSize
+        let rootView: AnyView
         
-        let rootView = PopoverView()
-            .environmentObject(self.playerManager)
+        switch popoverType {
+        case .full:
+            frameSize = NSSize(width: 210, height: 310)
+            rootView = AnyView(PopoverView().environmentObject(self.playerManager))
+        case .minimal:
+            frameSize = NSSize(width: 150, height: 200)
+            rootView = AnyView(CompactPopoverView().environmentObject(self.playerManager))
+        }
+        
         let hostedContentView = NSHostingView(rootView: rootView)
         hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
@@ -358,6 +404,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         playerManager.popoverIsShown = popover.isShown
     }
+
     
     @objc func togglePopover(_ sender: NSStatusBarButton?) {
         guard let statusBarItemButton = sender else { return }
@@ -426,8 +473,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         SettingsWindowController(
             panes: [
                 GeneralSettingsViewController(),
-                MenuBarAppearanceSettingsViewController(),
-                MiniPlayerAppearanceSettingsViewController(),
+                PopoverSettingsViewController(),
+                MenuBarSettingsViewController(),
+                MiniPlayerSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
             ],
@@ -441,15 +489,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         SettingsWindowController(
             panes: [
                 GeneralSettingsViewController(),
-                MenuBarAppearanceSettingsViewController(),
-                MiniPlayerAppearanceSettingsViewController(),
+                PopoverSettingsViewController(),
+                MenuBarSettingsViewController(),
+                MiniPlayerSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
             ],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
-        ).show(pane: .miniPlayerAppearance)
+        ).show(pane: .miniPlayer)
     }
     
     // MARK: - Setup
