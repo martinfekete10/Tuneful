@@ -66,6 +66,19 @@
 		FEFFE55D2B4FE051000887B5 /* Comparable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE55C2B4FE051000887B5 /* Comparable+Extension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FE9781942C0CC1A1007217A1 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		FE1F7E942B89E92A00B702AD /* StatusBarPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarPlaybackManager.swift; sourceTree = "<group>"; };
 		FE23689F2B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStatusBarTrackInfo.swift; sourceTree = "<group>"; };
@@ -103,6 +116,8 @@
 		FE6BFD092A73B23700D3321F /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
 		FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtView.swift; sourceTree = "<group>"; };
+		FE9781822C0CC1A0007217A1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		FE9781842C0CC1A0007217A1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
@@ -277,6 +292,8 @@
 		FE6F65F62AB62AFB00CE4D96 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FE9781822C0CC1A0007217A1 /* WidgetKit.framework */,
+				FE9781842C0CC1A0007217A1 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -339,6 +356,7 @@
 				FE6BFCDF2A72F37800D3321F /* Sources */,
 				FE6BFCE02A72F37800D3321F /* Frameworks */,
 				FE6BFCE12A72F37800D3321F /* Resources */,
+				FE9781942C0CC1A1007217A1 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -363,7 +381,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					FE6BFCE22A72F37800D3321F = {
@@ -591,6 +609,7 @@
 		FE6BFCF32A72F37900D3321F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tuneful/Tuneful.entitlements;
@@ -627,6 +646,7 @@
 		FE6BFCF42A72F37900D3321F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tuneful/Tuneful.entitlements;

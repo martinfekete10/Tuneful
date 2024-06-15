@@ -17,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
+    @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlaying: Bool = false
     @AppStorage("connectedApp") var connectedApp = ConnectedApps.spotify {
         didSet {
             self.updateMenuItemsState()
@@ -314,8 +315,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.frame = menuBarView.frame
         }
         
+        if hideMenuBarItemWhenNotPlaying && (!playerManager.isRunning || !playerManager.isPlaying) {
+            self.statusBarItem.isVisible = false
+        } else {
+            self.statusBarItem.isVisible = true
+        }
+        
         self.statusBarPlaybackManager.updateStatusBarPlaybackItem(playerAppIsRunning: playerAppIsRunning)
         self.statusBarPlaybackManager.toggleStatusBarVisibility()
+    }
+    
+    @objc func toggleMenuBarItemVisibility() {
+        if hideMenuBarItemWhenNotPlaying && (!playerManager.isRunning || !playerManager.isPlaying) {
+            self.statusBarItem.isVisible = false
+        } else {
+            self.statusBarItem.isVisible = true
+        }
     }
     
     @objc func menuBarPlaybackControls() {
