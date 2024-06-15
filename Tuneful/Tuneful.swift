@@ -31,7 +31,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // Popover
     static let popoverWidth: CGFloat = 210
-    static let popoverHeight: CGFloat = 370
     
     // Status bar
     private var statusBarItem: NSStatusItem!

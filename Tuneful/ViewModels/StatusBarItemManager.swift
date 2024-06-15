@@ -20,7 +20,9 @@ class StatusBarItemManager: ObservableObject {
         let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
         let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
-        let menuBarItemWidth = titleWidth == 0 ? Constants.StatusBar.imageWidth : (self.menuBarItemWidth > titleWidth  ? titleWidth : self.menuBarItemWidth)
+        let menuBarItemWidth = titleWidth == 0
+            ? Constants.StatusBar.imageWidth
+            : (self.menuBarItemWidth > titleWidth  ? titleWidth + 5 : self.menuBarItemWidth + 5)
         
         let mainView = HStack(spacing: 7) {
             if self.statusBarIcon != .hidden || titleWidth == 0 { // Should display icon when there is no menubar text
@@ -28,7 +30,7 @@ class StatusBarItemManager: ObservableObject {
             }
             
             if titleWidth != 0 {
-                MarqueeText(text: title, leftFade: 25.0, rightFade: 5.0, startDelay: 0, animating: isPlaying)
+                MarqueeText(text: title, leftFade: 0.0, rightFade: 0.0, startDelay: 0, animating: isPlaying)
             }
         }
         .frame(maxWidth: .infinity, alignment: .center)

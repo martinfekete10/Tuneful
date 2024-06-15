@@ -144,7 +144,7 @@ struct PopoverView: View {
         )
         .frame(
             width: AppDelegate.popoverWidth,
-            height: AppDelegate.popoverHeight
+            height: 370
         )
     }
     
