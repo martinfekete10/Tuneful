@@ -66,19 +66,6 @@ struct MenuBarAppearanceSettingsView: View {
                 }
                 
                 Settings.Section(label: {
-                    Text("Hide when music is not playing")
-                }) {
-                    Toggle(isOn: $hideMenuBarItemWhenNotPlaying) {
-                        Text("")
-                    }
-                    .onChange(of: hideMenuBarItemWhenNotPlaying) { _ in
-                        self.hideMenuBarItemWhenNotPlayingAppStorage = hideMenuBarItemWhenNotPlaying
-                        self.sendTrackChangedNotification()
-                    }
-                    .toggleStyle(.switch)
-                }
-                
-                Settings.Section(label: {
                     Text("Menu bar icon")
                 }) {
                     Picker("", selection: $statusBarIcon) {
@@ -163,6 +150,19 @@ struct MenuBarAppearanceSettingsView: View {
                             .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                             .font(.callout)
                     }
+                }
+                
+                Settings.Section(label: {
+                    Text("Hide when music is not playing")
+                }) {
+                    Toggle(isOn: $hideMenuBarItemWhenNotPlaying) {
+                        Text("")
+                    }
+                    .onChange(of: hideMenuBarItemWhenNotPlaying) { _ in
+                        self.hideMenuBarItemWhenNotPlayingAppStorage = hideMenuBarItemWhenNotPlaying
+                        self.sendTrackChangedNotification()
+                    }
+                    .toggleStyle(.switch)
                 }
                 
                 Settings.Section(label: {

@@ -28,7 +28,7 @@ class StatusBarItemManager: ObservableObject {
             }
             
             if titleWidth != 0 {
-                MarqueeText(text: title, leftFade: 5.0, rightFade: 5.0, startDelay: 0, animating: isPlaying)
+                MarqueeText(text: title, leftFade: 25.0, rightFade: 5.0, startDelay: 0, animating: isPlaying)
             }
         }
         .frame(maxWidth: .infinity, alignment: .center)
