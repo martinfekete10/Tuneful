@@ -184,7 +184,7 @@ jobs:
           echo -n "$PRIVATE_SPARKLE_KEY" > ./Configuration/sparkle_private_key
       - name: Generate Sparkle notes # generate Sparkle release notes (convert Markdown to HTML)
         run: |
-          pip3 install -r Configuration/requirements.txt
+          pip3 install --break-system-packages -r Configuration/requirements.txt
           python3 ./Configuration/generate_html_for_sparkle_release.py
           mv Release/latest_changes.html Release/${{ env.projname }}.html
       - name: Update appcast # generate / update appcast.xml with edDSA key
@@ -265,7 +265,7 @@ jobs:
           rm -rf Release/*.plist
       - name: Preparate Sparkle # generate Sparkle release notes (convert Markdown to HTML), remove beta item if present
         run: |
-          pip3 install -r Configuration/requirements.txt
+          pip3 install --break-system-packages -r Configuration/requirements.txt
           python3 ./Configuration/generate_html_for_sparkle_release.py
           mv Release/latest_changes.html Release/${{ env.projname }}.html
           python3 ./Configuration/remove_last_item_appcast.py
