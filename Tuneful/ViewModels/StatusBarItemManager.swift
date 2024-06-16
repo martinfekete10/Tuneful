@@ -22,9 +22,9 @@ class StatusBarItemManager: ObservableObject {
         let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
         var menuBarItemWidth = titleWidth == 0
             ? Constants.StatusBar.imageWidth
-            : (self.menuBarItemWidth > titleWidth  ? titleWidth + 5 : self.menuBarItemWidth + 5)
-        if self.statusBarIcon != .hidden {
-            menuBarItemWidth += 25
+            : (self.menuBarItemWidth > titleWidth  ? titleWidth : self.menuBarItemWidth)
+        if self.statusBarIcon != .hidden && titleWidth != 0 {
+            menuBarItemWidth += Constants.StatusBar.imageWidth
         }
         
         let mainView = HStack(spacing: 7) {
@@ -39,7 +39,7 @@ class StatusBarItemManager: ObservableObject {
         .frame(maxWidth: .infinity, alignment: .center)
         
         let menuBarView = NSHostingView(rootView: mainView)
-        menuBarView.frame = NSRect(x: 3, y: 1, width: menuBarItemWidth, height: 20)
+        menuBarView.frame = NSRect(x: 1, y: 1, width: menuBarItemWidth, height: 20)
         return menuBarView
     }
     
