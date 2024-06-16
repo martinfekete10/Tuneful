@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  MenuBarSettingsView.swift
 //  Tuneful
 //
 //  Created by Martin Fekete on 06/01/2024.
@@ -8,38 +8,38 @@
 import SwiftUI
 import Settings
 
-struct MenuBarAppearanceSettingsView: View {
+struct MenuBarSettingsView: View {
     
     @AppStorage("menuBarItemWidth") var menuBarItemWidthAppStorage: Double = 150
     @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt
     @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
-    @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
     @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
+    @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
     @State var menuBarItemWidth: Double
     @State var statusBarIcon: StatusBarIcon
     @State var trackInfoDetails: StatusBarTrackDetails
-    @State var popoverBackground: BackgroundType
     @State var showStatusBarTrackInfo: ShowStatusBarTrackInfo
     @State var showMenuBarPlaybackControls: Bool
+    @State var hideMenuBarItemWhenNotPlaying: Bool
     
     init() {
         @AppStorage("menuBarItemWidth") var menuBarItemWidthAppStorage: Double = 150
         @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt
         @AppStorage("trackInfoDetails") var trackInfoDetailsAppStorage: StatusBarTrackDetails = .artistAndSong
-        @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .transparent
         @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
         @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
+        @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
         
         self.menuBarItemWidth = menuBarItemWidthAppStorage
         self.statusBarIcon = statusBarIconAppStorage
         self.trackInfoDetails = trackInfoDetailsAppStorage
-        self.popoverBackground = popoverBackgroundAppStorage
         self.showStatusBarTrackInfo = showStatusBarTrackInfoAppStorage
         self.showMenuBarPlaybackControls = showMenuBarPlaybackControlsAppStorage
+        self.hideMenuBarItemWhenNotPlaying = hideMenuBarItemWhenNotPlayingAppStorage
     }
 
     var body: some View {
@@ -56,26 +56,17 @@ struct MenuBarAppearanceSettingsView: View {
                     }
                     .onChange(of: statusBarIcon) { _ in
                         self.statusBarIconAppStorage = statusBarIcon
+                        
+                        if statusBarIcon == .hidden && showStatusBarTrackInfo == .never {
+                            showStatusBarTrackInfo = .whenPlaying
+                        }
+                        
                         self.sendTrackChangedNotification()
                     }
-                    .pickerStyle(.segmented)
+                    .pickerStyle(.menu)
                     .frame(width: 200)
                 }
                 
-                Settings.Section(label: {
-                    Text("Popover background")
-                }) {
-                    Picker("", selection: $popoverBackground) {
-                        ForEach(BackgroundType.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .onChange(of: popoverBackground) { newValue in
-                        self.popoverBackgroundAppStorage = popoverBackground
-                    }
-                    .pickerStyle(.segmented)
-                    .frame(width: 200)
-                }
                 
                 Settings.Section(label: {
                     Text("Show song info in menu bar")
@@ -85,8 +76,13 @@ struct MenuBarAppearanceSettingsView: View {
                             Text(value.localizedName).tag(value)
                         }
                     }
-                    .onChange(of: showStatusBarTrackInfo) { newValue in
+                    .onChange(of: showStatusBarTrackInfo) { _ in
                         self.showStatusBarTrackInfoAppStorage = showStatusBarTrackInfo
+                        
+                        if statusBarIcon == .hidden && showStatusBarTrackInfo == .never {
+                            statusBarIcon = .appIcon
+                        }
+                        
                         self.sendTrackChangedNotification()
                     }
                     .pickerStyle(.menu)
@@ -102,7 +98,7 @@ struct MenuBarAppearanceSettingsView: View {
                             Text(value.localizedName).tag(value)
                         }
                     }
-                    .onChange(of: trackInfoDetails) { newValue in
+                    .onChange(of: trackInfoDetails) { _ in
                         self.trackInfoDetailsAppStorage = trackInfoDetails
                         self.sendTrackChangedNotification()
                     }
@@ -123,7 +119,7 @@ struct MenuBarAppearanceSettingsView: View {
                         } maximumValueLabel: {
                             Text("300")
                         }
-                        .onChange(of: menuBarItemWidth) { newValue in
+                        .onChange(of: menuBarItemWidth) { _ in
                             self.menuBarItemWidthAppStorage = menuBarItemWidth
                             self.sendTrackChangedNotification()
                             NSHapticFeedbackManager.defaultPerformer.perform(NSHapticFeedbackManager.FeedbackPattern.levelChange, performanceTime: .now)
@@ -135,6 +131,19 @@ struct MenuBarAppearanceSettingsView: View {
                             .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                             .font(.callout)
                     }
+                }
+                
+                Settings.Section(label: {
+                    Text("Hide when music is not playing")
+                }) {
+                    Toggle(isOn: $hideMenuBarItemWhenNotPlaying) {
+                        Text("")
+                    }
+                    .onChange(of: hideMenuBarItemWhenNotPlaying) { _ in
+                        self.hideMenuBarItemWhenNotPlayingAppStorage = hideMenuBarItemWhenNotPlaying
+                        self.sendTrackChangedNotification()
+                    }
+                    .toggleStyle(.switch)
                 }
                 
                 Settings.Section(label: {
@@ -160,7 +169,7 @@ struct MenuBarAppearanceSettingsView: View {
 
 struct MenuBarAppearanceSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuBarAppearanceSettingsView()
+        MenuBarSettingsView()
             .previewLayout(.device)
             .padding()
     }

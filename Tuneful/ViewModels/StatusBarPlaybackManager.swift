@@ -49,7 +49,7 @@ class StatusBarPlaybackManager: ObservableObject {
             Button(action: playerManager.previousTrack){
                 Image(systemName: "backward.end.fill")
                     .resizable()
-                    .frame(width: 11, height: 11)
+                    .frame(width: 9, height: 9)
                     .animation(.easeInOut(duration: 2.0), value: 1)
             }
             .pressButtonStyle()
@@ -64,7 +64,7 @@ class StatusBarPlaybackManager: ObservableObject {
             Button(action: playerManager.nextTrack) {
                 Image(systemName: "forward.end.fill")
                     .resizable()
-                    .frame(width: 11, height: 11)
+                    .frame(width: 9, height: 9)
                     .animation(.easeInOut(duration: 2.0), value: 1)
             }
             .pressButtonStyle()

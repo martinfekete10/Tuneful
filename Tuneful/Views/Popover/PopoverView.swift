@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PopoverView: View {
     
-    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
+    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .albumArt
     @EnvironmentObject var playerManager: PlayerManager
     
     var body: some View {
@@ -47,10 +47,10 @@ struct PopoverView: View {
                                     .font(.system(size: 15, weight: .bold))
                                     .lineLimit(1)
                                 Text(playerManager.track.artist)
+                                    .foregroundColor(.primary.opacity(Constants.Opacity.primaryOpacity2))
                                     .font(.headline)
                                     .fontWeight(.medium)
                                     .lineLimit(1)
-                                    .foregroundColor(.primary.opacity(Constants.Opacity.primaryOpacity2))
                             }
                             .frame(width: 180, height: 65, alignment: .center)
                             .opacity(0.8)
@@ -102,7 +102,6 @@ struct PopoverView: View {
                         .opacity(0.8)
                         
                         HStack {
-
                             Menu {
                                 ForEach(playerManager.audioDevices) { audioDevice in
                                     Button {
@@ -144,7 +143,7 @@ struct PopoverView: View {
         )
         .frame(
             width: AppDelegate.popoverWidth,
-            height: AppDelegate.popoverHeight
+            height: 370
         )
     }
     

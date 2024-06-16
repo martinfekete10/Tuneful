@@ -1,5 +1,5 @@
 //
-//  MiniPlayerAppearanceView.swift
+//  MiniPlayerSettingsView.swift
 //  Tuneful
 //
 //  Created by Martin Fekete on 21/01/2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Settings
 
-struct MiniPlayerAppearanceSettingsView: View {
+struct MiniPlayerSettingsView: View {
     
     @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
     @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
@@ -91,7 +91,6 @@ struct MiniPlayerAppearanceSettingsView: View {
                         self.miniPlayerTypeAppStorage = miniPlayerType
                         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
                     }
-
                 }
             }
         }
@@ -110,7 +109,7 @@ struct BorderModifier: ViewModifier {
 
 struct MiniPlayerAppearanceSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        MiniPlayerAppearanceSettingsView()
+        MiniPlayerSettingsView()
             .previewLayout(.device)
             .padding()
     }

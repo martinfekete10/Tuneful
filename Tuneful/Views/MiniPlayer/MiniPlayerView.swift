@@ -39,7 +39,7 @@ struct MiniPlayerView: View {
                     .padding(15)
                     .padding(.bottom, 20)
             } else {
-                HStack {
+                HStack(spacing: 0) {
                     Image(nsImage: playerManager.track.albumArt)
                         .resizable()
                         .scaledToFill()

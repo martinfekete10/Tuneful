@@ -19,21 +19,27 @@ class StatusBarItemManager: ObservableObject {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
         let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
-        let menuBarIconView = ZStack(alignment: .leading) {
-            HStack(alignment: .center) {
-                Image(nsImage: image)
-                MarqueeText(text: title, leftFade: 10.0, rightFade: 10.0, startDelay: 0, animating: isPlaying)
-            }
+        let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
+        var menuBarItemWidth = titleWidth == 0
+            ? Constants.StatusBar.imageWidth
+            : (self.menuBarItemWidth > titleWidth  ? titleWidth : self.menuBarItemWidth)
+        if self.statusBarIcon != .hidden && titleWidth != 0 {
+            menuBarItemWidth += Constants.StatusBar.imageWidth
         }
         
-        let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
-        let menuBarItemWidth = titleWidth == 0 ? Constants.StatusBar.imageWidth : (self.menuBarItemWidth > titleWidth  ? titleWidth + 40 : self.menuBarItemWidth)
-        let isItemBiggerThanLimit = Constants.StatusBar.imageWidth + title.stringWidth(with: Constants.StatusBar.marqueeFont) >= menuBarItemWidth
-        let xOffset = isItemBiggerThanLimit ? 10.0 : (menuBarItemWidth - Constants.StatusBar.imageWidth - title.stringWidth(with: Constants.StatusBar.marqueeFont)) / 2
+        let mainView = HStack(spacing: 7) {
+            if self.statusBarIcon != .hidden || titleWidth == 0 { // Should display icon when there is no menubar text
+                Image(nsImage: image)
+            }
+            
+            if titleWidth != 0 {
+                MarqueeText(text: title, leftFade: 0.0, rightFade: 0.0, startDelay: 0, animating: isPlaying)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
         
-        let menuBarView = NSHostingView(rootView: menuBarIconView)
-        menuBarView.frame = NSRect(x: xOffset, y: 1, width: menuBarItemWidth, height: 20)
-        
+        let menuBarView = NSHostingView(rootView: mainView)
+        menuBarView.frame = NSRect(x: 1, y: 1, width: menuBarItemWidth, height: 20)
         return menuBarView
     }
     
