@@ -24,6 +24,7 @@
 
 <p align="center">
   <img width="420" src="docs/images/playback.png">
+  <img width="420" src="docs/images/playback-minimal.png">
 </p>
 
 <p align="center">
