@@ -1,6 +1,6 @@
 # 1.6.0 - New popover style option, menu bar customization and more
 
--   New minimalist popover - you can now customize the look of the popover by selecting from 2 styles
+-   New minimalist popover option - you can now customize the look of the popover by selecting from 2 styles
 -   New option to hide menu bar item when the music is not playing
 -   New option to hide the icon/album art in the menu bar item and only display currently playing song info
 -   Slight improvement to the look of a full-sized mini player, making the controls a bit wider
