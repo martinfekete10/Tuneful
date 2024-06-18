@@ -14,15 +14,17 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.spotify
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfo: ShowStatusBarTrackInfo = .always
+    @AppStorage("scrollingTrackInfo") var scrollingTrackInfo: Bool = true
     
     public func getMenuBarView(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> NSView {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
         let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning)
         
         let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
+        
         var menuBarItemWidth = titleWidth == 0
             ? Constants.StatusBar.imageWidth
-            : (self.menuBarItemWidth > titleWidth  ? titleWidth : self.menuBarItemWidth)
+            : (self.menuBarItemWidth > titleWidth  ? titleWidth + 5 : self.menuBarItemWidth + 5)
         if self.statusBarIcon != .hidden && titleWidth != 0 {
             menuBarItemWidth += Constants.StatusBar.imageWidth
         }
@@ -32,8 +34,15 @@ class StatusBarItemManager: ObservableObject {
                 Image(nsImage: image)
             }
             
-            if titleWidth != 0 {
+            if scrollingTrackInfo && titleWidth != 0 {
                 MarqueeText(text: title, leftFade: 0.0, rightFade: 0.0, startDelay: 0, animating: isPlaying)
+            }
+            
+            if !scrollingTrackInfo && titleWidth != 0 {
+                Text(title)
+                    .lineLimit(1)
+                    .font(.system(size: 13, weight: .regular))
+                    .offset(x: -2.5) // Prevent small jumps when toggling between scrolling on and off
             }
         }
         .frame(maxWidth: .infinity, alignment: .center)

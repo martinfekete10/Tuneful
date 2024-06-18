@@ -16,6 +16,7 @@ struct MenuBarSettingsView: View {
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
     @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
+    @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = true
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
@@ -25,6 +26,7 @@ struct MenuBarSettingsView: View {
     @State var showStatusBarTrackInfo: ShowStatusBarTrackInfo
     @State var showMenuBarPlaybackControls: Bool
     @State var hideMenuBarItemWhenNotPlaying: Bool
+    @State var scrollingTrackInfo: Bool
     
     init() {
         @AppStorage("menuBarItemWidth") var menuBarItemWidthAppStorage: Double = 150
@@ -33,6 +35,7 @@ struct MenuBarSettingsView: View {
         @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
         @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
         @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
+        @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = true
         
         self.menuBarItemWidth = menuBarItemWidthAppStorage
         self.statusBarIcon = statusBarIconAppStorage
@@ -40,6 +43,7 @@ struct MenuBarSettingsView: View {
         self.showStatusBarTrackInfo = showStatusBarTrackInfoAppStorage
         self.showMenuBarPlaybackControls = showMenuBarPlaybackControlsAppStorage
         self.hideMenuBarItemWhenNotPlaying = hideMenuBarItemWhenNotPlayingAppStorage
+        self.scrollingTrackInfo = scrollingTrackInfoAppStorage
     }
 
     var body: some View {
@@ -131,6 +135,20 @@ struct MenuBarSettingsView: View {
                             .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                             .font(.callout)
                     }
+                }
+                
+                Settings.Section(label: {
+                    Text("Scrolling song info")
+                }) {
+                    Toggle(isOn: $scrollingTrackInfo) {
+                        Text("")
+                    }
+                    .onChange(of: scrollingTrackInfo) { _ in
+                        self.scrollingTrackInfoAppStorage = scrollingTrackInfo
+                        self.sendTrackChangedNotification()
+                    }
+                    .toggleStyle(.switch)
+                    .disabled(self.showStatusBarTrackInfo == .never)
                 }
                 
                 Settings.Section(label: {
