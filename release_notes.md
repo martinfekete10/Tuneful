@@ -1,3 +1,8 @@
+# 1.6.1 - Option to disable scrolling menu bar text
+
+-   Added new option to disable scrolling menu bar text as it may be distracting
+-   Fixed bug when the text was scrolling even if the width of menu bar item was large enough
+
 # 1.6.0 - New popover style option, menu bar customization and more
 
 -   New minimalist popover option - you can now customize the look of the popover by selecting from 2 styles
