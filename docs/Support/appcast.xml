@@ -3,6 +3,20 @@
     <channel>
         <title>Tuneful</title>
         <item>
+            <title>1.6.1</title>
+            <pubDate>Tue, 18 Jun 2024 19:03:29 +0000</pubDate>
+            <link>https://github.com/martinfekete10/Tuneful/releases</link>
+            <sparkle:version>1.6.1</sparkle:version>
+            <sparkle:shortVersionString>1.6.1</sparkle:shortVersionString>
+            <description><![CDATA[<h1>Option to disable scrolling menu bar text</h1>
+<ul>
+<li>Added new option to disable scrolling menu bar text as it may be distracting</li>
+<li>Fixed bug when the text was scrolling even if the width of menu bar item was large enough</li>
+</ul>]]></description>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.6.1/Tuneful.dmg" length="9152493" type="application/octet-stream" sparkle:edSignature="jT1nHd8Hpv2GmMyUYhBB8DmGG0XcBL7/HAFXdNSVl/jm/Sox1CGtiOwGXHrvbuvNOjpA/dJsHouE6EEgDN3HBQ=="/>
+        </item>
+        <item>
             <title>1.6.0</title>
             <pubDate>Sun, 16 Jun 2024 13:01:39 +0000</pubDate>
             <link>https://github.com/martinfekete10/Tuneful/releases</link>
@@ -34,26 +48,6 @@
 </ul>]]></description>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.5.0/Tuneful.dmg" length="9102450" type="application/octet-stream" sparkle:edSignature="sT+hQ5oWk1+9mJv2316gg5vjqZVtX921zI95PlF6eC/KjZgn7gJaflDKHfGatgOFP2o3wz7A/+9++KjK40VtAw=="/>
-        </item>
-        <item>
-            <title>1.4.0</title>
-            <pubDate>Thu, 25 Jan 2024 21:54:06 +0000</pubDate>
-            <link>https://github.com/martinfekete10/Tuneful/releases</link>
-            <sparkle:version>1.4.0</sparkle:version>
-            <sparkle:shortVersionString>1.4.0</sparkle:shortVersionString>
-            <description><![CDATA[<h1>Scrolling menu bar text</h1>
-<ul>
-<li>Menu bar text is now scrolling if it does not fit the max width</li>
-<li>New option to hide menu bar text when nothing is currently playing</li>
-<li>New keyboard shortcut to quickly switch between Spotify and Apple Music</li>
-<li>Ability to switch between Spotify and Apple Music from new menu bar submenu</li>
-<li>Fixed an issue when incremental volume increase would break the UI on max volume</li>
-<li>Fixed an issue when progress bar would not update until the mini player window is displayed for the first time</li>
-<li>Minor settings improvements</li>
-<li>Minor mini player improvements</li>
-</ul>]]></description>
-            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.4.0/Tuneful.dmg" length="9093394" type="application/octet-stream" sparkle:edSignature="ADvziOf2Rpd0LcIZA3hVA0etePWofWe1i+5CkMRR8n0ogLht/8UGOv8FVrOc8u74ujoWAiJHGYwQXbpbSLbyCA=="/>
         </item>
         <item>
             <title>0.9.6</title>
