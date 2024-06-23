@@ -25,11 +25,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
+    // Onboarding
     private var onboardingWindow: OnboardingWindow!
+    
+    // Mini player
+    private var originalMiniPlayerFrame: NSRect!// = NSRect(x: 10, y: 10, width: self.miniPlayerType == .full ? 1 : 2, height: 155)
     private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
-    private var popover: NSPopover!
+    private let miniPlayerHeigth: CGFloat = 155
+    private let miniPlayerWidth: CGFloat = 300
+    private let compactMiniPlayerWidth: CGFloat = 155
     
     // Popover
+    private var popover: NSPopover!
     static let popoverWidth: CGFloat = 210
     
     // Status bar
@@ -120,6 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager()
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
+        self.originalMiniPlayerFrame = NSRect(x: 10, y: 10, width: self.miniPlayerType == .full ? 300 : 155, height: 155)
         
 //        if let bundleID = Bundle.main.bundleIdentifier {
 //            UserDefaults.standard.removePersistentDomain(forName: bundleID)
@@ -283,16 +291,55 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.showHideMiniPlayer(self.statusBarMenu.item(withTitle: "Show mini player")!)
     }
     
+//    @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
+//        if sender.state == .on {
+//            sender.state = .off
+//            self.showPlayerWindow = false
+//            self.playerManager.timerStopSignal.send()
+//            self.miniPlayerWindow.close()
+//        } else {
+//            sender.state = .on
+//            self.showPlayerWindow = true
+//            if miniPlayerType == .full {
+//                self.playerManager.timerStartSignal.send()
+//            }
+//            self.miniPlayerWindow.makeKeyAndOrderFront(nil)
+//        }
+//    }
+    
     @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
             self.showPlayerWindow = false
             self.playerManager.timerStopSignal.send()
-            self.miniPlayerWindow.close()
+
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = 0.15
+                context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+
+                self.originalMiniPlayerFrame = miniPlayerWindow.frame
+                let targetFrame = NSRect(x: originalMiniPlayerFrame.midX, y: originalMiniPlayerFrame.midY, width: 0, height: 0)
+                self.miniPlayerWindow.animator().setFrame(targetFrame, display: true)
+                self.miniPlayerWindow.animator().alphaValue = 0.0
+            }, completionHandler: {
+                self.miniPlayerWindow.close()
+                self.miniPlayerWindow.alphaValue = 1.0
+            })
         } else {
             sender.state = .on
             self.showPlayerWindow = true
-            self.setupMiniPlayer()
+            self.miniPlayerWindow.makeKeyAndOrderFront(nil)
+            
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = 0.15
+                context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                self.miniPlayerWindow.animator().setFrame(self.originalMiniPlayerFrame, display: true)
+                self.miniPlayerWindow.animator().alphaValue = 1.0
+            }, completionHandler: {
+                if self.miniPlayerType == .full {
+                    self.playerManager.timerStartSignal.send()
+                }
+            })
         }
     }
     
@@ -396,32 +443,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Mini player
     
     @objc func setupMiniPlayer() {
-        let originalWindowPosition = miniPlayerWindow.frame.origin
-        let windowPosition = CGPoint(x: originalWindowPosition.x, y: originalWindowPosition.y + 10) // Not sure why, but everytime this function is called, window moves down a few pixels, thus this ugly workaround
-        
         switch miniPlayerType {
         case .full:
             setupMiniPlayerWindow(
-                size: NSSize(width: 300, height: 145),
-                position: windowPosition,
+                size: NSSize(width: self.miniPlayerWidth, height: self.miniPlayerHeigth),
+                position: miniPlayerWindow.frame.origin,
                 view: MiniPlayerView(parentWindow: miniPlayerWindow)
             )
         case .minimal:
             setupMiniPlayerWindow(
-                size: NSSize(width: 145, height: 145),
-                position: windowPosition,
+                size: NSSize(width: self.compactMiniPlayerWidth, height: self.miniPlayerHeigth),
+                position: miniPlayerWindow.frame.origin,
                 view: CompactMiniPlayerView(parentWindow: miniPlayerWindow)
             )
-        }
-        
-        miniPlayerWindow.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        
-        playerManager.timerStartSignal.send()
-        
-        if !showPlayerWindow {
-            playerManager.timerStopSignal.send()
-            miniPlayerWindow.close()
         }
     }
     
@@ -434,13 +468,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
+        let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
+        let hostedView = NSHostingView(rootView: rootView)
+        let miniPlayerFrame = NSRect(origin: position, size: size)
+        
+        self.originalMiniPlayerFrame = miniPlayerFrame
+        self.miniPlayerWindow.contentView = hostedView
+        self.miniPlayerWindow.makeKeyAndOrderFront(nil)
+        
         DispatchQueue.main.async {
-            self.miniPlayerWindow.setFrame(NSRect(origin: position, size: size), display: true, animate: true)
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = 0.15
+                context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                self.miniPlayerWindow.animator().setFrame(NSRect(origin: position, size: size), display: false)
+            })
         }
         
-        let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
-        let hostedOnboardingView = NSHostingView(rootView: rootView)
-        miniPlayerWindow.contentView = hostedOnboardingView
+        if self.miniPlayerType == .full && self.showPlayerWindow {
+            self.playerManager.timerStartSignal.send()
+        }
+        
+        if !self.showPlayerWindow {
+            self.miniPlayerWindow.close()
+        }
     }
     
     // MARK: - Settings

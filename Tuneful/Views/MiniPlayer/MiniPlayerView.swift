@@ -10,8 +10,8 @@ import MediaPlayer
 
 struct MiniPlayerView: View {
     
-    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
     @EnvironmentObject var playerManager: PlayerManager
+    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
     
     private var imageSize: CGFloat = 140.0
     private weak var parentWindow: MiniPlayerWindow!
@@ -97,7 +97,8 @@ struct MiniPlayerView: View {
                 }
             }
         }
-        .frame(width: 310, height: 155)
+        .frame(maxWidth: 310, maxHeight: 155)
+        .frame(minWidth: 0, minHeight: 0)
         .overlay(
             NotificationView()
         )

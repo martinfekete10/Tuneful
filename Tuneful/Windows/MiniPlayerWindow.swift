@@ -14,7 +14,7 @@ class MiniPlayerWindow: NSWindow {
     
     init() {
         super.init(
-            contentRect: NSRect(x: 10, y: 0, width: 300, height: 145),
+            contentRect: NSRect(x: 10, y: 10, width: 300, height: 145),
             styleMask: [.borderless],
             backing: .buffered,
             defer: false
@@ -39,7 +39,7 @@ class MiniPlayerWindow: NSWindow {
             .addItem(withTitle: "Full", action: #selector(setFullPlayer(_:)), keyEquivalent: "")
             .state = self.miniPlayerType == .full ? .on : .off
         customizeMenu
-            .addItem(withTitle: "Minimal", action: #selector(setAlbumArtPlayer(_:)), keyEquivalent: "")
+            .addItem(withTitle: "Minimal", action: #selector(setMinimalPlayer(_:)), keyEquivalent: "")
             .state = self.miniPlayerType == .minimal ? .on : .off
         customizeMenuItem.submenu = customizeMenu
         
@@ -58,7 +58,7 @@ class MiniPlayerWindow: NSWindow {
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
 
-    @objc func setAlbumArtPlayer(_ sender: Any) {
+    @objc func setMinimalPlayer(_ sender: Any) {
         miniPlayerType = .minimal
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }

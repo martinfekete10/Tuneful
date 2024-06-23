@@ -12,6 +12,7 @@ struct CompactMiniPlayerView: View {
     
     @EnvironmentObject var playerManager: PlayerManager
     @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
+    
     @State private var isShowingPlaybackControls = false
     
     private var imageSize: CGFloat = 140.0
@@ -92,7 +93,8 @@ struct CompactMiniPlayerView: View {
                 .opacity(isShowingPlaybackControls ? 1 : 0)
             }
         }
-        .frame(width: 155, height: 155)
+        .frame(maxWidth: 310, maxHeight: 155)
+        .frame(minWidth: 0, minHeight: 0)
         .onHover { _ in
             withAnimation(.linear(duration: 0.1)) {
                 self.isShowingPlaybackControls.toggle()
