@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FE1F7E952B89E92A00B702AD /* StatusBarPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1F7E942B89E92A00B702AD /* StatusBarPlaybackManager.swift */; };
+		FE204ACF2C29CA2D0046D4E6 /* NotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE204ACE2C29CA2D0046D4E6 /* NotificationWindow.swift */; };
 		FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE23689F2B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift */; };
 		FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */; };
 		FE2AEE302A8FC76500E8D576 /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */; };
@@ -84,6 +85,7 @@
 
 /* Begin PBXFileReference section */
 		FE1F7E942B89E92A00B702AD /* StatusBarPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarPlaybackManager.swift; sourceTree = "<group>"; };
+		FE204ACE2C29CA2D0046D4E6 /* NotificationWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationWindow.swift; sourceTree = "<group>"; };
 		FE23689F2B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStatusBarTrackInfo.swift; sourceTree = "<group>"; };
 		FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerWindow.swift; sourceTree = "<group>"; };
 		FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */,
 				FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */,
+				FE204ACE2C29CA2D0046D4E6 /* NotificationWindow.swift */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */,
 				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
+				FE204ACF2C29CA2D0046D4E6 /* NotificationWindow.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
 				FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,

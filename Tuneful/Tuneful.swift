@@ -29,11 +29,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var onboardingWindow: OnboardingWindow!
     
     // Mini player
-    private var originalMiniPlayerFrame: NSRect!// = NSRect(x: 10, y: 10, width: self.miniPlayerType == .full ? 1 : 2, height: 155)
     private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
     private let miniPlayerHeigth: CGFloat = 155
     private let miniPlayerWidth: CGFloat = 300
     private let compactMiniPlayerWidth: CGFloat = 155
+    private var originalMiniPlayerFrame: NSRect!
     
     // Popover
     private var popover: NSPopover!
@@ -122,16 +122,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        
+//        if let bundleID = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+//        }
+        
+        
         NSApp.setActivationPolicy(.accessory)
         
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager()
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
         self.originalMiniPlayerFrame = NSRect(x: 10, y: 10, width: self.miniPlayerType == .full ? 300 : 155, height: 155)
-        
-//        if let bundleID = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-//        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -287,62 +289,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    @objc func toggleMiniPlayer() {
-        self.showHideMiniPlayer(self.statusBarMenu.item(withTitle: "Show mini player")!)
-    }
-    
-//    @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
-//        if sender.state == .on {
-//            sender.state = .off
-//            self.showPlayerWindow = false
-//            self.playerManager.timerStopSignal.send()
-//            self.miniPlayerWindow.close()
-//        } else {
-//            sender.state = .on
-//            self.showPlayerWindow = true
-//            if miniPlayerType == .full {
-//                self.playerManager.timerStartSignal.send()
-//            }
-//            self.miniPlayerWindow.makeKeyAndOrderFront(nil)
-//        }
-//    }
-    
-    @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
-        if sender.state == .on {
-            sender.state = .off
-            self.showPlayerWindow = false
-            self.playerManager.timerStopSignal.send()
-
-            NSAnimationContext.runAnimationGroup({ context in
-                context.duration = 0.15
-                context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-
-                self.originalMiniPlayerFrame = miniPlayerWindow.frame
-                let targetFrame = NSRect(x: originalMiniPlayerFrame.midX, y: originalMiniPlayerFrame.midY, width: 0, height: 0)
-                self.miniPlayerWindow.animator().setFrame(targetFrame, display: true)
-                self.miniPlayerWindow.animator().alphaValue = 0.0
-            }, completionHandler: {
-                self.miniPlayerWindow.close()
-                self.miniPlayerWindow.alphaValue = 1.0
-            })
-        } else {
-            sender.state = .on
-            self.showPlayerWindow = true
-            self.miniPlayerWindow.makeKeyAndOrderFront(nil)
-            
-            NSAnimationContext.runAnimationGroup({ context in
-                context.duration = 0.15
-                context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-                self.miniPlayerWindow.animator().setFrame(self.originalMiniPlayerFrame, display: true)
-                self.miniPlayerWindow.animator().alphaValue = 1.0
-            }, completionHandler: {
-                if self.miniPlayerType == .full {
-                    self.playerManager.timerStartSignal.send()
-                }
-            })
-        }
-    }
-    
     @IBAction func openURL(_ sender: AnyObject) {
         let url = URL(string: "https://github.com/martinfekete10/Tuneful")
         NSWorkspace.shared.open(url!)
@@ -467,22 +413,55 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
+    @objc func toggleMiniPlayer() {
+        self.showHideMiniPlayer(self.statusBarMenu.item(withTitle: "Show mini player")!)
+    }
+    
+    @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
+        if sender.state == .on {
+            sender.state = .off
+            self.showPlayerWindow = false
+            self.playerManager.timerStopSignal.send()
+
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = 0.15
+                context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+
+                self.originalMiniPlayerFrame = miniPlayerWindow.frame
+                let targetFrame = NSRect(x: originalMiniPlayerFrame.midX, y: originalMiniPlayerFrame.midY, width: 0, height: 0)
+                self.miniPlayerWindow.animator().setFrame(targetFrame, display: true)
+                self.miniPlayerWindow.animator().alphaValue = 0.0
+            }, completionHandler: {
+                self.miniPlayerWindow.close()
+                self.miniPlayerWindow.alphaValue = 1.0
+            })
+        } else {
+            sender.state = .on
+            self.showPlayerWindow = true
+            self.miniPlayerWindow.makeKeyAndOrderFront(nil)
+            
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = 0.15
+                context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                self.miniPlayerWindow.animator().setFrame(self.originalMiniPlayerFrame, display: true)
+                self.miniPlayerWindow.animator().alphaValue = 1.0
+            }, completionHandler: {
+                if self.miniPlayerType == .full {
+                    self.playerManager.timerStartSignal.send()
+                }
+            })
+        }
+    }
+    
     private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
         let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
         let hostedView = NSHostingView(rootView: rootView)
         let miniPlayerFrame = NSRect(origin: position, size: size)
         
         self.originalMiniPlayerFrame = miniPlayerFrame
+        self.miniPlayerWindow.setFrame(miniPlayerFrame, display: false)
         self.miniPlayerWindow.contentView = hostedView
         self.miniPlayerWindow.makeKeyAndOrderFront(nil)
-        
-        DispatchQueue.main.async {
-            NSAnimationContext.runAnimationGroup({ context in
-                context.duration = 0.15
-                context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-                self.miniPlayerWindow.animator().setFrame(NSRect(origin: position, size: size), display: false)
-            })
-        }
         
         if self.miniPlayerType == .full && self.showPlayerWindow {
             self.playerManager.timerStartSignal.send()
@@ -491,6 +470,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if !self.showPlayerWindow {
             self.miniPlayerWindow.close()
         }
+    }
+    
+    // MARK: - Track changed notification
+    
+    private func setupTrackChangedNotificationWindow(size: NSSize, position: CGPoint) {
+        // TODO
     }
     
     // MARK: - Settings
