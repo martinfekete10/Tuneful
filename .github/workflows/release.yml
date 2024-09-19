@@ -9,7 +9,6 @@ concurrency:
 
 env:
     projname: Tuneful
-    beta-channel-name: "beta"
 
 jobs:
     preparation:
@@ -78,7 +77,7 @@ jobs:
 
     archive:
         name: Build and export app
-        runs-on: macos-13
+        runs-on: macos-14
         needs: preparation
         steps:
             - uses: actions/download-artifact@master # download all previously generated artifacts
@@ -118,123 +117,45 @@ jobs:
                   security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
                   security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
                   security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          # import certificate to keychain
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-      - name: Switch Xcode version # Force Xcode version (macOS runner has multiple Xcode versions installed)
-        run: |
-          sudo xcode-select -s "/Applications/Xcode_16.app"
-          /usr/bin/xcodebuild -version
-      - name: Build and archive # create archive
-        run: xcodebuild clean archive -project ${{ env.projname }}.xcodeproj -scheme ${{ env.projname }} -archivePath ${{ env.projname }}
-      - name: Export app # create .app
-        run: xcodebuild -exportArchive -archivePath "${{ env.projname }}.xcarchive" -exportPath Release -exportOptionsPlist "Configuration/export_options.plist"
-      - name: Dmg app # dmg .app
-        run: |
-          brew install create-dmg
-          cd Release
-          create-dmg \
-            --volname "Tuneful" \
-            --volicon "${{ github.workspace }}/docs/images/icon.icns" \
-            --background "${{ github.workspace }}/docs/images/installer-bg.png" \
-            --window-pos 200 120 \
-            --window-size 835 600 \
-            --icon-size 128 \
-            --icon "Tuneful.app" 230 285 \
-            --hide-extension "Tuneful.app" \
-            --app-drop-link 593 285 \
-            "./Tuneful.dmg" \
-            "./Tuneful.app"
-      - name: Upload archived dmg app
-        uses: actions/upload-artifact@master
-        with:
-          name: app
-          path: Release/${{ env.projname }}.dmg
 
-    pre-release:
-        name: Create pre-release
-        runs-on: macos-13
-        environment: deploy-beta
-        needs: archive
-        if: ${{ contains(github.event.comment.body, 'beta') }}
-        steps:
-            - uses: xt0rted/pull-request-comment-branch@v1 # check out branch of PR
-              id: comment-branch
-            - uses: actions/checkout@v3
-              if: success()
-              with:
-                  ref: ${{ steps.comment-branch.outputs.head_ref }}
-            - uses: actions/download-artifact@master # download all previously generated artifacts
-              with:
-                  path: artifacts
-            - name: Parse info generated in preparation job
-              id: info
+                  # import certificate to keychain
+                  security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+                  security list-keychain -d user -s $KEYCHAIN_PATH
+            - name: Switch Xcode version # Force Xcode version (macOS runner has multiple Xcode versions installed)
               run: |
-                  echo "new_version=$(cat artifacts/artifact/new_version)" >> $GITHUB_OUTPUT
-                  echo "title=$(cat artifacts/artifact/title)" >> $GITHUB_OUTPUT
-                  mv artifacts/artifact/new_version new_version
-                  mv artifacts/artifact/title title
-                  mv artifacts/artifact/latest_changes latest_changes
-                  mkdir Release
-                  mv artifacts/app/${{ env.projname }}.dmg Release/
-            - name: Prepare Sparkle update creation # Import Sparkle private key, remove unnecessary files in Release folder
-              env:
-                  PRIVATE_SPARKLE_KEY: ${{ secrets.PRIVATE_SPARKLE_KEY }}
+                  sudo xcode-select -s "/Applications/Xcode_16.app"
+                  /usr/bin/xcodebuild -version
+            - name: Build and archive # create archive
+              run: xcodebuild clean archive -project ${{ env.projname }}.xcodeproj -scheme ${{ env.projname }} -archivePath ${{ env.projname }}
+            - name: Export app # create .app
+              run: xcodebuild -exportArchive -archivePath "${{ env.projname }}.xcarchive" -exportPath Release -exportOptionsPlist "Configuration/export_options.plist"
+            - name: Dmg app # dmg .app
               run: |
-                  echo -n "$PRIVATE_SPARKLE_KEY" > ./Configuration/sparkle_private_key
-            - name: Generate Sparkle notes # generate Sparkle release notes (convert Markdown to HTML)
-              run: |
-                  pip3 install --break-system-packages -r Configuration/requirements.txt
-                  python3 ./Configuration/generate_html_for_sparkle_release.py
-                  mv Release/latest_changes.html Release/${{ env.projname }}.html
-            - name: Update appcast # generate / update appcast.xml with edDSA key
-              run: |
-                  ./Configuration/generate_appcast \
-                      --ed-key-file Configuration/sparkle_private_key \
-                      --link https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases \
-                      --download-url-prefix https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases/download/v${{ steps.info.outputs.new_version }}-beta/ \
-                      --channel ${{ env.beta-channel-name }} \
-                      -o docs/Support/appcast.xml \
-                      Release/
-            - name: Save generated appcast
+                  brew install create-dmg
+                  cd Release
+                  create-dmg \
+                    --volname "Tuneful" \
+                    --volicon "${{ github.workspace }}/docs/images/icon.icns" \
+                    --background "${{ github.workspace }}/docs/images/installer-bg.png" \
+                    --window-pos 200 120 \
+                    --window-size 835 600 \
+                    --icon-size 128 \
+                    --icon "Tuneful.app" 230 285 \
+                    --hide-extension "Tuneful.app" \
+                    --app-drop-link 593 285 \
+                    "./Tuneful.dmg" \
+                    "./Tuneful.app"
+            - name: Upload archived dmg app
               uses: actions/upload-artifact@master
               with:
-                  name: appcast
-                  path: docs/Support/appcast.xml
-            - name: Create GitHub beta release # Upload .dmg to GitHub release
-              uses: softprops/action-gh-release@v1
-              with:
-                  name: v${{ steps.info.outputs.new_version }}b - ${{ steps.info.outputs.title }}
-                  tag_name: v${{ steps.info.outputs.new_version }}-beta
-                  fail_on_unmatched_files: true
-                  body_path: latest_changes
-                  files: Release/${{ env.projname }}.dmg
-                  prerelease: true
-            - name: Create summary # create summary for PR
-              run: |
-                  echo "Beta Release v${{ steps.info.outputs.new_version }} created" > $GITHUB_STEP_SUMMARY
-            - uses: actions/checkout@v3 # checkout again, directly on the main branch, as it's a prerelease
-              if: success()
-            - name: Remove old appcast # remove old appcast
-              run: rm -rf docs/Support/appcast.xml
-            - name: Retrieve previously generated appcast
-              uses: actions/download-artifact@master
-              with:
-                  name: appcast
-                  path: docs/Support
-            - name: Saving appcast # commits only appcast to main
-              uses: stefanzweifel/git-auto-commit-action@v4
-              id: commit-appcast
-              with:
-                  file_pattern: docs/Support/appcast.xml
-                  commit_message: "Update appcast with beta release for v${{ steps.info.outputs.new_version }}"
-                  
+                  name: app
+                  path: Release/${{ env.projname }}.dmg
+
     release:
-        name: "Create Release"
+        name: "Create release"
         runs-on: macos-14
         environment: deploy-release
         needs: archive
-        if: ${{ !contains(github.event.comment.body, 'beta') }}
         steps:
             - uses: xt0rted/pull-request-comment-branch@v1 # check out branch of PR
               id: comment-branch
@@ -263,7 +184,7 @@ jobs:
                   rm -rf Release/*.app
                   rm -rf Release/*.log
                   rm -rf Release/*.plist
-            - name: Preparate Sparkle # generate Sparkle release notes (convert Markdown to HTML), remove beta item if present
+            - name: Preparate Sparkle # generate Sparkle release notes (convert Markdown to HTML)
               run: |
                   pip3 install --break-system-packages -r Configuration/requirements.txt
                   python3 ./Configuration/generate_html_for_sparkle_release.py
@@ -285,7 +206,6 @@ jobs:
                   fail_on_unmatched_files: true
                   body_path: latest_changes
                   files: Release/${{ env.projname }}.dmg
-                  prerelease: ${{ steps.channel.outputs.prerelease }}
             - name: Saving changes # commits changes to branch (version bump, appcast.xml)
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
@@ -296,11 +216,12 @@ jobs:
             - name: Create summary # create summary for PR
               run: |
                   echo "Release v${{ steps.info.outputs.new_version }} created." > $GITHUB_STEP_SUMMARY
+
     ending:
         name: Ending job
         if: always()
         runs-on: ubuntu-latest
-        needs: [pre-release, release]
+        needs: release
         steps:
             - uses: xt0rted/pull-request-comment-branch@v1 # check out branch of PR
               id: comment-branch
