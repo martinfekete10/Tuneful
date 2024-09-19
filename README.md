@@ -33,7 +33,7 @@
 `brew install martinfekete10/tap/tuneful`
 
 > [!NOTE]  
-> This app has not been notarized by Apple, so a warning will appear when you launch Tuneful for the first time. To open Tuneful, right-click on the app icon in Finder and select "Open".
+> This app has not been notarized by Apple so a warning will appear when you launch Tuneful for the first time. To open Tuneful, right-click on the app icon in Finder and select "Open".
 
 ## Screenshots
 
