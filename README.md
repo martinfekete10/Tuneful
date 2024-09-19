@@ -21,16 +21,19 @@
 <h5 align="center">Tuneful requires macOS 13 Ventura or newer</h5>
 
 ## Installation
+
 ### Tuneful can be installed using standard installation process
+
 1. Download the latest [releases](https://github.com/martinfekete10/Tuneful/releases/latest/download/Tuneful.dmg)
 2. Open the downloaded `.dmg` file and drag the app to your Applications folder
 3. Launch the app, select you preferred streaming service and enjoy!
 
 ### Or using Homebrew
+
 `brew install martinfekete10/tap/tuneful`
 
 > [!NOTE]  
-> This app has not been notarized by Apple, so a warning will appear when you launch Tuneful for the first time. To open Tuneful, right-click on the app icon in Finder and select "Open"
+> This app has not been notarized by Apple so a warning will appear when you launch Tuneful for the first time. To open Tuneful, right-click on the app icon in Finder and select "Open".
 
 ## Screenshots
 
@@ -58,12 +61,12 @@ If you find this app useful, consider supporting its development by [donating](h
 
 ## Acknowledgments
 
-- Project is partly based on [Jukebox](https://github.com/Jaysce/Jukebox/tree/main)
-- This project uses [Sparkle](https://sparkle-project.org) for update delivery
-- This project makes use of [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
-- GitHub Actions are based on repo from [Alex Perathoner](https://github.com/AlexPerathoner/SparkleReleaseTest)
-- Settings window is using [Settings](https://github.com/sindresorhus/Settings) Swift package
+-   Project is partly based on [Jukebox](https://github.com/Jaysce/Jukebox/tree/main)
+-   This project uses [Sparkle](https://sparkle-project.org) for update delivery
+-   This project makes use of [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
+-   GitHub Actions are based on repo from [Alex Perathoner](https://github.com/AlexPerathoner/SparkleReleaseTest)
+-   Settings window is using [Settings](https://github.com/sindresorhus/Settings) Swift package
 
 ---
 
-*Thank you for using Tuneful!*
+_Thank you for using Tuneful!_
