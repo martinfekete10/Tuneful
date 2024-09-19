@@ -123,7 +123,7 @@ jobs:
           security list-keychain -d user -s $KEYCHAIN_PATH
       - name: Switch Xcode version # Force Xcode version (macOS runner has multiple Xcode versions installed)
         run: |
-          sudo xcode-select -s "/Applications/Xcode_15.1.app"
+          sudo xcode-select -s "/Applications/Xcode_16.app"
           /usr/bin/xcodebuild -version
       - name: Build and archive # create archive
         run: xcodebuild clean archive -project ${{ env.projname }}.xcodeproj -scheme ${{ env.projname }} -archivePath ${{ env.projname }}
