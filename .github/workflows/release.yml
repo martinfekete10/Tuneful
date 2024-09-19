@@ -1,4 +1,4 @@
-name: "Create release"
+name: "Create Release"
 on:
     issue_comment:
         types: [created]
@@ -9,6 +9,7 @@ concurrency:
 
 env:
     projname: Tuneful
+    beta-channel-name: "beta"
 
 jobs:
     preparation:
@@ -36,6 +37,7 @@ jobs:
             - uses: xt0rted/pull-request-comment-branch@v1 # check out branch of PR
               id: comment-branch
             - uses: actions/checkout@v3
+              if: success()
               with:
                   ref: ${{ steps.comment-branch.outputs.head_ref }}
             - name: Extract latest changes # generate release notes, version and title to use in the release
@@ -76,7 +78,7 @@ jobs:
 
     archive:
         name: Build and export app
-        runs-on: macos-14
+        runs-on: macos-13
         needs: preparation
         steps:
             - uses: actions/download-artifact@master # download all previously generated artifacts
@@ -150,11 +152,90 @@ jobs:
                   name: app
                   path: Release/${{ env.projname }}.dmg
 
+    pre-release:
+        name: Create pre-release
+        runs-on: macos-13
+        environment: deploy-beta
+        needs: archive
+        if: ${{ contains(github.event.comment.body, 'beta') }}
+        steps:
+            - uses: xt0rted/pull-request-comment-branch@v1 # check out branch of PR
+              id: comment-branch
+            - uses: actions/checkout@v3
+              if: success()
+              with:
+                  ref: ${{ steps.comment-branch.outputs.head_ref }}
+            - uses: actions/download-artifact@master # download all previously generated artifacts
+              with:
+                  path: artifacts
+            - name: Parse info generated in preparation job
+              id: info
+              run: |
+                  echo "new_version=$(cat artifacts/artifact/new_version)" >> $GITHUB_OUTPUT
+                  echo "title=$(cat artifacts/artifact/title)" >> $GITHUB_OUTPUT
+                  mv artifacts/artifact/new_version new_version
+                  mv artifacts/artifact/title title
+                  mv artifacts/artifact/latest_changes latest_changes
+                  mkdir Release
+                  mv artifacts/app/${{ env.projname }}.dmg Release/
+            - name: Prepare Sparkle update creation # Import Sparkle private key, remove unnecessary files in Release folder
+              env:
+                  PRIVATE_SPARKLE_KEY: ${{ secrets.PRIVATE_SPARKLE_KEY }}
+              run: |
+                  echo -n "$PRIVATE_SPARKLE_KEY" > ./Configuration/sparkle_private_key
+            - name: Generate Sparkle notes # generate Sparkle release notes (convert Markdown to HTML)
+              run: |
+                  pip3 install --break-system-packages -r Configuration/requirements.txt
+                  python3 ./Configuration/generate_html_for_sparkle_release.py
+                  mv Release/latest_changes.html Release/${{ env.projname }}.html
+            - name: Update appcast # generate / update appcast.xml with edDSA key
+              run: |
+                  ./Configuration/generate_appcast \
+                      --ed-key-file Configuration/sparkle_private_key \
+                      --link https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases \
+                      --download-url-prefix https://github.com/${{ github.repository_owner }}/${{ github.event.repository.name }}/releases/download/v${{ steps.info.outputs.new_version }}-beta/ \
+                      --channel ${{ env.beta-channel-name }} \
+                      -o docs/Support/appcast.xml \
+                      Release/
+            - name: Save generated appcast
+              uses: actions/upload-artifact@master
+              with:
+                  name: appcast
+                  path: docs/Support/appcast.xml
+            - name: Create GitHub beta release # Upload .dmg to GitHub release
+              uses: softprops/action-gh-release@v1
+              with:
+                  name: v${{ steps.info.outputs.new_version }}b - ${{ steps.info.outputs.title }}
+                  tag_name: v${{ steps.info.outputs.new_version }}-beta
+                  fail_on_unmatched_files: true
+                  body_path: latest_changes
+                  files: Release/${{ env.projname }}.dmg
+                  prerelease: true
+            - name: Create summary # create summary for PR
+              run: |
+                  echo "Beta Release v${{ steps.info.outputs.new_version }} created" > $GITHUB_STEP_SUMMARY
+            - uses: actions/checkout@v3 # checkout again, directly on the main branch, as it's a prerelease
+              if: success()
+            - name: Remove old appcast # remove old appcast
+              run: rm -rf docs/Support/appcast.xml
+            - name: Retrieve previously generated appcast
+              uses: actions/download-artifact@master
+              with:
+                  name: appcast
+                  path: docs/Support
+            - name: Saving appcast # commits only appcast to main
+              uses: stefanzweifel/git-auto-commit-action@v4
+              id: commit-appcast
+              with:
+                  file_pattern: docs/Support/appcast.xml
+                  commit_message: "Update appcast with beta release for v${{ steps.info.outputs.new_version }}"
+
     release:
-        name: "Create release"
+        name: "Create Release"
         runs-on: macos-14
         environment: deploy-release
         needs: archive
+        if: ${{ !contains(github.event.comment.body, 'beta') }}
         steps:
             - uses: xt0rted/pull-request-comment-branch@v1 # check out branch of PR
               id: comment-branch
@@ -183,7 +264,7 @@ jobs:
                   rm -rf Release/*.app
                   rm -rf Release/*.log
                   rm -rf Release/*.plist
-            - name: Preparate Sparkle # generate Sparkle release notes (convert Markdown to HTML)
+            - name: Preparate Sparkle # generate Sparkle release notes (convert Markdown to HTML), remove beta item if present
               run: |
                   pip3 install --break-system-packages -r Configuration/requirements.txt
                   python3 ./Configuration/generate_html_for_sparkle_release.py
@@ -205,6 +286,7 @@ jobs:
                   fail_on_unmatched_files: true
                   body_path: latest_changes
                   files: Release/${{ env.projname }}.dmg
+                  prerelease: ${{ steps.channel.outputs.prerelease }}
             - name: Saving changes # commits changes to branch (version bump, appcast.xml)
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
@@ -215,11 +297,12 @@ jobs:
             - name: Create summary # create summary for PR
               run: |
                   echo "Release v${{ steps.info.outputs.new_version }} created." > $GITHUB_STEP_SUMMARY
+
     ending:
         name: Ending job
         if: always()
         runs-on: ubuntu-latest
-        needs: release
+        needs: [pre-release, release]
         steps:
             - uses: xt0rted/pull-request-comment-branch@v1 # check out branch of PR
               id: comment-branch
