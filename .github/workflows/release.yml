@@ -118,39 +118,38 @@ jobs:
                   security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
                   security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
                   security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-
-                  # import certificate to keychain
-                  security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-                  security list-keychain -d user -s $KEYCHAIN_PATH
-            - name: Switch Xcode version # Force Xcode version (macOS runner has multiple Xcode versions installed)
-              run: |
-                  sudo xcode-select -s "/Applications/Xcode_16.app"
-                  /usr/bin/xcodebuild -version
-            - name: Build and archive # create archive
-              run: xcodebuild clean archive -project ${{ env.projname }}.xcodeproj -scheme ${{ env.projname }} -archivePath ${{ env.projname }}
-            - name: Export app # create .app
-              run: xcodebuild -exportArchive -archivePath "${{ env.projname }}.xcarchive" -exportPath Release -exportOptionsPlist "Configuration/export_options.plist"
-            - name: Dmg app # dmg .app
-              run: |
-                  brew install create-dmg
-                  cd Release
-                  create-dmg \
-                    --volname "Tuneful" \
-                    --volicon "${{ github.workspace }}/docs/images/icon.icns" \
-                    --background "${{ github.workspace }}/docs/images/installer-bg.png" \
-                    --window-pos 200 120 \
-                    --window-size 835 600 \
-                    --icon-size 128 \
-                    --icon "Tuneful.app" 230 285 \
-                    --hide-extension "Tuneful.app" \
-                    --app-drop-link 593 285 \
-                    "./Tuneful.dmg" \
-                    "./Tuneful.app"
-            - name: Upload archived dmg app
-              uses: actions/upload-artifact@master
-              with:
-                  name: app
-                  path: Release/${{ env.projname }}.dmg
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+      - name: Switch Xcode version # Force Xcode version (macOS runner has multiple Xcode versions installed)
+        run: |
+          sudo xcode-select -s "/Applications/Xcode_16.app"
+          /usr/bin/xcodebuild -version
+      - name: Build and archive # create archive
+        run: xcodebuild clean archive -project ${{ env.projname }}.xcodeproj -scheme ${{ env.projname }} -archivePath ${{ env.projname }}
+      - name: Export app # create .app
+        run: xcodebuild -exportArchive -archivePath "${{ env.projname }}.xcarchive" -exportPath Release -exportOptionsPlist "Configuration/export_options.plist"
+      - name: Dmg app # dmg .app
+        run: |
+          brew install create-dmg
+          cd Release
+          create-dmg \
+            --volname "Tuneful" \
+            --volicon "${{ github.workspace }}/docs/images/icon.icns" \
+            --background "${{ github.workspace }}/docs/images/installer-bg.png" \
+            --window-pos 200 120 \
+            --window-size 835 600 \
+            --icon-size 128 \
+            --icon "Tuneful.app" 230 285 \
+            --hide-extension "Tuneful.app" \
+            --app-drop-link 593 285 \
+            "./Tuneful.dmg" \
+            "./Tuneful.app"
+      - name: Upload archived dmg app
+        uses: actions/upload-artifact@master
+        with:
+          name: app
+          path: Release/${{ env.projname }}.dmg
 
     pre-release:
         name: Create pre-release
@@ -229,7 +228,7 @@ jobs:
               with:
                   file_pattern: docs/Support/appcast.xml
                   commit_message: "Update appcast with beta release for v${{ steps.info.outputs.new_version }}"
-
+                  
     release:
         name: "Create Release"
         runs-on: macos-14
@@ -297,7 +296,6 @@ jobs:
             - name: Create summary # create summary for PR
               run: |
                   echo "Release v${{ steps.info.outputs.new_version }} created." > $GITHUB_STEP_SUMMARY
-
     ending:
         name: Ending job
         if: always()
