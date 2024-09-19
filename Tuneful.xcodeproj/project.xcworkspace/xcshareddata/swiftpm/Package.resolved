@@ -1,4 +1,5 @@
 {
+  "originHash" : "5c8e0d9666055e885057d72a05fb3ac54a83af8e15a267296b2331018481d48e",
   "pins" : [
     {
       "identity" : "issoundadditions",
@@ -32,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/Settings",
       "state" : {
-        "revision" : "2f4f65eed252198be383aa0d9058bbaf8f740aa5",
-        "version" : "3.1.0"
+        "revision" : "879ea83a7bbc6dbebf62bed8c547f090146372a6",
+        "version" : "3.1.1"
       }
     },
     {
@@ -46,5 +47,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

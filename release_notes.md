@@ -1,3 +1,7 @@
+# 1.6.2 - Fixed blank window on launch
+
+-  Fixed opening a blank window when starting Tuneful
+
 # 1.6.1 - Option to disable scrolling menu bar text
 
 -   Added new option to disable scrolling menu bar text as it may be distracting
