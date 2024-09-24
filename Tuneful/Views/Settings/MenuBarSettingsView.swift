@@ -17,6 +17,7 @@ struct MenuBarSettingsView: View {
     @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
     @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = true
+    @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusicAppStorage: Bool = true
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
     // and @AppStorage variable  is updated whenever the state changes using .onChange()
@@ -27,6 +28,7 @@ struct MenuBarSettingsView: View {
     @State var showMenuBarPlaybackControls: Bool
     @State var hideMenuBarItemWhenNotPlaying: Bool
     @State var scrollingTrackInfo: Bool
+    @State var showEqWhenPlayingMusic: Bool
     
     init() {
         @AppStorage("menuBarItemWidth") var menuBarItemWidthAppStorage: Double = 150
@@ -36,6 +38,7 @@ struct MenuBarSettingsView: View {
         @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
         @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
         @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = true
+        @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusicAppStorage: Bool = true
         
         self.menuBarItemWidth = menuBarItemWidthAppStorage
         self.statusBarIcon = statusBarIconAppStorage
@@ -44,6 +47,7 @@ struct MenuBarSettingsView: View {
         self.showMenuBarPlaybackControls = showMenuBarPlaybackControlsAppStorage
         self.hideMenuBarItemWhenNotPlaying = hideMenuBarItemWhenNotPlayingAppStorage
         self.scrollingTrackInfo = scrollingTrackInfoAppStorage
+        self.showEqWhenPlayingMusic = scrollingTrackInfoAppStorage
     }
 
     var body: some View {
@@ -71,6 +75,19 @@ struct MenuBarSettingsView: View {
                     .frame(width: 200)
                 }
                 
+                Settings.Section(label: {
+                    Text("Show equalizer when playing music")
+                }) {
+                    Toggle(isOn: $showEqWhenPlayingMusic) {
+                        Text("")
+                    }
+                    .onChange(of: showEqWhenPlayingMusic) { _ in
+                        self.showEqWhenPlayingMusicAppStorage = showEqWhenPlayingMusic
+                        self.sendTrackChangedNotification()
+                    }
+                    .toggleStyle(.switch)
+                    .disabled(self.showStatusBarTrackInfo == .never)
+                }
                 
                 Settings.Section(label: {
                     Text("Show song info in menu bar")

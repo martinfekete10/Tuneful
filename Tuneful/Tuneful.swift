@@ -16,6 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
+    @AppStorage("popoverIsEnabled") var popoverIsEnabled: Bool = true
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlaying: Bool = false
@@ -275,7 +276,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             statusBarItem.menu = statusBarMenu
             statusBarItem.button?.performClick(nil)
         default:
-            togglePopover(statusBarItem.button)
+            handlePopover(statusBarItem.button)
         }
     }
     
@@ -380,7 +381,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         playerManager.popoverIsShown = popover.isShown
     }
-
+    
+    @objc func handlePopover(_ sender: NSStatusBarButton?) {
+        if self.popoverIsEnabled {
+            self.togglePopover(sender)
+        } else {
+            self.playerManager.openMusicApp()
+        }
+    }
     
     @objc func togglePopover(_ sender: NSStatusBarButton?) {
         guard let statusBarItemButton = sender else { return }
