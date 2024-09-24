@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import ScriptingBridge
 import ISSoundAdditions
+import os
 
 class PlayerManager: ObservableObject {
     
@@ -95,7 +96,6 @@ class PlayerManager: ObservableObject {
         
         // Updating player state every 1 sec
         self.timerStartSignal.sink {
-            print("showing")
             self.getCurrentSeekerPosition()
             self.updatePlayerStateCancellable = Timer.publish(
                 every: 1, on: .main, in: .common
@@ -109,7 +109,6 @@ class PlayerManager: ObservableObject {
         .store(in: &self.cancellables)
         
         self.timerStopSignal.sink {
-            print("closing")
             self.updatePlayerStateCancellable = nil
         }
         .store(in: &self.cancellables)
@@ -122,7 +121,8 @@ class PlayerManager: ObservableObject {
     // MARK: - Setup
     
     private func setupMusicApps() {
-        print("Setting up music apps")
+        Logger.main.log("PlayerManager.setupMusicApps")
+        
         switch connectedApp {
         case .spotify:
             guard spotifyApp == nil else { return }
@@ -134,6 +134,8 @@ class PlayerManager: ObservableObject {
     }
     
     public func setupObservers() {
+        Logger.main.log("PlayerManager.setupObservers")
+        
         observer = UserDefaults.standard.observe(\.connectedApp, options: [.old, .new]) { defaults, change in
             DistributedNotificationCenter.default().removeObserver(self)
             DistributedNotificationCenter.default().addObserver(
@@ -175,6 +177,8 @@ class PlayerManager: ObservableObject {
     }
 
     @objc private func popoverIsOpening(_ notification: NSNotification) {
+        Logger.main.log("PlayerManager.popoverIsOpening")
+        
         if !showPlayerWindow {
             self.timerStartSignal.send()
         }
@@ -184,6 +188,8 @@ class PlayerManager: ObservableObject {
     }
 
     @objc private func popoverIsClosing(_ notification: NSNotification) {
+        Logger.main.log("PlayerManager.popoverIsClosing")
+        
         if !showPlayerWindow {
             self.timerStopSignal.send()
         }
@@ -193,9 +199,9 @@ class PlayerManager: ObservableObject {
     // MARK: - Notification Handlers
     
     @objc func musicAppChanged(_ sender: NSNotification?) {
-        self.setupMusicApps()
+        Logger.main.log("PlayerManager.musicAppChanged")
         
-        print("Music app changes")
+        self.setupMusicApps()
         guard isRunning, sender?.userInfo?["Player State"] as? String != "Stopped" else {
             self.track.title = ""
             self.track.artist = ""
@@ -210,6 +216,8 @@ class PlayerManager: ObservableObject {
     }
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
+        Logger.main.log("PlayerManager.playStateOrTrackDidChange")
+        
         let musicAppKilled = sender?.userInfo?["Player State"] as? String == "Stopped"
         let isRunningFromNotification = !musicAppKilled && isRunning
     
@@ -229,6 +237,8 @@ class PlayerManager: ObservableObject {
     }
     
     private func updateMenuBarText(playerAppIsRunning: Bool) {
+        Logger.main.log("PlayerManager.updateMenuBarText")
+        
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil, userInfo: ["PlayerAppIsRunning": playerAppIsRunning])
         }
@@ -237,6 +247,8 @@ class PlayerManager: ObservableObject {
     // MARK: - Media & Playback
     
     private func playStateChanged() -> Bool {
+        Logger.main.log("PlayerManager.playStateChanged")
+        
         switch connectedApp {
         case .spotify:
             if (isPlaying && spotifyApp?.playerState == .playing) || (!isPlaying && spotifyApp?.playerState != .playing) {
@@ -252,6 +264,8 @@ class PlayerManager: ObservableObject {
     }
     
     private func getPlayState() {
+        Logger.main.log("PlayerManager.getPlayState")
+        
         isPlaying = connectedApp == .spotify
         ? spotifyApp?.playerState == .playing
         : appleMusicApp?.playerState == .playing
@@ -270,8 +284,7 @@ class PlayerManager: ObservableObject {
     }
     
     func updatePlayerState() {
-        
-        print("Getting track information...")
+        Logger.main.log("PlayerManager.updatePlayerState")
         
         switch connectedApp {
         case .spotify:
@@ -290,7 +303,7 @@ class PlayerManager: ObservableObject {
                let url = URL(string: artworkURLString) {
                 URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                     guard let data = data, error == nil else {
-                        print(error!.localizedDescription)
+                        Logger.main.log("PlayerManager.updatePlayerState: couldn't retrieve playback state")
                         self?.sendNotification(title: "Couldn't Retrieve Playback State", message: error!.localizedDescription)
                         return
                     }
@@ -345,6 +358,8 @@ class PlayerManager: ObservableObject {
     // MARK: - Controls
     
     func togglePlayPause() {
+        Logger.main.log("PlayerManager.togglePlayPause")
+        
         switch connectedApp {
         case .spotify:
             spotifyApp?.playpause?()
@@ -354,6 +369,8 @@ class PlayerManager: ObservableObject {
     }
     
     func previousTrack() {
+        Logger.main.log("PlayerManager.previousTrack")
+        
         switch connectedApp {
         case .spotify:
             spotifyApp?.previousTrack?()
@@ -363,6 +380,8 @@ class PlayerManager: ObservableObject {
     }
     
     func nextTrack() {
+        Logger.main.log("PlayerManager.nextTrack")
+        
         switch connectedApp {
         case .spotify:
             spotifyApp?.nextTrack?()
@@ -372,6 +391,8 @@ class PlayerManager: ObservableObject {
     }
     
     func toggleLoveTrack() {
+        Logger.main.log("PlayerManager.toggleLoveTrack")
+        
         switch connectedApp {
         case .appleMusic:
             self.toggleAppleMusicLove()
@@ -381,7 +402,9 @@ class PlayerManager: ObservableObject {
     }
     
     func toggleAppleMusicLove() {
-        // Different versions of Apple Music use different names for starring tracksle
+        Logger.main.log("PlayerManager.toggleAppleMusicLove")
+        
+        // Different versions of Apple Music use different names for starring tracks
         if let isLovedTrack = appleMusicApp?.currentTrack?.loved {
             appleMusicApp?.currentTrack?.setLoved?(!isLovedTrack)
             self.isLoved = !isLovedTrack
@@ -394,6 +417,8 @@ class PlayerManager: ObservableObject {
     }
     
     func setShuffle() {
+        Logger.main.log("PlayerManager.setShuffle")
+        
         self.shuffleIsOn.toggle()
         switch connectedApp {
         case .appleMusic:
@@ -404,6 +429,8 @@ class PlayerManager: ObservableObject {
     }
     
     func setRepeat() {
+        Logger.main.log("PlayerManager.setRepeat")
+        
         self.repeatIsOn.toggle()
         switch connectedApp {
         case .appleMusic:
@@ -422,6 +449,8 @@ class PlayerManager: ObservableObject {
     // MARK: - Seeker
     
     func getCurrentSeekerPosition() {
+        Logger.main.log("PlayerManager.getCurrentSeekerPosition")
+        
         guard isRunning else { return }
         if isDraggingPlaybackPositionView { return }
         
@@ -431,6 +460,8 @@ class PlayerManager: ObservableObject {
     }
     
     func seekTrack() {
+        Logger.main.log("PlayerManager.seekTrack")
+        
         switch connectedApp {
         case .appleMusic:
             appleMusicApp?.setPlayerPosition?(seekerPosition)
@@ -440,6 +471,8 @@ class PlayerManager: ObservableObject {
     }
     
     func updateFormattedPlaybackPosition() {
+        Logger.main.log("PlayerManager.updateFormattedPlaybackPosition")
+        
         switch connectedApp {
         case .spotify:
             if self.spotifyApp?.playerPosition == nil {
@@ -461,6 +494,8 @@ class PlayerManager: ObservableObject {
     }
     
     func updateFormattedDuration() {
+        Logger.main.log("PlayerManager.updateFormattedDuration")
+        
         var durationSeconds: CGFloat
         switch connectedApp {
         case .spotify:
@@ -491,6 +526,8 @@ class PlayerManager: ObservableObject {
     // MARK: - Volume
     
     func getVolume() {
+        Logger.main.log("PlayerManager.getVolume")
+        
         switch connectedApp {
         case .spotify:
             self.volume = CGFloat(spotifyApp?.soundVolume ?? 50)
@@ -500,6 +537,8 @@ class PlayerManager: ObservableObject {
     }
     
     func setVolume(newVolume: Int) {
+        Logger.main.log("PlayerManager.setVolume")
+        
         var newVolume = newVolume
         if newVolume > 100 { newVolume = 100 }
         if newVolume < 0 { newVolume = 0 }
@@ -515,12 +554,16 @@ class PlayerManager: ObservableObject {
     }
     
     func increaseVolume() {
+        Logger.main.log("PlayerManager.increaseVolume")
+        
         let newVolume = Int(self.volume) + 10
         
         self.setVolume(newVolume: newVolume)
     }
     
     func decreaseVolume() {
+        Logger.main.log("PlayerManager.decreaseVolume")
+        
         let newVolume = Int(self.volume) - 10
         
         self.setVolume(newVolume: newVolume)
@@ -529,6 +572,8 @@ class PlayerManager: ObservableObject {
     // MARK: - Audio device
     
     func setOutputDevice(audioDevice: AudioDevice) {
+        Logger.main.log("PlayerManager.setOutputDevice")
+        
         do {
             try AudioDevice.setDefaultDevice(for: .output, device: audioDevice)
         } catch {
@@ -539,6 +584,8 @@ class PlayerManager: ObservableObject {
     // MARK: - Open music app
     
     func openMusicApp() {
+        Logger.main.log("PlayerManager.openMusicApp")
+        
         var appPath: URL
         switch connectedApp {
         case .spotify:
@@ -555,11 +602,15 @@ class PlayerManager: ObservableObject {
     // MARK: - Helpers
     
     private func formattedTimestamp(_ number: CGFloat) -> String {
+        Logger.main.log("PlayerManager.formattedTimestamp")
+        
         let formatter: DateComponentsFormatter = number >= 3600 ? .playbackTimeWithHours : .playbackTime
         return formatter.string(from: Double(number)) ?? Self.noPlaybackPositionPlaceholder
     }
     
     func isLikeAuthorized() -> Bool {
+        Logger.main.log("PlayerManager.isLikeAuthorized")
+        
         switch connectedApp {
         case .spotify:
             return false
