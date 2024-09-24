@@ -86,10 +86,6 @@ struct PopoverSettingsView: View {
     }
 }
 
-struct PopoverSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        PopoverSettingsView()
-            .previewLayout(.device)
-            .padding()
-    }
+#Preview {
+    PopoverSettingsView()
 }

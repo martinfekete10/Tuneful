@@ -28,10 +28,6 @@ struct KeyboardShortcutsSettingsView: View {
     }
 }
 
-struct KeyboardShortcutsSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        KeyboardShortcutsSettingsView()
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
+#Preview {
+    KeyboardShortcutsSettingsView()
 }

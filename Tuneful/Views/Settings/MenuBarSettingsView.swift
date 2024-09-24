@@ -76,20 +76,6 @@ struct MenuBarSettingsView: View {
                 }
                 
                 Settings.Section(label: {
-                    Text("Show equalizer when playing music")
-                }) {
-                    Toggle(isOn: $showEqWhenPlayingMusic) {
-                        Text("")
-                    }
-                    .onChange(of: showEqWhenPlayingMusic) { _ in
-                        self.showEqWhenPlayingMusicAppStorage = showEqWhenPlayingMusic
-                        self.sendTrackChangedNotification()
-                    }
-                    .toggleStyle(.switch)
-                    .disabled(self.showStatusBarTrackInfo == .never)
-                }
-                
-                Settings.Section(label: {
                     Text("Show song info in menu bar")
                 }) {
                     Picker("", selection: $showStatusBarTrackInfo) {
@@ -155,6 +141,20 @@ struct MenuBarSettingsView: View {
                 }
                 
                 Settings.Section(label: {
+                    Text("Show equalizer when playing music")
+                }) {
+                    Toggle(isOn: $showEqWhenPlayingMusic) {
+                        Text("")
+                    }
+                    .onChange(of: showEqWhenPlayingMusic) { _ in
+                        self.showEqWhenPlayingMusicAppStorage = showEqWhenPlayingMusic
+                        self.sendTrackChangedNotification()
+                    }
+                    .toggleStyle(.switch)
+                    .disabled(self.showStatusBarTrackInfo == .never)
+                }
+                
+                Settings.Section(label: {
                     Text("Scrolling song info")
                 }) {
                     Toggle(isOn: $scrollingTrackInfo) {
@@ -202,10 +202,6 @@ struct MenuBarSettingsView: View {
     }
 }
 
-struct MenuBarAppearanceSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuBarSettingsView()
-            .previewLayout(.device)
-            .padding()
-    }
+#Preview {
+    MenuBarSettingsView()
 }

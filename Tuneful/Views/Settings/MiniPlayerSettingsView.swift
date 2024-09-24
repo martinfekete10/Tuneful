@@ -107,10 +107,6 @@ struct BorderModifier: ViewModifier {
     }
 }
 
-struct MiniPlayerAppearanceSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        MiniPlayerSettingsView()
-            .previewLayout(.device)
-            .padding()
-    }
+#Preview {
+    MiniPlayerSettingsView()
 }
