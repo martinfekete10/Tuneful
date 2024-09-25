@@ -195,6 +195,7 @@ struct Shortcuts: View {
                     KeyboardShortcuts.Recorder("Next track:", name: .previousTrack)
                     KeyboardShortcuts.Recorder("Toggle mini player:", name: .showMiniPlayer)
                     KeyboardShortcuts.Recorder("Switch music player:", name: .changeMusicPlayer)
+                    KeyboardShortcuts.Recorder("Show/hide menu bar player:", name: .toggleMenuBarItemVisibility)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 

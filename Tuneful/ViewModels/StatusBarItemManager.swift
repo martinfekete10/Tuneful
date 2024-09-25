@@ -31,7 +31,7 @@ class StatusBarItemManager: ObservableObject {
         
         let mainView = HStack(spacing: 7) {
             if self.statusBarIcon != .hidden || titleWidth == 0 { // Should display icon when there is no menubar text
-                image.frame(width: 18, height: 18).padding(.trailing, 2)
+                image.frame(width: 18, height: 18)
             }
             
             if scrollingTrackInfo && titleWidth != 0 && playerAppIsRunning {

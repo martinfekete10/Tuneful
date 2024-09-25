@@ -209,6 +209,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         KeyboardShortcuts.onKeyUp(for: .changeMusicPlayer) {
             self.changeMusicPlayer()
         }
+        
+        KeyboardShortcuts.onKeyUp(for: .toggleMenuBarItemVisibility) {
+            self.toggleMenuBarItemVisibilityFromShortcut()
+        }
     }
     
     // MARK: - Menu bar
@@ -328,12 +332,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.frame = menuBarView.frame
         }
         
-        if hideMenuBarItemWhenNotPlaying && (!playerManager.isRunning || !playerManager.isPlaying) {
-            self.statusBarItem.isVisible = false
-        } else {
-            self.statusBarItem.isVisible = true
-        }
-        
+        self.toggleMenuBarItemVisibility()
         self.statusBarPlaybackManager.updateStatusBarPlaybackItem(playerAppIsRunning: playerAppIsRunning)
         self.statusBarPlaybackManager.toggleStatusBarVisibility()
     }
@@ -344,6 +343,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         } else {
             self.statusBarItem.isVisible = true
         }
+    }
+    
+    @objc func toggleMenuBarItemVisibilityFromShortcut() {
+        self.statusBarItem.isVisible = !self.statusBarItem.isVisible
     }
     
     @objc func menuBarPlaybackControls() {

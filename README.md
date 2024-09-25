@@ -22,6 +22,10 @@
 
 ## Installation
 
+> [!WARNING]
+> This app has not been notarized by Apple and a popup will be shown on first start. Click **Okay**, then go to **Settings > Privacy & Security** and scroll down until you see a button **Open anyway**. You'll have to do this once.
+> If you're running macOS older than Sequoia, right-click on the app icon in Finder and select "Open".
+
 ### Tuneful can be installed using standard installation process
 
 1. Download the latest [releases](https://github.com/martinfekete10/Tuneful/releases/latest/download/Tuneful.dmg)
@@ -31,9 +35,6 @@
 ### Or using Homebrew
 
 `brew install martinfekete10/tap/tuneful`
-
-> [!NOTE]  
-> This app has not been notarized by Apple so a warning will appear when you launch Tuneful for the first time. To open Tuneful, right-click on the app icon in Finder and select "Open".
 
 ## Screenshots
 
@@ -63,9 +64,9 @@ If you find this app useful, consider supporting its development by [donating](h
 
 -   Project is partly based on [Jukebox](https://github.com/Jaysce/Jukebox/tree/main)
 -   This project uses [Sparkle](https://sparkle-project.org) for update delivery
--   This project makes use of [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin)
+-   Launch at login is enabled by [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) package
 -   GitHub Actions are based on repo from [Alex Perathoner](https://github.com/AlexPerathoner/SparkleReleaseTest)
--   Settings window is using [Settings](https://github.com/sindresorhus/Settings) Swift package
+-   For Settings, the project uses [Settings](https://github.com/sindresorhus/Settings) package
 
 ---
 

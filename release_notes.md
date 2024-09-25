@@ -1,6 +1,14 @@
+# 1.6.3 - Various smaller features and bug fixes
+
+-   New option to show animated equaliser in menubar (instead of albumart/app icon) when music is playing
+-   New ability to add keyboard shortcut to show/hide menu bar item
+-   New option to disable popover window altogether - when enabled, music player will be opened insted of the popover window
+-   Fixed bug with scrolling Open Apple Music text when Apple Music is quit
+-   Smaller under the hood improvements
+
 # 1.6.2 - Fixed blank window on launch
 
--  Fixed opening a blank window when starting Tuneful
+-   Fixed opening a blank window when starting Tuneful
 
 # 1.6.1 - Option to disable scrolling menu bar text
 
