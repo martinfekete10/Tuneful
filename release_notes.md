@@ -1,3 +1,7 @@
+# 1.6.4 - Colored menu bar equaliser
+
+-   Menu bar equaliser animation is now colored based on album art
+
 # 1.6.3 - Various smaller features and bug fixes
 
 -   New option to show animated equaliser in menubar (instead of albumart/app icon) when music is playing
