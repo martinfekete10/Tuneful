@@ -23,7 +23,7 @@
 ## Installation
 
 > [!WARNING]
-> This app has not been notarized by Apple and a popup will be shown on first start. Click **Okay**, then go to **Settings > Privacy & Security** and scroll down until you see a button **Open anyway**. You'll have to do this once.
+> This app has not been notarized by Apple and a popup will be shown on first start. Click **Okay**, then go to **Settings > Privacy & Security** and scroll down and click on a **Open anyway** button next to **Tunfeul** - you'll need to do this only once.
 > If you're running macOS older than Sequoia, right-click on the app icon in Finder and select "Open".
 
 ### Tuneful can be installed using standard installation process
