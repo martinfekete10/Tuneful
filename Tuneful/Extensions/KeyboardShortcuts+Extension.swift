@@ -13,4 +13,5 @@ extension KeyboardShortcuts.Name {
     static let playPause = Self("playPause")
     static let showMiniPlayer = Self("showMiniPlayer")
     static let changeMusicPlayer = Self("changeMusicPlayer")
+    static let toggleMenuBarItemVisibility = Self("toggleMenuBarItemVisibility")
 }

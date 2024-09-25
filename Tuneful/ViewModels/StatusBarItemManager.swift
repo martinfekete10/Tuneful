@@ -15,11 +15,11 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.spotify
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfo: ShowStatusBarTrackInfo = .always
     @AppStorage("scrollingTrackInfo") var scrollingTrackInfo: Bool = true
+    @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusic: Bool = true
     
     public func getMenuBarView(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> NSView {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
-        let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning)
-        
+        let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
         let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
         
         var menuBarItemWidth = titleWidth == 0
@@ -31,14 +31,14 @@ class StatusBarItemManager: ObservableObject {
         
         let mainView = HStack(spacing: 7) {
             if self.statusBarIcon != .hidden || titleWidth == 0 { // Should display icon when there is no menubar text
-                Image(nsImage: image)
+                image.frame(width: 18, height: 18)
             }
             
-            if scrollingTrackInfo && titleWidth != 0 {
+            if scrollingTrackInfo && titleWidth != 0 && playerAppIsRunning {
                 MarqueeText(text: title, leftFade: 0.0, rightFade: 0.0, startDelay: 0, animating: isPlaying)
             }
             
-            if !scrollingTrackInfo && titleWidth != 0 {
+            if !scrollingTrackInfo && titleWidth != 0 || !playerAppIsRunning {
                 Text(title)
                     .lineLimit(1)
                     .font(.system(size: 13, weight: .regular))
@@ -90,11 +90,16 @@ class StatusBarItemManager: ObservableObject {
         return trackInfo
     }
     
-    private func getImage(albumArt: NSImage, playerAppIsRunning: Bool) -> NSImage {
-        if statusBarIcon == .albumArt && playerAppIsRunning {
-            return albumArt.roundImage(withSize: NSSize(width: 18, height: 18), radius: 4.0)
+    private func getImage(albumArt: NSImage, playerAppIsRunning: Bool, isPlaying: Bool) -> AnyView {
+        if isPlaying && showEqWhenPlayingMusic {
+            return AnyView(AudioSpectrumView(isPlaying: isPlaying))
         }
         
-        return NSImage(systemSymbolName: "music.quarternote.3", accessibilityDescription: "Tuneful")!
+        if statusBarIcon == .albumArt && playerAppIsRunning {
+            let roundedImage = albumArt.roundImage(withSize: NSSize(width: 18, height: 18), radius: 4.0)
+            return AnyView(Image(nsImage: roundedImage))
+        }
+        
+        return AnyView(Image(systemName: "music.quarternote.3"))
     }
 }

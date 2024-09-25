@@ -43,10 +43,6 @@ struct AboutSettingsView: View {
     }
 }
 
-struct AboutSettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AboutSettingsView()
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
+#Preview {
+    AboutSettingsView()
 }

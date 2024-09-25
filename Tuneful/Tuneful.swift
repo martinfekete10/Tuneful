@@ -16,6 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
+    @AppStorage("popoverIsEnabled") var popoverIsEnabled: Bool = true
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlaying: Bool = false
@@ -208,6 +209,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         KeyboardShortcuts.onKeyUp(for: .changeMusicPlayer) {
             self.changeMusicPlayer()
         }
+        
+        KeyboardShortcuts.onKeyUp(for: .toggleMenuBarItemVisibility) {
+            self.toggleMenuBarItemVisibilityFromShortcut()
+        }
     }
     
     // MARK: - Menu bar
@@ -275,7 +280,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             statusBarItem.menu = statusBarMenu
             statusBarItem.button?.performClick(nil)
         default:
-            togglePopover(statusBarItem.button)
+            handlePopover(statusBarItem.button)
         }
     }
     
@@ -327,12 +332,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.frame = menuBarView.frame
         }
         
-        if hideMenuBarItemWhenNotPlaying && (!playerManager.isRunning || !playerManager.isPlaying) {
-            self.statusBarItem.isVisible = false
-        } else {
-            self.statusBarItem.isVisible = true
-        }
-        
+        self.toggleMenuBarItemVisibility()
         self.statusBarPlaybackManager.updateStatusBarPlaybackItem(playerAppIsRunning: playerAppIsRunning)
         self.statusBarPlaybackManager.toggleStatusBarVisibility()
     }
@@ -343,6 +343,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         } else {
             self.statusBarItem.isVisible = true
         }
+    }
+    
+    @objc func toggleMenuBarItemVisibilityFromShortcut() {
+        self.statusBarItem.isVisible = !self.statusBarItem.isVisible
     }
     
     @objc func menuBarPlaybackControls() {
@@ -380,7 +384,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         playerManager.popoverIsShown = popover.isShown
     }
-
+    
+    @objc func handlePopover(_ sender: NSStatusBarButton?) {
+        if self.popoverIsEnabled {
+            self.togglePopover(sender)
+        } else {
+            self.playerManager.openMusicApp()
+        }
+    }
     
     @objc func togglePopover(_ sender: NSStatusBarButton?) {
         guard let statusBarItemButton = sender else { return }
