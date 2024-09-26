@@ -1,3 +1,10 @@
+# 1.6.5 - Bug fixes and minor improvements
+
+-   Fixed a bug where menu bar info wasn't currently updated when music player was killed
+-   Fixed a bug where equaliser animation preference wasn't correctly udpated on the settings window
+-   Made a small improvement to equaliser animation
+-   Settings window spacing is a bit improved
+
 # 1.6.4 - Colored menu bar equaliser
 
 -   Menu bar equaliser animation is now colored based on album art

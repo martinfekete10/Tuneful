@@ -31,57 +31,54 @@ struct PopoverSettingsView: View {
     }
     
     var body: some View {
-        VStack {
-            Settings.Container(contentWidth: 400) {
-                
-                Settings.Section(label: {
-                    Text("Enable popover")
-                }) {
-                    Toggle(isOn: $popoverIsEnabled) {
-                        Text("")
-                    }
-                    .onChange(of: popoverIsEnabled) { _ in
-                        self.popoverIsEnabledAppStorage = popoverIsEnabled
-                    }
-                    .toggleStyle(.switch)
+        Settings.Container(contentWidth: 350) {
+            Settings.Section(label: {
+                Text("Enable popover")
+            }) {
+                Toggle(isOn: $popoverIsEnabled) {
+                    Text("")
                 }
-                
-                Settings.Section(label: {
-                    Text("Popover style")
-                        .foregroundStyle(self.popoverIsEnabled ? .primary : .tertiary)
-                }) {
-                    Picker(selection: $popoverType, label: Text("")) {
-                        ForEach(PopoverType.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .frame(width: 200)
-                    .onChange(of: popoverType) { _ in
-                        self.popoverTypeAppStorage = popoverType
-                        NSApplication.shared.sendAction(#selector(AppDelegate.setupPopover), to: nil, from: nil)
-                    }
-                    .disabled(!popoverIsEnabled)
+                .onChange(of: popoverIsEnabled) { _ in
+                    self.popoverIsEnabledAppStorage = popoverIsEnabled
                 }
-                
-                Settings.Section(label: {
-                    Text("Popover background")
-                        .foregroundStyle(self.popoverIsEnabled ? .primary : .tertiary)
-                }) {
-                    Picker("", selection: $popoverBackground) {
-                        ForEach(BackgroundType.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .onChange(of: popoverBackground) { _ in
-                        self.popoverBackgroundAppStorage = popoverBackground
-                    }
-                    .pickerStyle(.segmented)
-                    .frame(width: 200)
-                    .disabled(!popoverIsEnabled)
-                }
-                
+                .toggleStyle(.switch)
             }
+            
+            Settings.Section(label: {
+                Text("Popover style")
+                    .foregroundStyle(self.popoverIsEnabled ? .primary : .tertiary)
+            }) {
+                Picker(selection: $popoverType, label: Text("")) {
+                    ForEach(PopoverType.allCases, id: \.self) { value in
+                        Text(value.localizedName).tag(value)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .frame(width: 200)
+                .onChange(of: popoverType) { _ in
+                    self.popoverTypeAppStorage = popoverType
+                    NSApplication.shared.sendAction(#selector(AppDelegate.setupPopover), to: nil, from: nil)
+                }
+                .disabled(!popoverIsEnabled)
+            }
+            
+            Settings.Section(label: {
+                Text("Popover background")
+                    .foregroundStyle(self.popoverIsEnabled ? .primary : .tertiary)
+            }) {
+                Picker("", selection: $popoverBackground) {
+                    ForEach(BackgroundType.allCases, id: \.self) { value in
+                        Text(value.localizedName).tag(value)
+                    }
+                }
+                .onChange(of: popoverBackground) { _ in
+                    self.popoverBackgroundAppStorage = popoverBackground
+                }
+                .pickerStyle(.segmented)
+                .frame(width: 200)
+                .disabled(!popoverIsEnabled)
+            }
+            
         }
     }
 }

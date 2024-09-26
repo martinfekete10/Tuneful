@@ -55,15 +55,17 @@ class StatusBarItemManager: ObservableObject {
     // MARK: - Private
     
     private func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> String {
+        let activePlayback = isPlaying && playerAppIsRunning
+        
         if self.showStatusBarTrackInfo == .never {
             return ""
         }
         
-        if self.showStatusBarTrackInfo == .whenPlaying && !isPlaying {
+        if self.showStatusBarTrackInfo == .whenPlaying && !activePlayback {
             return ""
         }
         
-        if !playerAppIsRunning {
+        if !playerAppIsRunning && !activePlayback {
             return "Open \(connectedApp.rawValue)"
         }
         
@@ -91,7 +93,7 @@ class StatusBarItemManager: ObservableObject {
     }
     
     private func getImage(albumArt: NSImage, playerAppIsRunning: Bool, isPlaying: Bool) -> AnyView {
-        if isPlaying && showEqWhenPlayingMusic {
+        if isPlaying && showEqWhenPlayingMusic && playerAppIsRunning {
             if #available(macOS 13.0, *), statusBarIcon == .albumArt {
                 return AnyView(
                     Rectangle()
