@@ -47,12 +47,12 @@ struct MenuBarSettingsView: View {
         self.showMenuBarPlaybackControls = showMenuBarPlaybackControlsAppStorage
         self.hideMenuBarItemWhenNotPlaying = hideMenuBarItemWhenNotPlayingAppStorage
         self.scrollingTrackInfo = scrollingTrackInfoAppStorage
-        self.showEqWhenPlayingMusic = scrollingTrackInfoAppStorage
+        self.showEqWhenPlayingMusic = showEqWhenPlayingMusicAppStorage
     }
 
     var body: some View {
         VStack {
-            Settings.Container(contentWidth: 400) {
+            Settings.Container(contentWidth: 450) {
                 
                 Settings.Section(label: {
                     Text("Menu bar icon")
