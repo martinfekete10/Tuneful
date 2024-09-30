@@ -308,7 +308,7 @@ class PlayerManager: ObservableObject {
                         return
                     }
                     DispatchQueue.main.async {
-                        self?.track.albumArt = NSImage(data: data) ?? NSImage()
+                        self?.updateAlbumArt(newAlbumArt: NSImage(data: data) ?? NSImage())
                         self?.updateMenuBarText(playerAppIsRunning: self!.isRunning)
                     }
                     
@@ -337,7 +337,8 @@ class PlayerManager: ObservableObject {
             waitForData = {
                 let art = self.appleMusicApp?.currentTrack?.artworks?()[0] as! MusicArtwork
                 if art.data != nil && !art.data!.isEmpty() {
-                    self.track.albumArt = art.data!
+                    //self.track.albumArt = art.data!
+                    self.updateAlbumArt(newAlbumArt: art.data!)
                 } else {
                     if count > 20 { return }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
@@ -353,6 +354,12 @@ class PlayerManager: ObservableObject {
         }
         
         self.getCurrentSeekerPosition()
+    }
+    
+    func updateAlbumArt(newAlbumArt: NSImage) {
+        withAnimation(.smooth) {
+            self.track.albumArt = newAlbumArt
+        }
     }
     
     // MARK: - Controls

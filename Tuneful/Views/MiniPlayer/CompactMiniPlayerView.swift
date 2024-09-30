@@ -42,18 +42,9 @@ struct CompactMiniPlayerView: View {
                     .padding(15)
                     .padding(.bottom, 20)
             } else {
-                Image(nsImage: playerManager.track.albumArt)
-                    .resizable()
-                    .scaledToFill()
-                    .cornerRadius(8)
-                    .frame(width: self.imageSize, height: self.imageSize)
+                AlbumArtView(imageSize: self.imageSize)
                     .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                     .dragWindowWithClick()
-                    .gesture(
-                        TapGesture(count: 2).onEnded {
-                            self.playerManager.openMusicApp()
-                        }
-                    )
 
                 HStack(spacing: 8) {
                     if playerManager.isLikeAuthorized() {

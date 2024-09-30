@@ -14,7 +14,6 @@ struct CompactPopoverView: View {
     @State private var isShowingPlaybackControls = false
     
     var body: some View {
-        
         ZStack {
             if popoverBackground == .albumArt && playerManager.isRunning {
                 Image(nsImage: playerManager.track.albumArt)
@@ -32,10 +31,11 @@ struct CompactPopoverView: View {
             } else {
                 VStack {
                     ZStack {
-                        Button(action: playerManager.openMusicApp) {
-                            AlbumArtView(imageSize: 185)
-                        }
-                        .pressButtonStyle()
+                        AlbumArtView(imageSize: 185)
+            
+                        AddToFavoritesView()
+                            .opacity(isShowingPlaybackControls ? 1 : 0)
+                            .offset(y: -30)
                         
                         VStack {
                             Spacer()

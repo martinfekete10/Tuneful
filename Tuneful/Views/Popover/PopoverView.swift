@@ -11,9 +11,9 @@ struct PopoverView: View {
     
     @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .albumArt
     @EnvironmentObject var playerManager: PlayerManager
+    @State private var isShowingPlaybackControls = false
     
     var body: some View {
-        
         ZStack {
             if popoverBackground == .albumArt && playerManager.isRunning {
                 Image(nsImage: playerManager.track.albumArt)
@@ -30,14 +30,20 @@ struct PopoverView: View {
                     .padding()
             } else {
                 VStack(spacing: 0) {
-                    // Media details
                     VStack(spacing: 0) {
-                        
-                        Button(action: playerManager.openMusicApp) {
+                        // Album art and add to favorites button
+                        ZStack {
                             AlbumArtView(imageSize: 185)
                                 .padding(.top, 12)
+                            
+                            AddToFavoritesView()
+                                .opacity(isShowingPlaybackControls ? 1 : 0)
                         }
-                        .pressButtonStyle()
+                        .onHover { _ in
+                            withAnimation(.linear(duration: 0.1)) {
+                                self.isShowingPlaybackControls.toggle()
+                            }
+                        }
 
                         // Track details
                         Button(action: playerManager.openMusicApp) {
@@ -58,48 +64,9 @@ struct PopoverView: View {
                         .pressButtonStyle()
 
                         PlaybackPositionView()
-
-                        HStack(spacing: 15) {
-                            Button(action: playerManager.setShuffle){
-                                Image(systemName: "shuffle")
-                                    .resizable()
-                                    .frame(width: 17, height: 17)
-                                    .animation(.easeInOut(duration: 2.0), value: 1)
-                                    .font(playerManager.shuffleIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
-                                    .opacity(playerManager.shuffleContextEnabled ? 1.0 : 0.45)
-                            }
-                            .pressButtonStyle()
-                            .disabled(!playerManager.shuffleContextEnabled)
-
-                            Button(action: playerManager.previousTrack){
-                                Image(systemName: "backward.end.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .animation(.easeInOut(duration: 2.0), value: 1)
-                            }
-                            .pressButtonStyle()
-
-                            PlayPauseButton(buttonSize: 40)
-
-                            Button(action: playerManager.nextTrack) {
-                                Image(systemName: "forward.end.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .animation(.easeInOut(duration: 2.0), value: 1)
-                            }
-                            .pressButtonStyle()
-
-                            Button(action: playerManager.setRepeat){
-                                Image(systemName: "repeat")
-                                    .resizable()
-                                    .frame(width: 15, height: 15)
-                                    .font(playerManager.repeatIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
-                                    .opacity(playerManager.repeatContextEnabled ? 1.0 : 0.45)
-                            }
-                            .pressButtonStyle()
-                            .disabled(!playerManager.repeatContextEnabled)
-                        }
-                        .opacity(0.8)
+                        
+                        PlaybackButtonsView(playButtonSize: 25.0)
+                            .padding(.vertical, 10)
                         
                         HStack {
                             Menu {
