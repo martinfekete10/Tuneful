@@ -192,10 +192,11 @@ struct Shortcuts: View {
                 Form {
                     KeyboardShortcuts.Recorder("Play/pause:", name: .playPause)
                     KeyboardShortcuts.Recorder("Next track:", name: .nextTrack)
-                    KeyboardShortcuts.Recorder("Next track:", name: .previousTrack)
-                    KeyboardShortcuts.Recorder("Toggle mini player:", name: .showMiniPlayer)
+                    KeyboardShortcuts.Recorder("Previous track:", name: .previousTrack)
+                    KeyboardShortcuts.Recorder("Show/hide mini player:", name: .showMiniPlayer)
                     KeyboardShortcuts.Recorder("Switch music player:", name: .changeMusicPlayer)
                     KeyboardShortcuts.Recorder("Show/hide menu bar player:", name: .toggleMenuBarItemVisibility)
+                    KeyboardShortcuts.Recorder("Show/hide popover:", name: .togglePopover)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 

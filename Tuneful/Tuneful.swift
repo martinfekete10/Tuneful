@@ -213,6 +213,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         KeyboardShortcuts.onKeyUp(for: .toggleMenuBarItemVisibility) {
             self.toggleMenuBarItemVisibilityFromShortcut()
         }
+        
+        KeyboardShortcuts.onKeyUp(for: .togglePopover) {
+            self.handlePopover(self.statusBarItem.button)
+        }
     }
     
     // MARK: - Menu bar
