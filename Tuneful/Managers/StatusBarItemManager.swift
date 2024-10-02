@@ -94,7 +94,7 @@ class StatusBarItemManager: ObservableObject {
     
     private func getImage(albumArt: NSImage, playerAppIsRunning: Bool, isPlaying: Bool) -> AnyView {
         if isPlaying && showEqWhenPlayingMusic && playerAppIsRunning {
-            if #available(macOS 13.0, *), statusBarIcon == .albumArt {
+            if statusBarIcon == .albumArt {
                 return AnyView(
                     Rectangle()
                         .fill(Color(nsColor: albumArt.averageColor ?? .white).gradient)

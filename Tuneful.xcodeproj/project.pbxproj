@@ -53,7 +53,6 @@
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
-		FEBAAE072CAD68F000472614 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBAAE062CAD68ED00472614 /* Buttons.swift */; };
 		FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */; };
 		FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */; };
 		FEE486E92B5D677400AB712F /* MiniPlayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E82B5D677400AB712F /* MiniPlayerType.swift */; };
@@ -140,7 +139,6 @@
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
-		FEBAAE062CAD68ED00472614 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMiniPlayerView.swift; sourceTree = "<group>"; };
 		FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerSettingsView.swift; sourceTree = "<group>"; };
 		FEE486E82B5D677400AB712F /* MiniPlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerType.swift; sourceTree = "<group>"; };
@@ -324,7 +322,6 @@
 		FE6BFD042A73ACEE00D3321F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				FEBAAE062CAD68ED00472614 /* Buttons.swift */,
 				FE6BFD052A73ACFD00D3321F /* Constants.swift */,
 				FE3189F72A7C3B1A006B2D59 /* Helper.swift */,
 			);
@@ -500,7 +497,6 @@
 				FEFFE54D2B49EF97000887B5 /* MenuBarSettingsView.swift in Sources */,
 				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
-				FEBAAE072CAD68F000472614 /* Buttons.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
 				FE7955492CA2C9E8002026AA /* NSBezierPath+Extension.swift in Sources */,
@@ -698,6 +694,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 0.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Martin-Fekete.Tuneful";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -735,6 +732,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 0.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Martin-Fekete.Tuneful";
 				PRODUCT_NAME = "$(TARGET_NAME)";

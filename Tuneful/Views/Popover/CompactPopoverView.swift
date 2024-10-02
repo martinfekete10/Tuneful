@@ -54,6 +54,7 @@ struct CompactPopoverView: View {
                             .opacity(isShowingPlaybackControls ? 1 : 0)
                         }
                     }
+                    .offset(x: -1, y: -3)
                     
                     Button(action: playerManager.openMusicApp) {
                         VStack(alignment: .center) {
@@ -78,14 +79,14 @@ struct CompactPopoverView: View {
             NotificationView()
                 .padding(.top, 15)
         )
+        .frame(
+            width: AppDelegate.popoverWidth,
+            height: 260
+        )
         .onHover { _ in
             withAnimation(.linear(duration: 0.2)) {
                 self.isShowingPlaybackControls.toggle()
             }
         }
-        .frame(
-            width: AppDelegate.popoverWidth,
-            height: 260
-        )
     }
 }

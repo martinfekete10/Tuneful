@@ -68,27 +68,6 @@ struct MiniPlayerView: View {
                         PlaybackPositionView()
                         
                         PlaybackButtonsView(playButtonSize: 20, spacing: 10)
-                        
-//                        HStack(spacing: 10) {
-//                            
-//                            Button(action: playerManager.previousTrack){
-//                                Image(systemName: "backward.end.fill")
-//                                    .resizable()
-//                                    .frame(width: 20, height: 20)
-//                                    .animation(.easeInOut(duration: 2.0), value: 1)
-//                            }
-//                            .pressButtonStyle()
-//                            
-//                            PlayPauseButton(buttonSize: 35)
-//                            
-//                            Button(action: playerManager.nextTrack) {
-//                                Image(systemName: "forward.end.fill")
-//                                    .resizable()
-//                                    .frame(width: 20, height: 20)
-//                                    .animation(.easeInOut(duration: 2.0), value: 1)
-//                            }
-//                            .pressButtonStyle()
-//                        }
                     }
                     .padding()
                     .opacity(0.8)

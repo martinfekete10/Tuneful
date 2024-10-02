@@ -8,7 +8,6 @@
 import SwiftUI
 
 class StatusBarPlaybackManager: ObservableObject {
-    
     @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControls: Bool = false
     
     private var playerManager: PlayerManager

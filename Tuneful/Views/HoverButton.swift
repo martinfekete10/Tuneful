@@ -8,11 +8,9 @@
 
 import SwiftUI
 
-@available(macOS 14.0, *)
 struct HoverButton: View {
     var icon: String
     var iconSize: CGFloat = 60
-    var contentTransition: ContentTransition = .symbolEffect
     var iconColor: Color = .white;
     var action: () -> Void
     
@@ -25,12 +23,20 @@ struct HoverButton: View {
                 .contentShape(Rectangle())
                 .frame(width: iconSize * 1.1, height: iconSize * 1.1)
                 .overlay {
-                    Image(systemName: icon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: isHovering ? iconSize * 1.1 : iconSize, height: isHovering ? iconSize * 1.1 : iconSize)
-                        .foregroundColor(iconColor)
-                        .contentTransition(contentTransition)
+                    if #available(macOS 14.0, *) {
+                        Image(systemName: icon)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: isHovering ? iconSize * 1.1 : iconSize, height: isHovering ? iconSize * 1.1 : iconSize)
+                            .foregroundColor(iconColor)
+                            .contentTransition(.symbolEffect)
+                    } else {
+                        Image(systemName: icon)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: isHovering ? iconSize * 1.1 : iconSize, height: isHovering ? iconSize * 1.1 : iconSize)
+                            .foregroundColor(iconColor)
+                    }
                 }
         }
         .buttonStyle(.plain)
