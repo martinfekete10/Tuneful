@@ -1,3 +1,10 @@
+# 1.6.6 - More native feel
+
+-   Updated playback buttons to use more native icons
+-   Playback buttons now animate on mouse hover
+-   New keyboard shortcut to show/hide popover
+-   Overall background maintenance and cleanup
+
 # 1.6.5 - Bug fixes and minor improvements
 
 -   Fixed a bug where menu bar info wasn't currently updated when music player was killed
