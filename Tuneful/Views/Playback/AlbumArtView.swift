@@ -9,11 +9,8 @@ import SwiftUI
 
 struct AlbumArtView: View {
     @EnvironmentObject var playerManager: PlayerManager
-    private var imageSize: CGFloat
     
-    init(imageSize: CGFloat = 180) {
-        self.imageSize = imageSize
-    }
+    var imageSize: CGFloat = 180
     
     var body: some View {
         Button(action: playerManager.openMusicApp) {
@@ -21,7 +18,7 @@ struct AlbumArtView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: self.imageSize, height: self.imageSize)
-                .cornerRadius(8)
+                .cornerRadius(10)
                 .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
         }
         .pressButtonStyle()

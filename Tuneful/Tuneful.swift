@@ -419,13 +419,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             setupMiniPlayerWindow(
                 size: NSSize(width: 300, height: 145),
                 position: windowPosition,
-                view: MiniPlayerView(parentWindow: miniPlayerWindow)
+                view: MiniPlayerView()
             )
         case .minimal:
             setupMiniPlayerWindow(
                 size: NSSize(width: 145, height: 145),
                 position: windowPosition,
-                view: CompactMiniPlayerView(parentWindow: miniPlayerWindow)
+                view: CompactMiniPlayerView()
             )
         }
         

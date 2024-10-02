@@ -15,14 +15,9 @@ struct CompactMiniPlayerView: View {
     @State private var isShowingPlaybackControls = false
     
     private var imageSize: CGFloat = 140.0
-    private var cornerRadius: CGFloat = 10.0
+    private var cornerRadius: CGFloat = 12.5
     private var playbackButtonSize: CGFloat = 15.0
     private var playPauseButtonSize: CGFloat = 25.0
-    private weak var parentWindow: MiniPlayerWindow!
-    
-    init(parentWindow: MiniPlayerWindow) {
-        self.parentWindow = parentWindow
-    }
 
     var body: some View {
         ZStack {
@@ -46,46 +41,17 @@ struct CompactMiniPlayerView: View {
                     .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                     .dragWindowWithClick()
 
-                HStack(spacing: 8) {
-                    if playerManager.isLikeAuthorized() {
-                        Button {
-                            playerManager.toggleLoveTrack()
-                        } label: {
-                            Image(systemName: playerManager.isLoved ? "star.fill" : "star")
-                                .font(.system(size: 14))
-                                .foregroundColor(.primary.opacity(0.8))
-                        }
-                        .pressButtonStyle()
-                    }
-                    
-                    Button(action: playerManager.previousTrack){
-                        Image(systemName: "backward.end.fill")
-                            .resizable()
-                            .frame(width: self.playbackButtonSize, height: self.playbackButtonSize)
-                            .animation(.easeInOut(duration: 2.0), value: 1)
-                    }
-                    .pressButtonStyle()
-                    
-                    PlayPauseButton(buttonSize: self.playPauseButtonSize)
-                    
-                    Button(action: playerManager.nextTrack) {
-                        Image(systemName: "forward.end.fill")
-                            .resizable()
-                            .frame(width: self.playbackButtonSize, height: self.playbackButtonSize)
-                            .animation(.easeInOut(duration: 2.0), value: 1)
-                    }
-                    .pressButtonStyle()
-                }
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
-                .background(VisualEffectView(material: .popover, blendingMode: .withinWindow))
-                .cornerRadius(cornerRadius)
-                .opacity(isShowingPlaybackControls ? 1 : 0)
+                PlaybackButtonsView(playButtonSize: 20, hideShuffleAndRepeat: true)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 10)
+                    .background(VisualEffectView(material: .popover, blendingMode: .withinWindow))
+                    .cornerRadius(cornerRadius)
+                    .opacity(isShowingPlaybackControls ? 1 : 0)
             }
         }
         .frame(width: 155, height: 155)
         .onHover { _ in
-            withAnimation(.linear(duration: 0.1)) {
+            withAnimation(.linear(duration: 0.2)) {
                 self.isShowingPlaybackControls.toggle()
             }
         }

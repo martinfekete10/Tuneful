@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PopoverView: View {
-    
     @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .albumArt
     @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
@@ -65,8 +64,8 @@ struct PopoverView: View {
 
                         PlaybackPositionView()
                         
-                        PlaybackButtonsView(playButtonSize: 25.0)
-                            .padding(.vertical, 10)
+                        PlaybackButtonsView(playButtonSize: 25)
+                            .padding(.vertical, 5)
                         
                         HStack {
                             Menu {
@@ -90,6 +89,7 @@ struct PopoverView: View {
                             
                             VolumeControlView()
                             
+ 
                             Button(action: openSettings){
                                 Image(systemName: "gear")
                                     .resizable()

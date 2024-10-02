@@ -357,9 +357,7 @@ class PlayerManager: ObservableObject {
     }
     
     func updateAlbumArt(newAlbumArt: NSImage) {
-        withAnimation(.smooth) {
-            self.track.albumArt = newAlbumArt
-        }
+        self.track.albumArt = newAlbumArt
     }
     
     // MARK: - Controls

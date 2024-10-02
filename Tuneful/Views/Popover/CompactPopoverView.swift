@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CompactPopoverView: View {
-    
     @EnvironmentObject var playerManager: PlayerManager
     @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .albumArt
     @State private var isShowingPlaybackControls = false
@@ -42,46 +41,7 @@ struct CompactPopoverView: View {
                                 .frame(height: 90)
                             
                             VStack(alignment: .center) {
-                                HStack(spacing: 10) {
-                                    Button(action: playerManager.setShuffle){
-                                        Image(systemName: "shuffle")
-                                            .resizable()
-                                            .frame(width: 12, height: 12)
-                                            .animation(.easeInOut(duration: 2.0), value: 1)
-                                            .font(playerManager.shuffleIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
-                                            .opacity(playerManager.shuffleContextEnabled ? 1.0 : 0.45)
-                                    }
-                                    .pressButtonStyle()
-                                    .disabled(!playerManager.shuffleContextEnabled)
-                                    
-                                    Button(action: playerManager.previousTrack){
-                                        Image(systemName: "backward.end.fill")
-                                            .resizable()
-                                            .frame(width: 15, height: 15)
-                                            .animation(.easeInOut(duration: 2.0), value: 1)
-                                    }
-                                    .pressButtonStyle()
-                                    
-                                    PlayPauseButton(buttonSize: 25)
-                                    
-                                    Button(action: playerManager.nextTrack) {
-                                        Image(systemName: "forward.end.fill")
-                                            .resizable()
-                                            .frame(width: 15, height: 15)
-                                            .animation(.easeInOut(duration: 2.0), value: 1)
-                                    }
-                                    .pressButtonStyle()
-                                    
-                                    Button(action: playerManager.setRepeat){
-                                        Image(systemName: "repeat")
-                                            .resizable()
-                                            .frame(width: 12, height: 12)
-                                            .font(playerManager.repeatIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
-                                            .opacity(playerManager.repeatContextEnabled ? 1.0 : 0.45)
-                                    }
-                                    .pressButtonStyle()
-                                    .disabled(!playerManager.repeatContextEnabled)
-                                }
+                                PlaybackButtonsView(playButtonSize: 22.5, spacing: 10)
                                 
                                 PlaybackPositionView()
                                     .frame(width: 155)
@@ -119,7 +79,7 @@ struct CompactPopoverView: View {
                 .padding(.top, 15)
         )
         .onHover { _ in
-            withAnimation(.linear(duration: 0.1)) {
+            withAnimation(.linear(duration: 0.2)) {
                 self.isShowingPlaybackControls.toggle()
             }
         }

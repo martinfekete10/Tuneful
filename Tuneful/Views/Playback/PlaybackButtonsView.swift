@@ -10,24 +10,33 @@ import SwiftUI
 struct PlaybackButtonsView: View {
     @EnvironmentObject var playerManager: PlayerManager
     
-    private var playButtonSize: CGFloat
-    
-    init(playButtonSize: CGFloat = 25) {
-        self.playButtonSize = playButtonSize
-    }
+    var playButtonSize: CGFloat = 25
+    var hideShuffleAndRepeat: Bool = false
+    var spacing: CGFloat = 12.5
     
     var body: some View {
-        HStack(spacing: 15) {
-            Button(action: playerManager.setShuffle){
-                Image(systemName: "shuffle")
-                    .resizable()
-                    .frame(width: playButtonSize * 0.45, height: playButtonSize * 0.45)
-                    .animation(.easeInOut(duration: 2.0), value: 1)
+        HStack(spacing: spacing) {
+            if !hideShuffleAndRepeat {
+                if #available(macOS 14.0, *) {
+                    HoverButton(icon: "shuffle", iconSize: playButtonSize * 0.6) {
+                        playerManager.setShuffle()
+                    }
                     .font(playerManager.shuffleIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
-                    .opacity(playerManager.shuffleContextEnabled ? 1.0 : 0.45)
+                    .opacity(playerManager.shuffleContextEnabled ? 1.0 : 0.5)
+                    .disabled(!playerManager.shuffleContextEnabled)
+                } else {
+                    Button(action: playerManager.setShuffle){
+                        Image(systemName: "shuffle")
+                            .resizable()
+                            .frame(width: playButtonSize * 0.45, height: playButtonSize * 0.45)
+                            .animation(.easeInOut(duration: 2.0), value: 1)
+                            .font(playerManager.shuffleIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
+                            .opacity(playerManager.shuffleContextEnabled ? 1.0 : 0.5)
+                    }
+                    .pressButtonStyle()
+                    .disabled(!playerManager.shuffleContextEnabled)
+                }
             }
-            .pressButtonStyle()
-            .disabled(!playerManager.shuffleContextEnabled)
 
             if #available(macOS 14.0, *) {
                 HoverButton(icon: "backward.fill", iconSize: playButtonSize) {
@@ -66,15 +75,26 @@ struct PlaybackButtonsView: View {
                 .pressButtonStyle()
             }
 
-            Button(action: playerManager.setRepeat){
-                Image(systemName: "repeat")
-                    .resizable()
-                    .frame(width: playButtonSize * 0.45, height: playButtonSize * 0.45)
-                    .font(playerManager.repeatIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
+            if !hideShuffleAndRepeat {
+                if #available(macOS 14.0, *) {
+                    HoverButton(icon: "repeat", iconSize: playButtonSize * 0.6) {
+                        playerManager.setRepeat()
+                    }
+                    .font(playerManager.repeatIsOn ? Font.title.weight(.bold) : Font.title.weight(.light))
                     .opacity(playerManager.repeatContextEnabled ? 1.0 : 0.45)
+                    .disabled(!playerManager.repeatContextEnabled)
+                } else {
+                    Button(action: playerManager.setRepeat){
+                        Image(systemName: "repeat")
+                            .resizable()
+                            .frame(width: playButtonSize * 0.45, height: playButtonSize * 0.5)
+                            .font(playerManager.repeatIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
+                            .opacity(playerManager.repeatContextEnabled ? 1.0 : 0.45)
+                    }
+                    .pressButtonStyle()
+                    .disabled(!playerManager.repeatContextEnabled)
+                }
             }
-            .pressButtonStyle()
-            .disabled(!playerManager.repeatContextEnabled)
         }
         .opacity(0.8)
     }

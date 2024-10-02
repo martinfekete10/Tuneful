@@ -9,17 +9,11 @@ import SwiftUI
 import MediaPlayer
 
 struct MiniPlayerView: View {
-    
     @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
     @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
     
     private var imageSize: CGFloat = 140.0
-    private weak var parentWindow: MiniPlayerWindow!
-    
-    init(parentWindow: MiniPlayerWindow) {
-        self.parentWindow = parentWindow
-    }
 
     var body: some View {
         
@@ -56,7 +50,7 @@ struct MiniPlayerView: View {
                         }
                     }
                     
-                    VStack(spacing: 7) {
+                    VStack(spacing: 10) {
                         Button(action: playerManager.openMusicApp) {
                             VStack {
                                 Text(playerManager.track.title)
@@ -73,7 +67,7 @@ struct MiniPlayerView: View {
                         
                         PlaybackPositionView()
                         
-                        PlaybackButtonsView(playButtonSize: 15)
+                        PlaybackButtonsView(playButtonSize: 20, spacing: 10)
                         
 //                        HStack(spacing: 10) {
 //                            
