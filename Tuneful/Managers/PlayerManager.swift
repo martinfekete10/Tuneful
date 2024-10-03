@@ -13,10 +13,10 @@ import ISSoundAdditions
 import os
 
 class PlayerManager: ObservableObject {
-    
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
     @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
     
+    var musicApp: PlayerProtocol!
     var spotifyApp: SpotifyApplication?
     var appleMusicApp: MusicApplication?
     
@@ -127,9 +127,11 @@ class PlayerManager: ObservableObject {
         case .spotify:
             guard spotifyApp == nil else { return }
             spotifyApp = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)
+            musicApp = SpotifyManager(app: spotifyApp!, notificationSubject: self.notificationSubject)
         case .appleMusic:
             guard appleMusicApp == nil else { return }
             appleMusicApp = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)
+            musicApp = AppleMusicManager(app: appleMusicApp!, notificationSubject: self.notificationSubject)
         }
     }
     
@@ -184,6 +186,7 @@ class PlayerManager: ObservableObject {
         }
         self.audioDevices = AudioDevice.output.filter{ $0.transportType != .virtual }
         self.getVolume()
+        
         popoverIsShown = true
     }
 
@@ -193,6 +196,7 @@ class PlayerManager: ObservableObject {
         if !showPlayerWindow {
             self.timerStopSignal.send()
         }
+        
         popoverIsShown = false
     }
     
@@ -284,293 +288,109 @@ class PlayerManager: ObservableObject {
     }
     
     func updatePlayerState() {
-        Logger.main.log("PlayerManager.updatePlayerState")
+        Logger.main.log("Getting track info")
         
-        switch connectedApp {
-        case .spotify:
-            
-            // Track
-            self.track.title = spotifyApp?.currentTrack?.name ?? "Unknown Title"
-            self.track.artist = spotifyApp?.currentTrack?.artist ?? "Unknown Artist"
-            self.track.album = spotifyApp?.currentTrack?.album ?? "Unknown Album"
-            
-            // Playback
-            self.shuffleIsOn = spotifyApp?.shuffling ?? false
-            self.shuffleContextEnabled = spotifyApp?.shufflingEnabled ?? false
-            self.repeatContextEnabled = spotifyApp?.repeatingEnabled ?? false
-            
-            if let artworkURLString = spotifyApp?.currentTrack?.artworkUrl,
-               let url = URL(string: artworkURLString) {
-                URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                    guard let data = data, error == nil else {
-                        Logger.main.log("PlayerManager.updatePlayerState: couldn't retrieve playback state")
-                        self?.sendNotification(title: "Couldn't Retrieve Playback State", message: error!.localizedDescription)
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        self?.updateAlbumArt(newAlbumArt: NSImage(data: data) ?? NSImage())
-                        self?.updateMenuBarText(playerAppIsRunning: self!.isRunning)
-                    }
-                    
-                }.resume()
+        getCurrentSeekerPosition()
+        track = musicApp.getTrackInfo()
+        trackDuration = musicApp.duration
+        shuffleIsOn = musicApp.shuffleIsOn
+        shuffleContextEnabled = musicApp.shuffleContextEnabled
+        repeatContextEnabled = musicApp.repeatContextEnabled
+        musicApp.getAlbumArt() { image in
+            if let albumArt = image {
+                self.updateAlbumArt(newAlbumArt: albumArt)
+                self.updateMenuBarText(playerAppIsRunning: self.isRunning)
             }
-            
-            // Seeker
-            self.trackDuration = Double(spotifyApp?.currentTrack?.duration ?? 1) / 1000
-            
-        case .appleMusic:
-            
-            // Track
-            self.track.title = appleMusicApp?.currentTrack?.name ?? "Unknown Title"
-            self.track.artist = appleMusicApp?.currentTrack?.artist ?? "Unknown Artist"
-            self.track.album = appleMusicApp?.currentTrack?.album ?? "Unknown Album"
-            self.isLoved = appleMusicApp?.currentTrack?.favorited ?? false
-            
-            // Playback
-            self.shuffleIsOn = appleMusicApp?.shuffleEnabled ?? false
-            self.shuffleContextEnabled = true // Always can shuffle in Apple Music
-            self.repeatContextEnabled = true // Always can repeat in Apple Music
-            
-            // Might have to change this later...
-            var count = 0
-            var waitForData: (() -> Void)!
-            waitForData = {
-                let art = self.appleMusicApp?.currentTrack?.artworks?()[0] as! MusicArtwork
-                if art.data != nil && !art.data!.isEmpty() {
-                    //self.track.albumArt = art.data!
-                    self.updateAlbumArt(newAlbumArt: art.data!)
-                } else {
-                    if count > 20 { return }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                        waitForData()
-                    }
-                }
-                count += 1
-            }
-            waitForData()
-            
-            // Seeker
-            self.trackDuration = Double(appleMusicApp?.currentTrack?.duration ?? 1)
         }
-        
-        self.getCurrentSeekerPosition()
     }
     
     func updateAlbumArt(newAlbumArt: NSImage) {
-        self.track.albumArt = newAlbumArt
+        track.albumArt = newAlbumArt
     }
     
     // MARK: - Controls
     
     func togglePlayPause() {
-        Logger.main.log("PlayerManager.togglePlayPause")
-        
-        switch connectedApp {
-        case .spotify:
-            spotifyApp?.playpause?()
-        case .appleMusic:
-            appleMusicApp?.playpause?()
-        }
+        musicApp.playPause()
     }
     
     func previousTrack() {
-        Logger.main.log("PlayerManager.previousTrack")
-        
-        switch connectedApp {
-        case .spotify:
-            spotifyApp?.previousTrack?()
-        case .appleMusic:
-            appleMusicApp?.backTrack?()
-        }
+        musicApp.previousTrack()
     }
     
     func nextTrack() {
-        Logger.main.log("PlayerManager.nextTrack")
-        
-        switch connectedApp {
-        case .spotify:
-            spotifyApp?.nextTrack?()
-        case .appleMusic:
-            appleMusicApp?.nextTrack?()
-        }
+        musicApp.nextTrack()
     }
     
     func toggleLoveTrack() {
-        Logger.main.log("PlayerManager.toggleLoveTrack")
-        
-        switch connectedApp {
-        case .appleMusic:
-            self.toggleAppleMusicLove()
-        case .spotify:
-            self.sendNotification(title: "Error", message: "Adding songs to favorites is not supported for Spotify yet")
-        }
-    }
-    
-    func toggleAppleMusicLove() {
-        Logger.main.log("PlayerManager.toggleAppleMusicLove")
-        
-        // Different versions of Apple Music use different names for starring tracks
-        if let isLovedTrack = appleMusicApp?.currentTrack?.loved {
-            appleMusicApp?.currentTrack?.setLoved?(!isLovedTrack)
-            self.isLoved = !isLovedTrack
-        } else if let isLovedTrack = appleMusicApp?.currentTrack?.favorited {
-            appleMusicApp?.currentTrack?.setFavorited?(!isLovedTrack)
-            self.isLoved = !isLovedTrack
-        } else {
-            self.sendNotification(title: "Error", message: "Could not save track to favorites")
-        }
+        self.isLoved = musicApp.toggleLoveTrack()
     }
     
     func setShuffle() {
-        Logger.main.log("PlayerManager.setShuffle")
-        
-        self.shuffleIsOn.toggle()
-        switch connectedApp {
-        case .appleMusic:
-            self.appleMusicApp?.setShuffleEnabled?(self.shuffleIsOn)
-        case .spotify:
-            self.spotifyApp?.setShuffling?(self.shuffleIsOn)
-        }
+        shuffleIsOn = musicApp.setShuffle(shuffleIsOn: shuffleIsOn)
     }
     
     func setRepeat() {
-        Logger.main.log("PlayerManager.setRepeat")
-        
-        self.repeatIsOn.toggle()
-        switch connectedApp {
-        case .appleMusic:
-            var musicErpt: MusicERpt
-            if repeatIsOn {
-                musicErpt = .all
-            } else {
-                musicErpt = .off
-            }
-            self.appleMusicApp?.setSongRepeat?(musicErpt)
-        case .spotify:
-            self.spotifyApp?.setRepeating?(repeatIsOn)
-        }
+        repeatIsOn = musicApp.setRepeat(repeatIsOn: repeatIsOn)
     }
     
     // MARK: - Seeker
     
     func getCurrentSeekerPosition() {
-        Logger.main.log("PlayerManager.getCurrentSeekerPosition")
-        
-        guard isRunning else { return }
+        if !isRunning { return }
         if isDraggingPlaybackPositionView { return }
         
-        self.seekerPosition = connectedApp == .spotify
-        ? Double(spotifyApp?.playerPosition ?? 0)
-        : Double(appleMusicApp?.playerPosition ?? 0)
+        self.seekerPosition = musicApp.getCurrentSeekerPosition()
     }
     
     func seekTrack() {
-        Logger.main.log("PlayerManager.seekTrack")
-        
-        switch connectedApp {
-        case .appleMusic:
-            appleMusicApp?.setPlayerPosition?(seekerPosition)
-        case .spotify:
-            spotifyApp?.setPlayerPosition?(seekerPosition)
-        }
+        musicApp.seekTrack(seekerPosition: seekerPosition)
     }
     
     func updateFormattedPlaybackPosition() {
-        Logger.main.log("PlayerManager.updateFormattedPlaybackPosition")
-        
-        switch connectedApp {
-        case .spotify:
-            if self.spotifyApp?.playerPosition == nil {
-                self.formattedPlaybackPosition = Self.noPlaybackPositionPlaceholder
-                return
-            }
-        case .appleMusic:
-            if self.appleMusicApp?.playerPosition == nil {
-                self.formattedPlaybackPosition = Self.noPlaybackPositionPlaceholder
-                return
-            }
-        }
-        
-        if self.isDraggingPlaybackPositionView {
+        if musicApp.playerPosition == nil {
+            formattedPlaybackPosition = Self.noPlaybackPositionPlaceholder
             return
         }
         
-        self.formattedPlaybackPosition = self.formattedTimestamp(self.seekerPosition)
+        if isDraggingPlaybackPositionView {
+            return
+        }
+        
+        formattedPlaybackPosition = formattedTimestamp(seekerPosition)
     }
     
     func updateFormattedDuration() {
-        Logger.main.log("PlayerManager.updateFormattedDuration")
-        
-        var durationSeconds: CGFloat
-        switch connectedApp {
-        case .spotify:
-            if spotifyApp?.currentTrack?.duration == nil {
-                self.formattedDuration = Self.noPlaybackPositionPlaceholder
-            }
-            durationSeconds = CGFloat(
-                (self.spotifyApp?.currentTrack?.duration ?? 1) / 1000
-            )
-        case .appleMusic:
-            if appleMusicApp?.currentTrack?.duration == nil {
-                self.formattedDuration = Self.noPlaybackPositionPlaceholder
-            }
-            durationSeconds = CGFloat(
-                self.appleMusicApp?.currentTrack?.duration ?? 1
-            )
-        }
-        
-        self.formattedDuration = self.formattedTimestamp(durationSeconds)
+        formattedDuration = formattedTimestamp(musicApp.duration)
     }
     
     func draggingPlaybackPosition() {
-        self.formattedPlaybackPosition = self.formattedTimestamp(
-            self.seekerPosition
-        )
+        formattedPlaybackPosition = formattedTimestamp(seekerPosition)
     }
     
     // MARK: - Volume
     
     func getVolume() {
-        Logger.main.log("PlayerManager.getVolume")
-        
-        switch connectedApp {
-        case .spotify:
-            self.volume = CGFloat(spotifyApp?.soundVolume ?? 50)
-        case .appleMusic:
-            self.volume = CGFloat(appleMusicApp?.soundVolume ?? 50)
-        }
+        volume = musicApp.volume
     }
     
     func setVolume(newVolume: Int) {
-        Logger.main.log("PlayerManager.setVolume")
-        
         var newVolume = newVolume
         if newVolume > 100 { newVolume = 100 }
         if newVolume < 0 { newVolume = 0 }
         
-        switch connectedApp {
-        case .spotify:
-            self.spotifyApp?.setSoundVolume?(newVolume)
-        case .appleMusic:
-            self.appleMusicApp?.setSoundVolume?(newVolume)
-        }
-
-        self.volume = CGFloat(newVolume)
+        musicApp.setVolume(volume: newVolume)
+        
+        volume = CGFloat(newVolume)
     }
     
     func increaseVolume() {
-        Logger.main.log("PlayerManager.increaseVolume")
-        
         let newVolume = Int(self.volume) + 10
-        
         self.setVolume(newVolume: newVolume)
     }
     
     func decreaseVolume() {
-        Logger.main.log("PlayerManager.decreaseVolume")
-        
         let newVolume = Int(self.volume) - 10
-        
         self.setVolume(newVolume: newVolume)
     }
     
@@ -589,16 +409,7 @@ class PlayerManager: ObservableObject {
     // MARK: - Open music app
     
     func openMusicApp() {
-        Logger.main.log("PlayerManager.openMusicApp")
-        
-        var appPath: URL
-        switch connectedApp {
-        case .spotify:
-            appPath = URL(fileURLWithPath: "/Applications/Spotify.app")
-        case .appleMusic:
-            appPath = URL(fileURLWithPath: "/System/Applications/Music.app")
-        }
-        
+        let appPath = musicApp.appPath
         let configuration = NSWorkspace.OpenConfiguration()
         configuration.activates = true
         NSWorkspace.shared.openApplication(at: appPath, configuration: configuration)
@@ -614,13 +425,6 @@ class PlayerManager: ObservableObject {
     }
     
     func isLikeAuthorized() -> Bool {
-        Logger.main.log("PlayerManager.isLikeAuthorized")
-        
-        switch connectedApp {
-        case .spotify:
-            return false
-        case .appleMusic:
-            return true
-        }
+        return musicApp.isLikeAuthorized
     }
 }
