@@ -11,10 +11,16 @@ import AppKit
 
 protocol PlayerProtocol {
     var notificationSubject: PassthroughSubject<AlertItem, Never> { get set }
+    
+    var appName: String { get }
+    var appPath: URL { get }
+    var appNotification: String { get }
+    
     var playerPosition: Double? { get }
+    var isPlaying: Bool { get }
+    var isRunning: Bool { get }
     var duration: CGFloat { get }
     var volume: CGFloat { get }
-    var appPath: URL { get }
     var isLikeAuthorized: Bool { get }
     var shuffleIsOn: Bool { get }
     var shuffleContextEnabled: Bool { get }

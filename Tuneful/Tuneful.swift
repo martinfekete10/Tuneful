@@ -148,7 +148,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.setupKeyboardShortcuts()
     }
     
-    // MARK: - Music player
+    // MARK: Music player
     
     private func changeMusicPlayer() {
         switch connectedApp {
@@ -187,7 +187,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    // MARK: - Keyboard shortcuts
+    // MARK: Keyboard shortcuts
     
     private func setupKeyboardShortcuts() {
         KeyboardShortcuts.onKeyUp(for: .playPause) {
@@ -219,7 +219,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    // MARK: - Menu bar
+    // MARK: Menu bar
     
     private func setupMenuBar() {
         self.statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -314,7 +314,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         statusBarItem.menu = nil
     }
     
-    // MARK: - Status bar item title
+    // MARK: Status bar item title
     
     @objc func updateStatusBarItem(_ notification: NSNotification?) {
         guard viewedOnboarding else { return }
@@ -358,7 +358,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     
-    // MARK: - Popover
+    // MARK: Popover
         
     @objc func setupPopover() {
         let frameSize: NSSize
@@ -408,7 +408,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    // MARK: - Mini player
+    // MARK: Mini player
     
     @objc func setupMiniPlayer() {
         let originalWindowPosition = miniPlayerWindow.frame.origin
@@ -458,7 +458,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         miniPlayerWindow.contentView = hostedOnboardingView
     }
     
-    // MARK: - Settings
+    // MARK: Settings
     
     @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
@@ -492,7 +492,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ).show(pane: .miniPlayer)
     }
     
-    // MARK: - Setup
+    // MARK: Setup
     
     public func showOnboarding() {
         if onboardingWindow == nil {

@@ -14,10 +14,16 @@ class SpotifyManager: PlayerProtocol {
     var app: SpotifyApplication
     var notificationSubject: PassthroughSubject<AlertItem, Never>
     
+    public var bundleId: String { "com.spotify.client" }
+    public var appName: String { "Spotify" }
+    public var appPath: URL = URL(fileURLWithPath: "/Applications/Spotify.app")
+    public var appNotification: String { "\(Constants.Spotify.bundleID).PlaybackStateChanged" }
+    
     public var playerPosition: Double? { app.playerPosition }
+    public var isPlaying: Bool { app.playerState == .playing }
+    public var isRunning: Bool { app.isRunning }
     public var duration: CGFloat { CGFloat(app.currentTrack?.duration ?? 1) / 1000 }
     public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) }
-    public var appPath: URL = URL(fileURLWithPath: "/Applications/Spotify.app")
     public var isLikeAuthorized: Bool = false
     public var shuffleIsOn: Bool { app.shuffling ?? false }
     public var shuffleContextEnabled: Bool { app.shufflingEnabled ?? false }
@@ -37,6 +43,22 @@ class SpotifyManager: PlayerProtocol {
     }
     
     func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
+//        Old one:
+//        if let artworkURLString = spotifyApp?.currentTrack?.artworkUrl,
+//           let url = URL(string: artworkURLString) {
+//            URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+//                guard let data = data, error == nil else {
+//                    Logger.main.log("PlayerManager.updatePlayerState: couldn't retrieve playback state")
+//                    self?.sendNotification(title: "Couldn't Retrieve Playback State", message: error!.localizedDescription)
+//                    return
+//                }
+//                DispatchQueue.main.async {
+//                    self?.updateAlbumArt(newAlbumArt: NSImage(data: data) ?? NSImage())
+//                    self?.updateMenuBarText(playerAppIsRunning: self!.isRunning)
+//                }
+//                
+//            }.resume()
+    
         let urlString = app.currentTrack?.artworkUrl
         
         guard urlString != nil else {

@@ -487,7 +487,7 @@ extension SBObject: MusicSubscriptionPlaylist {}
     @objc optional func setWork(_ work: String!) // the work name of the track
     @objc optional func setYear(_ year: Int) // the year the track was recorded/released
     
-    // MARK: - Loved/favorited
+    // MARK: Loved/favorited
     @objc optional var favorited: Bool { get } // is this track loved?
     @objc optional var loved: Bool { get } // is this track loved?
     @objc optional func setFavorited(_ loved: Bool) // is this track loved?

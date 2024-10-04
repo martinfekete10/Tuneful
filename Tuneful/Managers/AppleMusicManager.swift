@@ -14,10 +14,15 @@ class AppleMusicManager: PlayerProtocol {
     var app: MusicApplication
     var notificationSubject: PassthroughSubject<AlertItem, Never>
     
+    public var appName: String { "Apple Music" }
+    public var appPath: URL = URL(fileURLWithPath: "/Applications/Music.app")
+    public var appNotification: String { "\(Constants.AppleMusic.bundleID).playerInfo" }
+    
     public var playerPosition: Double? { app.playerPosition }
+    public var isPlaying: Bool { app.playerState == .playing }
+    public var isRunning: Bool { app.isRunning }
     public var duration: CGFloat { CGFloat(app.currentTrack?.duration ?? 1) }
     public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) }
-    public var appPath: URL = URL(fileURLWithPath: "/System/Applications/Music.app")
     public var isLikeAuthorized: Bool = true
     public var shuffleIsOn: Bool { app.shuffleEnabled ?? false }
     public var shuffleContextEnabled: Bool = true

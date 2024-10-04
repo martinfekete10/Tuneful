@@ -52,7 +52,7 @@ class StatusBarItemManager: ObservableObject {
         return menuBarView
     }
     
-    // MARK: - Private
+    // MARK: Private
     
     private func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> String {
         let activePlayback = isPlaying && playerAppIsRunning

@@ -17,20 +17,15 @@ class PlayerManager: ObservableObject {
     @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
     
     var musicApp: PlayerProtocol!
-    var spotifyApp: SpotifyApplication?
-    var appleMusicApp: MusicApplication?
+    var playbackManager = PlaybackManager()
     
-    var name: String {
-        connectedApp == .spotify ? Constants.Spotify.name : Constants.AppleMusic.name
-    }
+    // TODO: Media remote framework for other music players
+//    private let MRMediaRemoteGetNowPlayingInfo: @convention(c) (DispatchQueue, @escaping ([String: Any]) -> Void) -> Void
+//    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
     
-    var isRunning: Bool {
-        connectedApp == .spotify ? spotifyApp?.isRunning ?? false : appleMusicApp?.isRunning ?? false
-    }
-    
-    var notification: String {
-        connectedApp == .spotify ? Constants.Spotify.notification : Constants.AppleMusic.notification
-    }
+    var name: String { musicApp.appName }
+    var isRunning: Bool { musicApp.isRunning }
+    var notification: String { musicApp.appNotification }
     
     // Notifications
     let notificationSubject = PassthroughSubject<AlertItem, Never>()
@@ -88,6 +83,14 @@ class PlayerManager: ObservableObject {
     let timerStopSignal = PassthroughSubject<Void, Never>()
     
     init() {
+        // TODO: Media remote framework for other music players
+//        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
+//        let MRMediaRemoteGetNowPlayingInfoPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteGetNowPlayingInfo" as CFString)
+//        self.MRMediaRemoteGetNowPlayingInfo = unsafeBitCast(MRMediaRemoteGetNowPlayingInfoPointer, to: (@convention(c) (DispatchQueue, @escaping ([String: Any]) -> Void) -> Void).self)
+//        
+//        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
+//        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
+        
         // Music app and observers
         self.setupMusicApps()
         self.setupObservers()
@@ -118,25 +121,31 @@ class PlayerManager: ObservableObject {
         observer?.invalidate()
     }
     
-    // MARK: - Setup
+    // MARK: Setup
     
     private func setupMusicApps() {
-        Logger.main.log("PlayerManager.setupMusicApps")
+        Logger.main.log("Setting up music app")
         
         switch connectedApp {
         case .spotify:
-            guard spotifyApp == nil else { return }
-            spotifyApp = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)
+            let spotifyApp = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)
             musicApp = SpotifyManager(app: spotifyApp!, notificationSubject: self.notificationSubject)
         case .appleMusic:
-            guard appleMusicApp == nil else { return }
-            appleMusicApp = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)
+            let appleMusicApp = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)
             musicApp = AppleMusicManager(app: appleMusicApp!, notificationSubject: self.notificationSubject)
         }
     }
     
     public func setupObservers() {
-        Logger.main.log("PlayerManager.setupObservers")
+        Logger.main.log("Setting up observers")
+        
+//        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
+//        
+//        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
+//            .sink { [weak self] _ in
+//                self!.playStateOrTrackDidChange(nil)
+//            }
+//            .store(in: &cancellables)
         
         observer = UserDefaults.standard.observe(\.connectedApp, options: [.old, .new]) { defaults, change in
             DistributedNotificationCenter.default().removeObserver(self)
@@ -179,8 +188,6 @@ class PlayerManager: ObservableObject {
     }
 
     @objc private func popoverIsOpening(_ notification: NSNotification) {
-        Logger.main.log("PlayerManager.popoverIsOpening")
-        
         if !showPlayerWindow {
             self.timerStartSignal.send()
         }
@@ -191,8 +198,6 @@ class PlayerManager: ObservableObject {
     }
 
     @objc private func popoverIsClosing(_ notification: NSNotification) {
-        Logger.main.log("PlayerManager.popoverIsClosing")
-        
         if !showPlayerWindow {
             self.timerStopSignal.send()
         }
@@ -200,28 +205,28 @@ class PlayerManager: ObservableObject {
         popoverIsShown = false
     }
     
-    // MARK: - Notification Handlers
+    // MARK: Notification Handlers
     
-    @objc func musicAppChanged(_ sender: NSNotification?) {
-        Logger.main.log("PlayerManager.musicAppChanged")
-        
-        self.setupMusicApps()
-        guard isRunning, sender?.userInfo?["Player State"] as? String != "Stopped" else {
-            self.track.title = ""
-            self.track.artist = ""
-            self.track.albumArt = NSImage()
-            self.trackDuration = 0
-            return
-        }
-        
-        self.getPlayState()
-        self.updatePlayerState()
-        self.updateFormattedDuration()
-    }
+//    @objc func musicAppChanged(_ sender: NSNotification?) {
+//        Logger.main.log("Music app changed")
+//        
+//        self.setupMusicApps()
+//        guard isRunning, sender?.userInfo?["Player State"] as? String != "Stopped" else {
+//            self.track.title = ""
+//            self.track.artist = ""
+//            self.track.albumArt = NSImage()
+//            self.trackDuration = 0
+//            return
+//        }
+//        
+//        self.getPlayState()
+//        self.getNewSongInfo()
+//        self.updateFormattedDuration()
+//    }
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
-        Logger.main.log("PlayerManager.playStateOrTrackDidChange")
-        
+        Logger.main.log("Play state or track changed")
+
         let musicAppKilled = sender?.userInfo?["Player State"] as? String == "Stopped"
         let isRunningFromNotification = !musicAppKilled && isRunning
     
@@ -235,44 +240,35 @@ class PlayerManager: ObservableObject {
         }
         
         self.getPlayState()
-        self.updatePlayerState()
         self.updateFormattedDuration()
         self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+        
+        // Get track info before it's loaded in getNewSongInfo() and compare
+        // If previous song == current song => play state not changed
+        let notificationTrack = musicApp.getTrackInfo()
+        if track == notificationTrack { return }
+        
+        self.getNewSongInfo()
     }
     
     private func updateMenuBarText(playerAppIsRunning: Bool) {
-        Logger.main.log("PlayerManager.updateMenuBarText")
-        
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil, userInfo: ["PlayerAppIsRunning": playerAppIsRunning])
         }
     }
     
-    // MARK: - Media & Playback
+    // MARK: Media & Playback
     
     private func playStateChanged() -> Bool {
-        Logger.main.log("PlayerManager.playStateChanged")
-        
-        switch connectedApp {
-        case .spotify:
-            if (isPlaying && spotifyApp?.playerState == .playing) || (!isPlaying && spotifyApp?.playerState != .playing) {
-                return false
-            }
-        case .appleMusic:
-            if (isPlaying && appleMusicApp?.playerState == .playing) || (!isPlaying && appleMusicApp?.playerState != .playing) {
-                return false
-            }
+        if (musicApp.isPlaying && isPlaying) || (!musicApp.isPlaying && !isPlaying) {
+            return false
         }
         
         return true
     }
     
     private func getPlayState() {
-        Logger.main.log("PlayerManager.getPlayState")
-        
-        isPlaying = connectedApp == .spotify
-        ? spotifyApp?.playerState == .playing
-        : appleMusicApp?.playerState == .playing
+        isPlaying = musicApp.isPlaying
     }
     
     private func sendNotification(title: String, message: String) {
@@ -287,9 +283,20 @@ class PlayerManager: ObservableObject {
         self.notificationSubject.send(alert)
     }
     
-    func updatePlayerState() {
+    func getNewSongInfo() {
         Logger.main.log("Getting track info")
         
+        // TODO: Media remote framework for other music players
+//        MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main, { (information) in
+//            let artworkData = information["kMRMediaRemoteNowPlayingInfoArtworkData"] as? Data
+//            if artworkData == nil {
+//                print("No albumart")
+//                return
+//            }
+//            let artwork = NSImage(data: artworkData!)
+//            self.updateAlbumArt(newAlbumArt: artwork!)
+//        })
+
         getCurrentSeekerPosition()
         track = musicApp.getTrackInfo()
         trackDuration = musicApp.duration
@@ -305,10 +312,12 @@ class PlayerManager: ObservableObject {
     }
     
     func updateAlbumArt(newAlbumArt: NSImage) {
-        track.albumArt = newAlbumArt
+        withAnimation(.smooth) {
+            track.albumArt = newAlbumArt
+        }
     }
     
-    // MARK: - Controls
+    // MARK: Controls
     
     func togglePlayPause() {
         musicApp.playPause()
@@ -334,7 +343,7 @@ class PlayerManager: ObservableObject {
         repeatIsOn = musicApp.setRepeat(repeatIsOn: repeatIsOn)
     }
     
-    // MARK: - Seeker
+    // MARK: Seeker
     
     func getCurrentSeekerPosition() {
         if !isRunning { return }
@@ -368,7 +377,7 @@ class PlayerManager: ObservableObject {
         formattedPlaybackPosition = formattedTimestamp(seekerPosition)
     }
     
-    // MARK: - Volume
+    // MARK: Volume
     
     func getVolume() {
         volume = musicApp.volume
@@ -394,7 +403,7 @@ class PlayerManager: ObservableObject {
         self.setVolume(newVolume: newVolume)
     }
     
-    // MARK: - Audio device
+    // MARK: Audio device
     
     func setOutputDevice(audioDevice: AudioDevice) {
         Logger.main.log("PlayerManager.setOutputDevice")
@@ -406,7 +415,7 @@ class PlayerManager: ObservableObject {
         }
     }
     
-    // MARK: - Open music app
+    // MARK: Open music app
     
     func openMusicApp() {
         let appPath = musicApp.appPath
@@ -415,11 +424,9 @@ class PlayerManager: ObservableObject {
         NSWorkspace.shared.openApplication(at: appPath, configuration: configuration)
     }
     
-    // MARK: - Helpers
+    // MARK: Helpers
     
     private func formattedTimestamp(_ number: CGFloat) -> String {
-        Logger.main.log("PlayerManager.formattedTimestamp")
-        
         let formatter: DateComponentsFormatter = number >= 3600 ? .playbackTimeWithHours : .playbackTime
         return formatter.string(from: Double(number)) ?? Self.noPlaybackPositionPlaceholder
     }

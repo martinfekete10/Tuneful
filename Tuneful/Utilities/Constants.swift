@@ -22,15 +22,11 @@ enum Constants {
     }
     
     enum Spotify {
-        static let name = "Spotify"
         static let bundleID = "com.spotify.client"
-        static let notification = "\(bundleID).PlaybackStateChanged"
     }
     
     enum AppleMusic {
-        static let name = "Apple Music"
         static let bundleID = "com.apple.Music"
-        static let notification = "\(bundleID).playerInfo"
     }
     
     enum StatusBar {
