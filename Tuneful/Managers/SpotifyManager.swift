@@ -9,9 +9,10 @@ import os
 import Combine
 import Foundation
 import AppKit
+import ScriptingBridge
 
 class SpotifyManager: PlayerProtocol {
-    var app: SpotifyApplication
+    var app: SpotifyApplication = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)!
     var notificationSubject: PassthroughSubject<AlertItem, Never>
     
     public var bundleId: String { "com.spotify.client" }
@@ -29,8 +30,7 @@ class SpotifyManager: PlayerProtocol {
     public var shuffleContextEnabled: Bool { app.shufflingEnabled ?? false }
     public var repeatContextEnabled: Bool { app.repeatingEnabled ?? false }
     
-    init(app: SpotifyApplication, notificationSubject: PassthroughSubject<AlertItem, Never>) {
-        self.app = app
+    init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         self.notificationSubject = notificationSubject
     }
     
@@ -42,40 +42,34 @@ class SpotifyManager: PlayerProtocol {
         return track
     }
     
-    func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
-//        Old one:
-//        if let artworkURLString = spotifyApp?.currentTrack?.artworkUrl,
-//           let url = URL(string: artworkURLString) {
-//            URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-//                guard let data = data, error == nil else {
-//                    Logger.main.log("PlayerManager.updatePlayerState: couldn't retrieve playback state")
-//                    self?.sendNotification(title: "Couldn't Retrieve Playback State", message: error!.localizedDescription)
-//                    return
-//                }
-//                DispatchQueue.main.async {
-//                    self?.updateAlbumArt(newAlbumArt: NSImage(data: data) ?? NSImage())
-//                    self?.updateMenuBarText(playerAppIsRunning: self!.isRunning)
-//                }
-//                
-//            }.resume()
+    func getTrackInfoAsync(completion: @escaping (Track?) -> Void) {
+        DispatchQueue.global().async {
+            var track = Track()
+            track.title = self.app.currentTrack?.name ?? "Unknown Title"
+            track.artist = self.app.currentTrack?.artist ?? "Unknown Artist"
+            track.album = self.app.currentTrack?.album ?? "Unknown Artist"
+            
+            DispatchQueue.main.async {
+                completion(track)
+            }
+        }
+    }
     
+    func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
         let urlString = app.currentTrack?.artworkUrl
         
         guard urlString != nil else {
-            Logger.main.log("No album art URL string")
             completion(nil)
             return
         }
         
         guard let url = URL(string: urlString!) else {
-            Logger.main.log("Invalid album art URL string")
             completion(nil)
             return
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                Logger.main.log("Failed to fetch artwork: \(error.localizedDescription)")
+            if error != nil {
                 DispatchQueue.main.async {
                     completion(nil)
                 }
@@ -83,7 +77,6 @@ class SpotifyManager: PlayerProtocol {
             }
             
             guard let data = data, let image = NSImage(data: data) else {
-                Logger.main.log("No data or image could not be created")
                 DispatchQueue.main.async {
                     completion(nil)
                 }

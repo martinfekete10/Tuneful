@@ -26,6 +26,7 @@
 		FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */; };
 		FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4414B72AB4999600A73246 /* Notification.Name.swift */; };
 		FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE445FE32A977D0E001CA55A /* Double+Extension.swift */; };
+		FE478BFD2CB288430033D272 /* SystemPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */; };
 		FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */; };
 		FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */; };
 		FE4C92152B6143CC00FF79BE /* MarqueeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C92142B6143CC00FF79BE /* MarqueeTextView.swift */; };
@@ -62,7 +63,6 @@
 		FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */; };
 		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
 		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
-		FEF36A6A2CAF11DA0016089C /* PlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF36A692CAF11DA0016089C /* PlaybackManager.swift */; };
 		FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */; };
 		FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */; };
 		FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */; };
@@ -112,6 +112,7 @@
 		FE4414B72AB4999600A73246 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		FE445FE02A969E8D001CA55A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FE445FE32A977D0E001CA55A /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPlayerManager.swift; sourceTree = "<group>"; };
 		FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsView.swift; sourceTree = "<group>"; };
 		FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		FE4C92142B6143CC00FF79BE /* MarqueeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeTextView.swift; sourceTree = "<group>"; };
@@ -151,7 +152,6 @@
 		FEE486E82B5D677400AB712F /* MiniPlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerType.swift; sourceTree = "<group>"; };
 		FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSettingsView.swift; sourceTree = "<group>"; };
 		FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extension.swift"; sourceTree = "<group>"; };
-		FEF36A692CAF11DA0016089C /* PlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackManager.swift; sourceTree = "<group>"; };
 		FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlView.swift; sourceTree = "<group>"; };
 		FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
@@ -312,7 +312,7 @@
 		FE6BFCFC2A73A87600D3321F /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				FEF36A692CAF11DA0016089C /* PlaybackManager.swift */,
+				FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */,
 				FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */,
 				FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */,
 				FE6BFCFD2A73A89600D3321F /* PlayerManager.swift */,
@@ -531,10 +531,10 @@
 				FE6BFD032A73AB9A00D3321F /* SpotifyApplication.swift in Sources */,
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,
 				FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */,
-				FEF36A6A2CAF11DA0016089C /* PlaybackManager.swift in Sources */,
 				FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */,
 				FEFFE5592B4FE00D000887B5 /* NSError+Extension.swift in Sources */,
 				FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */,
+				FE478BFD2CB288430033D272 /* SystemPlayerManager.swift in Sources */,
 				FE8CE1582C1E0B140053FDEA /* PopoverType.swift in Sources */,
 				FEFFE55D2B4FE051000887B5 /* Comparable+Extension.swift in Sources */,
 				FE6BFCFE2A73A89600D3321F /* PlayerManager.swift in Sources */,

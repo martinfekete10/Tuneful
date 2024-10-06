@@ -26,6 +26,8 @@ protocol PlayerProtocol {
     var shuffleContextEnabled: Bool { get }
     var repeatContextEnabled: Bool { get }
     
+    func getTrackInfoAsync(completion: @escaping (Track?) -> Void)
+    
     func getTrackInfo() -> Track
     
     func getAlbumArt(completion: @escaping (NSImage?) -> Void)

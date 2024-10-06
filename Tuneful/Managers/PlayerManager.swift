@@ -17,10 +17,8 @@ class PlayerManager: ObservableObject {
     @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
     
     var musicApp: PlayerProtocol!
-    var playbackManager = PlaybackManager()
     
     // TODO: Media remote framework for other music players
-//    private let MRMediaRemoteGetNowPlayingInfo: @convention(c) (DispatchQueue, @escaping ([String: Any]) -> Void) -> Void
 //    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
     
     var name: String { musicApp.appName }
@@ -85,9 +83,6 @@ class PlayerManager: ObservableObject {
     init() {
         // TODO: Media remote framework for other music players
 //        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
-//        let MRMediaRemoteGetNowPlayingInfoPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteGetNowPlayingInfo" as CFString)
-//        self.MRMediaRemoteGetNowPlayingInfo = unsafeBitCast(MRMediaRemoteGetNowPlayingInfoPointer, to: (@convention(c) (DispatchQueue, @escaping ([String: Any]) -> Void) -> Void).self)
-//        
 //        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
 //        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
         
@@ -126,19 +121,21 @@ class PlayerManager: ObservableObject {
     private func setupMusicApps() {
         Logger.main.log("Setting up music app")
         
+        // TODO: Media remote framework for other music players
+//        musicApp = SystemPlayerManager(notificationSubject: self.notificationSubject)
+        
         switch connectedApp {
         case .spotify:
-            let spotifyApp = SBApplication(bundleIdentifier: Constants.Spotify.bundleID)
-            musicApp = SpotifyManager(app: spotifyApp!, notificationSubject: self.notificationSubject)
+            musicApp = SpotifyManager(notificationSubject: self.notificationSubject)
         case .appleMusic:
-            let appleMusicApp = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)
-            musicApp = AppleMusicManager(app: appleMusicApp!, notificationSubject: self.notificationSubject)
+            musicApp = AppleMusicManager(notificationSubject: self.notificationSubject)
         }
     }
     
     public func setupObservers() {
         Logger.main.log("Setting up observers")
         
+        // TODO: Media remote framework for other music players
 //        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
 //        
 //        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
@@ -160,6 +157,15 @@ class PlayerManager: ObservableObject {
             self.setupMusicApps()
             self.playStateOrTrackDidChange(nil)
         }
+        
+        // ScriptingBridge Observer
+        DistributedNotificationCenter.default().addObserver(
+            self,
+            selector: #selector(playStateOrTrackDidChange),
+            name: NSNotification.Name(rawValue: notification),
+            object: nil,
+            suspensionBehavior: .deliverImmediately
+        )
                 
         // ScriptingBridge Observer
         DistributedNotificationCenter.default().addObserver(
@@ -206,23 +212,6 @@ class PlayerManager: ObservableObject {
     }
     
     // MARK: Notification Handlers
-    
-//    @objc func musicAppChanged(_ sender: NSNotification?) {
-//        Logger.main.log("Music app changed")
-//        
-//        self.setupMusicApps()
-//        guard isRunning, sender?.userInfo?["Player State"] as? String != "Stopped" else {
-//            self.track.title = ""
-//            self.track.artist = ""
-//            self.track.albumArt = NSImage()
-//            self.trackDuration = 0
-//            return
-//        }
-//        
-//        self.getPlayState()
-//        self.getNewSongInfo()
-//        self.updateFormattedDuration()
-//    }
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
         Logger.main.log("Play state or track changed")
@@ -286,30 +275,33 @@ class PlayerManager: ObservableObject {
     func getNewSongInfo() {
         Logger.main.log("Getting track info")
         
-        // TODO: Media remote framework for other music players
-//        MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main, { (information) in
-//            let artworkData = information["kMRMediaRemoteNowPlayingInfoArtworkData"] as? Data
-//            if artworkData == nil {
-//                print("No albumart")
-//                return
-//            }
-//            let artwork = NSImage(data: artworkData!)
-//            self.updateAlbumArt(newAlbumArt: artwork!)
-//        })
-
         getCurrentSeekerPosition()
-        track = musicApp.getTrackInfo()
         trackDuration = musicApp.duration
         shuffleIsOn = musicApp.shuffleIsOn
         shuffleContextEnabled = musicApp.shuffleContextEnabled
         repeatContextEnabled = musicApp.repeatContextEnabled
+        track = musicApp.getTrackInfo()
+        fetchAlbumArt(retryCount: 5)
+        musicApp.getTrackInfoAsync() { track in
+            self.track = track ?? Track()
+        }
+    }
+    
+    func fetchAlbumArt(retryCount: Int = 5) {
         musicApp.getAlbumArt() { image in
             if let albumArt = image {
                 self.updateAlbumArt(newAlbumArt: albumArt)
                 self.updateMenuBarText(playerAppIsRunning: self.isRunning)
+            } else if retryCount > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    self.fetchAlbumArt(retryCount: retryCount - 1)
+                }
+            } else {
+                Logger.main.log("Failed to fetch album art")
             }
         }
     }
+
     
     func updateAlbumArt(newAlbumArt: NSImage) {
         withAnimation(.smooth) {

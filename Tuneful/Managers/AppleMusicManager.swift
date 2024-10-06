@@ -9,9 +9,10 @@ import os
 import Combine
 import Foundation
 import AppKit
+import ScriptingBridge
 
 class AppleMusicManager: PlayerProtocol {
-    var app: MusicApplication
+    var app: MusicApplication = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)!
     var notificationSubject: PassthroughSubject<AlertItem, Never>
     
     public var appName: String { "Apple Music" }
@@ -28,37 +29,36 @@ class AppleMusicManager: PlayerProtocol {
     public var shuffleContextEnabled: Bool = true
     public var repeatContextEnabled: Bool = true
     
-    init(app: MusicApplication, notificationSubject: PassthroughSubject<AlertItem, Never>) {
-        self.app = app
+    init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         self.notificationSubject = notificationSubject
     }
     
     func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
-        var count = 0
-        
-        func waitForData() {
-            guard let art = app.currentTrack?.artworks?()[0] as? MusicArtwork else {
-                completion(nil)
-                return
-            }
-            
-            if let data = art.data, !data.isEmpty() {
-                completion(data)
-            } else {
-                if count > 20 {
-                    completion(nil)
-                    return
-                }
-                count += 1
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                    waitForData()
-                }
-            }
+        guard let art = app.currentTrack?.artworks?()[0] as? MusicArtwork else {
+            completion(nil)
+            return
         }
         
-        waitForData()
+        if let data = art.data, !data.isEmpty() {
+            completion(data)
+        } else {
+            completion(nil)
+            return
+        }
     }
 
+    func getTrackInfoAsync(completion: @escaping (Track?) -> Void) {
+        DispatchQueue.global().async {
+            var track = Track()
+            track.title = self.app.currentTrack?.name ?? "Unknown Title"
+            track.artist = self.app.currentTrack?.artist ?? "Unknown Artist"
+            track.album = self.app.currentTrack?.album ?? "Unknown Artist"
+            
+            DispatchQueue.main.async {
+                completion(track)
+            }
+        }
+    }
     
     func getTrackInfo() -> Track {
         var track = Track()
