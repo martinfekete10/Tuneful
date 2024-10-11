@@ -5,6 +5,8 @@
 -   Playback buttons now animate on mouse hover
 -   Improved hadnling of menu bar information for podcasts
 -   New keyboard shortcut to show/hide popover
+-   Lowered minimum menu bar item width from 100px to 75px
+-   Code is a bit more optimised to make less background calls to chosen music player
 -   Background code maintenance and cleanup
 
 # 1.6.5 - Bug fixes and minor improvements
