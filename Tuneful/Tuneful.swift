@@ -159,22 +159,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    @objc private func setSpotify() {
-        if self.connectedApp == .spotify {
-            return
-        }
-        
-        self.connectedApp = .spotify
-    }
-    
-    @objc private func setAppleMusic() {
-        if self.connectedApp == .appleMusic {
-            return
-        }
-        
-        self.connectedApp = .appleMusic
-    }
-    
     func updateMenuItemsState() {
         if let menuItem = statusBarMenu.item(withTitle: "Music player")?.submenu {
             if let spotifyMenuItem = menuItem.item(withTitle: "Spotify") {
@@ -228,22 +212,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         statusBarMenu.delegate = self
         
         statusBarMenu.addItem(
+            withTitle: "♡ Support",
+            action: #selector(support),
+            keyEquivalent: ""
+        )
+        
+        statusBarMenu.addItem(
             withTitle: "Show mini player",
             action: #selector(showHideMiniPlayer),
             keyEquivalent: ""
         )
         .state = showPlayerWindow ? .on : .off
-        
-        let switchPlayerMenuItem = NSMenuItem(title: "Music player", action: nil, keyEquivalent: "")
-        let switchPlayerMenu = NSMenu()
-        switchPlayerMenu
-            .addItem(withTitle: "Spotify", action: #selector(setSpotify), keyEquivalent: "")
-            .state = self.connectedApp == .spotify ? .on : .off
-        switchPlayerMenu
-            .addItem(withTitle: "Apple Music", action: #selector(setAppleMusic), keyEquivalent: "")
-            .state = self.connectedApp == .appleMusic ? .on : .off
-        switchPlayerMenuItem.submenu = switchPlayerMenu
-        statusBarMenu.addItem(switchPlayerMenuItem)
         
         statusBarMenu.addItem(.separator())
         
@@ -307,6 +286,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @IBAction func openURL(_ sender: AnyObject) {
         let url = URL(string: "https://github.com/martinfekete10/Tuneful")
+        NSWorkspace.shared.open(url!)
+    }
+    
+    @IBAction func support(_ sender: AnyObject) {
+        let url = URL(string: "https://ko-fi.com/martinfekete")
         NSWorkspace.shared.open(url!)
     }
     

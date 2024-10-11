@@ -89,8 +89,6 @@ class PlayerManager: ObservableObject {
         self.setupMusicApps()
         self.setupObservers()
         
-        self.playStateOrTrackDidChange(nil)
-        
         // Updating player state every 1 sec
         self.timerStartSignal.sink {
             self.getCurrentSeekerPosition()
@@ -129,6 +127,8 @@ class PlayerManager: ObservableObject {
         case .appleMusic:
             musicApp = AppleMusicManager(notificationSubject: self.notificationSubject)
         }
+        
+        self.playStateOrTrackDidChange(nil)
     }
     
     public func setupObservers() {
@@ -144,17 +144,7 @@ class PlayerManager: ObservableObject {
 //            .store(in: &cancellables)
         
         observer = UserDefaults.standard.observe(\.connectedApp, options: [.old, .new]) { defaults, change in
-            DistributedNotificationCenter.default().removeObserver(self)
-            DistributedNotificationCenter.default().addObserver(
-                self,
-                selector: #selector(self.playStateOrTrackDidChange),
-                name: NSNotification.Name(rawValue: self.notification),
-                object: nil,
-                suspensionBehavior: .deliverImmediately
-            )
-             
             self.setupMusicApps()
-            self.playStateOrTrackDidChange(nil)
         }
         
         // ScriptingBridge Observer

@@ -29,7 +29,7 @@ struct AboutSettingsView: View {
                     
                     Divider()
                     HStack {
-                        Link("Support", destination: URL(string: "https://ko-fi.com/martinfekete")!)
+                        Link("♡ Support", destination: URL(string: "https://ko-fi.com/martinfekete")!)
                             .buttonStyle(.bordered)
                         Link("GitHub", destination: URL(string: "https://github.com/martinfekete10/Tuneful")!)
                             .buttonStyle(.bordered)
