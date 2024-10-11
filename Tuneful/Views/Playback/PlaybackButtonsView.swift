@@ -25,7 +25,10 @@ struct PlaybackButtonsView: View {
                 .disabled(!playerManager.shuffleContextEnabled)
             }
 
-            HoverButton(icon: "backward.fill", iconSize: playButtonSize) {
+            HoverButton(
+                icon: playerManager.track.isPodcast ? "15.arrow.trianglehead.counterclockwise" : "backward.fill",
+                iconSize: playButtonSize)
+            {
                 playerManager.previousTrack()
             }
             
@@ -37,7 +40,10 @@ struct PlaybackButtonsView: View {
                 PlayPauseButton(buttonSize: playButtonSize)
             }
 
-            HoverButton(icon: "forward.fill", iconSize: playButtonSize) {
+            HoverButton(
+                icon: playerManager.track.isPodcast ? "15.arrow.trianglehead.clockwise" : "forward.fill",
+                iconSize: playButtonSize)
+            {
                 playerManager.nextTrack()
             }
 

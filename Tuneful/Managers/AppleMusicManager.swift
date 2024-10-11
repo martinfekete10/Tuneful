@@ -22,7 +22,6 @@ class AppleMusicManager: PlayerProtocol {
     public var playerPosition: Double? { app.playerPosition }
     public var isPlaying: Bool { app.playerState == .playing }
     public var isRunning: Bool { app.isRunning }
-    public var duration: CGFloat { CGFloat(app.currentTrack?.duration ?? 1) }
     public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) }
     public var isLikeAuthorized: Bool = true
     public var shuffleIsOn: Bool { app.shuffleEnabled ?? false }
@@ -31,6 +30,12 @@ class AppleMusicManager: PlayerProtocol {
     
     init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         self.notificationSubject = notificationSubject
+    }
+    
+    func refreshInfo(completion: @escaping () -> Void) {
+        DispatchQueue.main.async() {
+            completion()
+        }
     }
     
     func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
@@ -46,25 +51,13 @@ class AppleMusicManager: PlayerProtocol {
             return
         }
     }
-
-    func getTrackInfoAsync(completion: @escaping (Track?) -> Void) {
-        DispatchQueue.global().async {
-            var track = Track()
-            track.title = self.app.currentTrack?.name ?? "Unknown Title"
-            track.artist = self.app.currentTrack?.artist ?? "Unknown Artist"
-            track.album = self.app.currentTrack?.album ?? "Unknown Artist"
-            
-            DispatchQueue.main.async {
-                completion(track)
-            }
-        }
-    }
     
     func getTrackInfo() -> Track {
         var track = Track()
         track.title = app.currentTrack?.name ?? "Unknown Title"
         track.artist = app.currentTrack?.artist ?? "Unknown Artist"
         track.album = app.currentTrack?.album ?? "Unknown Artist"
+        track.duration = CGFloat(app.currentTrack?.duration ?? 0)
         return track
     }
     

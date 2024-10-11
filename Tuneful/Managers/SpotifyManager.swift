@@ -23,7 +23,6 @@ class SpotifyManager: PlayerProtocol {
     public var playerPosition: Double? { app.playerPosition }
     public var isPlaying: Bool { app.playerState == .playing }
     public var isRunning: Bool { app.isRunning }
-    public var duration: CGFloat { CGFloat(app.currentTrack?.duration ?? 1) / 1000 }
     public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) }
     public var isLikeAuthorized: Bool = false
     public var shuffleIsOn: Bool { app.shuffling ?? false }
@@ -34,25 +33,19 @@ class SpotifyManager: PlayerProtocol {
         self.notificationSubject = notificationSubject
     }
     
+    func refreshInfo(completion: @escaping () -> Void) {
+        DispatchQueue.main.async() {
+            completion()
+        }
+    }
+    
     func getTrackInfo() -> Track {
         var track = Track()
         track.title = app.currentTrack?.name ?? "Unknown Title"
         track.artist = app.currentTrack?.artist ?? "Unknown Artist"
         track.album = app.currentTrack?.album ?? "Unknown Artist"
+        track.duration = CGFloat(app.currentTrack?.duration ?? 0) / 1000
         return track
-    }
-    
-    func getTrackInfoAsync(completion: @escaping (Track?) -> Void) {
-        DispatchQueue.global().async {
-            var track = Track()
-            track.title = self.app.currentTrack?.name ?? "Unknown Title"
-            track.artist = self.app.currentTrack?.artist ?? "Unknown Artist"
-            track.album = self.app.currentTrack?.album ?? "Unknown Artist"
-            
-            DispatchQueue.main.async {
-                completion(track)
-            }
-        }
     }
     
     func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
@@ -69,21 +62,17 @@ class SpotifyManager: PlayerProtocol {
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-            if error != nil {
+            guard error == nil, let data = data else {
+                Logger.main.log("Error fetching Spotify album image")
                 DispatchQueue.main.async {
                     completion(nil)
                 }
                 return
             }
             
-            guard let data = data, let image = NSImage(data: data) else {
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-                return
-            }
-            
+            let image = NSImage(data: data)
             DispatchQueue.main.async {
+                Logger.main.log("Spotify album image fetched")
                 completion(image)
             }
             

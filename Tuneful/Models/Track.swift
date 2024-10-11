@@ -12,8 +12,10 @@ struct Track: Equatable {
     var title = ""
     var artist = ""
     var album = ""
-    var loved = false
     var albumArt = NSImage()
+    var duration: CGFloat = 0.0
+    var isLoved = false
+    var isPodcast: Bool { self.duration > Constants.podcastThresholdDurationSec }
     
     static func == (lhs: Track, rhs: Track) -> Bool {
         if lhs.title == "" && lhs.artist == "" && lhs.album == "" {

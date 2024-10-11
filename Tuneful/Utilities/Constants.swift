@@ -9,6 +9,8 @@ import Foundation
 import AppKit
 
 enum Constants {
+    static let podcastThresholdDurationSec = 600.0
+    static let podcastRewindDurationSec = 15.0
     
     enum Opacity {
         static let primaryOpacity = 0.8

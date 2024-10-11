@@ -19,14 +19,13 @@ protocol PlayerProtocol {
     var playerPosition: Double? { get }
     var isPlaying: Bool { get }
     var isRunning: Bool { get }
-    var duration: CGFloat { get }
     var volume: CGFloat { get }
     var isLikeAuthorized: Bool { get }
     var shuffleIsOn: Bool { get }
     var shuffleContextEnabled: Bool { get }
     var repeatContextEnabled: Bool { get }
     
-    func getTrackInfoAsync(completion: @escaping (Track?) -> Void)
+    func refreshInfo(completion: @escaping () -> Void)
     
     func getTrackInfo() -> Track
     

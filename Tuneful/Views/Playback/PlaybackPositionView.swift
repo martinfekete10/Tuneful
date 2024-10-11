@@ -10,20 +10,15 @@ import Combine
 import SwiftUI
 
 struct PlaybackPositionView: View {
-    
     @EnvironmentObject var playerManager: PlayerManager
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
-    
-    var duration: CGFloat {
-        return CGFloat(playerManager.trackDuration)
-    }
     
     var body: some View {
         VStack(spacing: -5) {
             CustomSliderView(
                 value: $playerManager.seekerPosition,
                 isDragging: $playerManager.isDraggingPlaybackPositionView,
-                range: 0...duration,
+                range: 0...playerManager.track.duration,
                 knobDiameter: 10,
                 knobColor: .white,
                 knobScaleEffectMagnitude: 1.3,

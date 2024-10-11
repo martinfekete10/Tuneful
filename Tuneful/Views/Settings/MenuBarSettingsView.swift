@@ -119,10 +119,10 @@ struct MenuBarSettingsView: View {
                         .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                 }) {
                     VStack(alignment: .center) {
-                        Slider(value: $menuBarItemWidth, in: 100...300, step: 25) {
+                        Slider(value: $menuBarItemWidth, in: 75...300, step: 25) {
                             Text("")
                         } minimumValueLabel: {
-                            Text("100")
+                            Text("75")
                         } maximumValueLabel: {
                             Text("300")
                         }

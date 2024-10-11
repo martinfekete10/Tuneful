@@ -1,9 +1,11 @@
-# 1.6.6 - More native feel
+# 1.6.6 - Better podcast handling, more native UI
 
+-   When podcast is playing, 15-sec rewind buttons are displayed instead of forwads/backwards buttons
 -   Updated playback buttons to use more native icons
 -   Playback buttons now animate on mouse hover
+-   Improved hadnling of menu bar information for podcasts
 -   New keyboard shortcut to show/hide popover
--   Overall background maintenance and cleanup
+-   Background code maintenance and cleanup
 
 # 1.6.5 - Bug fixes and minor improvements
 

@@ -69,24 +69,27 @@ class StatusBarItemManager: ObservableObject {
             return "Open \(connectedApp.rawValue)"
         }
         
-        let trackTitle = track.title
-        let trackArtist = track.artist
+        return getTrackInfoDetails(track: track)
+    }
+    
+    private func getTrackInfoDetails(track: Track) -> String {
+        var title = track.title
+        var album = track.album
+        var artist = track.artist
+        
+        // In pocasts, replace artist name with podcast name (as artist name is empty)
+        if artist.isEmpty { artist = album }
+        if album.isEmpty { album = artist }
+        if title.isEmpty { title = album }
         
         var trackInfo = ""
         switch trackInfoDetails {
         case .artistAndSong:
-            // In some cases either of these is missing (e.g. podcasts) which would result in "• PodcastTitle"
-            if !trackArtist.isEmpty && !trackTitle.isEmpty {
-                trackInfo = "\(trackArtist) • \(trackTitle)"
-            } else if !trackArtist.isEmpty {
-                trackInfo = "\(trackArtist)"
-            } else if !trackTitle.isEmpty {
-                trackInfo = "\(trackTitle)"
-            }
+            trackInfo = "\(artist) • \(title)"
         case .artist:
-            trackInfo = "\(trackArtist)"
+            trackInfo = "\(artist)"
         case .song:
-            trackInfo = "\(trackTitle)"
+            trackInfo = "\(title)"
         }
         
         return trackInfo

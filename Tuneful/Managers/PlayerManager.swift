@@ -34,7 +34,6 @@ class PlayerManager: ObservableObject {
     @Published var isLoved = false
     
     // Seeker
-    @Published var trackDuration: Double = 0
     @Published var seekerPosition: CGFloat = 0 {
         didSet {
             self.updateFormattedPlaybackPosition()
@@ -166,15 +165,6 @@ class PlayerManager: ObservableObject {
             object: nil,
             suspensionBehavior: .deliverImmediately
         )
-                
-        // ScriptingBridge Observer
-        DistributedNotificationCenter.default().addObserver(
-            self,
-            selector: #selector(playStateOrTrackDidChange),
-            name: NSNotification.Name(rawValue: notification),
-            object: nil,
-            suspensionBehavior: .deliverImmediately
-        )
         
         // Add observer to listen for popover open
         NotificationCenter.default.addObserver(
@@ -220,24 +210,23 @@ class PlayerManager: ObservableObject {
         let isRunningFromNotification = !musicAppKilled && isRunning
     
         guard isRunningFromNotification else {
-            self.track.title = ""
-            self.track.artist = ""
-            self.track.albumArt = NSImage()
-            self.trackDuration = 0
+            self.track = Track()
             self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
             return
         }
         
-        self.getPlayState()
-        self.updateFormattedDuration()
-        self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
-        
-        // Get track info before it's loaded in getNewSongInfo() and compare
-        // If previous song == current song => play state not changed
-        let notificationTrack = musicApp.getTrackInfo()
-        if track == notificationTrack { return }
-        
-        self.getNewSongInfo()
+        self.musicApp.refreshInfo { // Needs to be refreshed for system player to load song info asynchronously
+            self.getPlayState()
+            self.updateFormattedDuration()
+            self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+            
+            // Get track info before it's loaded in getNewSongInfo() and compare
+            // If previous song == current song => play state not changed
+            let notificationTrack = self.musicApp.getTrackInfo()
+            if self.track == notificationTrack { return }
+            
+            self.getNewSongInfo()
+        }
     }
     
     private func updateMenuBarText(playerAppIsRunning: Bool) {
@@ -276,15 +265,12 @@ class PlayerManager: ObservableObject {
         Logger.main.log("Getting track info")
         
         getCurrentSeekerPosition()
-        trackDuration = musicApp.duration
         shuffleIsOn = musicApp.shuffleIsOn
         shuffleContextEnabled = musicApp.shuffleContextEnabled
         repeatContextEnabled = musicApp.repeatContextEnabled
         track = musicApp.getTrackInfo()
         fetchAlbumArt(retryCount: 5)
-        musicApp.getTrackInfoAsync() { track in
-            self.track = track ?? Track()
-        }
+        updateFormattedDuration()
     }
     
     func fetchAlbumArt(retryCount: Int = 5) {
@@ -301,11 +287,12 @@ class PlayerManager: ObservableObject {
             }
         }
     }
-
     
     func updateAlbumArt(newAlbumArt: NSImage) {
-        withAnimation(.smooth) {
-            track.albumArt = newAlbumArt
+        DispatchQueue.main.async {
+            withAnimation(.none) {
+                self.track.albumArt = newAlbumArt
+            }
         }
     }
     
@@ -316,11 +303,21 @@ class PlayerManager: ObservableObject {
     }
     
     func previousTrack() {
-        musicApp.previousTrack()
+        if track.isPodcast {
+            self.seekerPosition = seekerPosition - Constants.podcastRewindDurationSec
+            self.seekTrack()
+        } else {
+            musicApp.previousTrack()
+        }
     }
     
     func nextTrack() {
-        musicApp.nextTrack()
+        if track.isPodcast {
+            self.seekerPosition = seekerPosition + Constants.podcastRewindDurationSec
+            self.seekTrack()
+        } else {
+            musicApp.nextTrack()
+        }
     }
     
     func toggleLoveTrack() {
@@ -341,7 +338,9 @@ class PlayerManager: ObservableObject {
         if !isRunning { return }
         if isDraggingPlaybackPositionView { return }
         
-        self.seekerPosition = musicApp.getCurrentSeekerPosition()
+        musicApp.refreshInfo {
+            self.seekerPosition = self.musicApp.getCurrentSeekerPosition()
+        }
     }
     
     func seekTrack() {
@@ -362,7 +361,7 @@ class PlayerManager: ObservableObject {
     }
     
     func updateFormattedDuration() {
-        formattedDuration = formattedTimestamp(musicApp.duration)
+        formattedDuration = formattedTimestamp(track.duration)
     }
     
     func draggingPlaybackPosition() {

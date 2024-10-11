@@ -22,14 +22,15 @@ class SystemPlayerManager: PlayerProtocol {
     public var appNotification: String { "" }
     
     public var playerPosition: Double? { 50 }
-    public var isPlaying: Bool { true }
+    public var isPlaying: Bool { getIsPlaying() }
     public var isRunning: Bool { true }
-    public var duration: CGFloat { 50 }
     public var volume: CGFloat { 50 }
     public var isLikeAuthorized: Bool { false }
     public var shuffleIsOn: Bool { false }
     public var shuffleContextEnabled: Bool { false }
     public var repeatContextEnabled: Bool { false }
+    
+    private var info: [String: Any]?
     
     init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
@@ -44,21 +45,28 @@ class SystemPlayerManager: PlayerProtocol {
         self.notificationSubject = notificationSubject
     }
     
-    
-    func getTrackInfoAsync(completion: @escaping (Track?) -> Void) {
+    func refreshInfo() {
         MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { info in
-            let title = info["kMRMediaRemoteNowPlayingInfoTitle"] as? String ?? ""
-            let artist = info["kMRMediaRemoteNowPlayingInfoArtist"] as? String ?? ""
-            let album = info["kMRMediaRemoteNowPlayingInfoAlbum"] as? String ?? ""
-//            let state = info["kMRMediaRemoteNowPlayingInfoPlaybackRate"] as? Int
-
-            let track = Track(title: title, artist: artist, album: album)
-            completion(track)
+            Logger.main.log("Refreshing system player info")
+            self.info = info
+        }
+    }
+    
+    func refreshInfo(completion: @escaping () -> Void) {
+        MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { info in
+            Logger.main.log("Refreshing system player info")
+            self.info = info
+            completion()  // Call completion handler after the info is fetched
         }
     }
     
     func getTrackInfo() -> Track {
-        return Track()
+        let title = info?["kMRMediaRemoteNowPlayingInfoTitle"] as? String ?? ""
+        let artist = info?["kMRMediaRemoteNowPlayingInfoArtist"] as? String ?? ""
+        let album = info?["kMRMediaRemoteNowPlayingInfoAlbum"] as? String ?? ""
+        let duration = info?["kMRMediaRemoteNowPlayingInfoDuration"] as? Double ?? 0.0
+
+        return Track(title: title, artist: artist, album: album, duration: duration)
     }
 
     
@@ -106,7 +114,8 @@ class SystemPlayerManager: PlayerProtocol {
     }
     
     func getCurrentSeekerPosition() -> Double {
-        return 50
+        let playerPosition = info?["kMRMediaRemoteNowPlayingInfoElapsedTime"] as? Double ?? 0.0
+        return Double(playerPosition)
     }
     
     func seekTrack(seekerPosition: CGFloat) {
@@ -117,4 +126,11 @@ class SystemPlayerManager: PlayerProtocol {
         fatalError("Not implemented")
     }
     
+    // MARK: Private methods
+    
+    private func getIsPlaying() -> Bool {
+        let state = info?["kMRMediaRemoteNowPlayingInfoPlaybackRate"] as? Int ?? 0
+        print("Is playing: \(state)")
+        return state != 0
+    }
 }
