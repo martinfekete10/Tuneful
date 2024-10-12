@@ -2,8 +2,8 @@
 //  AudioSpectrumView.swift
 //  Tuneful
 //
-//  Created by Harsh Vardhan  Goswami on 02/08/24: https://github.com/TheBoredTeam/boring.notch
-//  Modified by Martin Fekete on 03/08/2023.
+//  Created by Harsh Vardhan Goswami on 02/08/24: https://github.com/TheBoredTeam/boring.notch
+//  Modified by Martin Fekete
 //
 
 import AppKit

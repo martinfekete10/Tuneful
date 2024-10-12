@@ -15,11 +15,11 @@ class AppleMusicManager: PlayerProtocol {
     var app: MusicApplication = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)!
     var notificationSubject: PassthroughSubject<AlertItem, Never>
     
+    public var bundleId: String { Constants.AppleMusic.bundleID }
     public var appName: String { "Apple Music" }
     public var appPath: URL = URL(fileURLWithPath: "/Applications/Music.app")
-    public var appNotification: String { "\(Constants.AppleMusic.bundleID).playerInfo" }
-    public var bundleId: String { Constants.AppleMusic.bundleID }
-    public var defaultAlbumArt: NSImage
+    public var appNotification: String { "\(bundleId).playerInfo" }
+    public var defaultAlbumArt: NSImage { AppIcons().getIcon(bundleID: bundleId) ?? NSImage() }
     
     public var playerPosition: Double? { app.playerPosition }
     public var isPlaying: Bool { app.playerState == .playing }
@@ -32,8 +32,6 @@ class AppleMusicManager: PlayerProtocol {
     
     init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         self.notificationSubject = notificationSubject
-        let tiffAlbumArt = AppIcons().getIcon(bundleID: Constants.AppleMusic.bundleID)?.tiffRepresentation!
-        self.defaultAlbumArt = tiffAlbumArt != nil ? NSImage(data: tiffAlbumArt!)! : NSImage()
     }
     
     func refreshInfo(completion: @escaping () -> Void) {
@@ -60,7 +58,7 @@ class AppleMusicManager: PlayerProtocol {
         var track = Track()
         track.title = app.currentTrack?.name ?? "Unknown Title"
         track.artist = app.currentTrack?.artist ?? "Unknown Artist"
-        track.album = app.currentTrack?.album ?? "Unknown Artist"
+        track.album = app.currentTrack?.album ?? "Unknown Album"
         track.duration = CGFloat(app.currentTrack?.duration ?? 0)
         return track
     }

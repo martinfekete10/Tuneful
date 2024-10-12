@@ -16,7 +16,7 @@ struct MenuBarSettingsView: View {
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
     @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
-    @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = true
+    @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = false
     @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusicAppStorage: Bool = true
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
@@ -37,7 +37,7 @@ struct MenuBarSettingsView: View {
         @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
         @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
         @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
-        @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = true
+        @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = false
         @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusicAppStorage: Bool = true
         
         self.menuBarItemWidth = menuBarItemWidthAppStorage

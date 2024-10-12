@@ -187,6 +187,7 @@ class PlayerManager: ObservableObject {
         }
         self.audioDevices = AudioDevice.output.filter { $0.transportType != .virtual }
         self.getVolume()
+        self.getPlaybackSettingInfo()
 
         popoverIsShown = true
     }
@@ -195,7 +196,7 @@ class PlayerManager: ObservableObject {
         if !showPlayerWindow {
             self.timerStopSignal.send()
         }
-
+        
         popoverIsShown = false
     }
 
@@ -225,6 +226,7 @@ class PlayerManager: ObservableObject {
             let notificationTrack = self.musicApp.getTrackInfo()
             if self.track == notificationTrack { return }
 
+            self.getPlaybackSettingInfo()
             self.getNewSongInfo()
         }
     }
@@ -262,14 +264,19 @@ class PlayerManager: ObservableObject {
         )
         self.notificationSubject.send(alert)
     }
+    
+    func getPlaybackSettingInfo() {
+        Logger.main.log("Getting playback setting info")
+        
+        shuffleIsOn = musicApp.shuffleIsOn // TODO: Doesn't seem to be working correctly for Spotify
+        shuffleContextEnabled = musicApp.shuffleContextEnabled
+        repeatContextEnabled = musicApp.repeatContextEnabled
+    }
 
     func getNewSongInfo() {
         Logger.main.log("Getting track info")
 
         getCurrentSeekerPosition()
-        shuffleIsOn = musicApp.shuffleIsOn
-        shuffleContextEnabled = musicApp.shuffleContextEnabled
-        repeatContextEnabled = musicApp.repeatContextEnabled
         track = musicApp.getTrackInfo()
         fetchAlbumArt(retryCount: 5)
         updateFormattedDuration()

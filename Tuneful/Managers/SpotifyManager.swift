@@ -18,8 +18,8 @@ class SpotifyManager: PlayerProtocol {
     public var bundleId: String { Constants.Spotify.bundleID }
     public var appName: String { "Spotify" }
     public var appPath: URL = URL(fileURLWithPath: "/Applications/Spotify.app")
-    public var appNotification: String { "\(Constants.Spotify.bundleID).PlaybackStateChanged" }
-    public var defaultAlbumArt: NSImage
+    public var appNotification: String { "\(bundleId).PlaybackStateChanged" }
+    public var defaultAlbumArt: NSImage { AppIcons().getIcon(bundleID: bundleId) ?? NSImage() }
     
     public var playerPosition: Double? { app.playerPosition }
     public var isPlaying: Bool { app.playerState == .playing }
@@ -32,8 +32,6 @@ class SpotifyManager: PlayerProtocol {
     
     init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         self.notificationSubject = notificationSubject
-        let tiffAlbumArt = AppIcons().getIcon(bundleID: Constants.Spotify.bundleID)?.tiffRepresentation!
-        self.defaultAlbumArt = tiffAlbumArt != nil ? NSImage(data: tiffAlbumArt!)! : NSImage()
     }
     
     func refreshInfo(completion: @escaping () -> Void) {

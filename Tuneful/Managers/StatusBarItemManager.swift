@@ -14,7 +14,7 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
     @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.spotify
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfo: ShowStatusBarTrackInfo = .always
-    @AppStorage("scrollingTrackInfo") var scrollingTrackInfo: Bool = true
+    @AppStorage("scrollingTrackInfo") var scrollingTrackInfo: Bool = false
     @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusic: Bool = true
     
     public func getMenuBarView(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> NSView {
