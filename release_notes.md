@@ -1,3 +1,8 @@
+# 1.6.7 - Small fixes
+
+-   Fixed issue when opening Apple Music via menu bar click
+-   Fixed menu bar icon behvaiour when set to Hidden setting
+
 # 1.6.6 - Better podcast handling, more native UI and more
 
 -   When podcast is playing, 15-sec rewind buttons are displayed instead of forwads/backwards buttons

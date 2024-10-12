@@ -30,7 +30,7 @@ class StatusBarItemManager: ObservableObject {
             menuBarItemWidth += Constants.StatusBar.imageWidth
         }
         
-        var mainView = HStack(spacing: 7) {
+        let mainView = HStack(spacing: 7) {
             if self.statusBarIcon != .hidden {
                 image.frame(width: 18, height: 18)
             }
