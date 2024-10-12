@@ -3,6 +3,26 @@
     <channel>
         <title>Tuneful</title>
         <item>
+            <title>1.6.6</title>
+            <pubDate>Sat, 12 Oct 2024 12:45:20 +0000</pubDate>
+            <link>https://github.com/martinfekete10/Tuneful/releases</link>
+            <sparkle:version>1.6.6</sparkle:version>
+            <sparkle:shortVersionString>1.6.6</sparkle:shortVersionString>
+            <description><![CDATA[<h1>Better podcast handling, more native UI and more</h1>
+<ul>
+<li>When podcast is playing, 15-sec rewind buttons are displayed instead of forwads/backwards buttons</li>
+<li>Updated playback buttons to use more native icons</li>
+<li>Playback buttons now animate on mouse hover</li>
+<li>Improved hadnling of menu bar information for podcasts</li>
+<li>New keyboard shortcut to show/hide popover</li>
+<li>Lowered minimum menu bar item width from 100px to 75px</li>
+<li>Code is a bit more optimised to make less background calls to Spotify/Apple Music</li>
+<li>Background code maintenance and cleanup</li>
+</ul>]]></description>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/martinfekete10/Tuneful/releases/download/v1.6.6/Tuneful.dmg" length="9156022" type="application/octet-stream" sparkle:edSignature="YSOM+rsrOZU5rOtfhVuvJHIWGRjPHD1yid7y+LoPUc8b0fX+JLQvU4IAgJjs1AIA5e+d/AAj7iSX1si83WjwBA=="/>
+        </item>
+        <item>
             <title>1.6.5</title>
             <pubDate>Thu, 26 Sep 2024 18:08:19 +0000</pubDate>
             <link>https://github.com/martinfekete10/Tuneful/releases</link>

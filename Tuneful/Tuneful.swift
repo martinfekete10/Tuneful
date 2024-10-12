@@ -148,7 +148,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.setupKeyboardShortcuts()
     }
     
-    // MARK: - Music player
+    // MARK: Music player
     
     private func changeMusicPlayer() {
         switch connectedApp {
@@ -157,22 +157,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         case .appleMusic:
             self.connectedApp = .spotify
         }
-    }
-    
-    @objc private func setSpotify() {
-        if self.connectedApp == .spotify {
-            return
-        }
-        
-        self.connectedApp = .spotify
-    }
-    
-    @objc private func setAppleMusic() {
-        if self.connectedApp == .appleMusic {
-            return
-        }
-        
-        self.connectedApp = .appleMusic
     }
     
     func updateMenuItemsState() {
@@ -187,7 +171,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    // MARK: - Keyboard shortcuts
+    // MARK: Keyboard shortcuts
     
     private func setupKeyboardShortcuts() {
         KeyboardShortcuts.onKeyUp(for: .playPause) {
@@ -213,9 +197,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         KeyboardShortcuts.onKeyUp(for: .toggleMenuBarItemVisibility) {
             self.toggleMenuBarItemVisibilityFromShortcut()
         }
+        
+        KeyboardShortcuts.onKeyUp(for: .togglePopover) {
+            self.handlePopover(self.statusBarItem.button)
+        }
     }
     
-    // MARK: - Menu bar
+    // MARK: Menu bar
     
     private func setupMenuBar() {
         self.statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -224,22 +212,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         statusBarMenu.delegate = self
         
         statusBarMenu.addItem(
+            withTitle: "♡ Support",
+            action: #selector(support),
+            keyEquivalent: ""
+        )
+        
+        statusBarMenu.addItem(
             withTitle: "Show mini player",
             action: #selector(showHideMiniPlayer),
             keyEquivalent: ""
         )
         .state = showPlayerWindow ? .on : .off
-        
-        let switchPlayerMenuItem = NSMenuItem(title: "Music player", action: nil, keyEquivalent: "")
-        let switchPlayerMenu = NSMenu()
-        switchPlayerMenu
-            .addItem(withTitle: "Spotify", action: #selector(setSpotify), keyEquivalent: "")
-            .state = self.connectedApp == .spotify ? .on : .off
-        switchPlayerMenu
-            .addItem(withTitle: "Apple Music", action: #selector(setAppleMusic), keyEquivalent: "")
-            .state = self.connectedApp == .appleMusic ? .on : .off
-        switchPlayerMenuItem.submenu = switchPlayerMenu
-        statusBarMenu.addItem(switchPlayerMenuItem)
         
         statusBarMenu.addItem(.separator())
         
@@ -306,11 +289,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSWorkspace.shared.open(url!)
     }
     
+    @IBAction func support(_ sender: AnyObject) {
+        let url = URL(string: "https://ko-fi.com/martinfekete")
+        NSWorkspace.shared.open(url!)
+    }
+    
     func menuDidClose(_: NSMenu) {
         statusBarItem.menu = nil
     }
     
-    // MARK: - Status bar item title
+    // MARK: Status bar item title
     
     @objc func updateStatusBarItem(_ notification: NSNotification?) {
         guard viewedOnboarding else { return }
@@ -354,7 +342,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     
-    // MARK: - Popover
+    // MARK: Popover
         
     @objc func setupPopover() {
         let frameSize: NSSize
@@ -404,7 +392,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    // MARK: - Mini player
+    // MARK: Mini player
     
     @objc func setupMiniPlayer() {
         let originalWindowPosition = miniPlayerWindow.frame.origin
@@ -415,13 +403,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             setupMiniPlayerWindow(
                 size: NSSize(width: 300, height: 145),
                 position: windowPosition,
-                view: MiniPlayerView(parentWindow: miniPlayerWindow)
+                view: MiniPlayerView()
             )
         case .minimal:
             setupMiniPlayerWindow(
                 size: NSSize(width: 145, height: 145),
                 position: windowPosition,
-                view: CompactMiniPlayerView(parentWindow: miniPlayerWindow)
+                view: CompactMiniPlayerView()
             )
         }
         
@@ -454,7 +442,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         miniPlayerWindow.contentView = hostedOnboardingView
     }
     
-    // MARK: - Settings
+    // MARK: Settings
     
     @objc func openSettings(_ sender: AnyObject) {
         SettingsWindowController(
@@ -488,7 +476,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ).show(pane: .miniPlayer)
     }
     
-    // MARK: - Setup
+    // MARK: Setup
     
     public func showOnboarding() {
         if onboardingWindow == nil {

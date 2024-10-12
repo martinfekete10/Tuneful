@@ -16,7 +16,7 @@ struct MenuBarSettingsView: View {
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
     @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
-    @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = true
+    @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = false
     @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusicAppStorage: Bool = true
     
     // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
@@ -37,7 +37,7 @@ struct MenuBarSettingsView: View {
         @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfoAppStorage: ShowStatusBarTrackInfo = .always
         @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControlsAppStorage: Bool = false
         @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlayingAppStorage: Bool = false
-        @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = true
+        @AppStorage("scrollingTrackInfo") var scrollingTrackInfoAppStorage: Bool = false
         @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusicAppStorage: Bool = true
         
         self.menuBarItemWidth = menuBarItemWidthAppStorage
@@ -119,10 +119,10 @@ struct MenuBarSettingsView: View {
                         .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
                 }) {
                     VStack(alignment: .center) {
-                        Slider(value: $menuBarItemWidth, in: 100...300, step: 25) {
+                        Slider(value: $menuBarItemWidth, in: 75...300, step: 25) {
                             Text("")
                         } minimumValueLabel: {
-                            Text("100")
+                            Text("75")
                         } maximumValueLabel: {
                             Text("300")
                         }

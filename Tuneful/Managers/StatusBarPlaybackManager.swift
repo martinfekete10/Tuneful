@@ -8,7 +8,6 @@
 import SwiftUI
 
 class StatusBarPlaybackManager: ObservableObject {
-    
     @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControls: Bool = false
     
     private var playerManager: PlayerManager
@@ -47,7 +46,7 @@ class StatusBarPlaybackManager: ObservableObject {
     @objc func updateStatusBarPlaybackItem(playerAppIsRunning: Bool) {
         let menuBarView = HStack {
             Button(action: playerManager.previousTrack){
-                Image(systemName: "backward.end.fill")
+                Image(systemName: "backward.fill")
                     .resizable()
                     .frame(width: 9, height: 9)
                     .animation(.easeInOut(duration: 2.0), value: 1)
@@ -62,7 +61,7 @@ class StatusBarPlaybackManager: ObservableObject {
                 .opacity(playerAppIsRunning ? 1.0 : 0.8)
             
             Button(action: playerManager.nextTrack) {
-                Image(systemName: "forward.end.fill")
+                Image(systemName: "forward.fill")
                     .resizable()
                     .frame(width: 9, height: 9)
                     .animation(.easeInOut(duration: 2.0), value: 1)

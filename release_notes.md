@@ -1,3 +1,14 @@
+# 1.6.6 - Better podcast handling, more native UI and more
+
+-   When podcast is playing, 15-sec rewind buttons are displayed instead of forwads/backwards buttons
+-   Updated playback buttons to use more native icons
+-   Playback buttons now animate on mouse hover
+-   Improved hadnling of menu bar information for podcasts
+-   New keyboard shortcut to show/hide popover
+-   Lowered minimum menu bar item width from 100px to 75px
+-   Code is a bit more optimised to make less background calls to Spotify/Apple Music
+-   Background code maintenance and cleanup
+
 # 1.6.5 - Bug fixes and minor improvements
 
 -   Fixed a bug where menu bar info wasn't currently updated when music player was killed

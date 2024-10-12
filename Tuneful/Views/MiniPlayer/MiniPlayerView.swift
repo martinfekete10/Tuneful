@@ -9,16 +9,11 @@ import SwiftUI
 import MediaPlayer
 
 struct MiniPlayerView: View {
-    
     @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
     @EnvironmentObject var playerManager: PlayerManager
+    @State private var isShowingPlaybackControls = false
     
     private var imageSize: CGFloat = 140.0
-    private weak var parentWindow: MiniPlayerWindow!
-    
-    init(parentWindow: MiniPlayerWindow) {
-        self.parentWindow = parentWindow
-    }
 
     var body: some View {
         
@@ -40,21 +35,22 @@ struct MiniPlayerView: View {
                     .padding(.bottom, 20)
             } else {
                 HStack(spacing: 0) {
-                    Image(nsImage: playerManager.track.albumArt)
-                        .resizable()
-                        .scaledToFill()
-                        .cornerRadius(8)
-                        .frame(width: self.imageSize, height: self.imageSize)
-                        .padding(.leading, 7)
-                        .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
-                        .dragWindowWithClick()
-                        .gesture(
-                            TapGesture(count: 2).onEnded {
-                                self.playerManager.openMusicApp()
-                            }
-                        )
+                    ZStack {
+                        AlbumArtView(imageSize: self.imageSize)
+                            .padding(.leading, 7)
+                            .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                            .dragWindowWithClick()
+                        
+                        AddToFavoritesView()
+                            .opacity(isShowingPlaybackControls ? 1 : 0)
+                    }
+                    .onHover { _ in
+                        withAnimation(.linear(duration: 0.1)) {
+                            self.isShowingPlaybackControls.toggle()
+                        }
+                    }
                     
-                    VStack(spacing: 7) {
+                    VStack(spacing: 10) {
                         Button(action: playerManager.openMusicApp) {
                             VStack {
                                 Text(playerManager.track.title)
@@ -71,26 +67,7 @@ struct MiniPlayerView: View {
                         
                         PlaybackPositionView()
                         
-                        HStack(spacing: 10) {
-                            
-                            Button(action: playerManager.previousTrack){
-                                Image(systemName: "backward.end.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .animation(.easeInOut(duration: 2.0), value: 1)
-                            }
-                            .pressButtonStyle()
-                            
-                            PlayPauseButton(buttonSize: 35)
-                            
-                            Button(action: playerManager.nextTrack) {
-                                Image(systemName: "forward.end.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .animation(.easeInOut(duration: 2.0), value: 1)
-                            }
-                            .pressButtonStyle()
-                        }
+                        PlaybackButtonsView(playButtonSize: 20, spacing: 10)
                     }
                     .padding()
                     .opacity(0.8)

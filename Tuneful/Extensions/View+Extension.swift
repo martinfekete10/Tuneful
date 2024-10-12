@@ -23,12 +23,8 @@ extension View {
     }
     
     @ViewBuilder func onValueChanged<T: Equatable>(of value: T, perform onChange: @escaping (T) -> Void) -> some View {
-        if #available(iOS 14.0, *) {
-            self.onChange(of: value, perform: onChange)
-        } else {
-            self.onReceive(Just(value)) { (value) in
-                onChange(value)
-            }
+        self.onReceive(Just(value)) { (value) in
+            onChange(value)
         }
     }
     

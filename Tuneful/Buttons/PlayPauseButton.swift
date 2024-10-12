@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PlayPauseButton: View {
-    
     @EnvironmentObject var playerManager: PlayerManager
     @State private var transparency: Double = 0.0
     
@@ -29,14 +28,14 @@ struct PlayPauseButton: View {
             }
         }) {
             ZStack {
-                Image(systemName: "pause.circle.fill")
+                Image(systemName: "pause.fill")
                     .resizable()
                     .frame(width: self.buttonSize, height: self.buttonSize)
                     .scaleEffect(playerManager.isPlaying ? 1.01 : 0.09)
                     .opacity(playerManager.isPlaying ? 1.01 : 0.09)
                     .animation(.interpolatingSpring(stiffness: 150, damping: 20), value: playerManager.isPlaying)
                 
-                Image(systemName: "play.circle.fill")
+                Image(systemName: "play.fill")
                     .resizable()
                     .frame(width: self.buttonSize, height: self.buttonSize)
                     .scaleEffect(playerManager.isPlaying ? 0.09 : 1.01)

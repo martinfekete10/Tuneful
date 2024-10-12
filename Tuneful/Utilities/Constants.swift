@@ -9,6 +9,9 @@ import Foundation
 import AppKit
 
 enum Constants {
+    static let podcastThresholdDurationSec = 600.0
+    static let podcastRewindDurationSec = 15.0
+    static let playerAppChangedMessage = "Player app changed"
     
     enum Opacity {
         static let primaryOpacity = 0.8
@@ -22,15 +25,11 @@ enum Constants {
     }
     
     enum Spotify {
-        static let name = "Spotify"
         static let bundleID = "com.spotify.client"
-        static let notification = "\(bundleID).PlaybackStateChanged"
     }
     
     enum AppleMusic {
-        static let name = "Apple Music"
         static let bundleID = "com.apple.Music"
-        static let notification = "\(bundleID).playerInfo"
     }
     
     enum StatusBar {
