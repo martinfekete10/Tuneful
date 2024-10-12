@@ -17,7 +17,7 @@ class AppleMusicManager: PlayerProtocol {
     
     public var bundleId: String { Constants.AppleMusic.bundleID }
     public var appName: String { "Apple Music" }
-    public var appPath: URL = URL(fileURLWithPath: "/Applications/Music.app")
+    public var appPath: URL = URL(fileURLWithPath: "/System/Applications/Music.app")
     public var appNotification: String { "\(bundleId).playerInfo" }
     public var defaultAlbumArt: NSImage { AppIcons().getIcon(bundleID: bundleId) ?? NSImage() }
     
