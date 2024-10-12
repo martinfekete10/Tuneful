@@ -15,6 +15,8 @@ protocol PlayerProtocol {
     var appName: String { get }
     var appPath: URL { get }
     var appNotification: String { get }
+    var bundleId: String { get }
+    var defaultAlbumArt: NSImage { get }
     
     var playerPosition: Double? { get }
     var isPlaying: Bool { get }

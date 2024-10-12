@@ -47,6 +47,7 @@
 		FE7955472CA2C7A3002026AA /* AudioSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7955462CA2C7A2002026AA /* AudioSpectrumView.swift */; };
 		FE7955492CA2C9E8002026AA /* NSBezierPath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7955482CA2C9E2002026AA /* NSBezierPath+Extension.swift */; };
 		FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE79554D2CA34BE6002026AA /* Logger+Extension.swift */; };
+		FE7B09D22CB997F600FBB6F8 /* AppIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */; };
 		FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */; };
 		FE8CE1542C1E03F30053FDEA /* CompactPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */; };
 		FE8CE1562C1E09C00053FDEA /* PopoverSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1552C1E09C00053FDEA /* PopoverSettingsView.swift */; };
@@ -135,6 +136,7 @@
 		FE7955462CA2C7A2002026AA /* AudioSpectrumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSpectrumView.swift; sourceTree = "<group>"; };
 		FE7955482CA2C9E2002026AA /* NSBezierPath+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+Extension.swift"; sourceTree = "<group>"; };
 		FE79554D2CA34BE6002026AA /* Logger+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extension.swift"; sourceTree = "<group>"; };
+		FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcons.swift; sourceTree = "<group>"; };
 		FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtView.swift; sourceTree = "<group>"; };
 		FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactPopoverView.swift; sourceTree = "<group>"; };
 		FE8CE1552C1E09C00053FDEA /* PopoverSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverSettingsView.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 		FE6BFD042A73ACEE00D3321F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */,
 				FE6BFD052A73ACFD00D3321F /* Constants.swift */,
 				FE3189F72A7C3B1A006B2D59 /* Helper.swift */,
 			);
@@ -508,6 +511,7 @@
 				FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */,
 				FEFFE5522B4AE2FA000887B5 /* StatusBarTrackDetails.swift in Sources */,
 				FE2554A02CA9C4B9003DAB77 /* PlaybackButtonsView.swift in Sources */,
+				FE7B09D22CB997F600FBB6F8 /* AppIcons.swift in Sources */,
 				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,

@@ -20,6 +20,7 @@ class SystemPlayerManager: PlayerProtocol {
     public var appName: String { "Spotify" }
     public var appPath: URL = URL(fileURLWithPath: "/Applications/Spotify.app")
     public var appNotification: String { "" }
+    public var defaultAlbumArt: NSImage
     
     public var playerPosition: Double? { 50 }
     public var isPlaying: Bool { getIsPlaying() }
@@ -43,6 +44,7 @@ class SystemPlayerManager: PlayerProtocol {
         self.MrMediaRemoteSendCommandFunction = unsafeBitCast(MRMediaRemoteSendCommandPointer, to: MRMediaRemoteSendCommandFunction.self)
         
         self.notificationSubject = notificationSubject
+        self.defaultAlbumArt = NSImage()
     }
     
     func refreshInfo() {
