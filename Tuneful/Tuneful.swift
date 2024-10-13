@@ -499,7 +499,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
 @main
 struct Tuneful: App {
-    
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {

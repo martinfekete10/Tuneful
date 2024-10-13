@@ -11,7 +11,6 @@ import SwiftUI
 struct HoverButton: View {
     var icon: String
     var iconSize: CGFloat = 60
-    var iconColor: Color = .white;
     var action: () -> Void
     
     @State private var isHovering = false
@@ -28,14 +27,12 @@ struct HoverButton: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: isHovering ? iconSize * 1.1 : iconSize, height: isHovering ? iconSize * 1.1 : iconSize)
-                            .foregroundColor(iconColor)
                             .contentTransition(.symbolEffect)
                     } else {
                         Image(systemName: icon)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: isHovering ? iconSize * 1.1 : iconSize, height: isHovering ? iconSize * 1.1 : iconSize)
-                            .foregroundColor(iconColor)
                     }
                 }
         }

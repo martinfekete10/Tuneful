@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PopoverView: View {
-    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .albumArt
     @EnvironmentObject var playerManager: PlayerManager
+    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .albumArt
     @State private var isShowingPlaybackControls = false
     
     var body: some View {
@@ -20,7 +20,7 @@ struct PopoverView: View {
                 VisualEffectView(material: .popover, blendingMode: .withinWindow)
             }
             
-            if !playerManager.isRunning {
+            if !playerManager.isRunning && playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
                     .font(.system(size: 14, weight: .regular))

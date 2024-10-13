@@ -72,17 +72,19 @@ class SystemPlayerManager: PlayerProtocol {
     }
 
     
-    func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
+        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
+        
         MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { information in
             guard let artworkData = information["kMRMediaRemoteNowPlayingInfoArtworkData"] as? Data else {
-                completion(nil)
+                completion(defaultRestult)
                 return
             }
             
-            if let artwork = NSImage(data: artworkData) {
-                completion(artwork)
+            if let image = NSImage(data: artworkData) {
+                completion(FetchedAlbumArt(image: image, isAlbumArt: true))
             } else {
-                completion(nil)
+                completion(defaultRestult)
             }
         }
     }

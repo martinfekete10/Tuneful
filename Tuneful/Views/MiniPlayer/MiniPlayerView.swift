@@ -25,7 +25,7 @@ struct MiniPlayerView: View {
                 VisualEffectView(material: .popover, blendingMode: .withinWindow)
             }
             
-            if !playerManager.isRunning {
+            if !playerManager.isRunning && playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(0.4))
                     .font(.system(size: 14, weight: .regular))
@@ -78,8 +78,5 @@ struct MiniPlayerView: View {
         .overlay(
             NotificationView()
         )
-        .if(miniPlayerBackground == .transparent || !playerManager.isRunning) { view in
-            view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
-        }
     }
 }

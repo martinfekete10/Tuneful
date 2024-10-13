@@ -78,7 +78,10 @@ class PlayerManager: ObservableObject {
     // Emits when the popover is shown or closed
     let timerStartSignal = PassthroughSubject<Void, Never>()
     let timerStopSignal = PassthroughSubject<Void, Never>()
-
+    
+    // Notch
+    private var notch: DynamicNotchInfo!
+    
     init() {
         // TODO: Media remote framework for other music players
         //        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
@@ -283,11 +286,21 @@ class PlayerManager: ObservableObject {
     }
 
     func fetchAlbumArt(retryCount: Int = 5) {
-        musicApp.getAlbumArt { image in
-            if let albumArt = image {
-                self.updateAlbumArt(newAlbumArt: albumArt)
+        musicApp.getAlbumArt { result in
+            if result.isAlbumArt {
+                self.updateAlbumArt(newAlbumArt: result.image)
                 self.updateMenuBarText(playerAppIsRunning: self.isRunning)
+
+                self.notch?.hide()
+                self.notch = DynamicNotchInfo(
+                    icon: Image(nsImage: result.image.roundImage(withSize: NSSize(width: 50, height: 50), radius: 10)),
+                    title: self.track.title,
+                    description: self.track.album
+                )
+                self.notch.show(for: 2)
             } else if retryCount > 0 {
+                self.updateAlbumArt(newAlbumArt: result.image)
+                self.updateMenuBarText(playerAppIsRunning: self.isRunning)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     self.fetchAlbumArt(retryCount: retryCount - 1)
                 }

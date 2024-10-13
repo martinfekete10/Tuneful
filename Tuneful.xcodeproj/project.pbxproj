@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */; };
+		FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */; };
+		FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F82CBC1B09001C13CE /* NSScreen+Extensions.swift */; };
+		FE1A62FD2CBC1B09001C13CE /* DynamicNotchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F32CBC1B09001C13CE /* DynamicNotchInfo.swift */; };
+		FE1A62FE2CBC1B09001C13CE /* NotchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F72CBC1B09001C13CE /* NotchView.swift */; };
+		FE1A62FF2CBC1B09001C13CE /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F92CBC1B09001C13CE /* VisualEffectView.swift */; };
+		FE1A63002CBC1B09001C13CE /* DynamicNotchProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F42CBC1B09001C13CE /* DynamicNotchProgress.swift */; };
+		FE1A63012CBC1B09001C13CE /* NotchShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F62CBC1B09001C13CE /* NotchShape.swift */; };
+		FE1A63022CBC1B09001C13CE /* BlurModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */; };
+		FE1A63032CBC1B09001C13CE /* NotchlessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F52CBC1B09001C13CE /* NotchlessView.swift */; };
 		FE1F7E952B89E92A00B702AD /* StatusBarPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1F7E942B89E92A00B702AD /* StatusBarPlaybackManager.swift */; };
 		FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE23689F2B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift */; };
 		FE25549B2CA95F87003DAB77 /* AddToFavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE25549A2CA95F6E003DAB77 /* AddToFavoritesView.swift */; };
@@ -16,7 +26,6 @@
 		FE2AEE302A8FC76500E8D576 /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */; };
 		FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */; };
 		FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */; };
-		FE2AEE362A93A44B00E8D576 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE352A93A44B00E8D576 /* VisualEffectView.swift */; };
 		FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */; };
 		FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F72A7C3B1A006B2D59 /* Helper.swift */; };
 		FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */; };
@@ -94,6 +103,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedAlbumArt.swift; sourceTree = "<group>"; };
+		FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurModifier.swift; sourceTree = "<group>"; };
+		FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotch.swift; sourceTree = "<group>"; };
+		FE1A62F32CBC1B09001C13CE /* DynamicNotchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotchInfo.swift; sourceTree = "<group>"; };
+		FE1A62F42CBC1B09001C13CE /* DynamicNotchProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotchProgress.swift; sourceTree = "<group>"; };
+		FE1A62F52CBC1B09001C13CE /* NotchlessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchlessView.swift; sourceTree = "<group>"; };
+		FE1A62F62CBC1B09001C13CE /* NotchShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchShape.swift; sourceTree = "<group>"; };
+		FE1A62F72CBC1B09001C13CE /* NotchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchView.swift; sourceTree = "<group>"; };
+		FE1A62F82CBC1B09001C13CE /* NSScreen+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSScreen+Extensions.swift"; sourceTree = "<group>"; };
+		FE1A62F92CBC1B09001C13CE /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		FE1F7E942B89E92A00B702AD /* StatusBarPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarPlaybackManager.swift; sourceTree = "<group>"; };
 		FE23689F2B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStatusBarTrackInfo.swift; sourceTree = "<group>"; };
 		FE25549A2CA95F6E003DAB77 /* AddToFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFavoritesView.swift; sourceTree = "<group>"; };
@@ -103,7 +122,6 @@
 		FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
 		FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliderView.swift; sourceTree = "<group>"; };
 		FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Extension.swift"; sourceTree = "<group>"; };
-		FE2AEE352A93A44B00E8D576 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
 		FE3189F72A7C3B1A006B2D59 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -183,6 +201,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE1A62EE2CBBE1E0001C13CE /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */,
+				FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */,
+				FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */,
+				FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */,
+			);
+			path = Players;
+			sourceTree = "<group>";
+		};
+		FE1A62FA2CBC1B09001C13CE /* DynamicNotchKit */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */,
+				FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */,
+				FE1A62F32CBC1B09001C13CE /* DynamicNotchInfo.swift */,
+				FE1A62F42CBC1B09001C13CE /* DynamicNotchProgress.swift */,
+				FE1A62F52CBC1B09001C13CE /* NotchlessView.swift */,
+				FE1A62F62CBC1B09001C13CE /* NotchShape.swift */,
+				FE1A62F72CBC1B09001C13CE /* NotchView.swift */,
+				FE1A62F82CBC1B09001C13CE /* NSScreen+Extensions.swift */,
+			);
+			path = DynamicNotchKit;
+			sourceTree = "<group>";
+		};
 		FE25549D2CA9C471003DAB77 /* Playback */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,8 +267,8 @@
 				FEE486E32B5D173A00AB712F /* MiniPlayer */,
 				FEF0660A2B51905200A514F2 /* Settings */,
 				FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */,
-				FE2AEE352A93A44B00E8D576 /* VisualEffectView.swift */,
 				FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */,
+				FE1A62F92CBC1B09001C13CE /* VisualEffectView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -267,7 +311,6 @@
 		FE6BFCE52A72F37800D3321F /* Tuneful */ = {
 			isa = PBXGroup;
 			children = (
-				FE9FCF1F2CAEC0010015DF4D /* Protocols */,
 				FEFFE5532B4FDDEA000887B5 /* Extensions */,
 				FEA6FB212B04168000DACC43 /* AudioDevices */,
 				FE6BFCE62A72F37800D3321F /* Tuneful.swift */,
@@ -283,6 +326,7 @@
 				FE6BFCEA2A72F37900D3321F /* Assets.xcassets */,
 				FE6BFCEF2A72F37900D3321F /* Tuneful.entitlements */,
 				FE6BFCEC2A72F37900D3321F /* Preview Content */,
+				FE1A62FA2CBC1B09001C13CE /* DynamicNotchKit */,
 			);
 			path = Tuneful;
 			sourceTree = "<group>";
@@ -298,6 +342,7 @@
 		FE6BFCF92A73A7CA00D3321F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */,
 				FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */,
 				FE6BFCFA2A73A7CA00D3321F /* SupportedApps.swift */,
 				FE6BFD072A73AE5E00D3321F /* Track.swift */,
@@ -314,9 +359,7 @@
 		FE6BFCFC2A73A87600D3321F /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */,
-				FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */,
-				FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */,
+				FE1A62EE2CBBE1E0001C13CE /* Players */,
 				FE6BFCFD2A73A89600D3321F /* PlayerManager.swift */,
 				FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */,
 				FE1F7E942B89E92A00B702AD /* StatusBarPlaybackManager.swift */,
@@ -359,14 +402,6 @@
 				FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */,
 			);
 			path = Popover;
-			sourceTree = "<group>";
-		};
-		FE9FCF1F2CAEC0010015DF4D /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		FEA6FB212B04168000DACC43 /* AudioDevices */ = {
@@ -521,9 +556,19 @@
 				FE7955472CA2C7A3002026AA /* AudioSpectrumView.swift in Sources */,
 				FEFFE54D2B49EF97000887B5 /* MenuBarSettingsView.swift in Sources */,
 				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
+				FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
+				FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */,
+				FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */,
+				FE1A62FD2CBC1B09001C13CE /* DynamicNotchInfo.swift in Sources */,
+				FE1A62FE2CBC1B09001C13CE /* NotchView.swift in Sources */,
+				FE1A62FF2CBC1B09001C13CE /* VisualEffectView.swift in Sources */,
+				FE1A63002CBC1B09001C13CE /* DynamicNotchProgress.swift in Sources */,
+				FE1A63012CBC1B09001C13CE /* NotchShape.swift in Sources */,
+				FE1A63022CBC1B09001C13CE /* BlurModifier.swift in Sources */,
+				FE1A63032CBC1B09001C13CE /* NotchlessView.swift in Sources */,
 				FE7955492CA2C9E8002026AA /* NSBezierPath+Extension.swift in Sources */,
 				FE8CE1562C1E09C00053FDEA /* PopoverSettingsView.swift in Sources */,
 				FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */,
@@ -558,7 +603,6 @@
 				FE6BFD062A73ACFD00D3321F /* Constants.swift in Sources */,
 				FEFFE55B2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift in Sources */,
 				FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */,
-				FE2AEE362A93A44B00E8D576 /* VisualEffectView.swift in Sources */,
 				FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */,
 				FE25549B2CA95F87003DAB77 /* AddToFavoritesView.swift in Sources */,
 				FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */,

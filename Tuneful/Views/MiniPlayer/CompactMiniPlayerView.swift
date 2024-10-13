@@ -28,7 +28,7 @@ struct CompactMiniPlayerView: View {
                 VisualEffectView(material: .popover, blendingMode: .withinWindow)
             }
             
-            if !playerManager.isRunning {
+            if !playerManager.isRunning && playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(0.4))
                     .font(.system(size: 14, weight: .regular))
@@ -44,7 +44,13 @@ struct CompactMiniPlayerView: View {
                 PlaybackButtonsView(playButtonSize: 20, hideShuffleAndRepeat: true)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 10)
-                    .background(VisualEffectView(material: .popover, blendingMode: .withinWindow))
+                    .background(
+                        VisualEffectView(material: .popover, blendingMode: .withinWindow)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                                    .strokeBorder(.quaternary, lineWidth: 1)
+                            }
+                    )
                     .cornerRadius(cornerRadius)
                     .opacity(isShowingPlaybackControls ? 1 : 0)
             }
@@ -58,8 +64,12 @@ struct CompactMiniPlayerView: View {
         .overlay(
             NotificationView()
         )
-        .if(miniPlayerBackground == .transparent || !playerManager.isRunning) { view in
-            view.background(VisualEffectView(material: .underWindowBackground, blendingMode: .withinWindow))
-        }
+        .background(
+            VisualEffectView(material: .popover, blendingMode: .behindWindow)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .strokeBorder(.quaternary, lineWidth: 1)
+                }
+        )
     }
 }

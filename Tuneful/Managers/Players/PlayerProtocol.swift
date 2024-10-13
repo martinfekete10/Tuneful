@@ -31,7 +31,7 @@ protocol PlayerProtocol {
     
     func getTrackInfo() -> Track
     
-    func getAlbumArt(completion: @escaping (NSImage?) -> Void)
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void)
     
     func playPause() -> Void
     

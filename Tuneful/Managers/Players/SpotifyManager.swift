@@ -49,32 +49,32 @@ class SpotifyManager: PlayerProtocol {
         return track
     }
     
-    func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
         let urlString = app.currentTrack?.artworkUrl
+        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
         
         guard urlString != nil else {
-            completion(nil)
+            completion(defaultRestult)
             return
         }
         
         guard let url = URL(string: urlString!) else {
-            completion(nil)
+            completion(defaultRestult)
             return
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil, let data = data else {
+            guard error == nil, let data = data, let image = NSImage(data: data) else {
                 Logger.main.log("Error fetching Spotify album image")
                 DispatchQueue.main.async {
-                    completion(nil)
+                    completion(defaultRestult)
                 }
                 return
             }
             
-            let image = NSImage(data: data)
             DispatchQueue.main.async {
                 Logger.main.log("Spotify album image fetched")
-                completion(image)
+                completion(FetchedAlbumArt(image: image, isAlbumArt: true))
             }
             
         }.resume()
