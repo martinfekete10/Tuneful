@@ -52,7 +52,7 @@ struct MenuBarSettingsView: View {
     }
 
     var body: some View {
-        Settings.Container(contentWidth: 450) {
+        Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
                 LuminareSection("General") {
                     HStack {
@@ -65,7 +65,7 @@ struct MenuBarSettingsView: View {
                                 Text(value.localizedName).tag(value)
                             }
                         }
-                        .frame(width: 200)
+                        .frame(width: 150)
                         .onChange(of: statusBarIcon) { _ in
                             self.statusBarIconAppStorage = statusBarIcon
                             
@@ -138,7 +138,7 @@ struct MenuBarSettingsView: View {
                             self.sendTrackChangedNotification()
                         }
                         .pickerStyle(.menu)
-                        .frame(width: 200)
+                        .frame(width: 150)
                     }
                     .padding(8)
                     
@@ -158,7 +158,7 @@ struct MenuBarSettingsView: View {
                             self.sendTrackChangedNotification()
                         }
                         .pickerStyle(.menu)
-                        .frame(width: 200)
+                        .frame(width: 150)
                         .disabled(self.showStatusBarTrackInfo == .never)
                     }
                     .padding(8)
