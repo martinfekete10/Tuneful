@@ -20,8 +20,8 @@ struct NotchlessView<Content>: View where Content: View {
                     .id(dynamicNotch.contentID)
                     .safeAreaInset(edge: .top, spacing: 0) { Color.clear.frame(height: 10) }
                     .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 10) }
-                    .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 10) }
-                    .safeAreaInset(edge: .trailing, spacing: 0) { Color.clear.frame(width: 10) }
+                    .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 13) }
+                    .safeAreaInset(edge: .trailing, spacing: 0) { Color.clear.frame(width: 13) }
                     .fixedSize()
 
                     .onHover { hovering in
