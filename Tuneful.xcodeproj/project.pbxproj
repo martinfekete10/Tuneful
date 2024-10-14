@@ -13,7 +13,6 @@
 		FE1A62FD2CBC1B09001C13CE /* DynamicNotchInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F32CBC1B09001C13CE /* DynamicNotchInfo.swift */; };
 		FE1A62FE2CBC1B09001C13CE /* NotchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F72CBC1B09001C13CE /* NotchView.swift */; };
 		FE1A62FF2CBC1B09001C13CE /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F92CBC1B09001C13CE /* VisualEffectView.swift */; };
-		FE1A63002CBC1B09001C13CE /* DynamicNotchProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F42CBC1B09001C13CE /* DynamicNotchProgress.swift */; };
 		FE1A63012CBC1B09001C13CE /* NotchShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F62CBC1B09001C13CE /* NotchShape.swift */; };
 		FE1A63022CBC1B09001C13CE /* BlurModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */; };
 		FE1A63032CBC1B09001C13CE /* NotchlessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F52CBC1B09001C13CE /* NotchlessView.swift */; };
@@ -109,7 +108,6 @@
 		FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurModifier.swift; sourceTree = "<group>"; };
 		FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotch.swift; sourceTree = "<group>"; };
 		FE1A62F32CBC1B09001C13CE /* DynamicNotchInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotchInfo.swift; sourceTree = "<group>"; };
-		FE1A62F42CBC1B09001C13CE /* DynamicNotchProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotchProgress.swift; sourceTree = "<group>"; };
 		FE1A62F52CBC1B09001C13CE /* NotchlessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchlessView.swift; sourceTree = "<group>"; };
 		FE1A62F62CBC1B09001C13CE /* NotchShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchShape.swift; sourceTree = "<group>"; };
 		FE1A62F72CBC1B09001C13CE /* NotchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchView.swift; sourceTree = "<group>"; };
@@ -222,7 +220,6 @@
 				FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */,
 				FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */,
 				FE1A62F32CBC1B09001C13CE /* DynamicNotchInfo.swift */,
-				FE1A62F42CBC1B09001C13CE /* DynamicNotchProgress.swift */,
 				FE1A62F52CBC1B09001C13CE /* NotchlessView.swift */,
 				FE1A62F62CBC1B09001C13CE /* NotchShape.swift */,
 				FE1A62F72CBC1B09001C13CE /* NotchView.swift */,
@@ -573,7 +570,6 @@
 				FE1A62FE2CBC1B09001C13CE /* NotchView.swift in Sources */,
 				FE1A62FF2CBC1B09001C13CE /* VisualEffectView.swift in Sources */,
 				FEF32F9B2CBD05FE0084BDAD /* TapAnimationModifier.swift in Sources */,
-				FE1A63002CBC1B09001C13CE /* DynamicNotchProgress.swift in Sources */,
 				FE1A63012CBC1B09001C13CE /* NotchShape.swift in Sources */,
 				FE1A63022CBC1B09001C13CE /* BlurModifier.swift in Sources */,
 				FE1A63032CBC1B09001C13CE /* NotchlessView.swift in Sources */,

@@ -1,7 +1,9 @@
 # 1.7.0 - New notch animation, UI improvements and others
 
 -   New feature to display notification when song changes. For Macbooks with notch, this is displayed as beautiful notch animation. For non-notch Macs, its shown as a small floating window 
+-   Redesigned settings with sleak UI
 -   Fixed coloring of playback buttons in light mode
+-   Fixed menu bar playback buttons
 -   Updated icon with better resolution
 
 # 1.6.7 - Small fixes

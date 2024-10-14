@@ -45,7 +45,7 @@ class StatusBarPlaybackManager: ObservableObject {
     
     @objc func updateStatusBarPlaybackItem(playerAppIsRunning: Bool) {
         let menuBarView = HStack {
-            PlaybackButtonsView(playButtonSize: 13, hideShuffleAndRepeat: true)
+            PlaybackButtonsView(playButtonSize: 12, hideShuffleAndRepeat: true)
                 .environmentObject(playerManager)
         }
         
