@@ -67,6 +67,8 @@ If you find this app useful, consider supporting its development by [donating](h
 -   Launch at login is enabled by [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) package
 -   GitHub Actions are based on repo from [Alex Perathoner](https://github.com/AlexPerathoner/SparkleReleaseTest)
 -   For Settings, the project uses [Settings](https://github.com/sindresorhus/Settings) package
+-   Tuneful uses [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
+    for notification animations
 
 ---
 
