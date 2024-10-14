@@ -74,6 +74,7 @@
 		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
 		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
 		FEF32F9B2CBD05FE0084BDAD /* TapAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF32F9A2CBD05F90084BDAD /* TapAnimationModifier.swift */; };
+		FEF32F9E2CBD49610084BDAD /* Luminare in Frameworks */ = {isa = PBXBuildFile; productRef = FEF32F9D2CBD49610084BDAD /* Luminare */; };
 		FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */; };
 		FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */; };
 		FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */; };
@@ -193,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */,
+				FEF32F9E2CBD49610084BDAD /* Luminare in Frameworks */,
 				FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */,
 				FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */,
 				FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */,
@@ -481,6 +483,7 @@
 				FEF53A742AF8010300CE4981 /* Sparkle */,
 				FEFFE54F2B4AA04B000887B5 /* Settings */,
 				FEF0660E2B51910700A514F2 /* KeyboardShortcuts */,
+				FEF32F9D2CBD49610084BDAD /* Luminare */,
 			);
 			productName = Tuneful;
 			productReference = FE6BFCE32A72F37800D3321F /* Tuneful.app */;
@@ -516,6 +519,7 @@
 				FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */,
 				FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */,
 			);
 			productRefGroup = FE6BFCE42A72F37800D3321F /* Products */;
 			projectDirPath = "";
@@ -858,6 +862,14 @@
 				minimumVersion = 1.16.1;
 			};
 		};
+		FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MrKai77/Luminare";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jbrinkman/ISSoundAdditions";
@@ -894,6 +906,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
+		};
+		FEF32F9D2CBD49610084BDAD /* Luminare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */;
+			productName = Luminare;
 		};
 		FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */ = {
 			isa = XCSwiftPackageProductDependency;
