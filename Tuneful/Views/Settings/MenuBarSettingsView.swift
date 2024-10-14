@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Settings
+import Luminare
 
 struct MenuBarSettingsView: View {
     
@@ -51,148 +52,149 @@ struct MenuBarSettingsView: View {
     }
 
     var body: some View {
-        VStack {
-            Settings.Container(contentWidth: 450) {
-                
-                Settings.Section(label: {
-                    Text("Menu bar icon")
-                }) {
-                    Picker("", selection: $statusBarIcon) {
-                        ForEach(StatusBarIcon.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .onChange(of: statusBarIcon) { _ in
-                        self.statusBarIconAppStorage = statusBarIcon
+        Settings.Container(contentWidth: 450) {
+            Settings.Section(title: "") {
+                LuminareSection("General") {
+                    HStack {
+                        Text("Menu bar icon")
                         
-                        if statusBarIcon == .hidden && showStatusBarTrackInfo == .never {
-                            showStatusBarTrackInfo = .whenPlaying
-                        }
+                        Spacer()
                         
-                        self.sendTrackChangedNotification()
-                    }
-                    .pickerStyle(.menu)
-                    .frame(width: 200)
-                }
-                
-                Settings.Section(label: {
-                    Text("Show song info in menu bar")
-                }) {
-                    Picker("", selection: $showStatusBarTrackInfo) {
-                        ForEach(ShowStatusBarTrackInfo.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .onChange(of: showStatusBarTrackInfo) { _ in
-                        self.showStatusBarTrackInfoAppStorage = showStatusBarTrackInfo
-                        
-                        if statusBarIcon == .hidden && showStatusBarTrackInfo == .never {
-                            statusBarIcon = .appIcon
-                        }
-                        
-                        self.sendTrackChangedNotification()
-                    }
-                    .pickerStyle(.menu)
-                    .frame(width: 200)
-                }
-                
-                Settings.Section(label: {
-                    Text("Song info details")
-                        .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
-                }) {
-                    Picker("", selection: $trackInfoDetails) {
-                        ForEach(StatusBarTrackDetails.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
-                        }
-                    }
-                    .onChange(of: trackInfoDetails) { _ in
-                        self.trackInfoDetailsAppStorage = trackInfoDetails
-                        self.sendTrackChangedNotification()
-                    }
-                    .pickerStyle(.menu)
-                    .frame(width: 200)
-                    .disabled(self.showStatusBarTrackInfo == .never)
-                }
-                
-                Settings.Section(label: {
-                    Text("Song info width")
-                        .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
-                }) {
-                    VStack(alignment: .center) {
-                        Slider(value: $menuBarItemWidth, in: 75...300, step: 25) {
-                            Text("")
-                        } minimumValueLabel: {
-                            Text("75")
-                        } maximumValueLabel: {
-                            Text("300")
-                        }
-                        .onChange(of: menuBarItemWidth) { _ in
-                            self.menuBarItemWidthAppStorage = menuBarItemWidth
-                            self.sendTrackChangedNotification()
-                            NSHapticFeedbackManager.defaultPerformer.perform(NSHapticFeedbackManager.FeedbackPattern.levelChange, performanceTime: .now)
+                        Picker("", selection: $statusBarIcon) {
+                            ForEach(StatusBarIcon.allCases, id: \.self) { value in
+                                Text(value.localizedName).tag(value)
+                            }
                         }
                         .frame(width: 200)
-                        .disabled(self.showStatusBarTrackInfo == .never)
+                        .onChange(of: statusBarIcon) { _ in
+                            self.statusBarIconAppStorage = statusBarIcon
+                            
+                            if statusBarIcon == .hidden && showStatusBarTrackInfo == .never {
+                                showStatusBarTrackInfo = .whenPlaying
+                            }
+                            
+                            self.sendTrackChangedNotification()
+                        }
+                        .pickerStyle(.menu)
+                    }
+                    .padding(8)
+                    
+                    LuminareToggle("Show equalizer when playing music", isOn: $showEqWhenPlayingMusicAppStorage)
+                        .onChange(of: showEqWhenPlayingMusicAppStorage) { _ in
+                            self.sendTrackChangedNotification()
+                        }
+                    
+                    HStack {
+                        Text("Hide menu bar item when nothing is playing")
                         
-                        Text("Width: \(Int(self.menuBarItemWidth)) pixels")
+                        Spacer()
+                        
+                        Toggle(isOn: $hideMenuBarItemWhenNotPlaying) {
+                            Text("")
+                        }
+                        .onChange(of: hideMenuBarItemWhenNotPlaying) { _ in
+                            self.hideMenuBarItemWhenNotPlayingAppStorage = hideMenuBarItemWhenNotPlaying
+                            self.sendTrackChangedNotification()
+                        }
+                        .toggleStyle(.switch)
+                    }
+                    .padding(8)
+                    
+                    HStack {
+                        Text("Show playback controls")
+                        
+                        Spacer()
+                        
+                        Toggle(isOn: $showMenuBarPlaybackControls) {
+                            Text("")
+                        }
+                        .onChange(of: showMenuBarPlaybackControls) { _ in
+                            self.showMenuBarPlaybackControlsAppStorage = showMenuBarPlaybackControls
+                            NSApplication.shared.sendAction(#selector(AppDelegate.menuBarPlaybackControls), to: nil, from: nil)
+                        }
+                        .toggleStyle(.switch)
+                    }
+                    .padding(8)
+                }
+                
+                LuminareSection("Song information in menu bar") {
+                    HStack {
+                        Text("Song info in menu bar")
+                        
+                        Spacer()
+                        
+                        Picker("", selection: $showStatusBarTrackInfo) {
+                            ForEach(ShowStatusBarTrackInfo.allCases, id: \.self) { value in
+                                Text(value.localizedName).tag(value)
+                            }
+                        }
+                        .onChange(of: showStatusBarTrackInfo) { _ in
+                            self.showStatusBarTrackInfoAppStorage = showStatusBarTrackInfo
+                            
+                            if statusBarIcon == .hidden && showStatusBarTrackInfo == .never {
+                                statusBarIcon = .appIcon
+                            }
+                            
+                            self.sendTrackChangedNotification()
+                        }
+                        .pickerStyle(.menu)
+                        .frame(width: 200)
+                    }
+                    .padding(8)
+                    
+                    HStack {
+                        Text("Song info details")
                             .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
-                            .font(.callout)
+                        
+                        Spacer()
+                        
+                        Picker("", selection: $trackInfoDetails) {
+                            ForEach(StatusBarTrackDetails.allCases, id: \.self) { value in
+                                Text(value.localizedName).tag(value)
+                            }
+                        }
+                        .onChange(of: trackInfoDetails) { _ in
+                            self.trackInfoDetailsAppStorage = trackInfoDetails
+                            self.sendTrackChangedNotification()
+                        }
+                        .pickerStyle(.menu)
+                        .frame(width: 200)
+                        .disabled(self.showStatusBarTrackInfo == .never)
                     }
-                }
-                
-                Settings.Section(label: {
-                    Text("Show equalizer when playing music")
-                }) {
-                    Toggle(isOn: $showEqWhenPlayingMusic) {
-                        Text("")
+                    .padding(8)
+                    
+                    LuminareSliderPicker(
+                        "Song info width",
+                        Array(stride(from: 75, through: 300, by: 25)),
+                        selection: $menuBarItemWidthAppStorage
+                    ) { value in
+                        LocalizedStringKey("\(value, specifier: "%.0f") pixels")
                     }
-                    .onChange(of: showEqWhenPlayingMusic) { _ in
-                        self.showEqWhenPlayingMusicAppStorage = showEqWhenPlayingMusic
+                    .onChange(of: menuBarItemWidthAppStorage) { _ in
                         self.sendTrackChangedNotification()
+                        NSHapticFeedbackManager.defaultPerformer.perform(NSHapticFeedbackManager.FeedbackPattern.levelChange, performanceTime: .now)
                     }
-                    .toggleStyle(.switch)
                     .disabled(self.showStatusBarTrackInfo == .never)
+                    
+                    HStack {
+                        Text("Scrolling song info")
+                            .foregroundStyle(self.showStatusBarTrackInfo == .never ? .tertiary : .primary)
+                        
+                        Spacer()
+                        
+                        Toggle(isOn: $scrollingTrackInfo) {
+                            Text("")
+                        }
+                        .onChange(of: scrollingTrackInfo) { _ in
+                            self.scrollingTrackInfoAppStorage = scrollingTrackInfo
+                            self.sendTrackChangedNotification()
+                        }
+                        .toggleStyle(.switch)
+                        .disabled(self.showStatusBarTrackInfo == .never)
+                    }
+                    .padding(8)
                 }
-                
-                Settings.Section(label: {
-                    Text("Scrolling song info")
-                }) {
-                    Toggle(isOn: $scrollingTrackInfo) {
-                        Text("")
-                    }
-                    .onChange(of: scrollingTrackInfo) { _ in
-                        self.scrollingTrackInfoAppStorage = scrollingTrackInfo
-                        self.sendTrackChangedNotification()
-                    }
-                    .toggleStyle(.switch)
-                    .disabled(self.showStatusBarTrackInfo == .never)
-                }
-                
-                Settings.Section(label: {
-                    Text("Hide when music is not playing")
-                }) {
-                    Toggle(isOn: $hideMenuBarItemWhenNotPlaying) {
-                        Text("")
-                    }
-                    .onChange(of: hideMenuBarItemWhenNotPlaying) { _ in
-                        self.hideMenuBarItemWhenNotPlayingAppStorage = hideMenuBarItemWhenNotPlaying
-                        self.sendTrackChangedNotification()
-                    }
-                    .toggleStyle(.switch)
-                }
-                
-                Settings.Section(label: {
-                    Text("Show player controls")
-                }) {
-                    Toggle(isOn: $showMenuBarPlaybackControls) {
-                        Text("")
-                    }
-                    .onChange(of: showMenuBarPlaybackControls) { _ in
-                        self.showMenuBarPlaybackControlsAppStorage = showMenuBarPlaybackControls
-                        NSApplication.shared.sendAction(#selector(AppDelegate.menuBarPlaybackControls), to: nil, from: nil)
-                    }
-                    .toggleStyle(.switch)
-                }
+                .padding(.top, 10)
             }
         }
     }
