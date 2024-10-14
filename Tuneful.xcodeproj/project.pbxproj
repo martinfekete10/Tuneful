@@ -73,6 +73,7 @@
 		FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */; };
 		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
 		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
+		FEF32F9B2CBD05FE0084BDAD /* TapAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF32F9A2CBD05F90084BDAD /* TapAnimationModifier.swift */; };
 		FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */; };
 		FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */; };
 		FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */; };
@@ -172,6 +173,7 @@
 		FEE486E82B5D677400AB712F /* MiniPlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerType.swift; sourceTree = "<group>"; };
 		FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSettingsView.swift; sourceTree = "<group>"; };
 		FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extension.swift"; sourceTree = "<group>"; };
+		FEF32F9A2CBD05F90084BDAD /* TapAnimationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAnimationModifier.swift; sourceTree = "<group>"; };
 		FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeControlView.swift; sourceTree = "<group>"; };
 		FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertItem.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		FE2AEE372A93A4FB00E8D576 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
+				FEF32F9A2CBD05F90084BDAD /* TapAnimationModifier.swift */,
 				FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */,
 			);
 			path = Styles;
@@ -565,6 +568,7 @@
 				FE1A62FD2CBC1B09001C13CE /* DynamicNotchInfo.swift in Sources */,
 				FE1A62FE2CBC1B09001C13CE /* NotchView.swift in Sources */,
 				FE1A62FF2CBC1B09001C13CE /* VisualEffectView.swift in Sources */,
+				FEF32F9B2CBD05FE0084BDAD /* TapAnimationModifier.swift in Sources */,
 				FE1A63002CBC1B09001C13CE /* DynamicNotchProgress.swift in Sources */,
 				FE1A63012CBC1B09001C13CE /* NotchShape.swift in Sources */,
 				FE1A63022CBC1B09001C13CE /* BlurModifier.swift in Sources */,

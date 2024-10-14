@@ -47,18 +47,11 @@ class SystemPlayerManager: PlayerProtocol {
         self.defaultAlbumArt = NSImage()
     }
     
-    func refreshInfo() {
-        MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { info in
-            Logger.main.log("Refreshing system player info")
-            self.info = info
-        }
-    }
-    
     func refreshInfo(completion: @escaping () -> Void) {
         MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { info in
             Logger.main.log("Refreshing system player info")
             self.info = info
-            completion()  // Call completion handler after the info is fetched
+            completion()
         }
     }
     

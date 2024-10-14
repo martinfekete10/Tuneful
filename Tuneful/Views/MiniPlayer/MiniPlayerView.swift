@@ -62,6 +62,9 @@ struct MiniPlayerView: View {
                                     .font(.body)
                                     .lineLimit(1)
                             }
+                            .tapAnimation() {
+                                self.playerManager.openMusicApp()
+                            }
                         }
                         .pressButtonStyle()
                         

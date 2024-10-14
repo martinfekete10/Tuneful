@@ -33,11 +33,11 @@ public class DynamicNotchInfo {
     private var internalDynamicNotch: DynamicNotch<InfoView>
     private let publisher: DynamicNotchInfoPublisher
 
-    public init(contentID: UUID = .init(), icon: Image! = nil, title: String, description: String? = nil, iconColor: Color = .white, style: DynamicNotch<InfoView>.Style = .auto) {
+    public init(contentID: UUID = .init(), icon: Image! = nil, title: String, description: String? = nil, iconColor: Color = .white, style: DynamicNotch<InfoView>.Style = .auto, onTap: @escaping () -> Void) {
         let publisher = DynamicNotchInfoPublisher(icon: icon, iconColor: iconColor, title: title, description: description)
         self.publisher = publisher
         internalDynamicNotch = DynamicNotch(contentID: contentID, style: style) {
-            InfoView(publisher: publisher)
+            InfoView(publisher: publisher, onTap: onTap)
         }
     }
 
@@ -63,12 +63,16 @@ public class DynamicNotchInfo {
 
 public extension DynamicNotchInfo {
     struct InfoView: View {
+        @State private var isTapped: Bool = false
+        
         private var publisher: DynamicNotchInfoPublisher
+        private var onTap: () -> Void
 
-        init(publisher: DynamicNotchInfoPublisher) {
+        init(publisher: DynamicNotchInfoPublisher, onTap: @escaping () -> Void) {
             self.publisher = publisher
+            self.onTap = onTap
         }
-
+        
         public var body: some View {
             HStack(spacing: 10) {
                 InfoImageView(publisher: publisher)
@@ -76,6 +80,9 @@ public extension DynamicNotchInfo {
                 Spacer(minLength: 0)
             }
             .frame(height: 40)
+            .tapAnimation {
+                self.onTap()
+            }
         }
     }
 
@@ -127,7 +134,7 @@ struct DynamicNotchInfo_Previews: PreviewProvider {
     static let publisher = DynamicNotchInfoPublisher(icon: nil, iconColor: .blue, title: "testing")
     static var previews: some View {
         VStack {
-            DynamicNotchInfo.InfoView(publisher: publisher)
+            DynamicNotchInfo.InfoView(publisher: publisher, onTap: {})
         }
     }
 }

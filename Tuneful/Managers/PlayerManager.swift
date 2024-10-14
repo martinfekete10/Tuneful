@@ -19,7 +19,7 @@ class PlayerManager: ObservableObject {
     var musicApp: PlayerProtocol!
 
     // TODO: Media remote framework for other music players
-    //    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
+//    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
 
     var name: String { musicApp.appName }
     var isRunning: Bool { musicApp.isRunning }
@@ -80,13 +80,13 @@ class PlayerManager: ObservableObject {
     let timerStopSignal = PassthroughSubject<Void, Never>()
     
     // Notch
-    private var notch: DynamicNotchInfo!
+    private var notchInfo: DynamicNotchInfo!
     
     init() {
         // TODO: Media remote framework for other music players
-        //        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
-        //        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
-        //        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
+//        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
+//        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
+//        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
 
         // Music app and observers
         self.setupMusicAppsAndObservers()
@@ -122,7 +122,7 @@ class PlayerManager: ObservableObject {
         Logger.main.log("Setting up music app")
 
         // TODO: Media remote framework for other music players
-        //        musicApp = SystemPlayerManager(notificationSubject: self.notificationSubject)
+//        musicApp = SystemPlayerManager(notificationSubject: self.notificationSubject)
 
         switch connectedApp {
         case .spotify:
@@ -138,13 +138,13 @@ class PlayerManager: ObservableObject {
         Logger.main.log("Setting up observers")
 
         // TODO: Media remote framework for other music players
-        //        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
-        //
-        //        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
-        //            .sink { [weak self] _ in
-        //                self!.playStateOrTrackDidChange(nil)
-        //            }
-        //            .store(in: &cancellables)
+//        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
+//
+//        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
+//            .sink { [weak self] _ in
+//                self!.playStateOrTrackDidChange(nil)
+//            }
+//            .store(in: &cancellables)
 
         // Remove existing observers
         NotificationCenter.default.removeObserver(self)
@@ -290,14 +290,7 @@ class PlayerManager: ObservableObject {
             if result.isAlbumArt {
                 self.updateAlbumArt(newAlbumArt: result.image)
                 self.updateMenuBarText(playerAppIsRunning: self.isRunning)
-
-                self.notch?.hide()
-                self.notch = DynamicNotchInfo(
-                    icon: Image(nsImage: result.image.roundImage(withSize: NSSize(width: 50, height: 50), radius: 10)),
-                    title: self.track.title,
-                    description: self.track.album
-                )
-                self.notch.show(for: 2)
+                self.updateNotchInfo(albumArt: result)
             } else if retryCount > 0 {
                 self.updateAlbumArt(newAlbumArt: result.image)
                 self.updateMenuBarText(playerAppIsRunning: self.isRunning)
@@ -318,6 +311,17 @@ class PlayerManager: ObservableObject {
                 self.track.albumArt = newAlbumArt
             }
         }
+    }
+    
+    func updateNotchInfo(albumArt: FetchedAlbumArt) {
+        self.notchInfo?.hide()
+        self.notchInfo = DynamicNotchInfo(
+            icon: Image(nsImage: albumArt.image.roundImage(withSize: NSSize(width: 70, height: 70), radius: 10)),
+            title: self.track.title,
+            description: self.track.album,
+            onTap: self.openMusicApp
+        )
+        self.notchInfo.show(for: 2)
     }
 
     // MARK: Controls

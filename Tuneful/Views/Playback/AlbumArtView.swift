@@ -13,14 +13,16 @@ struct AlbumArtView: View {
     var imageSize: CGFloat = 180
     
     var body: some View {
-        Button(action: playerManager.openMusicApp) {
+        VStack {
             Image(nsImage: playerManager.track.albumArt)
                 .resizable()
-                .scaledToFill()
+//                .scaledToFill()
                 .frame(width: self.imageSize, height: self.imageSize)
                 .cornerRadius(10)
                 .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                .tapAnimation(scale: 1.2, duration: 0.4) {
+                    self.playerManager.openMusicApp()
+                }
         }
-        .pressButtonStyle()
     }
 }
