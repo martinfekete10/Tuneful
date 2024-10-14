@@ -34,7 +34,7 @@ struct GeneralSettingsView: View {
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
-            Settings.Section(title: "") {                
+            Settings.Section(title: "") {
                 LuminareSection("General") {
                     LuminareToggle(
                         "Launch at login",
@@ -91,7 +91,7 @@ struct GeneralSettingsView: View {
                     
                     LuminareSliderPicker(
                         "Notification duration",
-                        Array(stride(from: 0.5, through: 3.0, by: 0.5)),
+                        Array(stride(from: 0.5, through: 5.0, by: 0.5)),
                         selection: $notificationDurationAppStorage
                     ) { value in
                         LocalizedStringKey("\(value, specifier: "%.1f") s")
