@@ -37,7 +37,7 @@ struct OnboardingView: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                         } else if step == .onDetails {
-                            Text("2. Permssions")
+                            Text("2. Permissions")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                         } else if step == .onShortcuts {
