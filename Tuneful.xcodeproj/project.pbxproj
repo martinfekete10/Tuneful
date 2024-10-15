@@ -66,6 +66,7 @@
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
+		FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */; };
 		FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */; };
 		FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */; };
 		FEE486E92B5D677400AB712F /* MiniPlayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E82B5D677400AB712F /* MiniPlayerType.swift */; };
@@ -167,6 +168,7 @@
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAppProvider.swift; sourceTree = "<group>"; };
 		FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMiniPlayerView.swift; sourceTree = "<group>"; };
 		FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerSettingsView.swift; sourceTree = "<group>"; };
 		FEE486E82B5D677400AB712F /* MiniPlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerType.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		FE1A62EE2CBBE1E0001C13CE /* Players */ = {
 			isa = PBXGroup;
 			children = (
+				FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */,
 				FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */,
 				FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */,
 				FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */,
@@ -585,6 +588,7 @@
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,
 				FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */,
 				FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */,
+				FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */,
 				FEFFE5592B4FE00D000887B5 /* NSError+Extension.swift in Sources */,
 				FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */,
 				FE478BFD2CB288430033D272 /* SystemPlayerManager.swift in Sources */,

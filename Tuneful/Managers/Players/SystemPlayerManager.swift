@@ -24,12 +24,13 @@ class SystemPlayerManager: PlayerProtocol {
     
     public var playerPosition: Double? { 50 }
     public var isPlaying: Bool { getIsPlaying() }
-    public var isRunning: Bool { true }
+    public var isRunning: Bool = true
     public var volume: CGFloat { 50 }
     public var isLikeAuthorized: Bool { false }
     public var shuffleIsOn: Bool { false }
     public var shuffleContextEnabled: Bool { false }
     public var repeatContextEnabled: Bool { false }
+    public var playbackSeekerEnabled: Bool { false }
     
     private var info: [String: Any]?
     
@@ -99,15 +100,15 @@ class SystemPlayerManager: PlayerProtocol {
     }
     
     func toggleLoveTrack() -> Bool {
-        fatalError("Not implemented")
+        return false // TODO
     }
     
     func setShuffle(shuffleIsOn: Bool) -> Bool {
-        fatalError("Not implemented")
+        return false // TODO
     }
     
     func setRepeat(repeatIsOn: Bool) -> Bool {
-        fatalError("Not implemented")
+        return false // TODO
     }
     
     func getCurrentSeekerPosition() -> Double {
@@ -116,11 +117,11 @@ class SystemPlayerManager: PlayerProtocol {
     }
     
     func seekTrack(seekerPosition: CGFloat) {
-        fatalError("Not implemented")
+        return // TODO
     }
     
     func setVolume(volume: Int) {
-        fatalError("Not implemented")
+        return // TODO
     }
     
     // MARK: Private methods

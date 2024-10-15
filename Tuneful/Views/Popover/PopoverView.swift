@@ -62,7 +62,9 @@ struct PopoverView: View {
                         }
                         .pressButtonStyle()
 
-                        PlaybackPositionView()
+                        if playerManager.musicApp.playbackSeekerEnabled {
+                            PlaybackPositionView()
+                        }
                         
                         PlaybackButtonsView(playButtonSize: 25)
                             .padding(.vertical, 5)
@@ -110,7 +112,7 @@ struct PopoverView: View {
         )
         .frame(
             width: AppDelegate.popoverWidth,
-            height: 370
+            height: playerManager.musicApp.playbackSeekerEnabled ? 370 : 350
         )
     }
     

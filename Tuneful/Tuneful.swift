@@ -163,6 +163,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.connectedApp = .appleMusic
         case .appleMusic:
             self.connectedApp = .spotify
+        case .system:
+            self.connectedApp = .system
         }
     }
     
