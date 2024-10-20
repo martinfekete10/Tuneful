@@ -26,6 +26,7 @@ protocol PlayerProtocol {
     var shuffleIsOn: Bool { get }
     var shuffleContextEnabled: Bool { get }
     var repeatContextEnabled: Bool { get }
+    var playbackSeekerEnabled: Bool { get }
     
     func refreshInfo(completion: @escaping () -> Void)
     

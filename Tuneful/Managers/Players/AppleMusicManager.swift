@@ -29,6 +29,7 @@ class AppleMusicManager: PlayerProtocol {
     public var shuffleIsOn: Bool { app.shuffleEnabled ?? false }
     public var shuffleContextEnabled: Bool = true
     public var repeatContextEnabled: Bool = true
+    public var playbackSeekerEnabled: Bool = true
     
     init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         self.notificationSubject = notificationSubject
