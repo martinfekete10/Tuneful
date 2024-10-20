@@ -83,10 +83,10 @@ struct MiniPlayerView: View {
         )
         .background(
             VisualEffectView(material: .popover, blendingMode: .behindWindow)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .strokeBorder(.quaternary, lineWidth: 1)
-                }
         )
+        .overlay {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .strokeBorder(.quaternary, lineWidth: 1)
+        }
     }
 }

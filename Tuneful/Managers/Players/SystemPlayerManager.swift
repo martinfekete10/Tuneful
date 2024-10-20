@@ -99,15 +99,15 @@ class SystemPlayerManager: PlayerProtocol {
     }
     
     func toggleLoveTrack() -> Bool {
-        fatalError("Not implemented")
+        return false
     }
     
     func setShuffle(shuffleIsOn: Bool) -> Bool {
-        fatalError("Not implemented")
+        return false
     }
     
     func setRepeat(repeatIsOn: Bool) -> Bool {
-        fatalError("Not implemented")
+        return false
     }
     
     func getCurrentSeekerPosition() -> Double {
@@ -116,7 +116,7 @@ class SystemPlayerManager: PlayerProtocol {
     }
     
     func seekTrack(seekerPosition: CGFloat) {
-        fatalError("Not implemented")
+        return
     }
     
     func setVolume(volume: Int) {

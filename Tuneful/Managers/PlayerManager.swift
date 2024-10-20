@@ -21,7 +21,7 @@ class PlayerManager: ObservableObject {
     var musicApp: PlayerProtocol!
     
     // TODO: Media remote framework for other music players
-    //    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
+    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
     
     var name: String { musicApp.appName }
     var isRunning: Bool { musicApp.isRunning }
@@ -86,9 +86,9 @@ class PlayerManager: ObservableObject {
     
     init() {
         // TODO: Media remote framework for other music players
-        //        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
-        //        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
-        //        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
+        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
+        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
+        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
         
         // Music app and observers
         self.setupMusicAppsAndObservers()
@@ -131,6 +131,8 @@ class PlayerManager: ObservableObject {
             musicApp = SpotifyManager(notificationSubject: self.notificationSubject)
         case .appleMusic:
             musicApp = AppleMusicManager(notificationSubject: self.notificationSubject)
+        case .system:
+            musicApp = SystemPlayerManager(notificationSubject: self.notificationSubject)
         }
         
         self.setupObservers()
@@ -140,13 +142,13 @@ class PlayerManager: ObservableObject {
         Logger.main.log("Setting up observers")
         
         // TODO: Media remote framework for other music players
-        //        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
-        //
-        //        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
-        //            .sink { [weak self] _ in
-        //                self!.playStateOrTrackDidChange(nil)
-        //            }
-        //            .store(in: &cancellables)
+        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
+
+        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
+            .sink { [weak self] _ in
+                self!.playStateOrTrackDidChange(nil)
+            }
+            .store(in: &cancellables)
         
         // Remove existing observers
         NotificationCenter.default.removeObserver(self)
