@@ -8,7 +8,6 @@
 import SwiftUI
 
 class StatusBarItemManager: ObservableObject {
-    
     @AppStorage("menuBarItemWidth") var menuBarItemWidth: Double = 150
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .albumArt
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
@@ -63,11 +62,15 @@ class StatusBarItemManager: ObservableObject {
     private func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> String {
         let activePlayback = isPlaying && playerAppIsRunning
         
-        if self.showStatusBarTrackInfo == .never {
+        if showStatusBarTrackInfo == .never {
             return ""
         }
         
-        if self.showStatusBarTrackInfo == .whenPlaying && !activePlayback {
+        if showStatusBarTrackInfo == .whenPlaying && !activePlayback {
+            return ""
+        }
+        
+        if track.isEmpty() {
             return ""
         }
         

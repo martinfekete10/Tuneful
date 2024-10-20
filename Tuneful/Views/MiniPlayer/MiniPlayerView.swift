@@ -25,7 +25,7 @@ struct MiniPlayerView: View {
                 VisualEffectView(material: .popover, blendingMode: .withinWindow)
             }
             
-            if !playerManager.isRunning && playerManager.track.isEmpty() {
+            if !playerManager.isRunning || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(0.4))
                     .font(.system(size: 14, weight: .regular))
@@ -68,7 +68,9 @@ struct MiniPlayerView: View {
                         }
                         .pressButtonStyle()
                         
-                        PlaybackPositionView()
+                        if playerManager.musicApp.playbackSeekerEnabled {
+                            PlaybackPositionView()
+                        }
                         
                         PlaybackButtonsView(playButtonSize: 20, spacing: 10)
                     }

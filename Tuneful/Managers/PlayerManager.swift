@@ -85,16 +85,14 @@ class PlayerManager: ObservableObject {
     private var notchInfo: DynamicNotchInfo!
     
     init() {
-        // TODO: Media remote framework for other music players
         let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
         let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
         self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
         
         // Music app and observers
-        self.playerAppProvider = PlayerAppProvider(connectedApp: self.connectedApp,notificationSubject: self.notificationSubject)
+        self.playerAppProvider = PlayerAppProvider(notificationSubject: self.notificationSubject)
         self.setupMusicAppsAndObservers()
-        self.setupObservers()
-//        self.playStateOrTrackDidChange(nil)
+        self.playStateOrTrackDidChange(nil)
         
         // Updating player state every 1 sec
         self.timerStartSignal.sink {
@@ -125,29 +123,8 @@ class PlayerManager: ObservableObject {
     private func setupMusicAppsAndObservers() {
         Logger.main.log("Setting up music app")
         
-        // TODO: Media remote framework for other music players
-        //        musicApp = SystemPlayerManager(notificationSubject: self.notificationSubject)
-        
-        switch connectedApp {
-        case .spotify:
-            musicApp = SpotifyManager(notificationSubject: self.notificationSubject)
-        case .appleMusic:
-            musicApp = AppleMusicManager(notificationSubject: self.notificationSubject)
-        case .system:
-            musicApp = SystemPlayerManager(notificationSubject: self.notificationSubject)
-        }
-        
-//        switch connectedApp {
-//        case .spotify:
-//            musicApp = SpotifyManager(notificationSubject: self.notificationSubject)
-//        case .appleMusic:
-//            musicApp = AppleMusicManager(notificationSubject: self.notificationSubject)
-//        case.system:
-//            musicApp = SystemPlayerManager(notificationSubject: self.notificationSubject)
-//        }
-//
-//        self.setupObservers()
-        self.musicApp = playerAppProvider.getPlayerApp()
+        self.musicApp = playerAppProvider.getPlayerApp(connectedApp: self.connectedApp)
+        self.setupObservers()
     }
     
     public func setupObservers() {
@@ -155,50 +132,35 @@ class PlayerManager: ObservableObject {
         
         // TODO: Media remote framework for other music players
         MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
-
-        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
-            .sink { [weak self] _ in
-                self!.playStateOrTrackDidChange(nil)
-            }
-            .store(in: &cancellables)
         
-        // Remove existing observers
-        NotificationCenter.default.removeObserver(self)
-        DistributedNotificationCenter.default().removeObserver(self)
-        observer?.invalidate()
+        if connectedApp == .system {
+            NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
+                .sink { [weak self] _ in
+                    self!.playStateOrTrackDidChange(nil)
+                }
+                .store(in: &cancellables)
+        } else {
+            DistributedNotificationCenter.default().addObserver(
+                self,
+                selector: #selector(playStateOrTrackDidChange),
+                name: NSNotification.Name(rawValue: musicApp.appNotification),
+                object: nil,
+                suspensionBehavior: .deliverImmediately
+            )
+        }
         
-        // TODO: Media remote framework for other music players
-        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
-
-        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
-            .sink { _ in
-                self.playStateOrTrackDidChange(nil)
-            }
-            .store(in: &cancellables)
+//        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingApplicationDidChangeNotification"))
+//            .sink { [weak self] notification in
+//                print(notification)
+//                self!.setupMusicAppsAndObservers()
+//            }
+//            .store(in: &cancellables)
         
-        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingApplicationDidChangeNotification"))
-            .sink { [weak self] notification in
-                print(notification)
-                self!.setupMusicAppsAndObservers()
-            }
-            .store(in: &cancellables)
-        
-//        observer = UserDefaults.standard.observe(\.connectedApp, options: [.old, .new]) {
-//            defaults, change in
-//            self.setupMusicAppsAndObservers()
-//            self.playStateOrTrackDidChange(
-//                NSNotification(
-//                    name: Notification.Name(Constants.playerAppChangedMessage), object: nil)
-//            )
-//        }
-        
-//        DistributedNotificationCenter.default().addObserver(
-//            self,
-//            selector: #selector(playStateOrTrackDidChange),
-//            name: NSNotification.Name(rawValue: musicApp.appNotification),
-//            object: nil,
-//            suspensionBehavior: .deliverImmediately
-//        )
+        observer = UserDefaults.standard.observe(\.connectedApp, options: [.old, .new]) {
+            defaults, change in
+            self.setupMusicAppsAndObservers()
+            self.playStateOrTrackDidChange(nil)
+        }
         
         // Add observer to listen for popover open
         NotificationCenter.default.addObserver(
@@ -243,19 +205,7 @@ class PlayerManager: ObservableObject {
         
         let musicAppKilled = sender?.userInfo?["Player State"] as? String == "Stopped"
         let isRunningFromNotification = !musicAppKilled && isRunning
-        let playerAppChanged = sender?.name.rawValue == Constants.playerAppChangedMessage
-//        
-//        if !isRunningFromNotification || playerAppChanged && !isRunning {
-//            self.track = Track()
-//            self.track.albumArt = musicApp.defaultAlbumArt
-//            self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
-//            return
-//        }
-        
-        if musicAppKilled {
-            self.setupMusicAppsAndObservers()
-            return
-        }
+
         self.musicApp.refreshInfo {  // Needs to be refreshed for system player to load song info asynchronously
             self.getPlayState()
             self.updateFormattedDuration()

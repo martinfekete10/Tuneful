@@ -57,7 +57,7 @@ struct GeneralSettingsView: View {
                         .onChange(of: connectedApp) { _ in
                             self.connectedAppAppStorage = connectedApp
                         }
-                        .pickerStyle(.segmented)
+                        .pickerStyle(.menu)
                         
                         Button {
                             let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)

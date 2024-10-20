@@ -29,7 +29,7 @@ class SpotifyManager: PlayerProtocol {
     public var shuffleIsOn: Bool { app.shuffling ?? false }
     public var shuffleContextEnabled: Bool { app.shufflingEnabled ?? false }
     public var repeatContextEnabled: Bool { app.repeatingEnabled ?? false }
-    public var playbackSeekerEnabled: Bool = true
+    public var playbackSeekerEnabled: Bool { true }
     
     init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         self.notificationSubject = notificationSubject

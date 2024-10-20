@@ -20,7 +20,7 @@ struct CompactPopoverView: View {
                 VisualEffectView(material: .popover, blendingMode: .withinWindow)
             }
             
-            if !playerManager.isRunning && playerManager.track.isEmpty() {
+            if !playerManager.isRunning || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
                     .font(.system(size: 14, weight: .regular))
@@ -38,13 +38,15 @@ struct CompactPopoverView: View {
                         
                         VStack {
                             Spacer()
-                                .frame(height: 90)
+                                .frame(height: playerManager.musicApp.playbackSeekerEnabled ? 90 : 125)
                             
                             VStack(alignment: .center) {
                                 PlaybackButtonsView(playButtonSize: 22.5, spacing: 10)
                                 
-                                PlaybackPositionView()
-                                    .frame(width: 155)
+                                if playerManager.musicApp.playbackSeekerEnabled {
+                                    PlaybackPositionView()
+                                        .frame(width: 155)
+                                }
                             }
                             .padding(10)
                             .frame(width: 170)
@@ -75,7 +77,7 @@ struct CompactPopoverView: View {
                     }
                     .pressButtonStyle()
                     .opacity(0.8)
-                    .padding(.top, 5)
+                    .padding(.vertical, 5)
                     .frame(width: 180)
                 }
                 .padding(50) // To force background coloring to whole popover
@@ -87,7 +89,7 @@ struct CompactPopoverView: View {
         )
         .frame(
             width: AppDelegate.popoverWidth,
-            height: 260
+            height: playerManager.musicApp.playbackSeekerEnabled ? 260 : 250
         )
         .onHover { _ in
             withAnimation(.linear(duration: 0.2)) {

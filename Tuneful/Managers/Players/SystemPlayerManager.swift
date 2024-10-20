@@ -16,9 +16,9 @@ class SystemPlayerManager: PlayerProtocol {
     
     var notificationSubject: PassthroughSubject<AlertItem, Never>
     
-    public var bundleId: String { "com.spotify.client" }
-    public var appName: String { "Spotify" }
-    public var appPath: URL = URL(fileURLWithPath: "/Applications/Spotify.app")
+    public var bundleId: String { "" }
+    public var appName: String { "System player" }
+    public var appPath: URL = URL(fileURLWithPath: "")
     public var appNotification: String { "" }
     public var defaultAlbumArt: NSImage
     
