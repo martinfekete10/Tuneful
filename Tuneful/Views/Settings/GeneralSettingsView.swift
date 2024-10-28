@@ -54,6 +54,7 @@ struct GeneralSettingsView: View {
                                 Text(value.localizedName).tag(value)
                             }
                         }
+                        .frame(width: 150)
                         .onChange(of: connectedApp) { _ in
                             self.connectedAppAppStorage = connectedApp
                         }

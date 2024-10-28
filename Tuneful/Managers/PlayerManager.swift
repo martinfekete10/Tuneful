@@ -130,16 +130,19 @@ class PlayerManager: ObservableObject {
     public func setupObservers() {
         Logger.main.log("Setting up observers")
         
-        // TODO: Media remote framework for other music players
-        MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
+        // Clean up existing observers
+        cleanupObservers()
         
-        if connectedApp == .system {
-            NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
-                .sink { [weak self] _ in
-                    self!.playStateOrTrackDidChange(nil)
-                }
-                .store(in: &cancellables)
-        } else {
+        // TODO: System player
+//        if connectedApp == .system {
+//            MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
+//            
+//            NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
+//                .sink { [weak self] _ in
+//                    self!.playStateOrTrackDidChange(nil)
+//                }
+//                .store(in: &cancellables)
+//        } else {
             DistributedNotificationCenter.default().addObserver(
                 self,
                 selector: #selector(playStateOrTrackDidChange),
@@ -147,14 +150,7 @@ class PlayerManager: ObservableObject {
                 object: nil,
                 suspensionBehavior: .deliverImmediately
             )
-        }
-        
-//        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingApplicationDidChangeNotification"))
-//            .sink { [weak self] notification in
-//                print(notification)
-//                self!.setupMusicAppsAndObservers()
-//            }
-//            .store(in: &cancellables)
+//        }
         
         observer = UserDefaults.standard.observe(\.connectedApp, options: [.old, .new]) {
             defaults, change in
@@ -162,7 +158,6 @@ class PlayerManager: ObservableObject {
             self.playStateOrTrackDidChange(nil)
         }
         
-        // Add observer to listen for popover open
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(popoverIsOpening),
@@ -170,13 +165,20 @@ class PlayerManager: ObservableObject {
             object: nil
         )
         
-        // Add observer to listen for popover close
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(popoverIsClosing),
             name: NSPopover.didCloseNotification,
             object: nil
         )
+    }
+    
+    private func cleanupObservers() {
+        NotificationCenter.default.removeObserver(self)
+        DistributedNotificationCenter.default().removeObserver(self)
+        cancellables.removeAll()
+        observer?.invalidate()
+        observer = nil
     }
     
     @objc private func popoverIsOpening(_ notification: NSNotification) {
@@ -196,6 +198,10 @@ class PlayerManager: ObservableObject {
         }
         
         popoverIsShown = false
+    }
+    
+    @objc func test(_ sender: NSNotification?) {
+        print("rerererere")
     }
     
     // MARK: Notification Handlers
@@ -318,6 +324,7 @@ class PlayerManager: ObservableObject {
     // MARK: Controls
 
     func togglePlayPause() {
+        isPlaying = !isPlaying
         musicApp.playPause()
     }
 

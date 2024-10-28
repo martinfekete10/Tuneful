@@ -158,13 +158,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Music player
     
     private func changeMusicPlayer() {
+        // TODO: System player
         switch connectedApp {
         case .spotify:
             self.connectedApp = .appleMusic
         case .appleMusic:
             self.connectedApp = .spotify
-        case .system:
-            self.connectedApp = .system
+//        case .system:
+//            self.connectedApp = .system
         }
     }
     

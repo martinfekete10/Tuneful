@@ -20,13 +20,14 @@ class PlayerAppProvider {
     }
     
     func getPlayerApp(connectedApp: ConnectedApps) -> PlayerProtocol {
+        // TODO: System player
         switch connectedApp {
         case .spotify:
             return spotify
         case .appleMusic:
             return appleMusic
-        case.system:
-            return systemPlayer
+//        case.system:
+//            return systemPlayer
         }
     }
 }
