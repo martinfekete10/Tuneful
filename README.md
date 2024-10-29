@@ -8,7 +8,7 @@
   <p align="center">
     Tuneful is a native macOS playback control app for Spotify and Apple Music which provides a convenient way to control your music from menu bar and optional mini player.
     <br />
-    <a href="https://martinfekete.com/Tuneful/">Website</a>
+    <a href="https://tuneful.dev/">Website</a>
     ·
     <a href="https://ko-fi.com/martinfekete">Support</a>
     ·
@@ -20,11 +20,25 @@
 
 <h5 align="center">Tuneful requires macOS 13 Ventura or newer</h5>
 
+## Screenshots
+
+<p align="center">
+  <img width="450" src="docs/images/popover.png">
+</p>
+
+<p align="center">
+  <img width="450" src="docs/images/popover-minimal.png">
+</p>
+
+<p align="center">
+  <img src="docs/images/miniplayer.png">
+</p>
+
 ## Installation
 
 > [!WARNING]
 > This app has not been notarized by Apple and a popup will be shown on first start. Click **Okay**, then go to **Settings > Privacy & Security** and scroll down and click on a **Open anyway** button next to **Tunfeul** - you'll need to do this only once.
-> If you're running macOS older than Sequoia, right-click on the app icon in Finder and select "Open".
+> If you're running macOS older than Sequoia, right-click on the app icon in Finder and select "Open". For more information, [visit project website](https://tuneful.dev/cant-open)
 
 ### Tuneful can be installed using standard installation process
 
@@ -35,22 +49,6 @@
 ### Or using Homebrew
 
 `brew install martinfekete10/tap/tuneful`
-
-## Screenshots
-
-<p align="center">
-  <img width="420" src="docs/images/playback.png">
-  <img width="420" src="docs/images/playback-minimal.png">
-</p>
-
-<p align="center">
-  <img height="250" src="docs/images/miniplayer-full.png">
-  <img height="250" src="docs/images/miniplayer-minimal.png">
-</p>
-
-<p align="center">
-  <img width="520" src="docs/images/menu-bar-settings.png">
-</p>
 
 ## Feedback
 
@@ -67,6 +65,8 @@ If you find this app useful, consider supporting its development by [donating](h
 -   Launch at login is enabled by [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) package
 -   GitHub Actions are based on repo from [Alex Perathoner](https://github.com/AlexPerathoner/SparkleReleaseTest)
 -   For Settings, the project uses [Settings](https://github.com/sindresorhus/Settings) package
+-   Tuneful uses [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
+    for notification animations
 
 ---
 

@@ -16,20 +16,21 @@ class SystemPlayerManager: PlayerProtocol {
     
     var notificationSubject: PassthroughSubject<AlertItem, Never>
     
-    public var bundleId: String { "com.spotify.client" }
-    public var appName: String { "Spotify" }
-    public var appPath: URL = URL(fileURLWithPath: "/Applications/Spotify.app")
+    public var bundleId: String { "" }
+    public var appName: String { "System player" }
+    public var appPath: URL = URL(fileURLWithPath: "")
     public var appNotification: String { "" }
     public var defaultAlbumArt: NSImage
     
     public var playerPosition: Double? { 50 }
     public var isPlaying: Bool { getIsPlaying() }
-    public var isRunning: Bool { true }
+    public var isRunning: Bool = true
     public var volume: CGFloat { 50 }
     public var isLikeAuthorized: Bool { false }
     public var shuffleIsOn: Bool { false }
     public var shuffleContextEnabled: Bool { false }
     public var repeatContextEnabled: Bool { false }
+    public var playbackSeekerEnabled: Bool { false }
     
     private var info: [String: Any]?
     
@@ -47,18 +48,11 @@ class SystemPlayerManager: PlayerProtocol {
         self.defaultAlbumArt = NSImage()
     }
     
-    func refreshInfo() {
-        MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { info in
-            Logger.main.log("Refreshing system player info")
-            self.info = info
-        }
-    }
-    
     func refreshInfo(completion: @escaping () -> Void) {
         MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { info in
             Logger.main.log("Refreshing system player info")
             self.info = info
-            completion()  // Call completion handler after the info is fetched
+            completion()
         }
     }
     
@@ -72,17 +66,19 @@ class SystemPlayerManager: PlayerProtocol {
     }
 
     
-    func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
+        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
+        
         MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { information in
             guard let artworkData = information["kMRMediaRemoteNowPlayingInfoArtworkData"] as? Data else {
-                completion(nil)
+                completion(defaultRestult)
                 return
             }
             
-            if let artwork = NSImage(data: artworkData) {
-                completion(artwork)
+            if let image = NSImage(data: artworkData) {
+                completion(FetchedAlbumArt(image: image, isAlbumArt: true))
             } else {
-                completion(nil)
+                completion(defaultRestult)
             }
         }
     }
@@ -104,15 +100,15 @@ class SystemPlayerManager: PlayerProtocol {
     }
     
     func toggleLoveTrack() -> Bool {
-        fatalError("Not implemented")
+        return false // TODO
     }
     
     func setShuffle(shuffleIsOn: Bool) -> Bool {
-        fatalError("Not implemented")
+        return false // TODO
     }
     
     func setRepeat(repeatIsOn: Bool) -> Bool {
-        fatalError("Not implemented")
+        return false // TODO
     }
     
     func getCurrentSeekerPosition() -> Double {
@@ -121,11 +117,11 @@ class SystemPlayerManager: PlayerProtocol {
     }
     
     func seekTrack(seekerPosition: CGFloat) {
-        fatalError("Not implemented")
+        return // TODO
     }
     
     func setVolume(volume: Int) {
-        fatalError("Not implemented")
+        return // TODO
     }
     
     // MARK: Private methods

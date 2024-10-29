@@ -1,3 +1,11 @@
+# 1.7.0 - Song change notifications, UI improvements and others
+
+-   New feature to display notification when song changes. For Macbooks with notch, this is displayed as beautiful notch animation; for non-notch Macs, its shown as a small floating window
+-   Redesigned settings with sleaker UI
+-   Fixed coloring of playback buttons in light mode
+-   Fixed menu bar playback buttons
+-   Updated icon with better resolution on retina and non-retina displays
+
 # 1.6.7 - Small fixes
 
 -   Fixed issue when opening Apple Music via menu bar click

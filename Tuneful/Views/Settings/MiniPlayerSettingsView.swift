@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Settings
+import Luminare
 
 struct MiniPlayerSettingsView: View {
     
@@ -37,73 +38,69 @@ struct MiniPlayerSettingsView: View {
     var body: some View {
         VStack {
             Settings.Container(contentWidth: 400) {
-                Settings.Section(label: {
-                    Text("Show mini player window")
-                }) {
-                    Toggle(isOn: $showPlayerWindow) {
-                        Text("")
-                    }
-                    .onChange(of: showPlayerWindow) { _ in
-                        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
-                    }
-                    .toggleStyle(.switch)
-                }
-                
-                Settings.Section(label: {
-                    Text("Mini player window always on top")
-                }) {
-                    Toggle(isOn: $miniPlayerWindowOnTop) {
-                        Text("")
-                    }
-                    .onChange(of: miniPlayerWindowOnTop) { _ in
-                        self.miniPlayerWindowOnTopAppStorage = miniPlayerWindowOnTop
-                        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayerWindowLevel), to: nil, from: nil)
-                    }
-                    .toggleStyle(.switch)
-                }
-                
-                Settings.Section(label: {
-                    Text("Mini player background")
-                }) {
-                    Picker("", selection: $miniPlayerBackground) {
-                        ForEach(BackgroundType.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
+                Settings.Section(title: "") {
+                    LuminareSection {
+                        LuminareToggle(
+                            "Show mini player",
+                            isOn: $showPlayerWindow
+                        )
+                        .onChange(of: showPlayerWindow) { _ in
+                            self.showPlayerWindowAppStorage = showPlayerWindow
+                            NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
                         }
-                    }
-                    .onChange(of: miniPlayerBackground) { newValue in
-                        self.miniPlayerBackgroundAppStorage = miniPlayerBackground
-                    }
-                    .pickerStyle(.segmented)
-                    .frame(width: 200)
-                }
-                
-                Settings.Section(label: {
-                    Text("Window style")
-                }) {
-                    Picker(selection: $miniPlayerType, label: Text("")) {
-                        ForEach(MiniPlayerType.allCases, id: \.self) { value in
-                            Text(value.localizedName).tag(value)
+                        
+                        LuminareToggle(
+                            "Mini player window always on top of other apps",
+                            isOn: $miniPlayerWindowOnTopAppStorage
+                        )
+                        .onChange(of: miniPlayerWindowOnTopAppStorage) { _ in
+                            NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayerWindowLevel), to: nil, from: nil)
                         }
-                    }
-                    .pickerStyle(.segmented)
-                    .frame(width: 200)
-                    .onChange(of: miniPlayerType) { _ in
-                        self.miniPlayerTypeAppStorage = miniPlayerType
-                        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
+                        
+                        HStack {
+                            Text("Background")
+                                .foregroundStyle(self.showPlayerWindowAppStorage ? .primary : .tertiary)
+                            
+                            Spacer()
+                            
+                            Picker("", selection: $miniPlayerBackground) {
+                                ForEach(BackgroundType.allCases, id: \.self) { value in
+                                    Text(value.localizedName).tag(value)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .frame(width: 150)
+                            .onChange(of: miniPlayerBackground) { newValue in
+                                self.miniPlayerBackgroundAppStorage = miniPlayerBackground
+                            }
+                            .disabled(!showPlayerWindowAppStorage)
+                        }
+                        .padding(8)
+                        
+                        HStack {
+                            Text("Window style")
+                                .foregroundStyle(self.showPlayerWindowAppStorage ? .primary : .tertiary)
+                            
+                            Spacer()
+                            
+                            Picker(selection: $miniPlayerType, label: Text("")) {
+                                ForEach(MiniPlayerType.allCases, id: \.self) { value in
+                                    Text(value.localizedName).tag(value)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .frame(width: 150)
+                            .onChange(of: miniPlayerType) { _ in
+                                self.miniPlayerTypeAppStorage = miniPlayerType
+                                NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
+                            }
+                            .disabled(!showPlayerWindowAppStorage)
+                        }
+                        .padding(8)
                     }
                 }
             }
         }
-    }
-}
-
-struct BorderModifier: ViewModifier {
-    var selectedMiniPlayer: MiniPlayerType?
-    var miniPlayerType: MiniPlayerType
-
-    func body(content: Content) -> some View {
-        content
-            .border(selectedMiniPlayer == miniPlayerType ? Color.blue : Color.clear, width: 2)
     }
 }
 

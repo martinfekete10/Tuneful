@@ -45,34 +45,12 @@ class StatusBarPlaybackManager: ObservableObject {
     
     @objc func updateStatusBarPlaybackItem(playerAppIsRunning: Bool) {
         let menuBarView = HStack {
-            Button(action: playerManager.previousTrack){
-                Image(systemName: "backward.fill")
-                    .resizable()
-                    .frame(width: 9, height: 9)
-                    .animation(.easeInOut(duration: 2.0), value: 1)
-            }
-            .pressButtonStyle()
-            .disabled(!playerAppIsRunning)
-            .opacity(playerAppIsRunning ? 1.0 : 0.8)
-            
-            PlayPauseButton(buttonSize: 14)
+            PlaybackButtonsView(playButtonSize: 12, hideShuffleAndRepeat: true)
                 .environmentObject(playerManager)
-                .disabled(!playerAppIsRunning)
-                .opacity(playerAppIsRunning ? 1.0 : 0.8)
-            
-            Button(action: playerManager.nextTrack) {
-                Image(systemName: "forward.fill")
-                    .resizable()
-                    .frame(width: 9, height: 9)
-                    .animation(.easeInOut(duration: 2.0), value: 1)
-            }
-            .pressButtonStyle()
-            .disabled(!playerAppIsRunning)
-            .opacity(playerAppIsRunning ? 1.0 : 0.8)
         }
         
         let iconView = NSHostingView(rootView: menuBarView)
-        iconView.frame = NSRect(x: 0, y: 1, width: 70, height: 20)
+        iconView.frame = NSRect(x: 0, y: 0, width: 90, height: 20)
         
         if let button = self.statusBarItem.button {
             button.subviews.forEach { $0.removeFromSuperview() }

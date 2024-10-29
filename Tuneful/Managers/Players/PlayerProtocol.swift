@@ -26,12 +26,13 @@ protocol PlayerProtocol {
     var shuffleIsOn: Bool { get }
     var shuffleContextEnabled: Bool { get }
     var repeatContextEnabled: Bool { get }
+    var playbackSeekerEnabled: Bool { get }
     
     func refreshInfo(completion: @escaping () -> Void)
     
     func getTrackInfo() -> Track
     
-    func getAlbumArt(completion: @escaping (NSImage?) -> Void)
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void)
     
     func playPause() -> Void
     

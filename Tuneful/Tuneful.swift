@@ -26,11 +26,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
+    // Windows
     private var onboardingWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
-    private var popover: NSPopover!
     
     // Popover
+    private var popover: NSPopover!
     static let popoverWidth: CGFloat = 210
     
     // Status bar
@@ -41,6 +42,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var playerManager: PlayerManager!
     private var statusBarItemManager: StatusBarItemManager!
     private var statusBarPlaybackManager: StatusBarPlaybackManager!
+    
+    private let updateController = SPUStandardUpdaterController(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
     
     // Settings
     let GeneralSettingsViewController: () -> SettingsPane = {
@@ -151,11 +158,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Music player
     
     private func changeMusicPlayer() {
+        // TODO: System player
         switch connectedApp {
         case .spotify:
             self.connectedApp = .appleMusic
         case .appleMusic:
             self.connectedApp = .spotify
+//        case .system:
+//            self.connectedApp = .system
         }
     }
     
@@ -235,10 +245,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         let updates = NSMenuItem(
             title: "Check for updates...",
-            action: #selector(SUUpdater.checkForUpdates(_:)),
+            action: #selector(updateController.updater.checkForUpdates),
             keyEquivalent: ""
         )
-        updates.target = SUUpdater.shared()
+        updates.target = updateController.updater
         statusBarMenu.addItem(updates)
         
         statusBarMenu.addItem(.separator())
@@ -448,8 +458,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         SettingsWindowController(
             panes: [
                 GeneralSettingsViewController(),
-                PopoverSettingsViewController(),
                 MenuBarSettingsViewController(),
+                PopoverSettingsViewController(),
                 MiniPlayerSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
@@ -464,8 +474,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         SettingsWindowController(
             panes: [
                 GeneralSettingsViewController(),
-                PopoverSettingsViewController(),
                 MenuBarSettingsViewController(),
+                PopoverSettingsViewController(),
                 MiniPlayerSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
@@ -499,7 +509,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
 @main
 struct Tuneful: App {
-    
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {

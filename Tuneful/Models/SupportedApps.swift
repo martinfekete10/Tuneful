@@ -11,6 +11,7 @@ import SwiftUI
 enum ConnectedApps: String, Equatable, CaseIterable {
     case spotify = "Spotify"
     case appleMusic = "Apple Music"
+//    case system = "System player"
     
     var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
 }

@@ -23,5 +23,12 @@ struct Track: Equatable {
         }
         return lhs.title == rhs.title && lhs.artist == rhs.artist && lhs.album == rhs.album
     }
+    
+    func isEmpty() -> Bool {
+        if self.title == "" && self.artist == "" && self.album == "" {
+            return true 
+        }
+        return false
+    }
 }
 

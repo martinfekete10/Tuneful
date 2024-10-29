@@ -29,6 +29,7 @@ class AppleMusicManager: PlayerProtocol {
     public var shuffleIsOn: Bool { app.shuffleEnabled ?? false }
     public var shuffleContextEnabled: Bool = true
     public var repeatContextEnabled: Bool = true
+    public var playbackSeekerEnabled: Bool = true
     
     init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
         self.notificationSubject = notificationSubject
@@ -40,16 +41,18 @@ class AppleMusicManager: PlayerProtocol {
         }
     }
     
-    func getAlbumArt(completion: @escaping (NSImage?) -> Void) {
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
+        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
+        
         guard let art = app.currentTrack?.artworks?()[0] as? MusicArtwork else {
-            completion(nil)
+            completion(defaultRestult)
             return
         }
         
-        if let data = art.data, !data.isEmpty() {
-            completion(data)
+        if let image = art.data, !image.isEmpty() {
+            completion(FetchedAlbumArt(image: image, isAlbumArt: true))
         } else {
-            completion(nil)
+            completion(defaultRestult)
             return
         }
     }
