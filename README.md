@@ -23,19 +23,22 @@
 ## Screenshots
 
 <p align="center">
-  <img width="420" src="docs/images/popover.png">
-  <img width="420" src="docs/images/popover-minimal.png">
+  <img width="450" src="docs/images/popover.png">
 </p>
 
 <p align="center">
-  <img height="250" src="docs/images/miniplayer.png">
+  <img width="450" src="docs/images/popover-minimal.png">
+</p>
+
+<p align="center">
+  <img src="docs/images/miniplayer.png">
 </p>
 
 ## Installation
 
 > [!WARNING]
 > This app has not been notarized by Apple and a popup will be shown on first start. Click **Okay**, then go to **Settings > Privacy & Security** and scroll down and click on a **Open anyway** button next to **Tunfeul** - you'll need to do this only once.
-> If you're running macOS older than Sequoia, right-click on the app icon in Finder and select "Open".
+> If you're running macOS older than Sequoia, right-click on the app icon in Finder and select "Open". For more information, [visit project website](https://tuneful.dev/cant-open)
 
 ### Tuneful can be installed using standard installation process
 
