@@ -20,6 +20,17 @@
 
 <h5 align="center">Tuneful requires macOS 13 Ventura or newer</h5>
 
+## Screenshots
+
+<p align="center">
+  <img width="420" src="docs/images/popover.png">
+  <img width="420" src="docs/images/popover-minimal.png">
+</p>
+
+<p align="center">
+  <img height="250" src="docs/images/miniplayer.png">
+</p>
+
 ## Installation
 
 > [!WARNING]
@@ -35,22 +46,6 @@
 ### Or using Homebrew
 
 `brew install martinfekete10/tap/tuneful`
-
-## Screenshots
-
-<p align="center">
-  <img width="420" src="docs/images/playback.png">
-  <img width="420" src="docs/images/playback-minimal.png">
-</p>
-
-<p align="center">
-  <img height="250" src="docs/images/miniplayer-full.png">
-  <img height="250" src="docs/images/miniplayer-minimal.png">
-</p>
-
-<p align="center">
-  <img width="520" src="docs/images/menu-bar-settings.png">
-</p>
 
 ## Feedback
 
