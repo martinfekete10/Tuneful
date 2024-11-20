@@ -11,10 +11,16 @@ import AppKit
 class MiniPlayerWindow: NSWindow {
     
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
+    @AppStorage("windowPosition") var savedPosition: String = "10,0"
     
     init() {
+        let userDefaults = UserDefaults.standard
+        let position = NSPoint.fromString(
+            userDefaults.string(forKey: "windowPosition") ?? "10,0"
+        ) ?? NSPoint(x: 10, y: 0)
+        
         super.init(
-            contentRect: NSRect(x: 10, y: 0, width: 300, height: 145),
+            contentRect: NSRect(x: position.x, y: position.y, width: 300, height: 145),
             styleMask: [.borderless],
             backing: .buffered,
             defer: false
@@ -26,6 +32,13 @@ class MiniPlayerWindow: NSWindow {
         self.isReleasedWhenClosed = false
         self.backgroundColor = NSColor.clear
         self.hasShadow = true
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowDidMove),
+            name: NSWindow.didMoveNotification,
+            object: self
+        )
     }
     
     override func rightMouseDown(with event: NSEvent) {
@@ -69,5 +82,26 @@ class MiniPlayerWindow: NSWindow {
     
     @objc func settings(_ sender: Any?) {
         NSApplication.shared.sendAction(#selector(AppDelegate.openMiniPlayerAppearanceSettings), to: nil, from: nil)
+    }
+    
+    @objc func windowDidMove(_ notification: Notification) {
+        let position = self.frame.origin
+        savedPosition = "\(position.x),\(position.y)"
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+extension NSPoint {
+    static func fromString(_ string: String) -> NSPoint? {
+        let components = string.split(separator: ",")
+        guard components.count == 2,
+              let x = Double(components[0]),
+              let y = Double(components[1]) else {
+            return nil
+        }
+        return NSPoint(x: x, y: y)
     }
 }

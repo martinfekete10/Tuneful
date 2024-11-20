@@ -405,8 +405,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Mini player
     
     @objc func setupMiniPlayer() {
-        let originalWindowPosition = miniPlayerWindow.frame.origin
-        let windowPosition = CGPoint(x: originalWindowPosition.x, y: originalWindowPosition.y + 10) // Not sure why, but everytime this function is called, window moves down a few pixels, thus this ugly workaround
+        let windowPosition = miniPlayerWindow.frame.origin
         
         switch miniPlayerType {
         case .full:
@@ -444,7 +443,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
         DispatchQueue.main.async {
-            self.miniPlayerWindow.setFrame(NSRect(origin: position, size: size), display: true, animate: true)
+            // Calculate new position that maintains the same vertical alignment
+            let currentFrame = self.miniPlayerWindow.frame
+            let newPosition = NSPoint(
+                x: position.x,
+                y: position.y + (currentFrame.height - size.height) // Adjust Y position to maintain top alignment
+            )
+            
+            self.miniPlayerWindow.setFrame(
+                NSRect(origin: newPosition, size: size),
+                display: true,
+                animate: true
+            )
         }
         
         let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
