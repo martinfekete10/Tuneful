@@ -11,7 +11,6 @@ import KeyboardShortcuts
 import Settings
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
-    
     @AppStorage("popoverType") var popoverType: PopoverType = .full
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
@@ -20,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlaying: Bool = false
-    @AppStorage("connectedApp") var connectedApp = ConnectedApps.spotify {
+    @AppStorage("connectedApp") var connectedApp = ConnectedApps.appleMusic {
         didSet {
             self.updateMenuItemsState()
         }
@@ -123,15 +122,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        NSApp.setActivationPolicy(.regular)
+        
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
         
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager()
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
-        
-//        if let bundleID = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-//        }
         
         NotificationCenter.default.addObserver(
             self,
@@ -158,14 +157,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Music player
     
     private func changeMusicPlayer() {
+        if !ConnectedApps.spotify.isInstalled {
+            return
+        }
+        
         // TODO: System player
         switch connectedApp {
         case .spotify:
             self.connectedApp = .appleMusic
         case .appleMusic:
             self.connectedApp = .spotify
-//        case .system:
-//            self.connectedApp = .system
         }
     }
     

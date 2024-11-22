@@ -12,7 +12,7 @@ import ISSoundAdditions
 import ScriptingBridge
 
 class PlayerManager: ObservableObject {
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
+    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
     @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
     @AppStorage("showSongNotification") private var showSongNotification = true
     @AppStorage("notificationDuration") private var notificationDuration = 2.0
@@ -21,7 +21,7 @@ class PlayerManager: ObservableObject {
     var playerAppProvider: PlayerAppProvider!
     
     // TODO: Media remote framework for other music players
-    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
+//    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
     
     var name: String { musicApp.appName }
     var isRunning: Bool { musicApp.isRunning }
@@ -85,9 +85,10 @@ class PlayerManager: ObservableObject {
     private var notchInfo: DynamicNotchInfo!
     
     init() {
-        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
-        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
-        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
+        // TODO: Media remote framework for other music players
+//        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
+//        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
+//        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
         
         // Music app and observers
         self.playerAppProvider = PlayerAppProvider(notificationSubject: self.notificationSubject)

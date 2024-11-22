@@ -11,7 +11,7 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("menuBarItemWidth") var menuBarItemWidth: Double = 150
     @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .albumArt
     @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
-    @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.spotify
+    @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.appleMusic
     @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfo: ShowStatusBarTrackInfo = .always
     @AppStorage("scrollingTrackInfo") var scrollingTrackInfo: Bool = false
     @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusic: Bool = true

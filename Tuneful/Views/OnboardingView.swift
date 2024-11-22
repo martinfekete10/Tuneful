@@ -21,10 +21,7 @@ struct OnboardingView: View {
     @State private var finishedAlert = false
     
     var body: some View {
-        
-        HStack {
-            
-            VStack(alignment: .center) {
+        VStack(alignment: .center) {
                 VStack {
                     VStack {
                         Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
@@ -48,7 +45,7 @@ struct OnboardingView: View {
                             EmptyView()
                         }
                     }
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 10)
                     
                     if step == .onAppPicker {
                         AppPicker()
@@ -61,10 +58,11 @@ struct OnboardingView: View {
                     }
                 }
                 .frame(width: 400, height: 250)
-                .padding(.horizontal, 32)
+                .padding(.horizontal, 30)
                 .animation(.spring(), value: step)
                 
                 Divider()
+                    .frame(width: 250)
                 
                 HStack {
                     if step == .onDetails {
@@ -102,33 +100,37 @@ struct OnboardingView: View {
                 }
                 .frame(width: 150, height: 50)
             }
-            .frame(width: 250, height: 400)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .edgesIgnoringSafeArea(.all)
+            .frame(width: 600, height: 500)
     }
 }
 
 struct AppPicker: View {
-    
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
+    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
     
     var body: some View {
         VStack(spacing: 10) {
             Picker("", selection: $connectedApp) {
-                ForEach(ConnectedApps.allCases, id: \.self) { value in
-                    Text(value.localizedName).tag(value)
+                ForEach(ConnectedApps.allCases.filter { $0.isInstalled }, id: \.self) { value in
+                    Text(value.localizedName)
+                        .tag(value)
                 }
             }
-            .pickerStyle(.segmented)
+            .pickerStyle(.menu)
+            
+            if !ConnectedApps.spotify.isInstalled {
+                Text("Apple Music is the only avaiable music app as Spotify was not found")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
+        .frame(width: 250)
     }
 }
 
 struct Details: View {
     
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.spotify
+    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
     
     @Binding var finishedAlert: Bool
     
@@ -207,6 +209,6 @@ struct Shortcuts: View {
             })
             .padding(.horizontal, 50)
         }
-        .padding(.bottom, 40)
+        .padding(.bottom, 90)
     }
 }

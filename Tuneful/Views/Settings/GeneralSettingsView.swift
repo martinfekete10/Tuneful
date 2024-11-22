@@ -11,7 +11,7 @@ import LaunchAtLogin
 import Luminare
 
 struct GeneralSettingsView: View {
-    @AppStorage("connectedApp") private var connectedAppAppStorage = ConnectedApps.spotify
+    @AppStorage("connectedApp") private var connectedAppAppStorage = ConnectedApps.appleMusic
     @AppStorage("showSongNotification") private var showSongNotificationAppStorage = true
     @AppStorage("notificationDuration") private var notificationDurationAppStorage = 2.0
     
@@ -23,7 +23,7 @@ struct GeneralSettingsView: View {
     @State private var notificationDuration: Double
     
     init() {
-        @AppStorage("connectedApp") var connectedAppAppStorage = ConnectedApps.spotify
+        @AppStorage("connectedApp") var connectedAppAppStorage = ConnectedApps.appleMusic
         @AppStorage("showSongNotification") var showSongNotificationAppStorage = true
         @AppStorage("notificationDuration") var notificationDurationAppStorage = 2.0
         
@@ -44,47 +44,57 @@ struct GeneralSettingsView: View {
                         )
                     )
                     
-                    HStack {
-                        Text("Connect Tuneful to")
-                        
-                        Spacer()
-                        
-                        Picker("", selection: $connectedApp) {
-                            ForEach(ConnectedApps.allCases, id: \.self) { value in
-                                Text(value.localizedName).tag(value)
+                    VStack {
+                        HStack {
+                            Text("Connect Tuneful to")
+                            
+                            Spacer()
+                            
+                            Picker("", selection: $connectedApp) {
+                                ForEach(ConnectedApps.allCases.filter { $0.isInstalled }, id: \.self) { value in
+                                    Text(value.localizedName)
+                                        .tag(value)
+                                }
+                            }
+                            .frame(width: 150)
+                            .onChange(of: connectedApp) { _ in
+                                self.connectedAppAppStorage = connectedApp
+                            }
+                            .pickerStyle(.menu)
+                            
+                            Button {
+                                let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                                switch consent {
+                                case .closed:
+                                    alertTitle = Text("\(Text(connectedApp.localizedName)) is not open")
+                                    alertMessage = Text("Please open \(Text(connectedApp.localizedName)) to enable permissions")
+                                case .granted:
+                                    alertTitle = Text("Permission granted for \(Text(connectedApp.localizedName))")
+                                    alertMessage = Text("Start playing a song!")
+                                case .notPrompted:
+                                    return
+                                case .denied:
+                                    alertTitle = Text("Permission denied")
+                                    alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(Text(connectedApp.localizedName)) under Tuneful")
+                                }
+                                showingAlert = true
+                            } label: {
+                                Image(systemName: "person.fill.questionmark")
+                            }
+                            .buttonStyle(.borderless)
+                            .alert(isPresented: $showingAlert) {
+                                Alert(title: alertTitle, message: alertMessage, dismissButton: .default(Text("Got it!")))
                             }
                         }
-                        .frame(width: 150)
-                        .onChange(of: connectedApp) { _ in
-                            self.connectedAppAppStorage = connectedApp
-                        }
-                        .pickerStyle(.menu)
+                        .padding(8)
                         
-                        Button {
-                            let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
-                            switch consent {
-                            case .closed:
-                                alertTitle = Text("\(Text(connectedApp.localizedName)) is not open")
-                                alertMessage = Text("Please open \(Text(connectedApp.localizedName)) to enable permissions")
-                            case .granted:
-                                alertTitle = Text("Permission granted for \(Text(connectedApp.localizedName))")
-                                alertMessage = Text("Start playing a song!")
-                            case .notPrompted:
-                                return
-                            case .denied:
-                                alertTitle = Text("Permission denied")
-                                alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(Text(connectedApp.localizedName)) under Tuneful")
-                            }
-                            showingAlert = true
-                        } label: {
-                            Image(systemName: "person.fill.questionmark")
-                        }
-                        .buttonStyle(.borderless)
-                        .alert(isPresented: $showingAlert) {
-                            Alert(title: alertTitle, message: alertMessage, dismissButton: .default(Text("Got it!")))
+                        if !ConnectedApps.spotify.isInstalled {
+                            Text("Apple Music is the only avaiable music app as Spotify was not found")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .padding(.bottom, 4)
                         }
                     }
-                    .padding(8)
                 }
                     
                 LuminareSection("Notifications") {

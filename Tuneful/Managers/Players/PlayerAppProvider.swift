@@ -9,23 +9,19 @@ import SwiftUI
 import Combine
 
 class PlayerAppProvider {
-    private var spotify: SpotifyManager
-    private var appleMusic: AppleMusicManager
-    private var systemPlayer: SystemPlayerManager
+    private var notificationSubject: PassthroughSubject<AlertItem, Never>
     
     init(notificationSubject: PassthroughSubject<AlertItem, Never>) {
-        self.spotify = SpotifyManager(notificationSubject: notificationSubject)
-        self.appleMusic = AppleMusicManager(notificationSubject: notificationSubject)
-        self.systemPlayer = SystemPlayerManager(notificationSubject: notificationSubject)
+        self.notificationSubject = notificationSubject
     }
     
     func getPlayerApp(connectedApp: ConnectedApps) -> PlayerProtocol {
         // TODO: System player
         switch connectedApp {
         case .spotify:
-            return spotify
+            return SpotifyManager(notificationSubject: notificationSubject)
         case .appleMusic:
-            return appleMusic
+            return AppleMusicManager(notificationSubject: notificationSubject)
 //        case.system:
 //            return systemPlayer
         }
