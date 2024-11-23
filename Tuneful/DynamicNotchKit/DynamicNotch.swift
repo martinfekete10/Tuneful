@@ -184,9 +184,9 @@ extension DynamicNotch {
 
         let view: NSView = {
             switch notchStyle {
-            case .notch: NSHostingView(rootView: NotchView(dynamicNotch: self))
+            case .notch: NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white))
             case .floating: NSHostingView(rootView: NotchlessView(dynamicNotch: self))
-            case .auto: screen.hasNotch ? NSHostingView(rootView: NotchView(dynamicNotch: self)) : NSHostingView(rootView: NotchlessView(dynamicNotch: self))
+            case .auto: screen.hasNotch ? NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white)) : NSHostingView(rootView: NotchlessView(dynamicNotch: self))
             }
         }()
 

@@ -16,8 +16,8 @@ class MiniPlayerWindow: NSWindow {
     init() {
         let userDefaults = UserDefaults.standard
         let position = NSPoint.fromString(
-            userDefaults.string(forKey: "windowPosition") ?? "10,0"
-        ) ?? NSPoint(x: 10, y: 0)
+            userDefaults.string(forKey: "windowPosition") ?? "10,10"
+        ) ?? NSPoint(x: 10, y: 10)
         
         super.init(
             contentRect: NSRect(x: position.x, y: position.y, width: 300, height: 145),
