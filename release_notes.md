@@ -1,8 +1,9 @@
-# 1.7.1 - Bug fixes and improvements
+# 1.7.1 - Mini player improvement and various bug fixes
 
 -   Fixed issue when Tuneful was crashing on launch if Spotify is not installed
 -   Fixed notch notification appearance for Light Mode
 -   Fixed accent color in settings window
+-   Mini player now remembers its position after relaunching Tuneful, huge thanks to @itssali
 -   Minor player manager optimisation
 
 # 1.7.0 - Song change notifications, UI improvements and others
