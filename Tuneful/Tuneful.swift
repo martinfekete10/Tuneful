@@ -19,11 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
     @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
     @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlaying: Bool = false
-    @AppStorage("connectedApp") var connectedApp = ConnectedApps.appleMusic {
-        didSet {
-            self.updateMenuItemsState()
-        }
-    }
+    @AppStorage("connectedApp") var connectedApp = ConnectedApps.appleMusic
     
     // Windows
     private var onboardingWindow: OnboardingWindow!
@@ -56,6 +52,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             toolbarIcon: NSImage(systemSymbolName: "switch.2", accessibilityDescription: "General settings")!
         ) {
             GeneralSettingsView()
+                .accentColor(.accentColor)
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -122,11 +119,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.regular)
+        NSApp.setActivationPolicy(.accessory)
         
-        if let bundleID = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-        }
+//        if let bundleID = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+//        }
         
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager()
@@ -167,18 +164,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.connectedApp = .appleMusic
         case .appleMusic:
             self.connectedApp = .spotify
-        }
-    }
-    
-    func updateMenuItemsState() {
-        if let menuItem = statusBarMenu.item(withTitle: "Music player")?.submenu {
-            if let spotifyMenuItem = menuItem.item(withTitle: "Spotify") {
-                spotifyMenuItem.state = (connectedApp == .spotify) ? .on : .off
-            }
-            
-            if let appleMusicMenuItem = menuItem.item(withTitle: "Apple Music") {
-                appleMusicMenuItem.state = (connectedApp == .appleMusic) ? .on : .off
-            }
         }
     }
     

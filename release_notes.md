@@ -1,3 +1,10 @@
+# 1.7.1 - Bug fixes and improvements
+
+-   Fixed issue when Tuneful was crashing on launch if Spotify is not installed
+-   Fixed notch notification appearance for Light Mode
+-   Fixed accent color in settings window
+-   Minor player manager optimisation
+
 # 1.7.0 - Song change notifications, UI improvements and others
 
 -   New feature to display notification when song changes. For Macbooks with notch, this is displayed as beautiful notch animation; for non-notch Macs, its shown as a small floating window
