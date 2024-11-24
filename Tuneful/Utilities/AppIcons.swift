@@ -10,7 +10,6 @@ import SwiftUI
 import AppKit
 
 struct AppIcons {
-    
     func getIcon(file path: URL) -> NSImage? {
         guard FileManager.default.fileExists(atPath: path.path())
         else { return nil }
@@ -24,5 +23,4 @@ struct AppIcons {
         
         return getIcon(file: path)
     }
-    
 }

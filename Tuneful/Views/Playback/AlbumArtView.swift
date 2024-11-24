@@ -16,7 +16,6 @@ struct AlbumArtView: View {
         VStack {
             Image(nsImage: playerManager.track.albumArt)
                 .resizable()
-//                .scaledToFill()
                 .frame(width: self.imageSize, height: self.imageSize)
                 .cornerRadius(10)
                 .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)

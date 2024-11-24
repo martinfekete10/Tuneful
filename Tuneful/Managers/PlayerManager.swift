@@ -11,7 +11,7 @@ import Combine
 import ISSoundAdditions
 import ScriptingBridge
 
-class PlayerManager: ObservableObject {
+public class PlayerManager: ObservableObject {
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
     @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
     @AppStorage("showSongNotification") private var showSongNotification = true
@@ -94,6 +94,7 @@ class PlayerManager: ObservableObject {
         self.playerAppProvider = PlayerAppProvider(notificationSubject: self.notificationSubject)
         self.setupMusicAppsAndObservers()
         self.playStateOrTrackDidChange(nil)
+        self.notchInfo = DynamicNotchInfo(playerManager: self)
         
         // Updating player state every 1 sec
         self.timerStartSignal.sink {
@@ -273,8 +274,10 @@ class PlayerManager: ObservableObject {
     func getNewSongInfo() {
         Logger.main.log("Getting track info")
         
-        getCurrentSeekerPosition()
-        track = musicApp.getTrackInfo()
+        withAnimation(Constants.SongTransitionAnimation) {
+            getCurrentSeekerPosition()
+            track = musicApp.getTrackInfo()
+        }
         fetchAlbumArt(retryCount: 5)
         updateFormattedDuration()
     }
@@ -312,13 +315,7 @@ class PlayerManager: ObservableObject {
             return
         }
         
-        self.notchInfo?.hide()
-        self.notchInfo = DynamicNotchInfo(
-            icon: Image(nsImage: albumArt.image.roundImage(withSize: NSSize(width: 70, height: 70), radius: 10)),
-            title: self.track.title,
-            description: self.track.album,
-            onTap: self.openMusicApp
-        )
+        self.notchInfo.refreshContent()
         self.notchInfo.show(for: notificationDuration)
     }
 

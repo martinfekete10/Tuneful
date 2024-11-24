@@ -30,22 +30,18 @@ internal final class DynamicNotchInfoPublisher: ObservableObject {
 }
 
 public class DynamicNotchInfo {
+    @Published var playerManager: PlayerManager
     private var internalDynamicNotch: DynamicNotch<InfoView>
-    private let publisher: DynamicNotchInfoPublisher
 
-    public init(contentID: UUID = .init(), icon: Image! = nil, title: String, description: String? = nil, iconColor: Color = .white, style: DynamicNotch<InfoView>.Style = .auto, onTap: @escaping () -> Void) {
-        let publisher = DynamicNotchInfoPublisher(icon: icon, iconColor: iconColor, title: title, description: description)
-        self.publisher = publisher
-        internalDynamicNotch = DynamicNotch(contentID: contentID, style: style) {
-            InfoView(publisher: publisher, onTap: onTap)
+    public init(contentID: UUID = .init(), style: DynamicNotch<InfoView>.Style = .auto, playerManager: PlayerManager) {
+        self.playerManager = playerManager
+        internalDynamicNotch = DynamicNotch(contentID: contentID, style: style, playerManager: playerManager) {
+            InfoView(playerManager: playerManager)
         }
     }
-
-    @MainActor
-    public func setContent(contentID: UUID = .init(), icon: Image? = nil, title: String, description: String? = nil, iconColor: Color = .white) {
-        withAnimation {
-            publisher.publish(icon: icon, iconColor: iconColor, title: title, description: description)
-        }
+    
+    public func refreshContent() {
+        internalDynamicNotch.refreshContent()
     }
 
     public func show(on screen: NSScreen = NSScreen.screens[0], for time: Double = 0) {
@@ -64,77 +60,33 @@ public class DynamicNotchInfo {
 public extension DynamicNotchInfo {
     struct InfoView: View {
         @State private var isTapped: Bool = false
-        
-        private var publisher: DynamicNotchInfoPublisher
-        private var onTap: () -> Void
+        @ObservedObject private var playerManager: PlayerManager
 
-        init(publisher: DynamicNotchInfoPublisher, onTap: @escaping () -> Void) {
-            self.publisher = publisher
-            self.onTap = onTap
+        init(playerManager: PlayerManager) {
+            self.playerManager = playerManager
         }
         
         public var body: some View {
             HStack(spacing: 10) {
-                InfoImageView(publisher: publisher)
-                InfoTextView(publisher: publisher)
+                AlbumArtView(imageSize: 50)
+                    .environmentObject(playerManager)
+                
+                VStack(alignment: .leading) {
+                    Text(playerManager.track.title)
+                        .font(.headline)
+                    Text(playerManager.track.artist)
+                        .foregroundStyle(.secondary)
+                        .font(.caption2)
+                        .opacity(1)
+                }
+                
                 Spacer(minLength: 0)
             }
-            .frame(height: 40)
+            .frame(height: 50)
+            .frame(maxWidth: 250)
             .tapAnimation {
-                self.onTap()
+                playerManager.openMusicApp()
             }
-        }
-    }
-
-    struct InfoImageView: View {
-        @ObservedObject private var publisher: DynamicNotchInfoPublisher
-
-        init(publisher: DynamicNotchInfoPublisher) {
-            self.publisher = publisher
-        }
-
-        public var body: some View {
-            if let image = publisher.icon {
-                image
-                    .resizable()
-                    .foregroundStyle(publisher.iconColor)
-                    .padding(3)
-                    .scaledToFit()
-            } else {
-                Image(nsImage: NSApplication.shared.applicationIconImage)
-                    .resizable()
-                    .padding(-5)
-                    .scaledToFit()
-            }
-        }
-    }
-
-    struct InfoTextView: View {
-        @ObservedObject private var publisher: DynamicNotchInfoPublisher
-
-        init(publisher: DynamicNotchInfoPublisher) {
-            self.publisher = publisher
-        }
-
-        public var body: some View {
-            VStack(alignment: .leading, spacing: publisher.description != nil ? nil : 0) {
-                Text(publisher.title)
-                    .font(.headline)
-                Text(publisher.description ?? "")
-                    .foregroundStyle(.secondary)
-                    .font(.caption2)
-                    .opacity(publisher.description != nil ? 1 : 0)
-                    .frame(maxHeight: publisher.description != nil ? nil : 0)
-            }
-        }
-    }
-}
-
-struct DynamicNotchInfo_Previews: PreviewProvider {
-    static let publisher = DynamicNotchInfoPublisher(icon: nil, iconColor: .blue, title: "testing")
-    static var previews: some View {
-        VStack {
-            DynamicNotchInfo.InfoView(publisher: publisher, onTap: {})
         }
     }
 }

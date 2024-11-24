@@ -26,17 +26,30 @@ struct NotchView<Content>: View where Content: View {
                         .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 15) }
                         .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 15) }
                         .safeAreaInset(edge: .trailing, spacing: 0) { Color.clear.frame(width: 15) }
-
                         .blur(radius: dynamicNotch.isVisible ? 0 : 10)
                         .scaleEffect(dynamicNotch.isVisible ? 1 : 0.8)
                         .offset(y: dynamicNotch.isVisible ? 0 : 5)
                         .padding(.horizontal, 15) // Small corner radius of the TOP of the notch
                         .transition(.blur.animation(.smooth))
+                    
+                    if dynamicNotch.isMouseInside {
+                        VStack {
+                            PlaybackButtonsView(playButtonSize: 20)
+                                .environmentObject(dynamicNotch.playerManager)
+                        }
+                        .frame(width: dynamicNotch.notchWidth * 0.75)
+                        .padding(.bottom, 15)
+                    }
                 }
                 .fixedSize()
                 .frame(minWidth: dynamicNotch.notchWidth)
                 .onHover { hovering in
-                    dynamicNotch.isMouseInside = hovering
+                    if !dynamicNotch.isVisible {
+                        return
+                    }
+                    withAnimation(dynamicNotch.animation) {
+                        dynamicNotch.isMouseInside = hovering
+                    }
                 }
                 .background {
                     Rectangle()

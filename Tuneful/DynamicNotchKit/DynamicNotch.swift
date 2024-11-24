@@ -13,6 +13,9 @@ import SwiftUI
 public class DynamicNotch<Content>: ObservableObject where Content: View {
 
     public var windowController: NSWindowController? // Make public in case user wants to modify the NSPanel
+    
+    // Player manager
+    @Published var playerManager: PlayerManager
 
     // Content Properties
     @Published var content: () -> Content
@@ -51,10 +54,11 @@ public class DynamicNotch<Content>: ObservableObject where Content: View {
     /// - Parameters:
     ///   - content: A SwiftUI View
     ///   - style: The popover's style. If unspecified, the style will be automatically set according to the screen.
-    public init(contentID: UUID = .init(), style: DynamicNotch.Style = .auto, @ViewBuilder content: @escaping () -> Content) {
+    public init(contentID: UUID = .init(), style: DynamicNotch.Style = .auto, playerManager: PlayerManager, @ViewBuilder content: @escaping () -> Content) {
         self.contentID = contentID
         self.content = content
         self.notchStyle = style
+        self.playerManager = playerManager
         self.subscription = NotificationCenter.default
             .publisher(for: NSApplication.didChangeScreenParametersNotification)
             .sink { [weak self] _ in
@@ -72,6 +76,12 @@ public extension DynamicNotch {
     /// - Parameter content: A SwiftUI View
     func setContent(contentID: UUID = .init(), content: @escaping () -> Content) {
         self.content = content
+        self.contentID = .init()
+    }
+    
+    /// Set this DynamicNotch's content.
+    /// - Parameter content: A SwiftUI View
+    func refreshContent(contentID: UUID = .init()) {
         self.contentID = .init()
     }
 

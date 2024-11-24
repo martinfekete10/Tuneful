@@ -5,8 +5,8 @@
 //  Source: [Jukebox](https://github.com/Jaysce/Jukebox)
 //
 
-import Foundation
 import AppKit
+import SwiftUI
 
 enum Constants {
     static let podcastThresholdDurationSec = 600.0
@@ -35,5 +35,9 @@ enum Constants {
     enum StatusBar {
         static let marqueeFont = NSFont.systemFont(ofSize: 13, weight: .regular)
         static let imageWidth = 30.0
+    }
+    
+    static var SongTransitionAnimation: Animation {
+        Animation.timingCurve(0.16, 1, 0.3, 1, duration: 0.7)
     }
 }
