@@ -11,7 +11,6 @@ import SwiftUI
 // MARK: - DynamicNotch
 
 public class DynamicNotch<Content>: ObservableObject where Content: View {
-
     public var windowController: NSWindowController? // Make public in case user wants to modify the NSPanel
     
     // Player manager

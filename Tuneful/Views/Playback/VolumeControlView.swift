@@ -31,11 +31,7 @@ struct VolumeControlView: View {
                 value: $playerManager.volume,
                 isDragging: $playerManager.isDraggingSoundVolumeSlider,
                 range: 0...100,
-                knobDiameter: 5,
-                knobColor: .white,
-                knobScaleEffectMagnitude: 1.5,
-                knobAnimation: .linear(duration: 0.15),
-                leadingRectangleColor: .playbackPositionLeadingRectangle
+                sliderHeight: 5
             )
             
             Button(action: playerManager.increaseVolume) {

@@ -36,6 +36,8 @@ struct NotchView<Content>: View where Content: View {
                         VStack {
                             PlaybackButtonsView(playButtonSize: 20)
                                 .environmentObject(dynamicNotch.playerManager)
+                            PlaybackPositionView()
+                                .environmentObject(dynamicNotch.playerManager)
                         }
                         .frame(width: dynamicNotch.notchWidth * 0.75)
                         .padding(.bottom, 15)
@@ -49,6 +51,13 @@ struct NotchView<Content>: View where Content: View {
                     }
                     withAnimation(dynamicNotch.animation) {
                         dynamicNotch.isMouseInside = hovering
+                    }
+                }
+                .onChange(of: dynamicNotch.isMouseInside) { isMouseInside in
+                    if isMouseInside {
+                        dynamicNotch.playerManager.startTimer()
+                    } else {
+                        dynamicNotch.playerManager.stopTimer()
                     }
                 }
                 .background {

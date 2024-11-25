@@ -363,7 +363,9 @@ public class PlayerManager: ObservableObject {
         if isDraggingPlaybackPositionView { return }
 
         musicApp.refreshInfo {
-            self.seekerPosition = self.musicApp.getCurrentSeekerPosition()
+            withAnimation {
+                self.seekerPosition = self.musicApp.getCurrentSeekerPosition()
+            }
         }
     }
 
@@ -391,6 +393,16 @@ public class PlayerManager: ObservableObject {
     func draggingPlaybackPosition() {
         formattedPlaybackPosition = formattedTimestamp(seekerPosition)
     }
+    
+    // MARK: Timer
+    
+    func startTimer() {
+        self.timerStartSignal.send()
+    }
+    
+    func stopTimer() {
+        self.timerStopSignal.send()
+    }
 
     // MARK: Volume
 
@@ -405,7 +417,9 @@ public class PlayerManager: ObservableObject {
 
         musicApp.setVolume(volume: newVolume)
 
-        volume = CGFloat(newVolume)
+        withAnimation {
+            volume = CGFloat(newVolume)
+        }
     }
 
     func increaseVolume() {
