@@ -278,44 +278,41 @@ public class PlayerManager: ObservableObject {
             getCurrentSeekerPosition()
             track = musicApp.getTrackInfo()
         }
+        showNotchNotification()
         fetchAlbumArt(retryCount: 5)
         updateFormattedDuration()
     }
     
     func fetchAlbumArt(retryCount: Int = 5) {
         musicApp.getAlbumArt { result in
-            if result.isAlbumArt {
-                self.updateAlbumArt(newAlbumArt: result.image)
+            if result != nil {
+                self.updateAlbumArt(newAlbumArt: result!)
                 self.updateMenuBarText(playerAppIsRunning: self.isRunning)
-                self.updateNotchInfo(albumArt: result)
             } else if retryCount > 0 {
-                self.updateAlbumArt(newAlbumArt: result.image)
-                self.updateMenuBarText(playerAppIsRunning: self.isRunning)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     self.fetchAlbumArt(retryCount: retryCount - 1)
                 }
             } else {
-                self.updateAlbumArt(newAlbumArt: self.musicApp.defaultAlbumArt)
                 self.updateMenuBarText(playerAppIsRunning: self.isRunning)
                 Logger.main.log("Failed to fetch album art")
             }
         }
     }
     
-    func updateAlbumArt(newAlbumArt: NSImage) {
+    func updateAlbumArt(newAlbumArt: FetchedAlbumArt) {
         DispatchQueue.main.async {
             withAnimation(.none) {
-                self.track.albumArt = newAlbumArt
+                self.track.nsAlbumArt = newAlbumArt.nsImage
+                self.track.albumArt = newAlbumArt.image
             }
         }
     }
     
-    func updateNotchInfo(albumArt: FetchedAlbumArt) {
+    func showNotchNotification() {
         if !showSongNotification || popoverIsShown {
             return
         }
         
-        self.notchInfo.refreshContent()
         self.notchInfo.show(for: notificationDuration)
     }
 

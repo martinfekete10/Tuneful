@@ -18,7 +18,7 @@ class StatusBarItemManager: ObservableObject {
     
     public func getMenuBarView(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> NSView {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
-        let image = self.getImage(albumArt: track.albumArt, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
+        let image = self.getImage(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
         let titleWidth = title.stringWidth(with: Constants.StatusBar.marqueeFont)
         
         var menuBarItemHeigth = 20.0
@@ -104,12 +104,12 @@ class StatusBarItemManager: ObservableObject {
         return trackInfo
     }
     
-    private func getImage(albumArt: NSImage, playerAppIsRunning: Bool, isPlaying: Bool) -> AnyView {
+    private func getImage(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> AnyView {
         if isPlaying && showEqWhenPlayingMusic && playerAppIsRunning {
             if statusBarIcon == .albumArt {
                 return AnyView(
                     Rectangle()
-                        .fill(Color(nsColor: albumArt.averageColor ?? .white).gradient)
+                        .fill(Color(nsColor: track.nsAlbumArt.averageColor ?? .white).gradient)
                         .mask { AudioSpectrumView(isPlaying: isPlaying) }
                 )
             } else {
@@ -118,8 +118,7 @@ class StatusBarItemManager: ObservableObject {
         }
         
         if statusBarIcon == .albumArt && playerAppIsRunning {
-            let roundedImage = albumArt.roundImage(withSize: NSSize(width: 18, height: 18), radius: 4.0)
-            return AnyView(Image(nsImage: roundedImage))
+            return AnyView(track.albumArt.resizable().frame(width: 18, height: 18).cornerRadius(4))
         }
         
         return AnyView(Image(systemName: "music.quarternote.3"))

@@ -29,7 +29,6 @@
 		FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */; };
 		FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */; };
 		FE31AED02CF50708002818ED /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */; };
-		FE31AED42CF6739E002818ED /* HoverTrackingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31AED32CF67394002818ED /* HoverTrackingWindowController.swift */; };
 		FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37A0322A829623006FBA5B /* MusicControl.swift */; };
 		FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */; };
 		FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */; };
@@ -128,7 +127,6 @@
 		FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 		FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
-		FE31AED32CF67394002818ED /* HoverTrackingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverTrackingWindowController.swift; sourceTree = "<group>"; };
 		FE37A0322A829623006FBA5B /* MusicControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControl.swift; sourceTree = "<group>"; };
 		FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
 		FE4414B72AB4999600A73246 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
@@ -222,7 +220,6 @@
 		FE1A62FA2CBC1B09001C13CE /* DynamicNotchKit */ = {
 			isa = PBXGroup;
 			children = (
-				FE31AED32CF67394002818ED /* HoverTrackingWindowController.swift */,
 				FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */,
 				FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */,
 				FE1A62F32CBC1B09001C13CE /* DynamicNotchInfo.swift */,
@@ -598,7 +595,6 @@
 				FEFFE55D2B4FE051000887B5 /* Comparable+Extension.swift in Sources */,
 				FE6BFCFE2A73A89600D3321F /* PlayerManager.swift in Sources */,
 				FE6BFD082A73AE5E00D3321F /* Track.swift in Sources */,
-				FE31AED42CF6739E002818ED /* HoverTrackingWindowController.swift in Sources */,
 				FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */,
 				FE4C92172B61459F00FF79BE /* String+Extension.swift in Sources */,
 				FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */,

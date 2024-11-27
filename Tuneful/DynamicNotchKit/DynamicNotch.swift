@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - DynamicNotch
 
 public class DynamicNotch<Content>: ObservableObject where Content: View {
-    public var windowController: HoverTrackingWindowController? // Make public in case user wants to modify the NSPanel
+    public var windowController: NSWindowController? // Make public in case user wants to modify the NSPanel
     
     // Player manager
     @Published var playerManager: PlayerManager
@@ -124,7 +124,7 @@ public extension DynamicNotch {
         guard isVisible else { return }
 
         guard !isMouseInside else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.hide()
             }
             return

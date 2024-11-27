@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import AppKit
+import SwiftUICore
 
 protocol PlayerProtocol {
     var notificationSubject: PassthroughSubject<AlertItem, Never> { get set }
@@ -32,7 +33,7 @@ protocol PlayerProtocol {
     
     func getTrackInfo() -> Track
     
-    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void)
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt?) -> Void)
     
     func playPause() -> Void
     

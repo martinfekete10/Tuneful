@@ -10,6 +10,7 @@ import Combine
 import Foundation
 import AppKit
 import ScriptingBridge
+import SwiftUICore
 
 class AppleMusicManager: PlayerProtocol {
     var app: MusicApplication = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)!
@@ -41,18 +42,16 @@ class AppleMusicManager: PlayerProtocol {
         }
     }
     
-    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
-        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
-        
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt?) -> Void) {
         guard let art = app.currentTrack?.artworks?()[0] as? MusicArtwork else {
-            completion(defaultRestult)
+            completion(nil)
             return
         }
         
         if let image = art.data, !image.isEmpty() {
-            completion(FetchedAlbumArt(image: image, isAlbumArt: true))
+            completion(FetchedAlbumArt(image: Image(nsImage: image), nsImage: image))
         } else {
-            completion(defaultRestult)
+            completion(nil)
             return
         }
     }

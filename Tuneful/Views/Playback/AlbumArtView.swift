@@ -14,7 +14,7 @@ struct AlbumArtView: View {
     
     var body: some View {
         VStack {
-            Image(nsImage: playerManager.track.albumArt)
+            playerManager.track.albumArt
                 .resizable()
                 .frame(width: self.imageSize, height: self.imageSize)
                 .cornerRadius(10)

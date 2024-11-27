@@ -19,7 +19,7 @@ struct MiniPlayerView: View {
         
         ZStack {
             if miniPlayerBackground == .albumArt && playerManager.isRunning {
-                Image(nsImage: playerManager.track.albumArt)
+                playerManager.track.albumArt
                     .resizable()
                     .scaledToFill()
                 VisualEffectView(material: .popover, blendingMode: .withinWindow)

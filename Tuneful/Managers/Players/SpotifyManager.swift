@@ -9,6 +9,7 @@ import os
 import Combine
 import Foundation
 import AppKit
+import SwiftUI
 import ScriptingBridge
 
 class SpotifyManager: PlayerProtocol {
@@ -50,17 +51,16 @@ class SpotifyManager: PlayerProtocol {
         return track
     }
     
-    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt?) -> Void) {
         let urlString = app.currentTrack?.artworkUrl
-        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
         
         guard urlString != nil else {
-            completion(defaultRestult)
+            completion(nil)
             return
         }
         
         guard let url = URL(string: urlString!) else {
-            completion(defaultRestult)
+            completion(nil)
             return
         }
         
@@ -68,14 +68,14 @@ class SpotifyManager: PlayerProtocol {
             guard error == nil, let data = data, let image = NSImage(data: data) else {
                 Logger.main.log("Error fetching Spotify album image")
                 DispatchQueue.main.async {
-                    completion(defaultRestult)
+                    completion(nil)
                 }
                 return
             }
             
             DispatchQueue.main.async {
                 Logger.main.log("Spotify album image fetched")
-                completion(FetchedAlbumArt(image: image, isAlbumArt: true))
+                completion(FetchedAlbumArt(image: Image(nsImage: image), nsImage: image))
             }
             
         }.resume()

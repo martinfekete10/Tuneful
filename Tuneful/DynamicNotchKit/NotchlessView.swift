@@ -32,16 +32,19 @@ struct NotchlessView<Content>: View where Content: View {
                         VStack {
                             PlaybackButtonsView(playButtonSize: 20)
                                 .environmentObject(dynamicNotch.playerManager)
+                            PlaybackPositionView(sliderHeight: 6, inline: true)
+                                .environmentObject(dynamicNotch.playerManager)
                         }
                         .frame(width: dynamicNotch.notchWidth * 0.75)
                         .padding(.bottom, 15)
                     }
                 }
                 .onHover { hovering in
-                    if !dynamicNotch.isVisible {
-                        return
-                    }
+//                    if !dynamicNotch.isVisible {
+//                        return
+//                    }
                     withAnimation(dynamicNotch.animation) {
+                        dynamicNotch.isVisible = hovering
                         dynamicNotch.isMouseInside = hovering
                     }
                 }

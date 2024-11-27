@@ -9,6 +9,7 @@ import os
 import Combine
 import Foundation
 import AppKit
+import SwiftUICore
 
 class SystemPlayerManager: PlayerProtocol {
     let MRMediaRemoteGetNowPlayingInfo: @convention(c) (DispatchQueue, @escaping ([String: Any]) -> Void) -> Void
@@ -66,19 +67,17 @@ class SystemPlayerManager: PlayerProtocol {
     }
 
     
-    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
-        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
-        
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt?) -> Void) {
         MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { information in
             guard let artworkData = information["kMRMediaRemoteNowPlayingInfoArtworkData"] as? Data else {
-                completion(defaultRestult)
+                completion(nil)
                 return
             }
             
             if let image = NSImage(data: artworkData) {
-                completion(FetchedAlbumArt(image: image, isAlbumArt: true))
+                completion(FetchedAlbumArt(image: Image(nsImage: image), nsImage: image))
             } else {
-                completion(defaultRestult)
+                completion(nil)
             }
         }
     }

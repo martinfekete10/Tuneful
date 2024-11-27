@@ -9,16 +9,17 @@ import Foundation
 import SwiftUI
 
 struct Track: Equatable {
-    var title = ""
-    var artist = ""
-    var album = ""
-    var albumArt = NSImage()
+    var title: String = ""
+    var artist: String = ""
+    var album: String = ""
+    var albumArt: Image = Image(.defaultAlbumart)
+    var nsAlbumArt: NSImage = NSImage()
     var duration: CGFloat = 0.0
-    var isLoved = false
+    var isLoved: Bool = false
     var isPodcast: Bool { self.duration > Constants.podcastThresholdDurationSec }
-    var albumArtImage: Image {
-        get { return Image(nsImage: albumArt.roundImage(withSize: NSSize(width: 50, height: 50), radius: 10)) }
-    }
+//    var albumArtImage: Image {
+//        get { return Image(nsImage: albumArt.roundImage(withSize: NSSize(width: 50, height: 50), radius: 10)) }
+//    }
     
     static func == (lhs: Track, rhs: Track) -> Bool {
         if lhs.title == "" && lhs.artist == "" && lhs.album == "" {

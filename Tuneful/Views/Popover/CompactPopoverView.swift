@@ -15,7 +15,7 @@ struct CompactPopoverView: View {
     var body: some View {
         ZStack {
             if popoverBackground == .albumArt && playerManager.isRunning {
-                Image(nsImage: playerManager.track.albumArt)
+                playerManager.track.albumArt
                     .resizable()
                 VisualEffectView(material: .popover, blendingMode: .withinWindow)
             }
