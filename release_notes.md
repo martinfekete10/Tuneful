@@ -1,3 +1,11 @@
+# 1.8.0 - Notch integration, sleeker UI and others
+
+-   New notch integration now allows you to control the music from notch. For non-notch Macs, this is available on hovering over new song notification
+-   New music slider which now looks and feels native
+-   Refactored the logic that fetches song information which makes the app feel snappier
+-   Added more animations to the UI so the app feels more fluid
+-   Fixed the bug when mini player floating preference was ignored on app restart
+
 # 1.7.1 - Mini player improvement and various bug fixes
 
 -   Fixed issue when Tuneful was crashing on launch if Spotify is not installed
