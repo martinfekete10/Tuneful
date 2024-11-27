@@ -36,7 +36,7 @@ struct NotchView<Content>: View where Content: View {
                         VStack {
                             PlaybackButtonsView(playButtonSize: 20)
                                 .environmentObject(dynamicNotch.playerManager)
-                            PlaybackPositionView()
+                            PlaybackPositionView(sliderHeight: 6, inline: true)
                                 .environmentObject(dynamicNotch.playerManager)
                         }
                         .frame(width: dynamicNotch.notchWidth * 0.75)

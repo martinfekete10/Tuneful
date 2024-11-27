@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - DynamicNotch
 
 public class DynamicNotch<Content>: ObservableObject where Content: View {
-    public var windowController: NSWindowController? // Make public in case user wants to modify the NSPanel
+    public var windowController: HoverTrackingWindowController? // Make public in case user wants to modify the NSPanel
     
     // Player manager
     @Published var playerManager: PlayerManager
@@ -26,7 +26,8 @@ public class DynamicNotch<Content>: ObservableObject where Content: View {
     @Published var notchHeight: CGFloat = 0
 
     // Notch Closing Properties
-    @Published var isMouseInside: Bool = false // If the mouse is inside, the notch will not auto-hide
+    @Published var isMouseInside: Bool = false
+    
     private var timer: Timer?
     var workItem: DispatchWorkItem?
     private var subscription: AnyCancellable?
@@ -123,7 +124,7 @@ public extension DynamicNotch {
         guard isVisible else { return }
 
         guard !isMouseInside else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
                 self.hide()
             }
             return
@@ -133,12 +134,12 @@ public extension DynamicNotch {
             self.isVisible = false
         }
 
-        timer = Timer.scheduledTimer(
-            withTimeInterval: maxAnimationDuration,
-            repeats: false
-        ) { _ in
-            self.deinitializeWindow()
-        }
+//        timer = Timer.scheduledTimer(
+//            withTimeInterval: maxAnimationDuration,
+//            repeats: false
+//        ) { _ in
+//            self.deinitializeWindow()
+//        }
     }
 
     /// Toggle the DynamicNotch's visibility.
@@ -193,9 +194,14 @@ extension DynamicNotch {
 
         let view: NSView = {
             switch notchStyle {
-            case .notch: NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white))
-            case .floating: NSHostingView(rootView: NotchlessView(dynamicNotch: self))
-            case .auto: screen.hasNotch ? NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white)) : NSHostingView(rootView: NotchlessView(dynamicNotch: self))
+            case .notch:
+                NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white))
+            case .floating:
+                NSHostingView(rootView: NotchlessView(dynamicNotch: self))
+            case .auto:
+                screen.hasNotch
+                    ? NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white))
+                    : NSHostingView(rootView: NotchlessView(dynamicNotch: self))
             }
         }()
 
@@ -220,5 +226,16 @@ extension DynamicNotch {
         guard let windowController else { return }
         windowController.close()
         self.windowController = nil
+    }
+    
+    // Handle mouse events
+    private func handleMouseEntered() {
+        print("Perform action on mouse hover")
+        // Add your method execution here
+    }
+
+    private func handleMouseExited() {
+        print("Perform action on mouse exit")
+        // Optional: Add exit handling here
     }
 }

@@ -446,6 +446,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
         let hostedOnboardingView = NSHostingView(rootView: rootView)
         miniPlayerWindow.contentView = hostedOnboardingView
+        toggleMiniPlayerWindowLevel()
     }
     
     // MARK: Settings
