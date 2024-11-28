@@ -24,7 +24,7 @@ public class PlayerManager: ObservableObject {
 //    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
     
     var name: String { musicApp.appName }
-    var isRunning: Bool { musicApp.isRunning }
+    var isRunning: Bool { musicApp.isRunning() }
     var notification: String { musicApp.appNotification }
     
     // Notifications
@@ -185,7 +185,7 @@ public class PlayerManager: ObservableObject {
     
     @objc private func popoverIsOpening(_ notification: NSNotification) {
         if !showPlayerWindow {
-            self.timerStartSignal.send()
+            self.startTimer()
         }
         self.audioDevices = AudioDevice.output.filter { $0.transportType != .virtual }
         self.getVolume()
@@ -196,14 +196,10 @@ public class PlayerManager: ObservableObject {
     
     @objc private func popoverIsClosing(_ notification: NSNotification) {
         if !showPlayerWindow {
-            self.timerStopSignal.send()
+            self.stopTimer()
         }
         
         popoverIsShown = false
-    }
-    
-    @objc func test(_ sender: NSNotification?) {
-        print("rerererere")
     }
     
     // MARK: Notification Handlers
@@ -213,6 +209,12 @@ public class PlayerManager: ObservableObject {
         
         let musicAppKilled = sender?.userInfo?["Player State"] as? String == "Stopped"
         let isRunningFromNotification = !musicAppKilled && isRunning
+        
+        if musicAppKilled || !musicApp.isRunning() {
+            self.track = Track()
+            self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+            return
+        }
 
         self.musicApp.refreshInfo {  // Needs to be refreshed for system player to load song info asynchronously
             self.getPlayState()
@@ -300,11 +302,9 @@ public class PlayerManager: ObservableObject {
     }
     
     func updateAlbumArt(newAlbumArt: FetchedAlbumArt) {
-        DispatchQueue.main.async {
-            withAnimation(.none) {
-                self.track.nsAlbumArt = newAlbumArt.nsImage
-                self.track.albumArt = newAlbumArt.image
-            }
+        withAnimation {
+            self.track.nsAlbumArt = newAlbumArt.nsImage
+            self.track.albumArt = newAlbumArt.image
         }
     }
     
@@ -394,10 +394,12 @@ public class PlayerManager: ObservableObject {
     // MARK: Timer
     
     func startTimer() {
+        if !musicApp.isRunning() { return }
         self.timerStartSignal.send()
     }
     
     func stopTimer() {
+        if !musicApp.isRunning() { return }
         self.timerStopSignal.send()
     }
 

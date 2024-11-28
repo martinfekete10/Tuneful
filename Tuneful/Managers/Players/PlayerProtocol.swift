@@ -21,7 +21,6 @@ protocol PlayerProtocol {
     
     var playerPosition: Double? { get }
     var isPlaying: Bool { get }
-    var isRunning: Bool { get }
     var volume: CGFloat { get }
     var isLikeAuthorized: Bool { get }
     var shuffleIsOn: Bool { get }
@@ -52,6 +51,8 @@ protocol PlayerProtocol {
     func seekTrack(seekerPosition: CGFloat) -> Void
     
     func setVolume(volume: Int) -> Void
+    
+    func isRunning() -> Bool
 }
 
 extension PlayerProtocol {

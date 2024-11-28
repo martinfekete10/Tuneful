@@ -39,7 +39,7 @@ struct NotchView<Content>: View where Content: View {
                             PlaybackPositionView(sliderHeight: 6, inline: true)
                                 .environmentObject(dynamicNotch.playerManager)
                         }
-                        .frame(width: dynamicNotch.notchWidth * 0.75)
+                        .frame(width: dynamicNotch.notchWidth * 0.8)
                         .padding(.bottom, 15)
                     }
                 }
@@ -51,6 +51,16 @@ struct NotchView<Content>: View where Content: View {
                         dynamicNotch.isMouseInside = hovering
                     }
                 }
+//                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global).onEnded { value in
+//                    let horizontalAmount = value.translation.width
+//                    let verticalAmount = value.translation.height
+//                    
+//                    if abs(horizontalAmount) > abs(verticalAmount) {
+//                        print(horizontalAmount < 0 ? "left swipe" : "right swipe")
+//                    } else {
+//                        print(verticalAmount < 0 ? "up swipe" : "down swipe")
+//                    }
+//                })
                 .onChange(of: dynamicNotch.isMouseInside) { isMouseInside in
                     if isMouseInside {
                         dynamicNotch.playerManager.startTimer()
@@ -76,7 +86,7 @@ struct NotchView<Content>: View where Content: View {
                         }
                     }
                 }
-                .shadow(color: .black.opacity(0.5), radius: dynamicNotch.isVisible ? 10 : 0)
+                .shadow(color: .black.opacity(0.6), radius: dynamicNotch.isVisible ? 10 : 0)
                 .animation(dynamicNotch.animation, value: dynamicNotch.contentID)
 
                 Spacer()

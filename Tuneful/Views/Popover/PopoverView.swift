@@ -20,7 +20,7 @@ struct PopoverView: View {
                 VisualEffectView(material: .popover, blendingMode: .withinWindow)
             }
             
-            if !playerManager.isRunning || playerManager.track.isEmpty() {
+            if !playerManager.musicApp.isRunning() || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
                     .font(.system(size: 14, weight: .regular))

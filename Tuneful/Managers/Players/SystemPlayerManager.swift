@@ -25,7 +25,6 @@ class SystemPlayerManager: PlayerProtocol {
     
     public var playerPosition: Double? { 50 }
     public var isPlaying: Bool { getIsPlaying() }
-    public var isRunning: Bool = true
     public var volume: CGFloat { 50 }
     public var isLikeAuthorized: Bool { false }
     public var shuffleIsOn: Bool { false }
@@ -121,6 +120,10 @@ class SystemPlayerManager: PlayerProtocol {
     
     func setVolume(volume: Int) {
         return // TODO
+    }
+    
+    func isRunning() -> Bool {
+        return true
     }
     
     // MARK: Private methods

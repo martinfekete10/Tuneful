@@ -24,7 +24,6 @@ class AppleMusicManager: PlayerProtocol {
     
     public var playerPosition: Double? { app.playerPosition }
     public var isPlaying: Bool { app.playerState == .playing }
-    public var isRunning: Bool { app.isRunning }
     public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) }
     public var isLikeAuthorized: Bool = true
     public var shuffleIsOn: Bool { app.shuffleEnabled ?? false }
@@ -118,5 +117,13 @@ class AppleMusicManager: PlayerProtocol {
     
     func setVolume(volume: Int) {
         app.setSoundVolume?(volume)
+    }
+    
+    func isRunning() -> Bool {
+        let workspace = NSWorkspace.shared
+        
+        return workspace.runningApplications.contains { app in
+            app.bundleIdentifier == self.bundleId
+        }
     }
 }
