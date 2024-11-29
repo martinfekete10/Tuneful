@@ -4,6 +4,7 @@
 -   New music slider which now looks and feels native
 -   Refactored the logic that fetches song information which makes the app feel snappier
 -   Added more animations to the UI so the app feels more fluid
+-   Fixed the bug when Spotify was opened in the background even if killed by the user
 -   Fixed the bug when mini player floating preference was ignored on app restart
 
 # 1.7.1 - Mini player improvement and various bug fixes

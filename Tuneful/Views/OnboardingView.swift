@@ -118,7 +118,7 @@ struct AppPicker: View {
             .pickerStyle(.menu)
             
             if !ConnectedApps.spotify.isInstalled {
-                Text("Apple Music is the only avaiable music app as Spotify was not found")
+                Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -128,7 +128,6 @@ struct AppPicker: View {
 }
 
 struct Details: View {
-    
     @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
     
@@ -163,7 +162,7 @@ struct Details: View {
                     showAlert = true
                     viewedOnboarding = true
                 case .closed:
-                    alertTitle = Text("\(name) is not open")
+                    alertTitle = Text("\(name) is not opened")
                     alertMessage = Text("Please open \(name) to enable permissions")
                     showAlert = true
                     success = false

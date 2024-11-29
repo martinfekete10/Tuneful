@@ -66,7 +66,7 @@ struct GeneralSettingsView: View {
                                 let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
                                 switch consent {
                                 case .closed:
-                                    alertTitle = Text("\(Text(connectedApp.localizedName)) is not open")
+                                    alertTitle = Text("\(Text(connectedApp.localizedName)) is not opened")
                                     alertMessage = Text("Please open \(Text(connectedApp.localizedName)) to enable permissions")
                                 case .granted:
                                     alertTitle = Text("Permission granted for \(Text(connectedApp.localizedName))")
@@ -89,7 +89,7 @@ struct GeneralSettingsView: View {
                         .padding(8)
                         
                         if !ConnectedApps.spotify.isInstalled {
-                            Text("Apple Music is the only avaiable music app as Spotify was not found")
+                            Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                                 .padding(.bottom, 4)

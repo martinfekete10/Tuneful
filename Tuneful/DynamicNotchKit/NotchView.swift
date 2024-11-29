@@ -47,8 +47,8 @@ struct NotchView<Content>: View where Content: View {
                 .frame(minWidth: dynamicNotch.notchWidth)
                 .onHover { hovering in
                     withAnimation(dynamicNotch.animation) {
-                        dynamicNotch.isVisible = hovering
                         dynamicNotch.isMouseInside = hovering
+                        dynamicNotch.isVisible = hovering
                     }
                 }
 //                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global).onEnded { value in
