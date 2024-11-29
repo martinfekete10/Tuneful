@@ -1,7 +1,8 @@
 name: "Create Release"
 on:
-    issue_comment:
-        types: [created]
+  push:
+    branches:
+      - main
 
 concurrency:
     group: publish-release${{ github.ref }}
