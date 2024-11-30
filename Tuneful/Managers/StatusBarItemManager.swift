@@ -16,6 +16,12 @@ class StatusBarItemManager: ObservableObject {
     @AppStorage("scrollingTrackInfo") var scrollingTrackInfo: Bool = false
     @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusic: Bool = true
     
+    @ObservedObject var playerManager: PlayerManager
+    
+    init(playerManager: PlayerManager) {
+        self.playerManager = playerManager
+    }
+    
     public func getMenuBarView(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> NSView {
         let title = self.getStatusBarTrackInfo(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
         let image = self.getImage(track: track, playerAppIsRunning: playerAppIsRunning, isPlaying: isPlaying)
@@ -110,10 +116,10 @@ class StatusBarItemManager: ObservableObject {
                 return AnyView(
                     Rectangle()
                         .fill(Color(nsColor: track.nsAlbumArt.averageColor ?? .white).gradient)
-                        .mask { AudioSpectrumView(isPlaying: isPlaying) }
+                        .mask { AudioSpectrumView().environmentObject(playerManager) }
                 )
             } else {
-                return AnyView(AudioSpectrumView(isPlaying: isPlaying))
+                return AnyView(AudioSpectrumView().environmentObject(playerManager))
             }
         }
         

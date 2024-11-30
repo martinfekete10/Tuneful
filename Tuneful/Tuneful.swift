@@ -126,7 +126,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 //        }
         
         self.playerManager = PlayerManager()
-        self.statusBarItemManager = StatusBarItemManager()
+        self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
         
         NotificationCenter.default.addObserver(

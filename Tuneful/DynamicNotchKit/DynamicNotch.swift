@@ -20,6 +20,7 @@ public class DynamicNotch<Content>: ObservableObject where Content: View {
     @Published var content: () -> Content
     @Published var contentID: UUID
     @Published var isVisible: Bool = false // Used to animate the fading in/out of the user's view
+    @Published var isNotificationVisible: Bool = false // Used to animate the fading in/out of the user's view
 
     // Notch Size
     @Published var notchWidth: CGFloat = 0
@@ -71,6 +72,17 @@ public class DynamicNotch<Content>: ObservableObject where Content: View {
 // MARK: - Public
 
 public extension DynamicNotch {
+    
+    func updateNotchWidth(isPlaying: Bool) {
+        withAnimation(self.animation) {
+            if isPlaying {
+                self.refreshNotchSize(NSScreen.screens[0])
+                self.notchWidth += 90
+            } else {
+                self.refreshNotchSize(NSScreen.screens[0])
+            }
+        }
+    }
 
     /// Set this DynamicNotch's content.
     /// - Parameter content: A SwiftUI View
@@ -110,6 +122,7 @@ public extension DynamicNotch {
         DispatchQueue.main.async {
             withAnimation(self.animation) {
                 self.isVisible = true
+                self.isNotificationVisible = true
             }
         }
 
@@ -132,14 +145,8 @@ public extension DynamicNotch {
 
         withAnimation(animation) {
             self.isVisible = false
+            self.isNotificationVisible = false
         }
-
-//        timer = Timer.scheduledTimer(
-//            withTimeInterval: maxAnimationDuration,
-//            repeats: false
-//        ) { _ in
-//            self.deinitializeWindow()
-//        }
     }
 
     /// Toggle the DynamicNotch's visibility.

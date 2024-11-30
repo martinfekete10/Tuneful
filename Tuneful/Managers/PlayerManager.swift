@@ -213,6 +213,7 @@ public class PlayerManager: ObservableObject {
         if musicAppKilled || !musicApp.isRunning() {
             self.track = Track()
             self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+            self.notchInfo.updateNotchWidth(isPlaying: false)
             return
         }
 
@@ -303,6 +304,7 @@ public class PlayerManager: ObservableObject {
     
     func updateAlbumArt(newAlbumArt: FetchedAlbumArt) {
         withAnimation {
+            self.track.avgAlbumColor = Color(nsColor: newAlbumArt.nsImage.averageColor ?? .gray)
             self.track.nsAlbumArt = newAlbumArt.nsImage
             self.track.albumArt = newAlbumArt.image
         }

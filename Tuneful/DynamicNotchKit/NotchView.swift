@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NotchView<Content>: View where Content: View {
     @ObservedObject var dynamicNotch: DynamicNotch<Content>
-
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -17,30 +17,30 @@ struct NotchView<Content>: View where Content: View {
 
                 VStack(spacing: 0) {
                     Spacer()
-                        .frame(width: dynamicNotch.notchWidth + 20, height: dynamicNotch.notchHeight)
-                    // We add an extra 20 here because the corner radius of the top increases when shown.
-                    // (the remaining 10 has already been accounted for in refreshNotchSize)
-
-                    dynamicNotch.content()
-                        .id(dynamicNotch.contentID)
-                        .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 15) }
-                        .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 15) }
-                        .safeAreaInset(edge: .trailing, spacing: 0) { Color.clear.frame(width: 15) }
-                        .blur(radius: dynamicNotch.isVisible ? 0 : 10)
-                        .scaleEffect(dynamicNotch.isVisible ? 1 : 0.8)
-                        .offset(y: dynamicNotch.isVisible ? 0 : 5)
-                        .padding(.horizontal, 15) // Small corner radius of the TOP of the notch
-                        .transition(.blur.animation(.smooth))
+                        .frame(width: dynamicNotch.notchWidth, height: dynamicNotch.notchHeight)
+                    
+                    if dynamicNotch.isNotificationVisible && !dynamicNotch.isMouseInside {
+                        InfoView(playerManager: dynamicNotch.playerManager)
+                            .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 15) }
+                            .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 15) }
+                            .safeAreaInset(edge: .trailing, spacing: 0) { Color.clear.frame(width: 15) }
+                            .blur(radius: dynamicNotch.isVisible ? 0 : 10)
+                            .scaleEffect(dynamicNotch.isVisible ? 1 : 0.8)
+                            .offset(y: dynamicNotch.isVisible ? 0 : 5)
+                            .padding(.horizontal, 15) // Small corner radius of the TOP of the notch
+                            .transition(.blur.animation(.smooth))
+                    }
                     
                     if dynamicNotch.isMouseInside {
-                        VStack {
-                            PlaybackButtonsView(playButtonSize: 20)
-                                .environmentObject(dynamicNotch.playerManager)
-                            PlaybackPositionView(sliderHeight: 6, inline: true)
-                                .environmentObject(dynamicNotch.playerManager)
-                        }
-                        .frame(width: dynamicNotch.notchWidth * 0.8)
-                        .padding(.bottom, 15)
+                        PlayerView(playerManager: dynamicNotch.playerManager)
+                            .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 15) }
+                            .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 15) }
+                            .safeAreaInset(edge: .trailing, spacing: 0) { Color.clear.frame(width: 15) }
+                            .blur(radius: dynamicNotch.isVisible ? 0 : 10)
+                            .scaleEffect(dynamicNotch.isVisible ? 1 : 0.8)
+                            .offset(y: dynamicNotch.isVisible ? 0 : 5)
+                            .padding(.horizontal, 15) // Small corner radius of the TOP of the notch
+                            .transition(.blur.animation(.smooth))
                     }
                 }
                 .fixedSize()
@@ -51,16 +51,6 @@ struct NotchView<Content>: View where Content: View {
                         dynamicNotch.isVisible = hovering
                     }
                 }
-//                .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .global).onEnded { value in
-//                    let horizontalAmount = value.translation.width
-//                    let verticalAmount = value.translation.height
-//                    
-//                    if abs(horizontalAmount) > abs(verticalAmount) {
-//                        print(horizontalAmount < 0 ? "left swipe" : "right swipe")
-//                    } else {
-//                        print(verticalAmount < 0 ? "up swipe" : "down swipe")
-//                    }
-//                })
                 .onChange(of: dynamicNotch.isMouseInside) { isMouseInside in
                     if isMouseInside {
                         dynamicNotch.playerManager.startTimer()
@@ -88,10 +78,68 @@ struct NotchView<Content>: View where Content: View {
                 }
                 .shadow(color: .black.opacity(0.6), radius: dynamicNotch.isVisible ? 10 : 0)
                 .animation(dynamicNotch.animation, value: dynamicNotch.contentID)
-
+                
                 Spacer()
             }
             Spacer()
+        }
+    }
+}
+
+struct InfoView: View {
+    @ObservedObject private var playerManager: PlayerManager
+
+    init(playerManager: PlayerManager) {
+        self.playerManager = playerManager
+    }
+    
+    public var body: some View {
+        VStack(alignment: .trailing) {
+            HStack(alignment: .center, spacing: 8) {
+                playerManager.track.albumArt
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .cornerRadius(5)
+                Text(playerManager.track.title)
+                    .font(.headline)
+                    .lineLimit(1)
+                Text(playerManager.track.artist)
+                    .foregroundStyle(.secondary)
+                    .font(.headline)
+                    .lineLimit(1)
+            }
+        }
+    }
+}
+
+struct PlayerView: View {
+    @ObservedObject private var playerManager: PlayerManager
+
+    init(playerManager: PlayerManager) {
+        self.playerManager = playerManager
+    }
+    
+    public var body: some View {
+        HStack(spacing: 10) {
+            AlbumArtView(imageSize: 80)
+                .environmentObject(playerManager)
+                .padding(5)
+            
+            VStack(alignment: .center) {
+                Text(playerManager.track.title)
+                    .font(.headline)
+                    .lineLimit(1)
+                Text(playerManager.track.artist)
+                    .foregroundStyle(.secondary)
+                    .font(.caption2)
+                    .lineLimit(1)
+                PlaybackButtonsView(playButtonSize: 20)
+                    .environmentObject(playerManager)
+                PlaybackPositionView(sliderHeight: 6, inline: true)
+                    .environmentObject(playerManager)
+            }
+            .frame(width: 250)
         }
     }
 }

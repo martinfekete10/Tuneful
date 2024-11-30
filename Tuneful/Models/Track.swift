@@ -14,6 +14,7 @@ struct Track: Equatable {
     var album: String = ""
     var albumArt: Image = Image(.defaultAlbumart)
     var nsAlbumArt: NSImage = NSImage()
+    var avgAlbumColor: Color = .gray
     var duration: CGFloat = 0.0
     var isLoved: Bool = false
     var isPodcast: Bool { self.duration > Constants.podcastThresholdDurationSec }

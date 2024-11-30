@@ -40,6 +40,10 @@ public class DynamicNotchInfo {
         }
     }
     
+    public func updateNotchWidth(isPlaying: Bool) {
+        internalDynamicNotch.updateNotchWidth(isPlaying: isPlaying)
+    }
+    
     public func refreshContent() {
         internalDynamicNotch.refreshContent()
     }
@@ -59,7 +63,6 @@ public class DynamicNotchInfo {
 
 public extension DynamicNotchInfo {
     struct InfoView: View {
-        @State private var isTapped: Bool = false
         @ObservedObject private var playerManager: PlayerManager
 
         init(playerManager: PlayerManager) {
