@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE08CE132CFC74E200F047CB /* SettingsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */; };
 		FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */; };
 		FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */; };
 		FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F82CBC1B09001C13CE /* NSScreen+Extensions.swift */; };
@@ -30,6 +31,7 @@
 		FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */; };
 		FE31AED02CF50708002818ED /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */; };
 		FE31AEDA2CF7CBAA002818ED /* ScrollWheelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31AED92CF7CBA3002818ED /* ScrollWheelModifier.swift */; };
+		FE31AEDC2CFBCB76002818ED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31AEDB2CFBCB71002818ED /* SettingsView.swift */; };
 		FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37A0322A829623006FBA5B /* MusicControl.swift */; };
 		FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */; };
 		FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */; };
@@ -106,6 +108,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindow.swift; sourceTree = "<group>"; };
 		FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedAlbumArt.swift; sourceTree = "<group>"; };
 		FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurModifier.swift; sourceTree = "<group>"; };
 		FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotch.swift; sourceTree = "<group>"; };
@@ -129,6 +132,7 @@
 		FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 		FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
 		FE31AED92CF7CBA3002818ED /* ScrollWheelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollWheelModifier.swift; sourceTree = "<group>"; };
+		FE31AEDB2CFBCB71002818ED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FE37A0322A829623006FBA5B /* MusicControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControl.swift; sourceTree = "<group>"; };
 		FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
 		FE4414B72AB4999600A73246 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
@@ -268,6 +272,7 @@
 		FE3189DB2A7B9D0B006B2D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FE31AEDB2CFBCB71002818ED /* SettingsView.swift */,
 				FE2554A12CA9CA93003DAB77 /* HoverButton.swift */,
 				FE25549E2CA9C488003DAB77 /* MenuBar */,
 				FE25549D2CA9C471003DAB77 /* Playback */,
@@ -284,6 +289,7 @@
 		FE3189FB2A7C3CEC006B2D59 /* Windows */ = {
 			isa = PBXGroup;
 			children = (
+				FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */,
 				FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */,
 				FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */,
 			);
@@ -587,6 +593,7 @@
 				FE6BFD022A73AB9A00D3321F /* MusicApplication.swift in Sources */,
 				FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */,
 				FE6BFD032A73AB9A00D3321F /* SpotifyApplication.swift in Sources */,
+				FE31AEDC2CFBCB76002818ED /* SettingsView.swift in Sources */,
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,
 				FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */,
 				FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */,
@@ -604,6 +611,7 @@
 				FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */,
 				FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */,
 				FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */,
+				FE08CE132CFC74E200F047CB /* SettingsWindow.swift in Sources */,
 				FE2554A22CA9CA93003DAB77 /* HoverButton.swift in Sources */,
 				FE4C92152B6143CC00FF79BE /* MarqueeTextView.swift in Sources */,
 				FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */,

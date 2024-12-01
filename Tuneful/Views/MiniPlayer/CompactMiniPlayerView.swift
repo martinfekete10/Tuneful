@@ -41,9 +41,8 @@ struct CompactMiniPlayerView: View {
                     .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                     .dragWindowWithClick()
 
-                PlaybackButtonsView(playButtonSize: 20, hideShuffleAndRepeat: true)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 10)
+                PlaybackButtonsView(playButtonSize: 17.5, hideShuffleAndRepeat: true, spacing: 17.5)
+                    .padding(15)
                     .background(
                         VisualEffectView(material: .popover, blendingMode: .withinWindow)
                             .overlay {

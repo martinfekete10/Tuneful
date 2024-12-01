@@ -77,19 +77,15 @@ public extension DynamicNotchInfo {
                 VStack(alignment: .leading) {
                     Text(playerManager.track.title)
                         .font(.headline)
+                        .lineLimit(1)
                     Text(playerManager.track.artist)
                         .foregroundStyle(.secondary)
                         .font(.caption2)
-                        .opacity(1)
+                        .lineLimit(1)
                 }
-                
-                Spacer(minLength: 0)
             }
             .frame(height: 50)
             .frame(maxWidth: 250)
-            .tapAnimation {
-                playerManager.openMusicApp()
-            }
         }
     }
 }

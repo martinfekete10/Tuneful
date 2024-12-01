@@ -38,7 +38,6 @@ struct MiniPlayerView: View {
                     ZStack {
                         AlbumArtView(imageSize: self.imageSize)
                             .padding(.leading, 7)
-                            .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                             .dragWindowWithClick()
                         
                         AddToFavoritesView()
@@ -72,7 +71,7 @@ struct MiniPlayerView: View {
                             PlaybackPositionView()
                         }
                         
-                        PlaybackButtonsView(playButtonSize: 20, spacing: 10)
+                        PlaybackButtonsView(playButtonSize: 17.5, spacing: 12.5)
                     }
                     .padding()
                     .opacity(0.8)

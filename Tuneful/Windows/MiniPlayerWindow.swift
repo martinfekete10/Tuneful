@@ -9,7 +9,6 @@ import SwiftUI
 import AppKit
 
 class MiniPlayerWindow: NSWindow {
-    
     @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
     @AppStorage("windowPosition") var savedPosition: String = "10,0"
     

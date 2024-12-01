@@ -14,16 +14,11 @@ struct AlbumArtView: View {
     
     var body: some View {
         ZStack {
-//            playerManager.track.albumArt
-//                .resizable()
-//            
-//            VisualEffectView(material: .popover, blendingMode: .withinWindow)
-            
             playerManager.track.albumArt
                 .resizable()
                 .frame(width: self.imageSize, height: self.imageSize)
                 .cornerRadius(10)
-//                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 2)
                 .tapAnimation(scale: 1.2, duration: 0.4) {
                     self.playerManager.openMusicApp()
                 }

@@ -9,6 +9,7 @@ import SwiftUI
 import Sparkle
 import KeyboardShortcuts
 import Settings
+import Luminare
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("popoverType") var popoverType: PopoverType = .full
@@ -43,6 +44,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         updaterDelegate: nil,
         userDriverDelegate: nil
     )
+    
+    private var settingsWindow = LuminareTrafficLightedWindow<SettingsView>(view: { SettingsView() })
     
     // Settings
     let GeneralSettingsViewController: () -> SettingsPane = {
@@ -125,6 +128,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 //            UserDefaults.standard.removePersistentDomain(forName: bundleID)
 //        }
         
+        self.settingsWindow.isReleasedWhenClosed = false
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
@@ -141,6 +145,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         } else {
             self.mainSetup()
         }
+    }
+    
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        return true
     }
     
     private func mainSetup() {
@@ -224,7 +232,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusBarMenu.addItem(
             withTitle: "Settings...",
-            action: #selector(openSettings),
+            action: #selector(openSettingsWindow),
             keyEquivalent: ""
         )
         
@@ -444,9 +452,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
-        let hostedOnboardingView = NSHostingView(rootView: rootView)
-        miniPlayerWindow.contentView = hostedOnboardingView
+        let miniPlayerView = NSHostingView(rootView: rootView)
+        miniPlayerWindow.contentView = miniPlayerView
         toggleMiniPlayerWindowLevel()
+    }
+    
+    // MARK: New settings
+    
+    @objc func openSettingsWindow() {
+        settingsWindow.orderFrontRegardless()
+        settingsWindow.makeKeyAndOrderFront(nil)
+        NSApplication.shared.activate(ignoringOtherApps: true)
     }
     
     // MARK: Settings
@@ -488,7 +504,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     public func showOnboarding() {
         if onboardingWindow == nil {
             onboardingWindow = OnboardingWindow()
-            let rootView = OnboardingView()
+            let rootView = OnboardingView().cornerRadius(12.5)
             let hostedOnboardingView = NSHostingView(rootView: rootView)
             onboardingWindow.contentView = hostedOnboardingView
         }

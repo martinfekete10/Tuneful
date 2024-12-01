@@ -11,7 +11,7 @@ class OnboardingWindow: NSWindow {
     init() {
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: 500, height: 200),
-            styleMask: [.titled, .fullSizeContentView],
+            styleMask: [.borderless],
             backing: .buffered,
             defer: false
         )
@@ -20,5 +20,6 @@ class OnboardingWindow: NSWindow {
         self.isMovableByWindowBackground = true
         self.isReleasedWhenClosed = true
         self.level = .floating
+        self.backgroundColor = NSColor.clear
     }
 }

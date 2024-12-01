@@ -213,7 +213,6 @@ public class PlayerManager: ObservableObject {
         if musicAppKilled || !musicApp.isRunning() {
             self.track = Track()
             self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
-            self.notchInfo.updateNotchWidth(isPlaying: false)
             return
         }
 

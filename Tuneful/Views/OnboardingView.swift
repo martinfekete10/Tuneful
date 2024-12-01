@@ -8,11 +8,12 @@
 import SwiftUI
 import ScriptingBridge
 import KeyboardShortcuts
+import Luminare
 
 struct OnboardingView: View {
     
     private enum Steps {
-      case onAppPicker, onDetails, onShortcuts
+      case onAppPicker, onDetails, allDone
     }
     
     @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
@@ -28,6 +29,7 @@ struct OnboardingView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 60, height: 60)
+                            .padding(.bottom, 10)
                         
                         if step == .onAppPicker {
                             Text("1. Preferred Music App")
@@ -37,8 +39,8 @@ struct OnboardingView: View {
                             Text("2. Permissions")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                        } else if step == .onShortcuts {
-                            Text("3. Global Keyboard Shortcuts")
+                        } else if step == .allDone {
+                            Text("3. All Done!")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                         } else {
@@ -51,25 +53,25 @@ struct OnboardingView: View {
                         AppPicker()
                     } else if step == .onDetails {
                         Details(finishedAlert: $finishedAlert)
-                    } else if step == .onShortcuts {
-                        Shortcuts()
+                    } else if step == .allDone {
+                        AllDone()
                     } else {
                         EmptyView()
                     }
                 }
                 .frame(width: 400, height: 250)
                 .padding(.horizontal, 30)
-                .animation(.spring(), value: step)
+                .animation(Constants.SongTransitionAnimation, value: step)
                 
                 Divider()
-                    .frame(width: 250)
+                    .frame(width: 300)
                 
                 HStack {
                     if step == .onDetails {
                         Button("Back") {
                             step = .onAppPicker
                         }
-                    } else if step == .onShortcuts {
+                    } else if step == .allDone {
                         Button("Back") {
                             step = .onDetails
                         }
@@ -87,7 +89,7 @@ struct OnboardingView: View {
                         .keyboardShortcut(.defaultAction)
                     } else if step == .onDetails {
                         Button("Continue") {
-                            step = .onShortcuts
+                            step = .allDone
                         }
                         .keyboardShortcut(.defaultAction)
                         .disabled(!finishedAlert)
@@ -101,6 +103,13 @@ struct OnboardingView: View {
                 .frame(width: 150, height: 50)
             }
             .frame(width: 600, height: 500)
+            .background(
+                VisualEffectView(material: .popover, blendingMode: .behindWindow)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .strokeBorder(.quaternary, lineWidth: 1)
+            }
     }
 }
 
@@ -186,28 +195,14 @@ struct Details: View {
     }
 }
 
-struct Shortcuts: View {
+struct AllDone: View {
     var body: some View {
         VStack {
-            VStack(alignment: .center, content: {
-                Form {
-                    KeyboardShortcuts.Recorder("Play/pause:", name: .playPause)
-                    KeyboardShortcuts.Recorder("Next track:", name: .nextTrack)
-                    KeyboardShortcuts.Recorder("Previous track:", name: .previousTrack)
-                    KeyboardShortcuts.Recorder("Show/hide mini player:", name: .showMiniPlayer)
-                    KeyboardShortcuts.Recorder("Switch music player:", name: .changeMusicPlayer)
-                    KeyboardShortcuts.Recorder("Show/hide menu bar player:", name: .toggleMenuBarItemVisibility)
-                    KeyboardShortcuts.Recorder("Show/hide popover:", name: .togglePopover)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                
-                Text("You can always change these later")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.top, 5)
-            })
-            .padding(.horizontal, 50)
+            Text("""
+                 To fully customize Tuneful, right-click Tuneful icon in menu bar and go to Settings.
+             """)
+            .font(.caption)
+            .multilineTextAlignment(.center)
         }
-        .padding(.bottom, 90)
     }
 }

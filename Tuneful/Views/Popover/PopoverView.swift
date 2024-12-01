@@ -66,7 +66,7 @@ struct PopoverView: View {
                             PlaybackPositionView()
                         }
                         
-                        PlaybackButtonsView(playButtonSize: 25)
+                        PlaybackButtonsView(playButtonSize: 22.5, spacing: 17.5)
                             .padding(.vertical, 5)
                         
                         HStack {
