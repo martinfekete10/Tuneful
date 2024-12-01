@@ -63,7 +63,6 @@
 		FE7B09D22CB997F600FBB6F8 /* AppIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */; };
 		FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */; };
 		FE8CE1542C1E03F30053FDEA /* CompactPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */; };
-		FE8CE1562C1E09C00053FDEA /* PopoverSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1552C1E09C00053FDEA /* PopoverSettingsView.swift */; };
 		FE8CE1582C1E0B140053FDEA /* PopoverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1572C1E0B140053FDEA /* PopoverType.swift */; };
 		FE9FCF212CAEC0290015DF4D /* PlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */; };
 		FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */; };
@@ -73,7 +72,6 @@
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
 		FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */; };
 		FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */; };
-		FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */; };
 		FEE486E92B5D677400AB712F /* MiniPlayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E82B5D677400AB712F /* MiniPlayerType.swift */; };
 		FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */; };
 		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
@@ -168,7 +166,6 @@
 		FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcons.swift; sourceTree = "<group>"; };
 		FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtView.swift; sourceTree = "<group>"; };
 		FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactPopoverView.swift; sourceTree = "<group>"; };
-		FE8CE1552C1E09C00053FDEA /* PopoverSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverSettingsView.swift; sourceTree = "<group>"; };
 		FE8CE1572C1E0B140053FDEA /* PopoverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverType.swift; sourceTree = "<group>"; };
 		FE9781822C0CC1A0007217A1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FE9781842C0CC1A0007217A1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -180,7 +177,6 @@
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAppProvider.swift; sourceTree = "<group>"; };
 		FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMiniPlayerView.swift; sourceTree = "<group>"; };
-		FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerSettingsView.swift; sourceTree = "<group>"; };
 		FEE486E82B5D677400AB712F /* MiniPlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerType.swift; sourceTree = "<group>"; };
 		FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSettingsView.swift; sourceTree = "<group>"; };
 		FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extension.swift"; sourceTree = "<group>"; };
@@ -448,8 +444,6 @@
 				FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */,
 				FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */,
 				FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */,
-				FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */,
-				FE8CE1552C1E09C00053FDEA /* PopoverSettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -593,7 +587,6 @@
 				FE1A63022CBC1B09001C13CE /* BlurModifier.swift in Sources */,
 				FE1A63032CBC1B09001C13CE /* NotchlessView.swift in Sources */,
 				FE7955492CA2C9E8002026AA /* NSBezierPath+Extension.swift in Sources */,
-				FE8CE1562C1E09C00053FDEA /* PopoverSettingsView.swift in Sources */,
 				FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */,
 				FE5B3CA22AB0AC700038B6E4 /* PopoverView.swift in Sources */,
 				FE6BFD0C2A73B2D400D3321F /* NSImage+Extension.swift in Sources */,
@@ -603,7 +596,6 @@
 				FE31AEDC2CFBCB76002818ED /* SettingsView.swift in Sources */,
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,
 				FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */,
-				FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */,
 				FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */,
 				FEFFE5592B4FE00D000887B5 /* NSError+Extension.swift in Sources */,
 				FE31AEDA2CF7CBAA002818ED /* ScrollWheelModifier.swift in Sources */,

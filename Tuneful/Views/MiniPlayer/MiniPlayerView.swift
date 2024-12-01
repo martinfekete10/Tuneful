@@ -9,7 +9,7 @@ import SwiftUI
 import MediaPlayer
 
 struct MiniPlayerView: View {
-    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
+    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
     @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
     

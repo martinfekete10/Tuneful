@@ -11,7 +11,7 @@ import MediaPlayer
 struct CompactMiniPlayerView: View {
     
     @EnvironmentObject var playerManager: PlayerManager
-    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .albumArt
+    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
     @State private var isShowingPlaybackControls = false
     
     private var imageSize: CGFloat = 140.0

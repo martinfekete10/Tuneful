@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CompactPopoverView: View {
     @EnvironmentObject var playerManager: PlayerManager
-    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .albumArt
+    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
     @State private var isShowingPlaybackControls = false
     
     var body: some View {

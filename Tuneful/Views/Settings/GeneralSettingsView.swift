@@ -21,19 +21,6 @@ struct GeneralSettingsView: View {
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
     @State private var showingAlert = false
-    @State private var connectedApp: ConnectedApps
-    @State private var showSongNotification: Bool
-    @State private var notificationDuration: Double
-    
-    init() {
-        @AppStorage("connectedApp") var connectedAppAppStorage = ConnectedApps.appleMusic
-        @AppStorage("showSongNotification") var showSongNotificationAppStorage = true
-        @AppStorage("notificationDuration") var notificationDurationAppStorage = 2.0
-        
-        self.connectedApp = connectedAppAppStorage
-        self.showSongNotification = showSongNotificationAppStorage
-        self.notificationDuration = notificationDurationAppStorage
-    }
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
@@ -53,32 +40,32 @@ struct GeneralSettingsView: View {
                             
                             Spacer()
                             
-                            Picker("", selection: $connectedApp) {
+                            Picker("", selection: $connectedAppAppStorage) {
                                 ForEach(ConnectedApps.allCases.filter { $0.isInstalled }, id: \.self) { value in
                                     Text(value.localizedName)
                                         .tag(value)
                                 }
                             }
                             .frame(width: 150)
-                            .onChange(of: connectedApp) { _ in
-                                self.connectedAppAppStorage = connectedApp
-                            }
+//                            .onChange(of: connectedApp) { _ in
+//                                self.connectedAppAppStorage = connectedApp
+//                            }
                             .pickerStyle(.menu)
                             
                             Button {
-                                let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                                let consent = Helper.promptUserForConsent(for: connectedAppAppStorage == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
                                 switch consent {
                                 case .closed:
-                                    alertTitle = Text("\(Text(connectedApp.localizedName)) is not opened")
-                                    alertMessage = Text("Please open \(Text(connectedApp.localizedName)) to enable permissions")
+                                    alertTitle = Text("\(Text(connectedAppAppStorage.localizedName)) is not opened")
+                                    alertMessage = Text("Please open \(Text(connectedAppAppStorage.localizedName)) to enable permissions")
                                 case .granted:
-                                    alertTitle = Text("Permission granted for \(Text(connectedApp.localizedName))")
+                                    alertTitle = Text("Permission granted for \(Text(connectedAppAppStorage.localizedName))")
                                     alertMessage = Text("Start playing a song!")
                                 case .notPrompted:
                                     return
                                 case .denied:
                                     alertTitle = Text("Permission denied")
-                                    alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(Text(connectedApp.localizedName)) under Tuneful")
+                                    alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(Text(connectedAppAppStorage.localizedName)) under Tuneful")
                                 }
                                 showingAlert = true
                             } label: {
@@ -99,20 +86,6 @@ struct GeneralSettingsView: View {
                         }
                     }
                 }
-                    
-                LuminareSection("Notifications") {
-                    LuminareToggle("Show notification on song change", isOn: $showSongNotificationAppStorage)
-                    
-                    LuminareSliderPicker(
-                        "Notification duration",
-                        Array(stride(from: 0.5, through: 5.0, by: 0.5)),
-                        selection: $notificationDurationAppStorage
-                    ) { value in
-                        LocalizedStringKey("\(value, specifier: "%.1f") s")
-                    }
-                    .disabled(!self.showSongNotificationAppStorage)
-                }
-                .padding(.top, 10)
             }
         }
     }

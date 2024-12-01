@@ -13,7 +13,6 @@ struct NotchSettingsView: View {
     @AppStorage("showSongNotification") private var showSongNotification = true
     @AppStorage("notificationDuration") private var notificationDuration = 2.0
     @AppStorage("notchPlayerEnabled") private var notchPlayerEnabled = true
-    @AppStorage("notchPlayerOnClick") private var notchPlayerOnClick = false
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
@@ -30,11 +29,16 @@ struct NotchSettingsView: View {
                     }
                     .disabled(!self.showSongNotification)
                 }
+                .padding(.bottom, 10)
                 
                 LuminareSection("Notch player") {
                     LuminareToggle("Enable notch player", isOn: $notchPlayerEnabled)
-                    LuminareToggle("Only show notch player on notch click", isOn: $notchPlayerOnClick)
                 }
+                
+                Text("For Macs without notch, this will be displayed as floating window on top of the screen. You can hover over the middle of the screen top to show it.")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                    .padding(7)
             }
         }
     }

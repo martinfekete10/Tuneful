@@ -10,47 +10,14 @@ import Settings
 import Luminare
 
 struct AppearanceSettingsView: View {
-    @AppStorage("popoverType") var popoverTypeAppStorage: PopoverType = .full
-    @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .albumArt
-    @AppStorage("popoverIsEnabled") var popoverIsEnabledAppStorage: Bool = true
+    @AppStorage("popoverType") var popoverType: PopoverType = .full
+    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
+    @AppStorage("popoverIsEnabled") var popoverIsEnabled: Bool = true
     
-    // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
-    // and @AppStorage variable  is updated whenever the state changes using .onChange()
-    @State var popoverType: PopoverType
-    @State var popoverBackground: BackgroundType
-    @State var popoverIsEnabled: Bool
-    
-    @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
-    @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
-    @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .minimal
-    @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTopAppStorage: Bool = true
-    
-    // A bit of a hack, binded AppStorage variable doesn't refresh UI, first we read the app storage this way
-    // and @AppStorage variable  is updated whenever the state changes using .onChange()
-    @State var miniPlayerBackground: BackgroundType
-    @State var showPlayerWindow: Bool
-    @State var miniPlayerType: MiniPlayerType
-    @State var miniPlayerWindowOnTop: Bool
-    
-    init() {
-        @AppStorage("popoverType") var popoverTypeAppStorage: PopoverType = .full
-        @AppStorage("popoverBackground") var popoverBackgroundAppStorage: BackgroundType = .albumArt
-        @AppStorage("popoverIsEnabled") var popoverIsEnabledAppStorage: Bool = true
-        
-        self.popoverType = popoverTypeAppStorage
-        self.popoverBackground = popoverBackgroundAppStorage
-        self.popoverIsEnabled = popoverIsEnabledAppStorage
-        
-        @AppStorage("miniPlayerBackground") var miniPlayerBackgroundAppStorage: BackgroundType = .albumArt
-        @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
-        @AppStorage("miniPlayerType") var miniPlayerTypeAppStorage: MiniPlayerType = .minimal
-        @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTopAppStorage: Bool = true
-        
-        self.miniPlayerBackground = miniPlayerBackgroundAppStorage
-        self.showPlayerWindow = showPlayerWindowAppStorage
-        self.miniPlayerType = miniPlayerTypeAppStorage
-        self.miniPlayerWindowOnTop = miniPlayerWindowOnTopAppStorage
-    }
+    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
+    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
+    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
+    @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
@@ -60,13 +27,10 @@ struct AppearanceSettingsView: View {
                         "Enable popover",
                         isOn: $popoverIsEnabled
                     )
-                    .onChange(of: popoverIsEnabled) { _ in
-                        self.popoverIsEnabledAppStorage = popoverIsEnabled
-                    }
                     
                     HStack {
                         Text("Popover style")
-                            .foregroundStyle(self.popoverIsEnabledAppStorage ? .primary : .tertiary)
+                            .foregroundStyle(self.popoverIsEnabled ? .primary : .tertiary)
                         
                         Spacer()
                         
@@ -76,18 +40,17 @@ struct AppearanceSettingsView: View {
                             }
                         }
                         .pickerStyle(.segmented)
-                        .frame(width: 150)
+                        .frame(width: 200)
                         .onChange(of: popoverType) { _ in
-                            self.popoverTypeAppStorage = popoverType
                             NSApplication.shared.sendAction(#selector(AppDelegate.setupPopover), to: nil, from: nil)
                         }
-                        .disabled(!popoverIsEnabledAppStorage)
+                        .disabled(!popoverIsEnabled)
                     }
                     .padding(8)
                     
                     HStack {
                         Text("Popover background")
-                            .foregroundStyle(self.popoverIsEnabledAppStorage ? .primary : .tertiary)
+                            .foregroundStyle(self.popoverIsEnabled ? .primary : .tertiary)
                         
                         Spacer()
                         
@@ -96,15 +59,13 @@ struct AppearanceSettingsView: View {
                                 Text(value.localizedName).tag(value)
                             }
                         }
-                        .onChange(of: popoverBackground) { _ in
-                            self.popoverBackgroundAppStorage = popoverBackground
-                        }
                         .pickerStyle(.segmented)
-                        .frame(width: 150)
-                        .disabled(!popoverIsEnabledAppStorage)
+                        .frame(width: 200)
+                        .disabled(!popoverIsEnabled)
                     }
                     .padding(8)
                 }
+                .padding(.bottom, 10)
                 
                 LuminareSection("Mini player") {
                     LuminareToggle(
@@ -112,21 +73,20 @@ struct AppearanceSettingsView: View {
                         isOn: $showPlayerWindow
                     )
                     .onChange(of: showPlayerWindow) { _ in
-                        self.showPlayerWindowAppStorage = showPlayerWindow
                         NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
                     }
                     
                     LuminareToggle(
                         "Mini player window always on top of other apps",
-                        isOn: $miniPlayerWindowOnTopAppStorage
+                        isOn: $miniPlayerWindowOnTop
                     )
-                    .onChange(of: miniPlayerWindowOnTopAppStorage) { _ in
+                    .onChange(of: miniPlayerWindowOnTop) { _ in
                         NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayerWindowLevel), to: nil, from: nil)
                     }
                     
                     HStack {
                         Text("Background")
-                            .foregroundStyle(self.showPlayerWindowAppStorage ? .primary : .tertiary)
+                            .foregroundStyle(self.showPlayerWindow ? .primary : .tertiary)
                         
                         Spacer()
                         
@@ -136,17 +96,14 @@ struct AppearanceSettingsView: View {
                             }
                         }
                         .pickerStyle(.segmented)
-                        .frame(width: 150)
-                        .onChange(of: miniPlayerBackground) { newValue in
-                            self.miniPlayerBackgroundAppStorage = miniPlayerBackground
-                        }
-                        .disabled(!showPlayerWindowAppStorage)
+                        .frame(width: 200)
+                        .disabled(!showPlayerWindow)
                     }
                     .padding(8)
                     
                     HStack {
                         Text("Window style")
-                            .foregroundStyle(self.showPlayerWindowAppStorage ? .primary : .tertiary)
+                            .foregroundStyle(self.showPlayerWindow ? .primary : .tertiary)
                         
                         Spacer()
                         
@@ -156,12 +113,11 @@ struct AppearanceSettingsView: View {
                             }
                         }
                         .pickerStyle(.segmented)
-                        .frame(width: 150)
+                        .frame(width: 200)
                         .onChange(of: miniPlayerType) { _ in
-                            self.miniPlayerTypeAppStorage = miniPlayerType
                             NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
                         }
-                        .disabled(!showPlayerWindowAppStorage)
+                        .disabled(!showPlayerWindow)
                     }
                     .padding(8)
                 }
