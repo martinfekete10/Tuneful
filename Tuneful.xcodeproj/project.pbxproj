@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		FE08CE132CFC74E200F047CB /* SettingsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */; };
-		FE08CE152CFCB2D100F047CB /* SettingsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE142CFCB2C800F047CB /* SettingsProtocol.swift */; };
+		FE08CE172CFCC53500F047CB /* NotchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */; };
+		FE08CE192CFCC76E00F047CB /* AppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE182CFCC76700F047CB /* AppearanceSettingsView.swift */; };
 		FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */; };
 		FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */; };
 		FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F82CBC1B09001C13CE /* NSScreen+Extensions.swift */; };
@@ -110,7 +111,8 @@
 
 /* Begin PBXFileReference section */
 		FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindow.swift; sourceTree = "<group>"; };
-		FE08CE142CFCB2C800F047CB /* SettingsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProtocol.swift; sourceTree = "<group>"; };
+		FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchSettingsView.swift; sourceTree = "<group>"; };
+		FE08CE182CFCC76700F047CB /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
 		FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedAlbumArt.swift; sourceTree = "<group>"; };
 		FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurModifier.swift; sourceTree = "<group>"; };
 		FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotch.swift; sourceTree = "<group>"; };
@@ -440,7 +442,8 @@
 		FEF0660A2B51905200A514F2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				FE08CE142CFCB2C800F047CB /* SettingsProtocol.swift */,
+				FE08CE182CFCC76700F047CB /* AppearanceSettingsView.swift */,
+				FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */,
 				FEFFE54C2B49EF97000887B5 /* MenuBarSettingsView.swift */,
 				FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */,
 				FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */,
@@ -568,6 +571,7 @@
 				FE7B09D22CB997F600FBB6F8 /* AppIcons.swift in Sources */,
 				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
+				FE08CE192CFCC76E00F047CB /* AppearanceSettingsView.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
 				FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
@@ -577,7 +581,6 @@
 				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
-				FE08CE152CFCB2D100F047CB /* SettingsProtocol.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
 				FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */,
@@ -636,6 +639,7 @@
 				FE1F7E952B89E92A00B702AD /* StatusBarPlaybackManager.swift in Sources */,
 				FE6BFCFB2A73A7CA00D3321F /* SupportedApps.swift in Sources */,
 				FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */,
+				FE08CE172CFCC53500F047CB /* NotchSettingsView.swift in Sources */,
 				FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -61,37 +61,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
-    let PopoverSettingsViewController: () -> SettingsPane = {
+    let AppearanceSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
-            identifier: .popover,
-            title: "Popover",
-            toolbarIcon: NSImage(systemSymbolName: "rectangle.portrait", accessibilityDescription: "Popover settings")!
+            identifier: .appearance,
+            title: "Appearance",
+            toolbarIcon: NSImage(systemSymbolName: "paintbrush", accessibilityDescription: "Appearance settings")!
         ) {
-            PopoverSettingsView()
+            AppearanceSettingsView()
         }
         
         return Settings.PaneHostingController(pane: paneView)
     }
     
-    let MenuBarSettingsViewController: () -> SettingsPane = {
+    let NotchSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
-            identifier: .menuBar,
-            title: "Menu bar",
-            toolbarIcon: NSImage(systemSymbolName: "menubar.rectangle", accessibilityDescription: "Menu bar settings")!
+            identifier: .notch,
+            title: "Notch",
+            toolbarIcon: NSImage(systemSymbolName: "button.roundedbottom.horizontal", accessibilityDescription: "Notch settings")!
         ) {
-            MenuBarSettingsView()
-        }
-        
-        return Settings.PaneHostingController(pane: paneView)
-    }
-    
-    let MiniPlayerSettingsViewController: () -> SettingsPane = {
-        let paneView = Settings.Pane(
-            identifier: .miniPlayer,
-            title: "Mini player",
-            toolbarIcon: NSImage(systemSymbolName: "play.rectangle.on.rectangle.fill", accessibilityDescription: "Mini player settings")!
-        ) {
-            MiniPlayerSettingsView()
+            NotchSettingsView()
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -232,7 +220,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusBarMenu.addItem(
             withTitle: "Settings...",
-            action: #selector(openSettingsWindow),
+            action: #selector(openSettings),
             keyEquivalent: ""
         )
         
@@ -459,7 +447,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // MARK: New settings
     
-    @objc func openSettingsWindow() {
+    @objc func openNewSettings() {
         settingsWindow.orderFrontRegardless()
         settingsWindow.makeKeyAndOrderFront(nil)
         NSApplication.shared.activate(ignoringOtherApps: true)
@@ -471,9 +459,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         SettingsWindowController(
             panes: [
                 GeneralSettingsViewController(),
-                MenuBarSettingsViewController(),
-                PopoverSettingsViewController(),
-                MiniPlayerSettingsViewController(),
+                AppearanceSettingsViewController(),
+                NotchSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
             ],
@@ -487,16 +474,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         SettingsWindowController(
             panes: [
                 GeneralSettingsViewController(),
-                MenuBarSettingsViewController(),
-                PopoverSettingsViewController(),
-                MiniPlayerSettingsViewController(),
+                AppearanceSettingsViewController(),
+                NotchSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
             ],
             style: .toolbarItems,
             animated: true,
             hidesToolbarForSingleItem: true
-        ).show(pane: .miniPlayer)
+        ).show(pane: .appearance)
     }
     
     // MARK: Setup

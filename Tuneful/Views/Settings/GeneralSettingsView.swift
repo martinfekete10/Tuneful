@@ -10,7 +10,7 @@ import Settings
 import LaunchAtLogin
 import Luminare
 
-struct GeneralSettingsView: View, SettingsProtocol {
+struct GeneralSettingsView: View {
     var title: String = "General"
     var systemImage: String = "switch.2"
     

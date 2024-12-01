@@ -71,24 +71,3 @@ enum SettingsCategory: String, Identifiable, CaseIterable {
         }
     }
 }
-
-struct GeneralSettingsView2: View {
-    var body: some View {
-        Text("General Settings")
-            .font(.title)
-    }
-}
-
-struct AppearanceSettingsView: View {
-    var body: some View {
-        Text("Appearance Settings")
-            .font(.title)
-    }
-}
-
-struct PrivacySettingsView: View {
-    var body: some View {
-        Text("Privacy Settings")
-            .font(.title)
-    }
-}

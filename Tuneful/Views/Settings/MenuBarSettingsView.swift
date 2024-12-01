@@ -9,7 +9,7 @@ import SwiftUI
 import Settings
 import Luminare
 
-struct MenuBarSettingsView: View, SettingsProtocol {
+struct MenuBarSettingsView: View {
     var title: String = "Menu bar"
     var systemImage: String = "menubar.rectangle"
     
