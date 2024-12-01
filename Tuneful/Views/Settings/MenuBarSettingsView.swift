@@ -9,7 +9,9 @@ import SwiftUI
 import Settings
 import Luminare
 
-struct MenuBarSettingsView: View {
+struct MenuBarSettingsView: View, SettingsProtocol {
+    var title: String = "Menu bar"
+    var systemImage: String = "menubar.rectangle"
     
     @AppStorage("menuBarItemWidth") var menuBarItemWidthAppStorage: Double = 150
     @AppStorage("statusBarIcon") var statusBarIconAppStorage: StatusBarIcon = .albumArt

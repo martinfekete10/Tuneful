@@ -10,7 +10,10 @@ import Settings
 import LaunchAtLogin
 import Luminare
 
-struct GeneralSettingsView: View {
+struct GeneralSettingsView: View, SettingsProtocol {
+    var title: String = "General"
+    var systemImage: String = "switch.2"
+    
     @AppStorage("connectedApp") private var connectedAppAppStorage = ConnectedApps.appleMusic
     @AppStorage("showSongNotification") private var showSongNotificationAppStorage = true
     @AppStorage("notificationDuration") private var notificationDurationAppStorage = 2.0
