@@ -20,7 +20,7 @@ struct NotchView<Content>: View where Content: View {
                         .frame(width: dynamicNotch.notchWidth, height: dynamicNotch.notchHeight)
                     
                     if !dynamicNotch.isMouseInside && dynamicNotch.isNotificationVisible {
-                        NotchInfoView(playerManager: dynamicNotch.playerManager)
+                        NotchInfoView(playerManager: dynamicNotch.playerManager, minimumNotchWidth: dynamicNotch.notchWidth)
                             .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 15) }
                             .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 15) }
                             .safeAreaInset(edge: .trailing, spacing: 0) { Color.clear.frame(width: 15) }
@@ -63,6 +63,12 @@ struct NotchView<Content>: View where Content: View {
                         .foregroundStyle(.black)
                         .padding(-50) // The opening/closing animation can overshoot, so this makes sure that it's still black
                 }
+                .contextMenu {
+                    Button(
+                        action: { NSApplication.shared.sendAction(#selector(AppDelegate.openSettings), to: nil, from: nil) },
+                        label: { Text("Settings...") }
+                    )
+                }
                 .mask {
                     GeometryReader { _ in // This helps with positioning everything
                         HStack {
@@ -88,9 +94,11 @@ struct NotchView<Content>: View where Content: View {
 
 struct NotchInfoView: View {
     @ObservedObject private var playerManager: PlayerManager
+    var minimumNotchWidth: Double
 
-    init(playerManager: PlayerManager) {
+    init(playerManager: PlayerManager, minimumNotchWidth: Double) {
         self.playerManager = playerManager
+        self.minimumNotchWidth = minimumNotchWidth
     }
     
     public var body: some View {
@@ -110,6 +118,7 @@ struct NotchInfoView: View {
                     .lineLimit(1)
             }
         }
+        .frame(minWidth: minimumNotchWidth)
     }
 }
 
@@ -121,7 +130,7 @@ struct NotchPlayerView: View {
     }
     
     public var body: some View {
-        HStack(spacing: 10) {
+        HStack(alignment: .top, spacing: 10) {
             AlbumArtView(imageSize: 80)
                 .environmentObject(playerManager)
                 .padding(5)
@@ -139,7 +148,7 @@ struct NotchPlayerView: View {
                 PlaybackPositionView(sliderHeight: 6, inline: true)
                     .environmentObject(playerManager)
             }
-            .frame(width: 250)
         }
+        .frame(width: 350)
     }
 }

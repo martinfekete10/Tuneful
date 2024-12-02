@@ -10,14 +10,25 @@ import Settings
 import Luminare
 
 struct AppearanceSettingsView: View {
+    @AppStorage("popoverIsEnabled") var popoverIsEnabledAppStorage: Bool = true
     @AppStorage("popoverType") var popoverType: PopoverType = .full
     @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
-    @AppStorage("popoverIsEnabled") var popoverIsEnabled: Bool = true
     
-    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
-    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
-    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
+    @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
     @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
+    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
+    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
+    
+    @State var popoverIsEnabled: Bool
+    @State var showPlayerWindow: Bool
+    
+    init() {
+        @AppStorage("popoverIsEnabled") var popoverIsEnabledAppStorage: Bool = true
+        @AppStorage("showPlayerWindow") var showPlayerWindowAppStorage: Bool = true
+        
+        self.popoverIsEnabled = popoverIsEnabledAppStorage
+        self.showPlayerWindow = showPlayerWindowAppStorage
+    }
     
     var body: some View {
         Settings.Container(contentWidth: 400) {

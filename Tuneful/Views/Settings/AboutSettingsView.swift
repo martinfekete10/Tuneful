@@ -42,8 +42,6 @@ struct AboutSettingsView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
                         
-                        Divider()
-                        
                         HStack {
                             Link("♡ Support", destination: URL(string: "https://ko-fi.com/martinfekete")!)
                                 .buttonStyle(LuminareCompactButtonStyle())

@@ -52,6 +52,12 @@ struct NotchlessView<Content>: View where Content: View {
                                 .strokeBorder(.quaternary, lineWidth: 1)
                         }
                 }
+                .contextMenu {
+                    Button(
+                        action: { NSApplication.shared.sendAction(#selector(AppDelegate.openSettings), to: nil, from: nil) },
+                        label: { Text("Settings...") }
+                    )
+                }
                 .clipShape(.rect(cornerRadius: 20))
                 .shadow(color: .black.opacity(0.5), radius: dynamicNotch.isVisible ? 10 : 0)
                 .padding(5)
