@@ -10,8 +10,8 @@ import SwiftUI
 import Luminare
 
 enum ConnectedApps: String, Equatable, CaseIterable, LuminarePickerData {
-    case spotify = "Spotify"
     case appleMusic = "Apple Music"
+    case spotify = "Spotify"
     
     var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
     

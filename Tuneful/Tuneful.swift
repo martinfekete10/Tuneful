@@ -11,6 +11,7 @@ import Sparkle
 import KeyboardShortcuts
 import Settings
 import Luminare
+typealias SettingsPaneIdentifier = AppSettings.PaneIdentifier
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("popoverType") var popoverType: PopoverType = .full
@@ -48,7 +49,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     private var settingsWindow = LuminareTrafficLightedWindow<SettingsView>(view: { SettingsView() })
     
-    // Settings
+    // MARK: Settings
+    
     let GeneralSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .general,
@@ -57,6 +59,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ) {
             GeneralSettingsView()
                 .accentColor(.accentColor)
+        }
+        
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let MenuBarSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .menuBar,
+            title: "Menu bar",
+            toolbarIcon: NSImage(systemSymbolName: "menubar.rectangle", accessibilityDescription: "Menu bar settings")!
+        ) {
+            MenuBarSettingsView()
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -113,9 +127,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
-        if let bundleID = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-        }
+//        if let bundleID = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+//        }
         
         self.settingsWindow.isReleasedWhenClosed = false
         self.playerManager = PlayerManager()
@@ -461,6 +475,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             panes: [
                 GeneralSettingsViewController(),
                 AppearanceSettingsViewController(),
+                MenuBarSettingsViewController(),
                 NotchSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
@@ -476,6 +491,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             panes: [
                 GeneralSettingsViewController(),
                 AppearanceSettingsViewController(),
+                MenuBarSettingsViewController(),
                 NotchSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()

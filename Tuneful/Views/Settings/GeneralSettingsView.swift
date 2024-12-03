@@ -44,17 +44,43 @@ struct GeneralSettingsView: View {
                             
                             Spacer()
                             
-                            Picker("", selection: $connectedApp) {
-                                ForEach(ConnectedApps.allCases.filter { $0.selectable }, id: \.self) { value in
-                                    Text(value.localizedName)
-                                        .tag(value)
+//                            Picker("", selection: $connectedApp) {
+//                                ForEach(ConnectedApps.allCases.filter { $0.selectable }, id: \.self) { value in
+//                                    Text(value.localizedName)
+//                                        .tag(value)
+//                                }
+//                            }
+//                            .frame(width: 150)
+//                            .onChange(of: connectedApp) { _ in
+//                                self.connectedAppAppStorage = connectedApp
+//                            }
+//                            .pickerStyle(.menu)
+                            
+                            HStack {
+                                ForEach(ConnectedApps.allCases, id: \.rawValue) { app in
+                                    LuminareSection() {
+                                        Button(action: {
+                                            connectedApp = app
+                                            connectedAppAppStorage = app
+                                        }) {
+                                            app.getIcon
+                                                .resizable()
+                                                .frame(width: 40, height: 40)
+                                                .aspectRatio(1, contentMode: .fit)
+                                        }
+                                        .disabled(!app.selectable)
+                                        .buttonStyle(PlainButtonStyle())
+                                        .frame(width: 50, height: 50)
+                                    }
+                                    .if(connectedApp == app) { button in
+                                        button.overlay(
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .stroke(.secondary, lineWidth: 2)
+                                        )
+                                    }
                                 }
                             }
                             .frame(width: 150)
-                            .onChange(of: connectedApp) { _ in
-                                self.connectedAppAppStorage = connectedApp
-                            }
-                            .pickerStyle(.menu)
                             
                             Button {
                                 let consent = Helper.promptUserForConsent(for: connectedAppAppStorage == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)

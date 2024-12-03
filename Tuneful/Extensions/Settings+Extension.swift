@@ -11,6 +11,7 @@ import enum Settings.Settings
 
 extension Settings.PaneIdentifier {
     static let general = Self("general")
+    static let menuBar = Self("menuBar")
     static let appearance = Self("appearance")
     static let notch = Self("notch")
     static let keyboard = Self("keyboard")

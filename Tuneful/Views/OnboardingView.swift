@@ -11,7 +11,6 @@ import KeyboardShortcuts
 import Luminare
 
 struct OnboardingView: View {
-    
     private enum Steps {
       case onAppPicker, onDetails, allDone
     }
@@ -25,46 +24,46 @@ struct OnboardingView: View {
         VStack(alignment: .center) {
                 VStack {
                     VStack {
-                        Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                            .padding(.bottom, 10)
-                        
+                        HStack {
+                            Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                            
+                            if step == .onAppPicker {
+                                Text("Preferred Music App")
+                                    .font(.largeTitle)
+                                    .fontWeight(.semibold)
+                            } else if step == .onDetails {
+                                Text("Permissions")
+                                    .font(.largeTitle)
+                                    .fontWeight(.semibold)
+                            } else if step == .allDone {
+                                Text("All Done!")
+                                    .font(.largeTitle)
+                                    .fontWeight(.semibold)
+                            } else {
+                                EmptyView()
+                            }
+                        }
+                        .padding(.bottom, 10)
+                    }
+                    
+                    HStack {
                         if step == .onAppPicker {
-                            Text("1. Preferred Music App")
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                            AppPicker()
                         } else if step == .onDetails {
-                            Text("2. Permissions")
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                            Details(finishedAlert: $finishedAlert)
                         } else if step == .allDone {
-                            Text("3. All Done!")
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                            AllDone()
                         } else {
                             EmptyView()
                         }
                     }
-                    .padding(.bottom, 10)
-                    
-                    if step == .onAppPicker {
-                        AppPicker()
-                    } else if step == .onDetails {
-                        Details(finishedAlert: $finishedAlert)
-                    } else if step == .allDone {
-                        AllDone()
-                    } else {
-                        EmptyView()
-                    }
+                    .frame(width: 300, height: 150)
                 }
                 .frame(width: 400, height: 250)
-                .padding(.horizontal, 30)
                 .animation(Constants.SongTransitionAnimation, value: step)
-                
-                Divider()
-                    .frame(width: 300)
                 
                 HStack {
                     if step == .onDetails {
@@ -90,13 +89,11 @@ struct OnboardingView: View {
                             step = .onDetails
                         }
                         .buttonStyle(LuminareCompactButtonStyle())
-                        .keyboardShortcut(.defaultAction)
                     } else if step == .onDetails {
                         Button("Continue") {
                             step = .allDone
                         }
                         .buttonStyle(LuminareCompactButtonStyle())
-                        .keyboardShortcut(.defaultAction)
                         .disabled(!finishedAlert)
                     } else {
                         Button("Finish") {
@@ -106,7 +103,7 @@ struct OnboardingView: View {
                         .buttonStyle(LuminareCompactButtonStyle())
                     }
                 }
-                .frame(width: 150, height: 50)
+                .frame(width: 300, height: 40)
             }
             .frame(width: 600, height: 500)
             .background(
@@ -145,16 +142,15 @@ struct AppPicker: View {
                                 .stroke(.secondary, lineWidth: 2)
                         )
                     }
-                    
-                    if !ConnectedApps.spotify.selectable {
-                        Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
                 }
             }
+            
+            if !ConnectedApps.spotify.selectable {
+                Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
-        .frame(width: 250)
     }
 }
 
@@ -174,13 +170,12 @@ struct Details: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text("""
                  Tuneful requires permission to control \(name) and display music data.
                  
                  Open \(name) and click 'Enable permissions' below and select OK in the alert that is presented.
              """)
-            .font(.caption)
             .multilineTextAlignment(.center)
             
             Button("Enable permissions") {
@@ -223,7 +218,6 @@ struct AllDone: View {
             Text("""
                  To fully customize Tuneful, right-click Tuneful icon in menu bar and go to Settings.
              """)
-            .font(.caption)
             .multilineTextAlignment(.center)
         }
     }
