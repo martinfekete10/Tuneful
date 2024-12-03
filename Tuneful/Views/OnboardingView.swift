@@ -71,14 +71,17 @@ struct OnboardingView: View {
                         Button("Back") {
                             step = .onAppPicker
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                     } else if step == .allDone {
                         Button("Back") {
                             step = .onDetails
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                     } else {
                         Button("Back") {
                             step = .onAppPicker
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                         .disabled(step == .onAppPicker)
                     }
                     
@@ -86,11 +89,13 @@ struct OnboardingView: View {
                         Button("Continue") {
                             step = .onDetails
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                         .keyboardShortcut(.defaultAction)
                     } else if step == .onDetails {
                         Button("Continue") {
                             step = .allDone
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                         .keyboardShortcut(.defaultAction)
                         .disabled(!finishedAlert)
                     } else {
@@ -98,6 +103,7 @@ struct OnboardingView: View {
                             self.viewedShortcutsSetup = true
                             NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil)
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                     }
                 }
                 .frame(width: 150, height: 50)
@@ -118,18 +124,34 @@ struct AppPicker: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            Picker("", selection: $connectedApp) {
-                ForEach(ConnectedApps.allCases.filter { $0.isInstalled }, id: \.self) { value in
-                    Text(value.localizedName)
-                        .tag(value)
+            HStack {
+                ForEach(ConnectedApps.allCases, id: \.rawValue) { app in
+                    LuminareSection() {
+                        Button(action: {
+                            connectedApp = app
+                        }) {
+                            app.getIcon
+                                .resizable()
+                                .frame(width: 70, height: 70)
+                                .aspectRatio(1, contentMode: .fit)
+                        }
+                        .disabled(!app.selectable)
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(width: 80, height: 80)
+                    }
+                    .if(connectedApp == app) { button in
+                        button.overlay(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(.secondary, lineWidth: 2)
+                        )
+                    }
+                    
+                    if !ConnectedApps.spotify.selectable {
+                        Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
-            }
-            .pickerStyle(.menu)
-            
-            if !ConnectedApps.spotify.isInstalled {
-                Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
             }
         }
         .frame(width: 250)

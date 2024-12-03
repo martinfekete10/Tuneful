@@ -45,7 +45,7 @@ struct GeneralSettingsView: View {
                             Spacer()
                             
                             Picker("", selection: $connectedApp) {
-                                ForEach(ConnectedApps.allCases.filter { $0.isInstalled }, id: \.self) { value in
+                                ForEach(ConnectedApps.allCases.filter { $0.selectable }, id: \.self) { value in
                                     Text(value.localizedName)
                                         .tag(value)
                                 }
@@ -82,7 +82,7 @@ struct GeneralSettingsView: View {
                         }
                         .padding(8)
                         
-                        if !ConnectedApps.spotify.isInstalled {
+                        if !ConnectedApps.spotify.selectable {
                             Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
