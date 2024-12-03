@@ -130,7 +130,6 @@ class SystemPlayerManager: PlayerProtocol {
     
     private func getIsPlaying() -> Bool {
         let state = info?["kMRMediaRemoteNowPlayingInfoPlaybackRate"] as? Int ?? 0
-        print("Is playing: \(state)")
         return state != 0
     }
 }

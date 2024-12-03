@@ -133,7 +133,6 @@ struct NotchPlayerView: View {
         HStack(alignment: .top, spacing: 10) {
             AlbumArtView(imageSize: 80)
                 .environmentObject(playerManager)
-                .padding(5)
             
             VStack(alignment: .center) {
                 Text(playerManager.track.title)
@@ -141,7 +140,7 @@ struct NotchPlayerView: View {
                     .lineLimit(1)
                 Text(playerManager.track.artist)
                     .foregroundStyle(.secondary)
-                    .font(.caption2)
+                    .font(.headline)
                     .lineLimit(1)
                 PlaybackButtonsView(playButtonSize: 20)
                     .environmentObject(playerManager)

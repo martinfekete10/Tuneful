@@ -15,17 +15,21 @@ struct GeneralSettingsView: View {
     var systemImage: String = "switch.2"
     
     @AppStorage("connectedApp") private var connectedAppAppStorage = ConnectedApps.appleMusic
-    @AppStorage("showSongNotification") private var showSongNotificationAppStorage = true
-    @AppStorage("notificationDuration") private var notificationDurationAppStorage = 2.0
     
+    @State private var connectedApp: ConnectedApps
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
     @State private var showingAlert = false
     
+    init() {
+        @AppStorage("connectedApp") var connectedAppAppStorage = ConnectedApps.appleMusic
+        self.connectedApp = connectedAppAppStorage
+    }
+    
     var body: some View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
-                LuminareSection("General") {
+                LuminareSection("") {
                     LuminareToggle(
                         "Launch at login",
                         isOn: Binding(
@@ -40,16 +44,16 @@ struct GeneralSettingsView: View {
                             
                             Spacer()
                             
-                            Picker("", selection: $connectedAppAppStorage) {
+                            Picker("", selection: $connectedApp) {
                                 ForEach(ConnectedApps.allCases.filter { $0.isInstalled }, id: \.self) { value in
                                     Text(value.localizedName)
                                         .tag(value)
                                 }
                             }
                             .frame(width: 150)
-//                            .onChange(of: connectedApp) { _ in
-//                                self.connectedAppAppStorage = connectedApp
-//                            }
+                            .onChange(of: connectedApp) { _ in
+                                self.connectedAppAppStorage = connectedApp
+                            }
                             .pickerStyle(.menu)
                             
                             Button {

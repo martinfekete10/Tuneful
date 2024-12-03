@@ -5,6 +5,7 @@
 //  Created by Martin Fekete on 27/07/2023.
 //
 
+import os
 import SwiftUI
 import Sparkle
 import KeyboardShortcuts

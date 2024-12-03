@@ -60,6 +60,7 @@ class AppleMusicManager: PlayerProtocol {
         track.title = app.currentTrack?.name ?? "Unknown Title"
         track.artist = app.currentTrack?.artist ?? "Unknown Artist"
         track.album = app.currentTrack?.album ?? "Unknown Album"
+        track.isLoved = getIsLoved()
         track.duration = CGFloat(app.currentTrack?.duration ?? 0)
         return track
     }
@@ -69,7 +70,7 @@ class AppleMusicManager: PlayerProtocol {
     }
     
     func previousTrack() {
-        app.previousTrack?()
+        app.backTrack?()
     }
     
     func nextTrack() {
@@ -124,6 +125,16 @@ class AppleMusicManager: PlayerProtocol {
         
         return workspace.runningApplications.contains { app in
             app.bundleIdentifier == self.bundleId
+        }
+    }
+    
+    private func getIsLoved() -> Bool {
+        if let isLovedTrack = app.currentTrack?.loved {
+            return isLovedTrack
+        } else if let isLovedTrack = app.currentTrack?.favorited {
+            return isLovedTrack
+        } else {
+            return false
         }
     }
 }

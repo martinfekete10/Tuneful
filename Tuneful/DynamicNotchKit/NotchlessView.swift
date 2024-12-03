@@ -99,7 +99,7 @@ struct NotchlessInfoView: View {
                     .lineLimit(1)
                 Text(playerManager.track.artist)
                     .foregroundStyle(.secondary)
-                    .font(.caption2)
+                    .font(.headline)
                     .lineLimit(1)
             }
         }

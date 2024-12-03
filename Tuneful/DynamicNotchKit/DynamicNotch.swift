@@ -234,15 +234,4 @@ extension DynamicNotch {
         windowController.close()
         self.windowController = nil
     }
-    
-    // Handle mouse events
-    private func handleMouseEntered() {
-        print("Perform action on mouse hover")
-        // Add your method execution here
-    }
-
-    private func handleMouseExited() {
-        print("Perform action on mouse exit")
-        // Optional: Add exit handling here
-    }
 }

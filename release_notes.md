@@ -6,6 +6,8 @@
 -   Added more animations to the UI so the app feels more fluid
 -   Fixed the bug when Spotify was opened in the background even if killed by the user
 -   Fixed the bug when mini player floating preference was ignored on app restart
+-   Fixed the bug when Tuneful wasn't fetching Apple Music song favorite info correctly when changing songs
+-   Fixed the bug when previous song button didn't rewind the song to the beginning if some part already played for Apple Music
 
 # 1.7.1 - Mini player improvement and various bug fixes
 

@@ -37,7 +37,6 @@ struct MiniPlayerView: View {
                 HStack(spacing: 0) {
                     ZStack {
                         AlbumArtView(imageSize: self.imageSize)
-                            .padding(.leading, 7)
                             .dragWindowWithClick()
                         
                         AddToFavoritesView()
@@ -76,6 +75,7 @@ struct MiniPlayerView: View {
                     .padding()
                     .opacity(0.8)
                 }
+                .padding(.leading, 8)
             }
         }
         .frame(width: 310, height: 155)
