@@ -29,7 +29,7 @@ struct GeneralSettingsView: View {
     var body: some View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
-                LuminareSection("") {
+                LuminareSection {
                     LuminareToggle(
                         "Launch at login",
                         isOn: Binding(
@@ -44,18 +44,6 @@ struct GeneralSettingsView: View {
                             
                             Spacer()
                             
-//                            Picker("", selection: $connectedApp) {
-//                                ForEach(ConnectedApps.allCases.filter { $0.selectable }, id: \.self) { value in
-//                                    Text(value.localizedName)
-//                                        .tag(value)
-//                                }
-//                            }
-//                            .frame(width: 150)
-//                            .onChange(of: connectedApp) { _ in
-//                                self.connectedAppAppStorage = connectedApp
-//                            }
-//                            .pickerStyle(.menu)
-                            
                             HStack {
                                 ForEach(ConnectedApps.allCases, id: \.rawValue) { app in
                                     LuminareSection() {
@@ -65,8 +53,8 @@ struct GeneralSettingsView: View {
                                         }) {
                                             app.getIcon
                                                 .resizable()
-                                                .frame(width: 40, height: 40)
-                                                .aspectRatio(1, contentMode: .fit)
+                                                .scaledToFit()
+                                                .frame(width: 50, height: 50)
                                         }
                                         .disabled(!app.selectable)
                                         .buttonStyle(PlainButtonStyle())

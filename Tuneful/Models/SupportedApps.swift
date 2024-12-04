@@ -27,7 +27,7 @@ enum ConnectedApps: String, Equatable, CaseIterable, LuminarePickerData {
     var getIcon: Image {
         switch self {
         case .spotify:
-            return Image(.spotifyIcon)
+             return Image(.spotifyIcon)
         case .appleMusic:
             return Image(.appleMusicIcon)
         }

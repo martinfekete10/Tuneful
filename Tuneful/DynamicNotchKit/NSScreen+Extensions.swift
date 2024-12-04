@@ -17,9 +17,9 @@ extension NSScreen {
     }
 
     var hasNotch: Bool {
-        return false
+//        return false
 //        return true
-//        auxiliaryTopLeftArea?.width != nil && auxiliaryTopRightArea?.width != nil
+        auxiliaryTopLeftArea?.width != nil && auxiliaryTopRightArea?.width != nil
     }
 
     var notchSize: NSSize? {
