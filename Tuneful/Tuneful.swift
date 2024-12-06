@@ -11,7 +11,8 @@ import Sparkle
 import KeyboardShortcuts
 import Settings
 import Luminare
-typealias SettingsPaneIdentifier = AppSettings.PaneIdentifier
+import Combine
+import Defaults
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @AppStorage("popoverType") var popoverType: PopoverType = .full
@@ -160,6 +161,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.setupMenuBar()
         self.updateStatusBarItem(nil)
         self.setupKeyboardShortcuts()
+        self.setupNotch()
     }
     
     // MARK: Music player
@@ -520,6 +522,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func finishOnboarding(_ sender: AnyObject) {
         onboardingWindow.close()
         self.mainSetup()
+    }
+    
+    // MARK: Notch
+    
+    private func setupNotch() {
+        let notchEnabled = Defaults[.notchEnabled]
+        if !notchEnabled {
+            hideNotch()
+        }
+    }
+    
+    @objc func showNotch() {
+        playerManager.initializeNotch()
+    }
+    
+    @objc func hideNotch() {
+        playerManager.deinitializeNotch()
     }
 }
 

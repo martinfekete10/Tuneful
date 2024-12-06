@@ -14,11 +14,16 @@ struct PopoverView: View {
     
     var body: some View {
         ZStack {
-            if popoverBackground == .albumArt && playerManager.isRunning {
+//            if popoverBackground == .albumArt && playerManager.isRunning {
                 playerManager.track.albumArt
                     .resizable()
-                VisualEffectView(material: .popover, blendingMode: .withinWindow)
-            }
+                    .frame(width: 190, height: 190)
+                    .offset(y: -80)
+            VisualEffectView(material: .popover, blendingMode: .withinWindow)
+            
+            VisualEffectView(material: .popover, blendingMode: .withinWindow)
+                .opacity(0.7)
+//            }
             
             if !playerManager.musicApp.isRunning() || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")

@@ -59,6 +59,14 @@ public class DynamicNotchInfo {
     public func toggle() {
         internalDynamicNotch.toggle()
     }
+    
+    public func deinitializeNotchWindow() {
+        internalDynamicNotch.deinitializeWindow()
+    }
+    
+    public func initializeNotchWindow() {
+        internalDynamicNotch.initializeWindow(screen: NSScreen.screens[0])
+    }
 }
 
 public extension DynamicNotchInfo {

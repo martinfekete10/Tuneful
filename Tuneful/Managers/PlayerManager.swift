@@ -10,6 +10,7 @@ import SwiftUI
 import Combine
 import ISSoundAdditions
 import ScriptingBridge
+import Defaults
 
 public class PlayerManager: ObservableObject {
     @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
@@ -310,7 +311,8 @@ public class PlayerManager: ObservableObject {
     }
     
     func showNotchNotification() {
-        if !showSongNotification || popoverIsShown {
+        let notchEnabled = Defaults[.notchEnabled]
+        if !notchEnabled || !showSongNotification || popoverIsShown {
             return
         }
         
@@ -464,5 +466,15 @@ public class PlayerManager: ObservableObject {
 
     func isLikeAuthorized() -> Bool {
         return musicApp.isLikeAuthorized
+    }
+    
+    // MARK: Notch
+    
+    func deinitializeNotch() {
+        notchInfo.deinitializeNotchWindow()
+    }
+    
+    func initializeNotch() {
+        notchInfo.initializeNotchWindow()
     }
 }
