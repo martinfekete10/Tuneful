@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Defaults
 
 struct PopoverView: View {
-    @EnvironmentObject var playerManager: PlayerManager
-    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
+    @EnvironmentObject private var playerManager: PlayerManager
+    @Default(.popoverBackground) private var popoverBackground
     @State private var isShowingPlaybackControls = false
     
     var body: some View {

@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Defaults
 
-enum StatusBarTrackDetails: String, Equatable, CaseIterable {
+enum StatusBarTrackDetails: String, Equatable, CaseIterable, Defaults.Serializable {
     
     case artistAndSong = "Artist and song"
     case artist = "Artist"

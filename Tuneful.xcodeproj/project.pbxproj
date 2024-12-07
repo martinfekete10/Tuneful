@@ -45,6 +45,9 @@
 		FE4C92152B6143CC00FF79BE /* MarqueeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C92142B6143CC00FF79BE /* MarqueeTextView.swift */; };
 		FE4C92172B61459F00FF79BE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C92162B61459F00FF79BE /* String+Extension.swift */; };
 		FE5B3CA22AB0AC700038B6E4 /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */; };
+		FE5B56E62D037EEF0077527C /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = FE5B56E52D037EEF0077527C /* Defaults */; };
+		FE5B56E82D037EEF0077527C /* DefaultsMacros in Frameworks */ = {isa = PBXBuildFile; productRef = FE5B56E72D037EEF0077527C /* DefaultsMacros */; };
+		FE5B56EC2D0386EC0077527C /* Defaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */; };
 		FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE62A72F37800D3321F /* Tuneful.swift */; };
 		FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */; };
 		FE6BFCEB2A72F37900D3321F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE6BFCEA2A72F37900D3321F /* Assets.xcassets */; };
@@ -146,6 +149,7 @@
 		FE4C92142B6143CC00FF79BE /* MarqueeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeTextView.swift; sourceTree = "<group>"; };
 		FE4C92162B61459F00FF79BE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
+		FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Extensions.swift"; sourceTree = "<group>"; };
 		FE6BFCE32A72F37800D3321F /* Tuneful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuneful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6BFCE62A72F37800D3321F /* Tuneful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuneful.swift; sourceTree = "<group>"; };
 		FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
@@ -202,9 +206,11 @@
 				FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */,
 				FEF32F9E2CBD49610084BDAD /* Luminare in Frameworks */,
 				FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */,
+				FE5B56E82D037EEF0077527C /* DefaultsMacros in Frameworks */,
 				FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */,
 				FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */,
 				FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */,
+				FE5B56E62D037EEF0077527C /* Defaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +311,14 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		FE5B56EB2D0386EC0077527C /* Defaults */ = {
+			isa = PBXGroup;
+			children = (
+				FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */,
+			);
+			path = Defaults;
+			sourceTree = "<group>";
+		};
 		FE6BFCDA2A72F37800D3321F = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +339,7 @@
 		FE6BFCE52A72F37800D3321F /* Tuneful */ = {
 			isa = PBXGroup;
 			children = (
+				FE5B56EB2D0386EC0077527C /* Defaults */,
 				FEFFE5532B4FDDEA000887B5 /* Extensions */,
 				FEA6FB212B04168000DACC43 /* AudioDevices */,
 				FE6BFCE62A72F37800D3321F /* Tuneful.swift */,
@@ -493,6 +508,8 @@
 				FEFFE54F2B4AA04B000887B5 /* Settings */,
 				FEF0660E2B51910700A514F2 /* KeyboardShortcuts */,
 				FEF32F9D2CBD49610084BDAD /* Luminare */,
+				FE5B56E52D037EEF0077527C /* Defaults */,
+				FE5B56E72D037EEF0077527C /* DefaultsMacros */,
 			);
 			productName = Tuneful;
 			productReference = FE6BFCE32A72F37800D3321F /* Tuneful.app */;
@@ -529,6 +546,7 @@
 				FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */,
 				FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */,
+				FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */,
 			);
 			productRefGroup = FE6BFCE42A72F37800D3321F /* Products */;
 			projectDirPath = "";
@@ -577,6 +595,7 @@
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
+				FE5B56EC2D0386EC0077527C /* Defaults+Extensions.swift in Sources */,
 				FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */,
 				FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */,
 				FE1A62FD2CBC1B09001C13CE /* DynamicNotchInfo.swift in Sources */,
@@ -864,6 +883,14 @@
 				kind = branch;
 			};
 		};
+		FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
@@ -911,6 +938,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FE3F67FC2AAD02D100CCE841 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
 			productName = LaunchAtLogin;
+		};
+		FE5B56E52D037EEF0077527C /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+		FE5B56E72D037EEF0077527C /* DefaultsMacros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = DefaultsMacros;
 		};
 		FEF0660E2B51910700A514F2 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;

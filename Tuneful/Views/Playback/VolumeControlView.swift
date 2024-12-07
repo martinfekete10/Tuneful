@@ -11,9 +11,7 @@ import SwiftUI
 import ISSoundAdditions
 
 struct VolumeControlView: View {
-    
     @EnvironmentObject var playerManager: PlayerManager
-    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
     
     let volumeIconSize = CGFloat(12)
     

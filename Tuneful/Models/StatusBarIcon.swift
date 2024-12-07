@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Defaults
 
-enum StatusBarIcon: String, Equatable, CaseIterable {
+enum StatusBarIcon: String, Equatable, CaseIterable, Defaults.Serializable {
     case albumArt = "Album art"
     case appIcon = "App icon"
     case hidden = "Hidden"

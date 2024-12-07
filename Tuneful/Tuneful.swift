@@ -15,16 +15,6 @@ import Combine
 import Defaults
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
-    @AppStorage("popoverType") var popoverType: PopoverType = .full
-    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
-    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
-    @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
-    @AppStorage("popoverIsEnabled") var popoverIsEnabled: Bool = true
-    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
-    @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
-    @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlaying: Bool = false
-    @AppStorage("connectedApp") var connectedApp = ConnectedApps.appleMusic
-    
     // Windows
     private var onboardingWindow: OnboardingWindow!
     private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
@@ -144,7 +134,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             object: nil
         )
         
-        if !viewedOnboarding {
+        if !Defaults[.viewedOnboarding] {
             self.showOnboarding()
         } else {
             self.mainSetup()
@@ -172,11 +162,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         // TODO: System player
-        switch connectedApp {
+        switch Defaults[.connectedApp] {
         case .spotify:
-            self.connectedApp = .appleMusic
+            Defaults[.connectedApp] = .appleMusic
         case .appleMusic:
-            self.connectedApp = .spotify
+            Defaults[.connectedApp] = .spotify
         }
     }
     
@@ -231,7 +221,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             action: #selector(showHideMiniPlayer),
             keyEquivalent: ""
         )
-        .state = showPlayerWindow ? .on : .off
+        .state = Defaults[.showPlayerWindow] ? .on : .off
         
         statusBarMenu.addItem(.separator())
         
@@ -283,12 +273,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
-            self.showPlayerWindow = false
+            Defaults[.showPlayerWindow] = false
             self.playerManager.timerStopSignal.send()
             self.miniPlayerWindow.close()
         } else {
             sender.state = .on
-            self.showPlayerWindow = true
+            Defaults[.showPlayerWindow] = true
             self.setupMiniPlayer()
         }
     }
@@ -310,7 +300,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Status bar item title
     
     @objc func updateStatusBarItem(_ notification: NSNotification?) {
-        guard viewedOnboarding else { return }
+        guard Defaults[.viewedOnboarding] else { return }
         
         var playerAppIsRunning = playerManager.isRunning
         if notification?.userInfo?["PlayerAppIsRunning"] != nil {
@@ -335,7 +325,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @objc func toggleMenuBarItemVisibility() {
-        if hideMenuBarItemWhenNotPlaying && (!playerManager.isRunning || !playerManager.isPlaying) {
+        if Defaults[.hideMenuBarItemWhenNotPlaying] && (!playerManager.isRunning || !playerManager.isPlaying) {
             self.statusBarItem.isVisible = false
         } else {
             self.statusBarItem.isVisible = true
@@ -359,7 +349,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let popoverWidth = 210
         let popoverHeigth = 310
         
-        switch popoverType {
+        switch Defaults[.popoverType] {
         case .full:
             frameSize = NSSize(width: popoverWidth, height: popoverHeigth)
             rootView = AnyView(PopoverView().environmentObject(self.playerManager))
@@ -383,7 +373,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @objc func handlePopover(_ sender: NSStatusBarButton?) {
-        if self.popoverIsEnabled {
+        if Defaults[.popoverIsEnabled] {
             self.togglePopover(sender)
         } else {
             self.playerManager.openMusicApp()
@@ -406,7 +396,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func setupMiniPlayer() {
         let windowPosition = miniPlayerWindow.frame.origin
         
-        switch miniPlayerType {
+        switch Defaults[.miniPlayerType] {
         case .full:
             setupMiniPlayerWindow(
                 size: NSSize(width: 300, height: 145),
@@ -426,14 +416,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         playerManager.timerStartSignal.send()
         
-        if !showPlayerWindow {
+        if !Defaults[.showPlayerWindow] {
             playerManager.timerStopSignal.send()
             miniPlayerWindow.close()
         }
     }
     
     @objc func toggleMiniPlayerWindowLevel() {
-        if self.miniPlayerWindowOnTop {
+        if Defaults[.miniPlayerWindowOnTop] {
             self.miniPlayerWindow.level = .floating
         } else {
             self.miniPlayerWindow.level = .normal

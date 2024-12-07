@@ -8,8 +8,9 @@
 import Foundation
 import SwiftUI
 import Luminare
+import Defaults
 
-enum ConnectedApps: String, Equatable, CaseIterable, LuminarePickerData {
+enum ConnectedApps: String, Equatable, CaseIterable, LuminarePickerData, Defaults.Serializable {
     case appleMusic = "Apple Music"
     case spotify = "Spotify"
     

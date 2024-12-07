@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
+import Defaults
 
 class StatusBarPlaybackManager: ObservableObject {
-    @AppStorage("showMenuBarPlaybackControls") var showMenuBarPlaybackControls: Bool = false
-    
     private var playerManager: PlayerManager
     private var statusBarItem: NSStatusItem
     
@@ -18,7 +17,7 @@ class StatusBarPlaybackManager: ObservableObject {
         
         // Playback buttons in meu bar
         self.statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        self.statusBarItem.isVisible = self.showMenuBarPlaybackControls
+        self.statusBarItem.isVisible = Defaults[.showMenuBarPlaybackControls]
         self.updateStatusBarPlaybackItem(playerAppIsRunning: playerManager.isRunning)
         
         let contextMenu = NSMenu()
@@ -40,7 +39,7 @@ class StatusBarPlaybackManager: ObservableObject {
     }
 
     func toggleStatusBarVisibility() {
-        statusBarItem.isVisible = self.showMenuBarPlaybackControls
+        statusBarItem.isVisible = Defaults[.showMenuBarPlaybackControls]
     }
     
     @objc func updateStatusBarPlaybackItem(playerAppIsRunning: Bool) {

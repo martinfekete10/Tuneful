@@ -59,15 +59,15 @@ enum SettingsCategory: String, Identifiable, CaseIterable {
     
     var title: String {
         switch self {
-        case .general: GeneralSettingsView().title
-        case .menuBar: MenuBarSettingsView().title
+        case .general: "General"
+        case .menuBar: "Menu bar"
         }
     }
     
     var iconName: String {
         switch self {
-        case .general: GeneralSettingsView().systemImage
-        case .menuBar: MenuBarSettingsView().systemImage
+        case .general: "gear"
+        case .menuBar: "gear"
         }
     }
 }

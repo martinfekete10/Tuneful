@@ -1,6 +1,15 @@
 {
-  "originHash" : "98946b2d21c745a3204168b35d3b08adbb56968e101874e3d329784ab3132005",
+  "originHash" : "65163de07630725f7d7a408243fd7c343eee3adeef75f7df73a63ca64834ec28",
   "pins" : [
+    {
+      "identity" : "defaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/Defaults",
+      "state" : {
+        "revision" : "ef1b2318fb549002bb533bec3a8ad98ae09f2cb6",
+        "version" : "9.0.0"
+      }
+    },
     {
       "identity" : "issoundadditions",
       "kind" : "remoteSourceControl",
@@ -53,6 +62,15 @@
       "state" : {
         "revision" : "1f07f4096e52f19b5e7abaa697b7fc592b7ff57c",
         "version" : "2.5.1"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax",
+      "state" : {
+        "revision" : "0687f71944021d616d34d922343dcef086855920",
+        "version" : "600.0.1"
       }
     }
   ],

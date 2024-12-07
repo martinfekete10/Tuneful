@@ -7,16 +7,11 @@
 
 import SwiftUI
 import AppKit
+import Defaults
 
 class MiniPlayerWindow: NSWindow {
-    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
-    @AppStorage("windowPosition") var savedPosition: String = "10,0"
-    
     init() {
-        let userDefaults = UserDefaults.standard
-        let position = NSPoint.fromString(
-            userDefaults.string(forKey: "windowPosition") ?? "10,10"
-        ) ?? NSPoint(x: 10, y: 10)
+        let position = NSPoint.fromString(Defaults[.windowPosition]) ?? NSPoint(x: 10, y: 10)
         
         super.init(
             contentRect: NSRect(x: position.x, y: position.y, width: 300, height: 145),
@@ -49,10 +44,10 @@ class MiniPlayerWindow: NSWindow {
         let customizeMenu = NSMenu()
         customizeMenu
             .addItem(withTitle: "Full", action: #selector(setFullPlayer(_:)), keyEquivalent: "")
-            .state = self.miniPlayerType == .full ? .on : .off
+            .state = Defaults[.miniPlayerType] == .full ? .on : .off
         customizeMenu
             .addItem(withTitle: "Minimal", action: #selector(setAlbumArtPlayer(_:)), keyEquivalent: "")
-            .state = self.miniPlayerType == .minimal ? .on : .off
+            .state = Defaults[.miniPlayerType] == .minimal ? .on : .off
         customizeMenuItem.submenu = customizeMenu
         
         menu.addItem(customizeMenuItem)
@@ -66,12 +61,12 @@ class MiniPlayerWindow: NSWindow {
     }
 
     @objc func setFullPlayer(_ sender: Any) {
-        miniPlayerType = .full
+        Defaults[.miniPlayerType] = .full
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
 
     @objc func setAlbumArtPlayer(_ sender: Any) {
-        miniPlayerType = .minimal
+        Defaults[.miniPlayerType] = .minimal
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
     
@@ -85,7 +80,7 @@ class MiniPlayerWindow: NSWindow {
     
     @objc func windowDidMove(_ notification: Notification) {
         let position = self.frame.origin
-        savedPosition = "\(position.x),\(position.y)"
+        Defaults[.windowPosition] = "\(position.x),\(position.y)"
     }
     
     deinit {

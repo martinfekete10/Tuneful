@@ -9,14 +9,14 @@ import SwiftUI
 import ScriptingBridge
 import KeyboardShortcuts
 import Luminare
+import Defaults
 
 struct OnboardingView: View {
     private enum Steps {
       case onAppPicker, onDetails, allDone
     }
     
-    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
-    
+    @Default(.viewedOnboarding) private var viewedOnboarding
     @State private var step: Steps = .onAppPicker
     @State private var finishedAlert = false
     
@@ -97,7 +97,7 @@ struct OnboardingView: View {
                         .disabled(!finishedAlert)
                     } else {
                         Button("Finish") {
-                            self.viewedShortcutsSetup = true
+                            self.viewedOnboarding = true
                             NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil)
                         }
                         .buttonStyle(LuminareCompactButtonStyle())
@@ -117,7 +117,7 @@ struct OnboardingView: View {
 }
 
 struct AppPicker: View {
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
+    @Default(.connectedApp) private var connectedApp
     
     var body: some View {
         VStack(spacing: 10) {
@@ -155,11 +155,10 @@ struct AppPicker: View {
 }
 
 struct Details: View {
-    @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
+    @Default(.connectedApp) private var connectedApp
+    @Default(.viewedOnboarding) private var viewedOnboarding
     
     @Binding var finishedAlert: Bool
-    
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
     @State private var showAlert = false

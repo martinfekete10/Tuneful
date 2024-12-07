@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Defaults
 
 class PlayerAppProvider {
     private var notificationSubject: PassthroughSubject<AlertItem, Never>
@@ -15,9 +16,9 @@ class PlayerAppProvider {
         self.notificationSubject = notificationSubject
     }
     
-    func getPlayerApp(connectedApp: ConnectedApps) -> PlayerProtocol {
+    func getPlayerApp() -> PlayerProtocol {
         // TODO: System player
-        switch connectedApp {
+        switch Defaults[.connectedApp] {
         case .spotify:
             return SpotifyManager(notificationSubject: notificationSubject)
         case .appleMusic:

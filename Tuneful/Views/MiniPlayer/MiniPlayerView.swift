@@ -9,7 +9,7 @@ import SwiftUI
 import MediaPlayer
 
 struct MiniPlayerView: View {
-    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
+//    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
     @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
     
@@ -18,12 +18,12 @@ struct MiniPlayerView: View {
     var body: some View {
         
         ZStack {
-            if miniPlayerBackground == .albumArt && playerManager.isRunning {
-                playerManager.track.albumArt
-                    .resizable()
-                    .scaledToFill()
-                VisualEffectView(material: .popover, blendingMode: .withinWindow)
-            }
+//            if miniPlayerBackground == .albumArt && playerManager.isRunning {
+//                playerManager.track.albumArt
+//                    .resizable()
+//                    .scaledToFill()
+//                VisualEffectView(material: .popover, blendingMode: .withinWindow)
+//            }
             
             if !playerManager.isRunning || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")

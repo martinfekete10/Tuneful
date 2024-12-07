@@ -11,7 +11,7 @@ import MediaPlayer
 struct CompactMiniPlayerView: View {
     
     @EnvironmentObject var playerManager: PlayerManager
-    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
+//    @AppStorage("miniPlayerBackground") var miniPlayerBackground: BackgroundType = .transparent
     @State private var isShowingPlaybackControls = false
     
     private var imageSize: CGFloat = 140.0
@@ -21,12 +21,12 @@ struct CompactMiniPlayerView: View {
 
     var body: some View {
         ZStack {
-            if miniPlayerBackground == .albumArt && playerManager.isRunning {
-                playerManager.track.albumArt
-                    .resizable()
-                    .scaledToFill()
-                VisualEffectView(material: .popover, blendingMode: .withinWindow)
-            }
+//            if miniPlayerBackground == .albumArt && playerManager.isRunning {
+//                playerManager.track.albumArt
+//                    .resizable()
+//                    .scaledToFill()
+//                VisualEffectView(material: .popover, blendingMode: .withinWindow)
+//            }
             
             if !playerManager.isRunning || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")

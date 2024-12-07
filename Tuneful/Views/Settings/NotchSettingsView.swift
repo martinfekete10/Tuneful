@@ -11,9 +11,8 @@ import Luminare
 import Defaults
 
 struct NotchSettingsView: View {
-    @AppStorage("showSongNotification") private var showSongNotification = true
-    @AppStorage("notificationDuration") private var notificationDuration = 2.0
-    
+    @Default(.showSongNotification) var showSongNotification
+    @Default(.notificationDuration) var notificationDuration
     @Default(.notchEnabled) var notchEnabled
     
     var body: some View {

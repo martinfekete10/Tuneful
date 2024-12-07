@@ -6,16 +6,9 @@
 //
 
 import SwiftUI
+import Defaults
 
 class StatusBarItemManager: ObservableObject {
-    @AppStorage("menuBarItemWidth") var menuBarItemWidth: Double = 150
-    @AppStorage("statusBarIcon") var statusBarIcon: StatusBarIcon = .albumArt
-    @AppStorage("trackInfoDetails") var trackInfoDetails: StatusBarTrackDetails = .artistAndSong
-    @AppStorage("connectedApp") var connectedApp: ConnectedApps = ConnectedApps.appleMusic
-    @AppStorage("showStatusBarTrackInfo") var showStatusBarTrackInfo: ShowStatusBarTrackInfo = .always
-    @AppStorage("scrollingTrackInfo") var scrollingTrackInfo: Bool = false
-    @AppStorage("showEqWhenPlayingMusic") var showEqWhenPlayingMusic: Bool = true
-    
     @ObservedObject var playerManager: PlayerManager
     
     init(playerManager: PlayerManager) {
@@ -30,21 +23,21 @@ class StatusBarItemManager: ObservableObject {
         var menuBarItemHeigth = 20.0
         var menuBarItemWidth = titleWidth == 0
             ? Constants.StatusBar.imageWidth
-            : (self.menuBarItemWidth > titleWidth  ? titleWidth + 5 : self.menuBarItemWidth + 5)
-        if self.statusBarIcon != .hidden && titleWidth != 0 {
+            : (Defaults[.menuBarItemWidth] > titleWidth  ? titleWidth + 5 : Defaults[.menuBarItemWidth] + 5)
+        if Defaults[.statusBarIcon] != .hidden && titleWidth != 0 {
             menuBarItemWidth += Constants.StatusBar.imageWidth
         }
         
         let mainView = HStack(spacing: 7) {
-            if self.statusBarIcon != .hidden {
+            if Defaults[.statusBarIcon] != .hidden {
                 image.frame(width: 18, height: 18)
             }
             
-            if scrollingTrackInfo && titleWidth != 0 && playerAppIsRunning {
+            if Defaults[.scrollingTrackInfo] && titleWidth != 0 && playerAppIsRunning {
                 MarqueeText(text: title, leftFade: 0.0, rightFade: 0.0, startDelay: 0, animating: isPlaying)
             }
             
-            if !scrollingTrackInfo && titleWidth != 0 || !playerAppIsRunning {
+            if !Defaults[.scrollingTrackInfo] && titleWidth != 0 || !playerAppIsRunning {
                 Text(title)
                     .lineLimit(1)
                     .font(.system(size: 13, weight: .regular))
@@ -53,7 +46,7 @@ class StatusBarItemManager: ObservableObject {
         }
         .frame(maxWidth: .infinity, alignment: .center)
         
-        if self.statusBarIcon == .hidden && titleWidth == 0 {
+        if Defaults[.statusBarIcon] == .hidden && titleWidth == 0 {
             menuBarItemHeigth = 0
             menuBarItemWidth = 0
        }
@@ -68,11 +61,11 @@ class StatusBarItemManager: ObservableObject {
     private func getStatusBarTrackInfo(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> String {
         let activePlayback = isPlaying && playerAppIsRunning
         
-        if showStatusBarTrackInfo == .never {
+        if Defaults[.showStatusBarTrackInfo] == .never {
             return ""
         }
         
-        if showStatusBarTrackInfo == .whenPlaying && !activePlayback {
+        if Defaults[.showStatusBarTrackInfo] == .whenPlaying && !activePlayback {
             return ""
         }
         
@@ -81,7 +74,7 @@ class StatusBarItemManager: ObservableObject {
         }
         
         if !playerAppIsRunning && !activePlayback {
-            return "Open \(connectedApp.rawValue)"
+            return "Open \(Defaults[.connectedApp].rawValue)"
         }
         
         return getTrackInfoDetails(track: track)
@@ -98,7 +91,7 @@ class StatusBarItemManager: ObservableObject {
         if title.isEmpty { title = album }
         
         var trackInfo = ""
-        switch trackInfoDetails {
+        switch Defaults[.trackInfoDetails] {
         case .artistAndSong:
             trackInfo = "\(artist) • \(title)"
         case .artist:
@@ -111,8 +104,8 @@ class StatusBarItemManager: ObservableObject {
     }
     
     private func getImage(track: Track, playerAppIsRunning: Bool, isPlaying: Bool) -> AnyView {
-        if isPlaying && showEqWhenPlayingMusic && playerAppIsRunning {
-            if statusBarIcon == .albumArt {
+        if isPlaying && Defaults[.showEqWhenPlayingMusic] && playerAppIsRunning {
+            if Defaults[.statusBarIcon] == .albumArt {
                 return AnyView(
                     Rectangle()
                         .fill(Color(nsColor: track.nsAlbumArt.averageColor ?? .white).gradient)
@@ -123,7 +116,7 @@ class StatusBarItemManager: ObservableObject {
             }
         }
         
-        if statusBarIcon == .albumArt && playerAppIsRunning {
+        if Defaults[.statusBarIcon] == .albumArt && playerAppIsRunning {
             return AnyView(track.albumArt.resizable().frame(width: 18, height: 18).cornerRadius(4))
         }
         

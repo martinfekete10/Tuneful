@@ -10,15 +10,12 @@ import Foundation
 import SwiftUI
 
 struct NotificationView: View {
-    
     @EnvironmentObject var playerManager: PlayerManager
     
     @State private var isPresented = false
     @State private var title = ""
     @State private var message = ""
-
     @State private var messageId = UUID()
-
     @State private var cancelButtonIsShowing = false
 
     let presentAnimation = Animation.spring(

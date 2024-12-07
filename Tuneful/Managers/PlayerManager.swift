@@ -13,11 +13,6 @@ import ScriptingBridge
 import Defaults
 
 public class PlayerManager: ObservableObject {
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
-    @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
-    @AppStorage("showSongNotification") private var showSongNotification = true
-    @AppStorage("notificationDuration") private var notificationDuration = 2.0
-    
     var musicApp: PlayerProtocol!
     var playerAppProvider: PlayerAppProvider!
     
@@ -126,7 +121,7 @@ public class PlayerManager: ObservableObject {
     private func setupMusicAppsAndObservers() {
         Logger.main.log("Setting up music app")
         
-        self.musicApp = playerAppProvider.getPlayerApp(connectedApp: self.connectedApp)
+        self.musicApp = playerAppProvider.getPlayerApp()
         self.setupObservers()
     }
     
@@ -185,7 +180,7 @@ public class PlayerManager: ObservableObject {
     }
     
     @objc private func popoverIsOpening(_ notification: NSNotification) {
-        if !showPlayerWindow {
+        if !Defaults[.showPlayerWindow] {
             self.startTimer()
         }
         self.audioDevices = AudioDevice.output.filter { $0.transportType != .virtual }
@@ -196,7 +191,7 @@ public class PlayerManager: ObservableObject {
     }
     
     @objc private func popoverIsClosing(_ notification: NSNotification) {
-        if !showPlayerWindow {
+        if !Defaults[.showPlayerWindow] {
             self.stopTimer()
         }
         
@@ -311,12 +306,11 @@ public class PlayerManager: ObservableObject {
     }
     
     func showNotchNotification() {
-        let notchEnabled = Defaults[.notchEnabled]
-        if !notchEnabled || !showSongNotification || popoverIsShown {
+        if !Defaults[.notchEnabled] || !Defaults[.showSongNotification] || popoverIsShown {
             return
         }
         
-        self.notchInfo.show(for: notificationDuration)
+        self.notchInfo.show(for: Defaults[.notificationDuration])
     }
 
     // MARK: Controls

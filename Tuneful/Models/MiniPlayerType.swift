@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Defaults
 
-enum MiniPlayerType: String, Equatable, CaseIterable {
+enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
     
     case full = "Full"
     case minimal = "Minimal"
