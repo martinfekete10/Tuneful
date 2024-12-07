@@ -17,9 +17,10 @@ struct NotchlessView<Content>: View where Content: View {
                 Spacer()
 
                 VStack(spacing: 0) {
-                    Spacer(minLength: 20)
-                    
-                    NotchlessInfoView(playerManager: dynamicNotch.playerManager)
+                    NotchlessInfoView(
+                        playerManager: dynamicNotch.playerManager,
+                        notchHeight: dynamicNotch.notchHeight
+                    )
                         .safeAreaInset(edge: .top, spacing: 0) { Color.clear.frame(height: 10) }
                         .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 10) }
                         .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 13) }
@@ -28,7 +29,10 @@ struct NotchlessView<Content>: View where Content: View {
                         .fixedSize()
                     
                     if dynamicNotch.isMouseInside {
-                        NotchlessPlayerView(playerManager: dynamicNotch.playerManager)
+                        NotchlessPlayerView(
+                            playerManager: dynamicNotch.playerManager,
+                            notchHeight: dynamicNotch.notchHeight
+                        )
                     }
                 }
                 .fixedSize()
@@ -69,7 +73,7 @@ struct NotchlessView<Content>: View where Content: View {
                             }
                     }
                 }
-                .offset(y: dynamicNotch.isVisible ? dynamicNotch.notchHeight - 50 : -windowHeight + 7)
+                .offset(y: dynamicNotch.isVisible ? 0 : -windowHeight + 10)
                 .animation(dynamicNotch.animation, value: dynamicNotch.contentID)
                 .opacity(dynamicNotch.isVisible ? 1 : 0.025)
 
@@ -83,9 +87,11 @@ struct NotchlessView<Content>: View where Content: View {
 
 struct NotchlessInfoView: View {
     @ObservedObject private var playerManager: PlayerManager
+    private var notchHeight: Double
 
-    init(playerManager: PlayerManager) {
+    init(playerManager: PlayerManager, notchHeight: Double) {
         self.playerManager = playerManager
+        self.notchHeight = notchHeight
     }
     
     public var body: some View {
@@ -113,9 +119,11 @@ struct NotchlessInfoView: View {
 
 struct NotchlessPlayerView: View {
     @ObservedObject private var playerManager: PlayerManager
+    private var notchHeight: Double
 
-    init(playerManager: PlayerManager) {
+    init(playerManager: PlayerManager, notchHeight: Double) {
         self.playerManager = playerManager
+        self.notchHeight = notchHeight
     }
     
     public var body: some View {
@@ -123,6 +131,7 @@ struct NotchlessPlayerView: View {
             PlaybackButtonsView(playButtonSize: 20, spacing: 20)
                 .environmentObject(playerManager)
                 .padding(.bottom, 5)
+            
             PlaybackPositionView(sliderHeight: 6, inline: true)
                 .environmentObject(playerManager)
         }
