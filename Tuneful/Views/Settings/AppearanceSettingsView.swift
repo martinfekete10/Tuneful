@@ -75,13 +75,21 @@ struct AppearanceSettingsView: View {
                         NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
                     }
                     
-                    LuminareToggle(
-                        "Mini player window always on top of other apps",
-                        isOn: $miniPlayerWindowOnTop
-                    )
-                    .onChange(of: miniPlayerWindowOnTop) { _ in
-                        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayerWindowLevel), to: nil, from: nil)
+                    HStack {
+                        Text("Mini player window always on top of other apps")
+                            .foregroundStyle(showPlayerWindow ? .primary : .tertiary)
+                        
+                        Spacer()
+                        
+                        Toggle("", isOn: $miniPlayerWindowOnTop)
+                            .toggleStyle(.switch)
+                            .disabled(!showPlayerWindow)
+                            .controlSize(.small)
+                            .onChange(of: miniPlayerWindowOnTop) { _ in
+                                NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayerWindowLevel), to: nil, from: nil)
+                            }
                     }
+                    .padding(8)
                     
                     HStack {
                         Text("Window style")
