@@ -53,7 +53,7 @@ public class PlayerManager: ObservableObject {
     @Published var repeatContextEnabled = false
     
     // Playback time
-    static let noPlaybackPositionPlaceholder = "- : -"
+    static let noPlaybackPositionPlaceholder = "--:--"
     var formattedDuration = PlayerManager.noPlaybackPositionPlaceholder
     var formattedPlaybackPosition = PlayerManager.noPlaybackPositionPlaceholder
     

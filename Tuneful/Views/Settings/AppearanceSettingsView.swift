@@ -40,8 +40,7 @@ struct AppearanceSettingsView: View {
                                 Text(value.localizedName).tag(value)
                             }
                         }
-                        .pickerStyle(.segmented)
-                        .frame(width: 200)
+                        .frame(width: 150)
                         .onChange(of: popoverType) { _ in
                             NSApplication.shared.sendAction(#selector(AppDelegate.setupPopover), to: nil, from: nil)
                         }
@@ -95,8 +94,7 @@ struct AppearanceSettingsView: View {
                                 Text(value.localizedName).tag(value)
                             }
                         }
-                        .pickerStyle(.segmented)
-                        .frame(width: 200)
+                        .frame(width: 150)
                         .onChange(of: miniPlayerType) { _ in
                             NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
                         }

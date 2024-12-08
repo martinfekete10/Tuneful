@@ -2,8 +2,10 @@
 
 -   New notch integration now allows you to control the music from notch. For non-notch Macs, this is available on hovering over new song notification
 -   New music slider which now looks and feels native
+-   New popover and mini player background type
+-   New UI animations so the app feels more fluid
+-   Enhanced onboarding
 -   Refactored the logic that fetches song information which makes the app feel snappier
--   Added more animations to the UI so the app feels more fluid
 -   Fixed the bug when Spotify was opened in the background even if killed by the user
 -   Fixed the bug when mini player floating preference was ignored on app restart
 -   Fixed the bug when Tuneful wasn't fetching Apple Music song favorite info correctly when changing songs
