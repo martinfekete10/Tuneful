@@ -27,5 +27,6 @@ extension Defaults.Keys {
     static let windowPosition = Key<String>("windowPosition", default: "10,10")
     static let showSongNotification = Key<Bool>("showSongNotification", default: true)
     static let notificationDuration = Key<Double>("notificationDuration", default: 2)
-    static let popoverBackground = Key<BackgroundType>("popoverBackground", default: .semiTransparent)
+    static let popoverBackground = Key<BackgroundType>("popoverBackground", default: .glow)
+    static let miniPlayerBackground = Key<BackgroundType>("miniPlayerBackground", default: .transparent)
 }

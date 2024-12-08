@@ -48,6 +48,7 @@
 		FE5B56E62D037EEF0077527C /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = FE5B56E52D037EEF0077527C /* Defaults */; };
 		FE5B56E82D037EEF0077527C /* DefaultsMacros in Frameworks */ = {isa = PBXBuildFile; productRef = FE5B56E72D037EEF0077527C /* DefaultsMacros */; };
 		FE5B56EC2D0386EC0077527C /* Defaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */; };
+		FE5B56F22D059B4F0077527C /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B56F12D059B350077527C /* BackgroundView.swift */; };
 		FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE62A72F37800D3321F /* Tuneful.swift */; };
 		FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */; };
 		FE6BFCEB2A72F37900D3321F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE6BFCEA2A72F37900D3321F /* Assets.xcassets */; };
@@ -150,6 +151,7 @@
 		FE4C92162B61459F00FF79BE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Extensions.swift"; sourceTree = "<group>"; };
+		FE5B56F12D059B350077527C /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		FE6BFCE32A72F37800D3321F /* Tuneful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuneful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6BFCE62A72F37800D3321F /* Tuneful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuneful.swift; sourceTree = "<group>"; };
 		FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 		FE3189DB2A7B9D0B006B2D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FE5B56F12D059B350077527C /* BackgroundView.swift */,
 				FE31AEDB2CFBCB71002818ED /* SettingsView.swift */,
 				FE2554A12CA9CA93003DAB77 /* HoverButton.swift */,
 				FE25549E2CA9C488003DAB77 /* MenuBar */,
@@ -527,6 +530,7 @@
 				TargetAttributes = {
 					FE6BFCE22A72F37800D3321F = {
 						CreatedOnToolsVersion = 14.3.1;
+						LastSwiftMigration = 1610;
 					};
 				};
 			};
@@ -627,6 +631,7 @@
 				FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */,
 				FE4C92172B61459F00FF79BE /* String+Extension.swift in Sources */,
 				FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */,
+				FE5B56F22D059B4F0077527C /* BackgroundView.swift in Sources */,
 				FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */,
 				FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */,
 				FE08CE132CFC74E200F047CB /* SettingsWindow.swift in Sources */,
@@ -782,6 +787,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tuneful/Tuneful.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
@@ -819,6 +825,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tuneful/Tuneful.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";

@@ -6,24 +6,16 @@
 //
 
 import SwiftUI
+import Defaults
 
 struct CompactPopoverView: View {
     @EnvironmentObject var playerManager: PlayerManager
-//    @AppStorage("popoverBackground") var popoverBackground: BackgroundType = .transparent
     @State private var isShowingPlaybackControls = false
+    @Default(.popoverBackground) private var popoverBackground
     
     var body: some View {
         ZStack {
-//            if popoverBackground == .albumArt && playerManager.isRunning {
-                playerManager.track.albumArt
-                    .resizable()
-                    .frame(width: 190, height: 190)
-                    .offset(y: -30)
-            VisualEffectView(material: .popover, blendingMode: .withinWindow)
-            
-            VisualEffectView(material: .popover, blendingMode: .withinWindow)
-                .opacity(0.7)
-//            }
+            BackgroundView(background: popoverBackground, yOffset: -30)
             
             if !playerManager.isRunning || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")

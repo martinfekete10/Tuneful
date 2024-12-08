@@ -9,7 +9,7 @@ import SwiftUI
 import Defaults
 
 enum BackgroundType: String, Equatable, CaseIterable, Defaults.Serializable {
-    case semiTransparent = "Semi-transparent"
+    case glow = "Tint"
     case transparent = "Transparent"
     case albumArt = "Album art"
     

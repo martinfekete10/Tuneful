@@ -10,21 +10,12 @@ import Defaults
 
 struct PopoverView: View {
     @EnvironmentObject private var playerManager: PlayerManager
-    @Default(.popoverBackground) private var popoverBackground
     @State private var isShowingPlaybackControls = false
+    @Default(.popoverBackground) private var popoverBackground
     
     var body: some View {
         ZStack {
-//            if popoverBackground == .albumArt && playerManager.isRunning {
-                playerManager.track.albumArt
-                    .resizable()
-                    .frame(width: 190, height: 190)
-                    .offset(y: -80)
-            VisualEffectView(material: .popover, blendingMode: .withinWindow)
-            
-            VisualEffectView(material: .popover, blendingMode: .withinWindow)
-                .opacity(0.7)
-//            }
+            BackgroundView(background: popoverBackground, yOffset: -80)
             
             if !playerManager.musicApp.isRunning() || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")

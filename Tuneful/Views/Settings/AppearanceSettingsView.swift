@@ -13,9 +13,12 @@ import Defaults
 struct AppearanceSettingsView: View {
     @Default(.popoverIsEnabled) private var popoverIsEnabled
     @Default(.popoverType) private var popoverType
+    @Default(.popoverBackground) private var popoverBackground
+    
     @Default(.showPlayerWindow) private var showPlayerWindow
     @Default(.miniPlayerWindowOnTop) private var miniPlayerWindowOnTop
     @Default(.miniPlayerType) private var miniPlayerType
+    @Default(.miniPlayerBackground) private var miniPlayerBackground
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
@@ -42,6 +45,22 @@ struct AppearanceSettingsView: View {
                         .onChange(of: popoverType) { _ in
                             NSApplication.shared.sendAction(#selector(AppDelegate.setupPopover), to: nil, from: nil)
                         }
+                        .disabled(!popoverIsEnabled)
+                    }
+                    .padding(8)
+                    
+                    HStack {
+                        Text("Background")
+                            .foregroundStyle(popoverIsEnabled ? .primary : .tertiary)
+                        
+                        Spacer()
+                        
+                        Picker("", selection: $popoverBackground) {
+                            ForEach(BackgroundType.allCases, id: \.self) { value in
+                                Text(value.localizedName).tag(value)
+                            }
+                        }
+                        .frame(width: 150)
                         .disabled(!popoverIsEnabled)
                     }
                     .padding(8)
@@ -81,6 +100,22 @@ struct AppearanceSettingsView: View {
                         .onChange(of: miniPlayerType) { _ in
                             NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
                         }
+                        .disabled(!showPlayerWindow)
+                    }
+                    .padding(8)
+                    
+                    HStack {
+                        Text("Background")
+                            .foregroundStyle(showPlayerWindow ? .primary : .tertiary)
+                        
+                        Spacer()
+                        
+                        Picker("", selection: $miniPlayerBackground) {
+                            ForEach(BackgroundType.allCases, id: \.self) { value in
+                                Text(value.localizedName).tag(value)
+                            }
+                        }
+                        .frame(width: 150)
                         .disabled(!showPlayerWindow)
                     }
                     .padding(8)
