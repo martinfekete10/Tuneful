@@ -118,9 +118,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
-//        if let bundleID = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-//        }
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
         
         self.settingsWindow.isReleasedWhenClosed = false
         self.playerManager = PlayerManager()
@@ -476,22 +476,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             animated: true,
             hidesToolbarForSingleItem: true
         ).show()
-    }
-    
-    @objc func openMiniPlayerAppearanceSettings(_ sender: AnyObject) {
-        SettingsWindowController(
-            panes: [
-                GeneralSettingsViewController(),
-                AppearanceSettingsViewController(),
-                MenuBarSettingsViewController(),
-                NotchSettingsViewController(),
-                KeyboardShortcutsSettingsViewController(),
-                AboutSettingsViewController()
-            ],
-            style: .toolbarItems,
-            animated: true,
-            hidesToolbarForSingleItem: true
-        ).show(pane: .appearance)
     }
     
     // MARK: Setup

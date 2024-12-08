@@ -43,11 +43,11 @@ struct AboutSettingsView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         
                         HStack {
-                            Link("♡ Support", destination: URL(string: "https://ko-fi.com/martinfekete")!)
+                            Link("❤️ Support", destination: URL(string: "https://ko-fi.com/martinfekete")!)
                                 .buttonStyle(LuminareCompactButtonStyle())
-                            Link("GitHub", destination: URL(string: "https://github.com/martinfekete10/Tuneful")!)
+                            Link("🧑‍💻 GitHub", destination: URL(string: "https://github.com/martinfekete10/Tuneful")!)
                                 .buttonStyle(LuminareCompactButtonStyle())
-                            Link("Website", destination: URL(string: "https://martinfekete.com/Tuneful")!)
+                            Link("🌐 Website", destination: URL(string: "https://martinfekete.com/Tuneful")!)
                                 .buttonStyle(LuminareCompactButtonStyle())
                         }
                     }

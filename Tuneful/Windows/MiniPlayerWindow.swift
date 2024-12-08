@@ -75,7 +75,7 @@ class MiniPlayerWindow: NSWindow {
     }
     
     @objc func settings(_ sender: Any?) {
-        NSApplication.shared.sendAction(#selector(AppDelegate.openMiniPlayerAppearanceSettings), to: nil, from: nil)
+        NSApplication.shared.sendAction(#selector(AppDelegate.openSettings), to: nil, from: nil)
     }
     
     @objc func windowDidMove(_ notification: Notification) {

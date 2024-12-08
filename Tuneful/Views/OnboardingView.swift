@@ -31,7 +31,7 @@ struct OnboardingView: View {
                                 .frame(width: 50, height: 50)
                             
                             if step == .onAppPicker {
-                                Text("Preferred Music App")
+                                Text("Preferred music app")
                                     .font(.largeTitle)
                                     .fontWeight(.semibold)
                             } else if step == .onDetails {
@@ -39,7 +39,7 @@ struct OnboardingView: View {
                                     .font(.largeTitle)
                                     .fontWeight(.semibold)
                             } else if step == .allDone {
-                                Text("All Done!")
+                                Text("All done!")
                                     .font(.largeTitle)
                                     .fontWeight(.semibold)
                             } else {
