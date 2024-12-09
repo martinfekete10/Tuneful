@@ -23,10 +23,14 @@ struct BackgroundView: View {
                 .resizable()
                 .frame(width: albumArtSize, height: albumArtSize)
                 .offset(x: xOffset, y: yOffset)
-            VisualEffectView(material: .popover, blendingMode: .withinWindow)
+            
+            playerManager.track.albumArt
+                .resizable()
+                .frame(width: albumArtSize, height: albumArtSize)
+                .offset(x: xOffset != 0 ? xOffset + 10 : xOffset, y: yOffset != 0 ? yOffset + 20 : yOffset)
+                .opacity(0.5)
             
             VisualEffectView(material: .popover, blendingMode: .withinWindow)
-                .opacity(0.9)
         case .albumArt:
             playerManager.track.albumArt
                 .resizable()
