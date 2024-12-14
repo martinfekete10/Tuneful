@@ -214,17 +214,27 @@ extension DynamicNotch {
 
         let panel = NSPanel(
             contentRect: .zero,
-            styleMask: [.borderless, .nonactivatingPanel],
+            styleMask: [.fullSizeContentView, .borderless, .utilityWindow, .nonactivatingPanel],
             backing: .buffered,
             defer: true
         )
-        panel.hasShadow = false
+        panel.isMovable = false
+        panel.isOpaque = false
+        panel.titleVisibility = .hidden
+        panel.titlebarAppearsTransparent = true
         panel.backgroundColor = .clear
-        panel.level = .screenSaver
-        panel.collectionBehavior = .canJoinAllSpaces
         panel.contentView = view
         panel.orderFrontRegardless()
         panel.setFrame(screen.frame, display: false)
+        panel.hasShadow = false
+        panel.isReleasedWhenClosed = false
+        panel.level = .mainMenu + 3
+        panel.collectionBehavior = [
+            .fullScreenAuxiliary,
+            .stationary,
+            .canJoinAllSpaces,
+            .ignoresCycle,
+        ]
 
         windowController = .init(window: panel)
     }

@@ -200,6 +200,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         KeyboardShortcuts.onKeyUp(for: .togglePopover) {
             self.handlePopover(self.statusBarItem.button)
         }
+        KeyboardShortcuts.onKeyUp(for: .openSettings) {
+            self.openSettings(self)
+        }
     }
     
     // MARK: Menu bar
@@ -522,7 +525,6 @@ struct Tuneful: App {
     
     var body: some Scene {
         Settings {
-            EmptyView()
         }
     }
 }
