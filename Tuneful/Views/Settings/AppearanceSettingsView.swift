@@ -20,6 +20,8 @@ struct AppearanceSettingsView: View {
     @Default(.miniPlayerType) private var miniPlayerType
     @Default(.miniPlayerBackground) private var miniPlayerBackground
     
+    private var playerManagerMock = PlayerManagerMock() as PlayerManager
+    
     var body: some View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
@@ -45,6 +47,32 @@ struct AppearanceSettingsView: View {
                             NSApplication.shared.sendAction(#selector(AppDelegate.setupPopover), to: nil, from: nil)
                         }
                         .disabled(!popoverIsEnabled)
+                    }
+                    .padding(8)
+                    
+                    HStack {
+                        Text("Test")
+                            .foregroundStyle(popoverIsEnabled ? .primary : .tertiary)
+                        
+                        Spacer()
+                        
+                        ScrollView {
+                            VStack {
+                                PopoverView()
+                                    .scaledToFit()
+                                    .frame(width: 250)
+                                    .environmentObject(playerManagerMock)
+                                    .allowsHitTesting(false)
+                                
+                                CompactPopoverView()
+                                    .scaledToFit()
+                                    .frame(width: 250)
+                                    .environmentObject(playerManagerMock)
+                                    .allowsHitTesting(false)
+                                
+                            }
+                        }
+                        .frame(height: 200)
                     }
                     .padding(8)
                     

@@ -68,6 +68,8 @@
 		FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */; };
 		FE8CE1542C1E03F30053FDEA /* CompactPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */; };
 		FE8CE1582C1E0B140053FDEA /* PopoverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1572C1E0B140053FDEA /* PopoverType.swift */; };
+		FE8F0DA12D0DE1BE005C7722 /* PlayerManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8F0DA02D0DE1BA005C7722 /* PlayerManagerMock.swift */; };
+		FE8F0DA32D0DE476005C7722 /* MusicAppMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8F0DA22D0DE471005C7722 /* MusicAppMock.swift */; };
 		FE9FCF212CAEC0290015DF4D /* PlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */; };
 		FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */; };
 		FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */; };
@@ -173,6 +175,8 @@
 		FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtView.swift; sourceTree = "<group>"; };
 		FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactPopoverView.swift; sourceTree = "<group>"; };
 		FE8CE1572C1E0B140053FDEA /* PopoverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverType.swift; sourceTree = "<group>"; };
+		FE8F0DA02D0DE1BA005C7722 /* PlayerManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManagerMock.swift; sourceTree = "<group>"; };
+		FE8F0DA22D0DE471005C7722 /* MusicAppMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicAppMock.swift; sourceTree = "<group>"; };
 		FE9781822C0CC1A0007217A1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FE9781842C0CC1A0007217A1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerProtocol.swift; sourceTree = "<group>"; };
@@ -342,6 +346,7 @@
 		FE6BFCE52A72F37800D3321F /* Tuneful */ = {
 			isa = PBXGroup;
 			children = (
+				FE8F0D9F2D0DE1B5005C7722 /* Mocks */,
 				FE5B56EB2D0386EC0077527C /* Defaults */,
 				FEFFE5532B4FDDEA000887B5 /* Extensions */,
 				FEA6FB212B04168000DACC43 /* AudioDevices */,
@@ -434,6 +439,15 @@
 				FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */,
 			);
 			path = Popover;
+			sourceTree = "<group>";
+		};
+		FE8F0D9F2D0DE1B5005C7722 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				FE8F0DA22D0DE471005C7722 /* MusicAppMock.swift */,
+				FE8F0DA02D0DE1BA005C7722 /* PlayerManagerMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		FEA6FB212B04168000DACC43 /* AudioDevices */ = {
@@ -594,6 +608,7 @@
 				FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */,
 				FE7955472CA2C7A3002026AA /* AudioSpectrumView.swift in Sources */,
 				FEFFE54D2B49EF97000887B5 /* MenuBarSettingsView.swift in Sources */,
+				FE8F0DA32D0DE476005C7722 /* MusicAppMock.swift in Sources */,
 				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
@@ -646,6 +661,7 @@
 				FEFFE55B2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift in Sources */,
 				FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */,
 				FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */,
+				FE8F0DA12D0DE1BE005C7722 /* PlayerManagerMock.swift in Sources */,
 				FE31AED02CF50708002818ED /* PlaybackPositionView.swift in Sources */,
 				FE25549B2CA95F87003DAB77 /* AddToFavoritesView.swift in Sources */,
 				FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */,

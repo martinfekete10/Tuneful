@@ -38,9 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         userDriverDelegate: nil
     )
     
-    private var settingsWindow = LuminareTrafficLightedWindow<SettingsView>(view: { SettingsView() })
-    
     // MARK: Settings
+    
+    private var settingsWindow = LuminareTrafficLightedWindow<SettingsView>(view: { SettingsView() })
     
     let GeneralSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
@@ -49,7 +49,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             toolbarIcon: NSImage(systemSymbolName: "switch.2", accessibilityDescription: "General settings")!
         ) {
             GeneralSettingsView()
-                .accentColor(.accentColor)
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -74,6 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             toolbarIcon: NSImage(systemSymbolName: "paintbrush", accessibilityDescription: "Appearance settings")!
         ) {
             AppearanceSettingsView()
+                .environmentObject(PlayerManagerMock())
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -398,21 +398,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func setupMiniPlayer() {
         let windowPosition = miniPlayerWindow.frame.origin
-        
-        switch Defaults[.miniPlayerType] {
-        case .full:
-            setupMiniPlayerWindow(
-                size: NSSize(width: 300, height: 145),
-                position: windowPosition,
-                view: MiniPlayerView()
-            )
-        case .minimal:
-            setupMiniPlayerWindow(
-                size: NSSize(width: 145, height: 145),
-                position: windowPosition,
-                view: CompactMiniPlayerView()
-            )
-        }
+
+        setupMiniPlayerWindow(
+            size: Defaults[.miniPlayerType].getWindowSize(),
+            position: windowPosition,
+            view: Defaults[.miniPlayerType].view
+        )
         
         miniPlayerWindow.makeKeyAndOrderFront(nil)
         NSApplication.shared.activate(ignoringOtherApps: true)
