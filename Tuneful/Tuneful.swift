@@ -202,6 +202,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         KeyboardShortcuts.onKeyUp(for: .openSettings) {
             self.openSettings(self)
         }
+        KeyboardShortcuts.onKeyUp(for: .likeSong) {
+            self.playerManager.toggleLoveTrack()
+        }
     }
     
     // MARK: Menu bar

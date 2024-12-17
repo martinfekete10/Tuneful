@@ -15,5 +15,6 @@ extension KeyboardShortcuts.Name {
     static let changeMusicPlayer = Self("changeMusicPlayer")
     static let toggleMenuBarItemVisibility = Self("toggleMenuBarItemVisibility")
     static let togglePopover = Self("togglePopover")
+    static let likeSong = Self("likeSong")
     static let openSettings = Self("openSettings", default: .init(.comma, modifiers: [.command]))
 }
