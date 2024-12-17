@@ -164,16 +164,16 @@ struct Details: View {
     @State private var showAlert = false
     @State private var success = false
     
-    private var name: Text {
+    private var appName: Text {
         Text(connectedApp.localizedName)
     }
     
     var body: some View {
         VStack(spacing: 20) {
             Text("""
-                 Tuneful requires permission to control \(name) and display music data.
+                 Tuneful requires permission to control \(appName) and display music data.
                  
-                 Open \(name) and click 'Enable permissions' below and select OK in the alert that is presented.
+                 Open \(appName) and click 'Enable permissions' below and select OK in the alert that is presented.
              """)
             .multilineTextAlignment(.center)
             
@@ -187,13 +187,13 @@ struct Details: View {
                     showAlert = true
                     viewedOnboarding = true
                 case .closed:
-                    alertTitle = Text("\(name) is not opened")
-                    alertMessage = Text("Please open \(name) to enable permissions")
+                    alertTitle = Text("\(appName) is not opened")
+                    alertMessage = Text("Please open \(appName) to enable permissions")
                     showAlert = true
                     success = false
                 case .denied:
                     alertTitle = Text("Permission denied")
-                    alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(name) under Tuneful")
+                    alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(appName) under Tuneful")
                     showAlert = true
                     success = false
                 case .notPrompted:

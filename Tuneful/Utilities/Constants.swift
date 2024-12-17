@@ -9,7 +9,7 @@ import AppKit
 import SwiftUI
 
 enum Constants {
-    static let podcastThresholdDurationSec = 600.0
+    static let podcastThresholdDurationSec = 900.0
     static let podcastRewindDurationSec = 15.0
     static let playerAppChangedMessage = "Player app changed"
     

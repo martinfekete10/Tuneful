@@ -19,7 +19,7 @@ struct PopoverView: View {
             BackgroundView(background: popoverBackground, yOffset: -80)
             
             if !playerManager.musicApp.isRunning() || playerManager.track.isEmpty() {
-                Text("Please open \(connectedApp) to use Tuneful")
+                Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
                     .font(.system(size: 14, weight: .regular))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

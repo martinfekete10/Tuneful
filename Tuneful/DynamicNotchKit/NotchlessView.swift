@@ -17,6 +17,8 @@ struct NotchlessView<Content>: View where Content: View {
                 Spacer()
 
                 VStack(spacing: 0) {
+                    Spacer(minLength: 20)
+                    
                     NotchlessInfoView(
                         playerManager: dynamicNotch.playerManager,
                         notchHeight: dynamicNotch.notchHeight
@@ -73,7 +75,7 @@ struct NotchlessView<Content>: View where Content: View {
                             }
                     }
                 }
-                .offset(y: dynamicNotch.isVisible ? 0 : -windowHeight + 10)
+                .offset(y: dynamicNotch.isVisible ? -25 : -windowHeight + 10)
                 .animation(dynamicNotch.animation, value: dynamicNotch.contentID)
                 .opacity(dynamicNotch.isVisible ? 1 : 0.025)
 
