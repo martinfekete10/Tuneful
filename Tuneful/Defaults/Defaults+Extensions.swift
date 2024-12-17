@@ -18,7 +18,6 @@ extension Defaults.Keys {
     static let trackInfoDetails = Key<StatusBarTrackDetails>("trackInfoDetails", default: .artistAndSong)
     static let showStatusBarTrackInfo = Key<ShowStatusBarTrackInfo>("showStatusBarTrackInfo", default: .always)
     static let showMenuBarPlaybackControls = Key<Bool>("showMenuBarPlaybackControls", default: false)
-    static let scrollingTrackInfo = Key<Bool>("scrollingTrackInfo", default: false)
     static let showEqWhenPlayingMusic = Key<Bool>("showEqWhenPlayingMusic", default: true)
     static let hideMenuBarItemWhenNotPlaying = Key<Bool>("hideMenuBarItemWhenNotPlaying", default: false)
     

@@ -33,11 +33,7 @@ class StatusBarItemManager: ObservableObject {
                 image.frame(width: 18, height: 18)
             }
             
-            if Defaults[.scrollingTrackInfo] && titleWidth != 0 && playerAppIsRunning {
-                MarqueeText(text: title, leftFade: 0.0, rightFade: 0.0, startDelay: 0, animating: isPlaying)
-            }
-            
-            if !Defaults[.scrollingTrackInfo] && titleWidth != 0 || !playerAppIsRunning {
+            if titleWidth != 0 || !playerAppIsRunning {
                 Text(title)
                     .lineLimit(1)
                     .font(.system(size: 13, weight: .regular))

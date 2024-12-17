@@ -16,7 +16,6 @@ struct MenuBarSettingsView: View {
     @Default(.showStatusBarTrackInfo) private var showStatusBarTrackInfo
     @Default(.showMenuBarPlaybackControls) private var showMenuBarPlaybackControls
     @Default(.hideMenuBarItemWhenNotPlaying) private var hideMenuBarItemWhenNotPlaying
-    @Default(.scrollingTrackInfo) private var scrollingTrackInfo
     @Default(.showEqWhenPlayingMusic) private var showEqWhenPlayingMusic
     
     var body: some View {
@@ -135,23 +134,6 @@ struct MenuBarSettingsView: View {
                     }
                     .disabled(showStatusBarTrackInfo == .never)
                     .opacity(showStatusBarTrackInfo == .never ? 0.7 : 1)
-                    
-                    HStack {
-                        Text("Scrolling song info")
-                            .foregroundStyle(showStatusBarTrackInfo == .never ? .tertiary : .primary)
-                        
-                        Spacer()
-                        
-                        Toggle(isOn: $scrollingTrackInfo) {
-                            Text("")
-                        }
-                        .onChange(of: scrollingTrackInfo) { _ in
-                            sendTrackChangedNotification()
-                        }
-                        .toggleStyle(.switch)
-                        .disabled(showStatusBarTrackInfo == .never)
-                    }
-                    .padding(8)
                 }
                 .padding(.top, 10)
             }
