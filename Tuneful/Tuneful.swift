@@ -73,7 +73,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             toolbarIcon: NSImage(systemSymbolName: "paintbrush", accessibilityDescription: "Appearance settings")!
         ) {
             AppearanceSettingsView()
-                .environmentObject(PlayerManagerMock())
         }
         
         return Settings.PaneHostingController(pane: paneView)
