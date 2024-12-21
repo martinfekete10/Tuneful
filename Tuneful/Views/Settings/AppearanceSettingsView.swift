@@ -19,6 +19,7 @@ struct AppearanceSettingsView: View {
     @Default(.miniPlayerWindowOnTop) private var miniPlayerWindowOnTop
     @Default(.miniPlayerType) private var miniPlayerType
     @Default(.miniPlayerBackground) private var miniPlayerBackground
+    @Default(.miniPlayerScaleFactor) private var miniPlayerScaleFactor
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
@@ -120,6 +121,26 @@ struct AppearanceSettingsView: View {
                             ForEach(BackgroundType.allCases, id: \.self) { value in
                                 Text(value.localizedName).tag(value)
                             }
+                        }
+                        .frame(width: 150)
+                        .disabled(!showPlayerWindow)
+                    }
+                    .padding(8)
+                    
+                    HStack {
+                        Text("Size")
+                            .foregroundStyle(showPlayerWindow ? .primary : .tertiary)
+                        
+                        Spacer()
+                        
+                        Picker("", selection: $miniPlayerScaleFactor) {
+                            ForEach(MiniPlayerScaleFactor.allCases, id: \.self) { value in
+                                Text(value.localizedName).tag(value)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .onChange(of: miniPlayerScaleFactor) { _ in
+                            NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
                         }
                         .frame(width: 150)
                         .disabled(!showPlayerWindow)

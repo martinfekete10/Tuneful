@@ -11,6 +11,7 @@ import Defaults
 enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
     case full = "Full"
     case minimal = "Minimal"
+    case vertical = "Vertical"
     
     var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
     
@@ -19,6 +20,7 @@ enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
         switch self {
         case .full: MiniPlayerView()
         case .minimal: CompactMiniPlayerView()
+        case .vertical: VerticalMiniPlayerView()
         }
     }
     
@@ -28,6 +30,8 @@ enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
             return MiniPlayerView().size
         case .minimal:
             return CompactMiniPlayerView().size
+        case .vertical:
+            return VerticalMiniPlayerView().size
         }
     }
 }

@@ -9,10 +9,10 @@ import SwiftUI
 import MediaPlayer
 import Defaults
 
-struct MiniPlayerView: View, MiniPlayerViewProtocol {
+struct VerticalMiniPlayerView: View, MiniPlayerViewProtocol {
     @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
-    @State var size = CGSize(width: 200, height: 150)
+    @State var size = CGSize(width: 150, height: 300)
     
     @Default(.miniPlayerScaleFactor) private var miniPlayerScaleFactor
     @Default(.miniPlayerBackground) private var miniPlayerBackground
@@ -30,7 +30,7 @@ struct MiniPlayerView: View, MiniPlayerViewProtocol {
                     .padding(15)
                     .padding(.bottom, 20)
             } else {
-                HStack(spacing: 10 * miniPlayerScaleFactor.rawValue) {
+                VStack(spacing: 10) {
                     ZStack {
                         AlbumArtView(imageSize: self.imageSize * miniPlayerScaleFactor.rawValue)
                             .dragWindowWithClick()
@@ -44,7 +44,9 @@ struct MiniPlayerView: View, MiniPlayerViewProtocol {
                         }
                     }
                     
-                    VStack(spacing: 10 * miniPlayerScaleFactor.rawValue) {
+                    VStack(spacing: 10) {
+                        PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, hideShuffleAndRepeat: true, spacing: 17.5 * miniPlayerScaleFactor.rawValue)
+                        
                         Button(action: playerManager.openMusicApp) {
                             VStack {
                                 Text(playerManager.track.title)
@@ -61,14 +63,7 @@ struct MiniPlayerView: View, MiniPlayerViewProtocol {
                             }
                         }
                         .pressButtonStyle()
-                        
-                        if playerManager.musicApp.playbackSeekerEnabled {
-                            PlaybackPositionView()
-                        }
-                        
-                        PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, spacing: 12.5 * miniPlayerScaleFactor.rawValue)
                     }
-                    .frame(width: imageSize * miniPlayerScaleFactor.rawValue) // Both sides should be the same
                     .opacity(0.75)
                 }
             }
@@ -81,7 +76,7 @@ struct MiniPlayerView: View, MiniPlayerViewProtocol {
             GeometryReader { proxy in
                 ZStack {
                     VisualEffectView(material: .popover, blendingMode: .behindWindow)
-                    BackgroundView(background: miniPlayerBackground, xOffset: -80)
+                    BackgroundView(background: miniPlayerBackground, yOffset: -80)
                 }
                 .onAppear {
                     size = proxy.size

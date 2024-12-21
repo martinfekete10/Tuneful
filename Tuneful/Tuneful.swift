@@ -427,20 +427,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     private func setupMiniPlayerWindow<Content: View>(position: CGPoint, size: CGSize, view: Content) {
-        DispatchQueue.main.async {
-            // Calculate new position that maintains the same vertical alignment
-            let currentFrame = self.miniPlayerWindow.frame
-            let newPosition = NSPoint(
-                x: position.x,
-                y: position.y + (currentFrame.height - size.height) // Adjust Y position to maintain top alignment
-            )
-            
-            self.miniPlayerWindow.setFrame(
-                NSRect(origin: newPosition, size: size),
-                display: true,
-                animate: true
-            )
-        }
+        let currentFrame = self.miniPlayerWindow.frame
+        let newPosition = NSPoint(
+            x: position.x,
+            y: position.y + (currentFrame.height - size.height)
+        )
+        
+        self.miniPlayerWindow.setFrame(
+            NSRect(origin: newPosition, size: size),
+            display: true,
+            animate: false
+        )
         
         let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
         let miniPlayerView = NSHostingView(rootView: rootView)

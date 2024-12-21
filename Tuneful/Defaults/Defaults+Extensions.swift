@@ -27,6 +27,7 @@ extension Defaults.Keys {
     static let notificationDuration = Key<Double>("notificationDuration", default: 2)
     
     // Mini player
+    static let miniPlayerScaleFactor = Key<MiniPlayerScaleFactor>("miniPlayerScaleFactor", default: .normal)
     static let showPlayerWindow = Key<Bool>("showPlayerWindow", default: true)
     static let miniPlayerType = Key<MiniPlayerType>("miniPlayerType", default: .minimal)
     static let miniPlayerWindowOnTop = Key<Bool>("miniPlayerWindowOnTop", default: true)

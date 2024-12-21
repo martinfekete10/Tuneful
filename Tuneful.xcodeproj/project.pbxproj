@@ -71,6 +71,8 @@
 		FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */; };
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
 		FEBA35E82D172B7F0081A3F2 /* MiniPlayerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35E72D172B760081A3F2 /* MiniPlayerViewProtocol.swift */; };
+		FEBA35EA2D17566E0081A3F2 /* VerticalMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */; };
+		FEBA35EC2D1766790081A3F2 /* MiniPlayerScaleFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
 		FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */; };
@@ -177,6 +179,8 @@
 		FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicManager.swift; sourceTree = "<group>"; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		FEBA35E72D172B760081A3F2 /* MiniPlayerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewProtocol.swift; sourceTree = "<group>"; };
+		FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMiniPlayerView.swift; sourceTree = "<group>"; };
+		FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerScaleFactor.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAppProvider.swift; sourceTree = "<group>"; };
@@ -370,6 +374,7 @@
 		FE6BFCF92A73A7CA00D3321F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */,
 				FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */,
 				FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */,
 				FE6BFCFA2A73A7CA00D3321F /* SupportedApps.swift */,
@@ -445,6 +450,7 @@
 			children = (
 				FEBA35E72D172B760081A3F2 /* MiniPlayerViewProtocol.swift */,
 				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
+				FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */,
 				FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */,
 			);
 			path = MiniPlayer;
@@ -595,6 +601,7 @@
 				FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */,
 				FEBA35E82D172B7F0081A3F2 /* MiniPlayerViewProtocol.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
+				FEBA35EA2D17566E0081A3F2 /* VerticalMiniPlayerView.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
 				FE5B56EC2D0386EC0077527C /* Defaults+Extensions.swift in Sources */,
@@ -613,6 +620,7 @@
 				FE6BFD0C2A73B2D400D3321F /* NSImage+Extension.swift in Sources */,
 				FE6BFD022A73AB9A00D3321F /* MusicApplication.swift in Sources */,
 				FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */,
+				FEBA35EC2D1766790081A3F2 /* MiniPlayerScaleFactor.swift in Sources */,
 				FE6BFD032A73AB9A00D3321F /* SpotifyApplication.swift in Sources */,
 				FE31AEDC2CFBCB76002818ED /* SettingsView.swift in Sources */,
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,

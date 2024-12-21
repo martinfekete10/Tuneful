@@ -25,7 +25,7 @@ class MiniPlayerWindow: NSWindow {
         self.collectionBehavior = [.canJoinAllSpaces, .fullScreenNone]
         self.isReleasedWhenClosed = false
         self.backgroundColor = NSColor.clear
-        self.hasShadow = true
+        self.hasShadow = false
         
         NotificationCenter.default.addObserver(
             self,
@@ -46,8 +46,11 @@ class MiniPlayerWindow: NSWindow {
             .addItem(withTitle: "Full", action: #selector(setFullPlayer(_:)), keyEquivalent: "")
             .state = Defaults[.miniPlayerType] == .full ? .on : .off
         customizeMenu
-            .addItem(withTitle: "Minimal", action: #selector(setAlbumArtPlayer(_:)), keyEquivalent: "")
+            .addItem(withTitle: "Minimal", action: #selector(setCompactMiniPlayer(_:)), keyEquivalent: "")
             .state = Defaults[.miniPlayerType] == .minimal ? .on : .off
+        customizeMenu
+            .addItem(withTitle: "Vertical", action: #selector(setVerticalMiniPlayer(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerType] == .vertical ? .on : .off
         customizeMenuItem.submenu = customizeMenu
         
         menu.addItem(customizeMenuItem)
@@ -65,8 +68,13 @@ class MiniPlayerWindow: NSWindow {
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
 
-    @objc func setAlbumArtPlayer(_ sender: Any) {
+    @objc func setCompactMiniPlayer(_ sender: Any) {
         Defaults[.miniPlayerType] = .minimal
+        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
+    }
+    
+    @objc func setVerticalMiniPlayer(_ sender: Any) {
+        Defaults[.miniPlayerType] = .vertical
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
     
