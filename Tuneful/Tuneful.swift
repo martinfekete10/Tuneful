@@ -402,8 +402,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let windowPosition = miniPlayerWindow.frame.origin
 
         setupMiniPlayerWindow(
-            size: Defaults[.miniPlayerType].getWindowSize(),
             position: windowPosition,
+            size: Defaults[.miniPlayerType].size,
             view: Defaults[.miniPlayerType].view
         )
         
@@ -426,7 +426,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
+    private func setupMiniPlayerWindow<Content: View>(position: CGPoint, size: CGSize, view: Content) {
         DispatchQueue.main.async {
             // Calculate new position that maintains the same vertical alignment
             let currentFrame = self.miniPlayerWindow.frame
@@ -447,6 +447,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         miniPlayerWindow.contentView = miniPlayerView
         toggleMiniPlayerWindowLevel()
     }
+
     
     // MARK: New settings
     

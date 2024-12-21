@@ -9,9 +9,11 @@ import SwiftUI
 import MediaPlayer
 import Defaults
 
-struct CompactMiniPlayerView: View {
+struct CompactMiniPlayerView: View, MiniPlayerViewProtocol {
     @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
+    @State var size = CGSize(width: 150, height: 150)
+    
     @Default(.miniPlayerBackground) private var miniPlayerBackground
     
     private var imageSize: CGFloat = 140.0
@@ -21,8 +23,6 @@ struct CompactMiniPlayerView: View {
 
     var body: some View {
         ZStack {
-            BackgroundView(background: miniPlayerBackground)
-            
             if !playerManager.isRunning || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(0.4))
@@ -35,7 +35,7 @@ struct CompactMiniPlayerView: View {
                 AlbumArtView(imageSize: self.imageSize)
                     .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                     .dragWindowWithClick()
-
+                
                 PlaybackButtonsView(playButtonSize: 17.5, hideShuffleAndRepeat: true, spacing: 17.5)
                     .padding(15)
                     .background(
@@ -49,7 +49,7 @@ struct CompactMiniPlayerView: View {
                     .opacity(isShowingPlaybackControls ? 1 : 0)
             }
         }
-        .frame(width: 155, height: 155)
+        .padding(7.5)
         .onHover { _ in
             withAnimation(.linear(duration: 0.2)) {
                 self.isShowingPlaybackControls.toggle()
@@ -59,7 +59,15 @@ struct CompactMiniPlayerView: View {
             NotificationView()
         )
         .background(
-            VisualEffectView(material: .popover, blendingMode: .behindWindow)
+            GeometryReader { proxy in
+                ZStack {
+                    VisualEffectView(material: .popover, blendingMode: .behindWindow)
+                    BackgroundView(background: miniPlayerBackground, xOffset: -80)
+                }
+                .onAppear {
+                    size = proxy.size
+                }
+            }
         )
         .overlay {
             RoundedRectangle(cornerRadius: 10, style: .continuous)

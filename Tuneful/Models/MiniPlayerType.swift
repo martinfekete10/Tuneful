@@ -22,10 +22,12 @@ enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
         }
     }
     
-    func getWindowSize() -> NSSize {
+    var size: CGSize {
         switch self {
-        case .full: return NSSize(width: 300, height: 145)
-        case .minimal: return NSSize(width: 145, height: 145)
+        case .full:
+            return MiniPlayerView().size
+        case .minimal:
+            return CompactMiniPlayerView().size
         }
     }
 }

@@ -9,18 +9,17 @@ import SwiftUI
 import MediaPlayer
 import Defaults
 
-struct MiniPlayerView: View {
+struct MiniPlayerView: View, MiniPlayerViewProtocol {
     @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
+    @State var size = CGSize(width: 200, height: 150)
+    
     @Default(.miniPlayerBackground) private var miniPlayerBackground
     
     private var imageSize: CGFloat = 140.0
 
     var body: some View {
-        
         ZStack {
-            BackgroundView(background: miniPlayerBackground, xOffset: -80)
-            
             if !playerManager.isRunning || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(0.4))
@@ -30,7 +29,7 @@ struct MiniPlayerView: View {
                     .padding(15)
                     .padding(.bottom, 20)
             } else {
-                HStack(spacing: 0) {
+                HStack(spacing: 10) {
                     ZStack {
                         AlbumArtView(imageSize: self.imageSize)
                             .dragWindowWithClick()
@@ -68,18 +67,25 @@ struct MiniPlayerView: View {
                         
                         PlaybackButtonsView(playButtonSize: 17.5, spacing: 12.5)
                     }
-                    .padding()
-                    .opacity(0.8)
+                    .frame(width: imageSize) // Both sides should be the same
+                    .opacity(0.75)
                 }
-                .padding(.leading, 8)
             }
         }
-        .frame(width: 310, height: 155)
+        .padding(7.5)
         .overlay(
             NotificationView()
         )
         .background(
-            VisualEffectView(material: .popover, blendingMode: .behindWindow)
+            GeometryReader { proxy in
+                ZStack {
+                    VisualEffectView(material: .popover, blendingMode: .behindWindow)
+                    BackgroundView(background: miniPlayerBackground, xOffset: -80)
+                }
+                .onAppear {
+                    size = proxy.size
+                }
+            }
         )
         .overlay {
             RoundedRectangle(cornerRadius: 10, style: .continuous)

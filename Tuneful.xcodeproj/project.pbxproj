@@ -70,6 +70,7 @@
 		FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */; };
 		FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */; };
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
+		FEBA35E82D172B7F0081A3F2 /* MiniPlayerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35E72D172B760081A3F2 /* MiniPlayerViewProtocol.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
 		FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */; };
@@ -175,6 +176,7 @@
 		FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyManager.swift; sourceTree = "<group>"; };
 		FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicManager.swift; sourceTree = "<group>"; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
+		FEBA35E72D172B760081A3F2 /* MiniPlayerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewProtocol.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAppProvider.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 		FEE486E32B5D173A00AB712F /* MiniPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				FEBA35E72D172B760081A3F2 /* MiniPlayerViewProtocol.swift */,
 				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
 				FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */,
 			);
@@ -590,6 +593,7 @@
 				FEFFE54D2B49EF97000887B5 /* MenuBarSettingsView.swift in Sources */,
 				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */,
+				FEBA35E82D172B7F0081A3F2 /* MiniPlayerViewProtocol.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
