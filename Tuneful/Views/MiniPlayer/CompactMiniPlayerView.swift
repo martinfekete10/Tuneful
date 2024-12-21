@@ -50,7 +50,7 @@ struct CompactMiniPlayerView: View, MiniPlayerViewProtocol {
                     .opacity(isShowingPlaybackControls ? 1 : 0)
             }
         }
-        .padding(7.5 * miniPlayerScaleFactor.rawValue)
+        .padding(10 * miniPlayerScaleFactor.rawValue)
         .onHover { _ in
             withAnimation(.linear(duration: 0.2)) {
                 self.isShowingPlaybackControls.toggle()

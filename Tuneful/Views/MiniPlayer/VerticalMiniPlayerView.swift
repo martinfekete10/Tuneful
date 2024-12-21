@@ -30,7 +30,7 @@ struct VerticalMiniPlayerView: View, MiniPlayerViewProtocol {
                     .padding(15)
                     .padding(.bottom, 20)
             } else {
-                VStack(spacing: 10) {
+                VStack(spacing: 10 * miniPlayerScaleFactor.rawValue) {
                     ZStack {
                         AlbumArtView(imageSize: self.imageSize * miniPlayerScaleFactor.rawValue)
                             .dragWindowWithClick()
@@ -44,7 +44,7 @@ struct VerticalMiniPlayerView: View, MiniPlayerViewProtocol {
                         }
                     }
                     
-                    VStack(spacing: 10) {
+                    VStack(spacing: 10 * miniPlayerScaleFactor.rawValue) {
                         PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, hideShuffleAndRepeat: true, spacing: 17.5 * miniPlayerScaleFactor.rawValue)
                         
                         Button(action: playerManager.openMusicApp) {

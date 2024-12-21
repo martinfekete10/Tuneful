@@ -9,27 +9,33 @@ import SwiftUI
 import Defaults
 
 enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
-    case full = "Full"
     case minimal = "Minimal"
+    case horizontal = "Full"
     case vertical = "Vertical"
     
-    var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
+    var localizedName: String {
+        switch self {
+        case .minimal: "Minimal"
+        case .horizontal: "Horizontal"
+        case .vertical: "Vertical"
+        }
+    }
     
     @ViewBuilder
     var view: some View {
         switch self {
-        case .full: MiniPlayerView()
         case .minimal: CompactMiniPlayerView()
+        case .horizontal: HorizontalMiniPlayerView()
         case .vertical: VerticalMiniPlayerView()
         }
     }
     
     var size: CGSize {
         switch self {
-        case .full:
-            return MiniPlayerView().size
         case .minimal:
             return CompactMiniPlayerView().size
+        case .horizontal:
+            return HorizontalMiniPlayerView().size
         case .vertical:
             return VerticalMiniPlayerView().size
         }

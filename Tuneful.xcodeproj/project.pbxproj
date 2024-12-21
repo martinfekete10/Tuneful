@@ -48,7 +48,7 @@
 		FE5B56EC2D0386EC0077527C /* Defaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */; };
 		FE5B56F22D059B4F0077527C /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B56F12D059B350077527C /* BackgroundView.swift */; };
 		FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE62A72F37800D3321F /* Tuneful.swift */; };
-		FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */; };
+		FE6BFCE92A72F37800D3321F /* HorizontalMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE82A72F37800D3321F /* HorizontalMiniPlayerView.swift */; };
 		FE6BFCEB2A72F37900D3321F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE6BFCEA2A72F37900D3321F /* Assets.xcassets */; };
 		FE6BFCEE2A72F37900D3321F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE6BFCED2A72F37900D3321F /* Preview Assets.xcassets */; };
 		FE6BFCFB2A73A7CA00D3321F /* SupportedApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCFA2A73A7CA00D3321F /* SupportedApps.swift */; };
@@ -153,7 +153,7 @@
 		FE5B56F12D059B350077527C /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		FE6BFCE32A72F37800D3321F /* Tuneful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuneful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6BFCE62A72F37800D3321F /* Tuneful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuneful.swift; sourceTree = "<group>"; };
-		FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
+		FE6BFCE82A72F37800D3321F /* HorizontalMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMiniPlayerView.swift; sourceTree = "<group>"; };
 		FE6BFCEA2A72F37900D3321F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FE6BFCED2A72F37900D3321F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FE6BFCEF2A72F37900D3321F /* Tuneful.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tuneful.entitlements; sourceTree = "<group>"; };
@@ -449,7 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				FEBA35E72D172B760081A3F2 /* MiniPlayerViewProtocol.swift */,
-				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
+				FE6BFCE82A72F37800D3321F /* HorizontalMiniPlayerView.swift */,
 				FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */,
 				FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */,
 			);
@@ -635,7 +635,7 @@
 				FE6BFD082A73AE5E00D3321F /* Track.swift in Sources */,
 				FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */,
 				FE4C92172B61459F00FF79BE /* String+Extension.swift in Sources */,
-				FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */,
+				FE6BFCE92A72F37800D3321F /* HorizontalMiniPlayerView.swift in Sources */,
 				FE5B56F22D059B4F0077527C /* BackgroundView.swift in Sources */,
 				FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */,
 				FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */,

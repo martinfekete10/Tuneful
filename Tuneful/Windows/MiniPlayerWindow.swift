@@ -35,36 +35,50 @@ class MiniPlayerWindow: NSWindow {
         )
     }
     
+    override var canBecomeKey: Bool {
+        return true
+    }
+    
     override func rightMouseDown(with event: NSEvent) {
         let menu = NSMenu()
         
         menu.addItem(withTitle: "Hide window", action: #selector(hideWindow(_:)), keyEquivalent: "")
 
-        let customizeMenuItem = NSMenuItem(title: "Window style", action: nil, keyEquivalent: "")
-        let customizeMenu = NSMenu()
-        customizeMenu
-            .addItem(withTitle: "Full", action: #selector(setFullPlayer(_:)), keyEquivalent: "")
-            .state = Defaults[.miniPlayerType] == .full ? .on : .off
-        customizeMenu
+        let windowStyleMenuItem = NSMenuItem(title: "Window style", action: nil, keyEquivalent: "")
+        let windowMenu = NSMenu()
+        windowMenu
             .addItem(withTitle: "Minimal", action: #selector(setCompactMiniPlayer(_:)), keyEquivalent: "")
             .state = Defaults[.miniPlayerType] == .minimal ? .on : .off
-        customizeMenu
+        windowMenu
+            .addItem(withTitle: "Horizontal", action: #selector(setHorizontalMiniPlayer(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerType] == .horizontal ? .on : .off
+        windowMenu
             .addItem(withTitle: "Vertical", action: #selector(setVerticalMiniPlayer(_:)), keyEquivalent: "")
             .state = Defaults[.miniPlayerType] == .vertical ? .on : .off
-        customizeMenuItem.submenu = customizeMenu
+        windowStyleMenuItem.submenu = windowMenu
+        menu.addItem(windowStyleMenuItem)
         
-        menu.addItem(customizeMenuItem)
+        let backgroundStyleMenuItem = NSMenuItem(title: "Background style", action: nil, keyEquivalent: "")
+        let backgroundMenu = NSMenu()
+        backgroundMenu
+            .addItem(withTitle: "Tint", action: #selector(setTintBg(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerBackground] == .glow ? .on : .off
+        backgroundMenu
+            .addItem(withTitle: "Transparent", action: #selector(setTransparentBg(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerBackground] == .transparent ? .on : .off
+        backgroundMenu
+            .addItem(withTitle: "Album art", action: #selector(setAlbumArtBg(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerBackground] == .albumArt ? .on : .off
+        backgroundStyleMenuItem.submenu = backgroundMenu
+        menu.addItem(backgroundStyleMenuItem)
+        
         menu.addItem(withTitle: "Settings...", action: #selector(settings(_:)), keyEquivalent: "")
 
         NSMenu.popUpContextMenu(menu, with: event, for: self.contentView!)
     }
-    
-    override var canBecomeKey: Bool {
-        return true
-    }
 
-    @objc func setFullPlayer(_ sender: Any) {
-        Defaults[.miniPlayerType] = .full
+    @objc func setHorizontalMiniPlayer(_ sender: Any) {
+        Defaults[.miniPlayerType] = .horizontal
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
 
@@ -76,6 +90,18 @@ class MiniPlayerWindow: NSWindow {
     @objc func setVerticalMiniPlayer(_ sender: Any) {
         Defaults[.miniPlayerType] = .vertical
         NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
+    }
+    
+    @objc func setTintBg(_ sender: Any) {
+        Defaults[.miniPlayerBackground] = .glow
+    }
+
+    @objc func setAlbumArtBg(_ sender: Any) {
+        Defaults[.miniPlayerBackground] = .albumArt
+    }
+    
+    @objc func setTransparentBg(_ sender: Any) {
+        Defaults[.miniPlayerBackground] = .transparent
     }
     
     @objc func hideWindow(_ sender: Any?) {

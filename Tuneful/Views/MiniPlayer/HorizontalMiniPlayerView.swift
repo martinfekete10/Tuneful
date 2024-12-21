@@ -9,7 +9,7 @@ import SwiftUI
 import MediaPlayer
 import Defaults
 
-struct MiniPlayerView: View, MiniPlayerViewProtocol {
+struct HorizontalMiniPlayerView: View, MiniPlayerViewProtocol {
     @EnvironmentObject var playerManager: PlayerManager
     @State private var isShowingPlaybackControls = false
     @State var size = CGSize(width: 200, height: 150)
@@ -73,7 +73,7 @@ struct MiniPlayerView: View, MiniPlayerViewProtocol {
                 }
             }
         }
-        .padding(7.5 * miniPlayerScaleFactor.rawValue)
+        .padding(10 * miniPlayerScaleFactor.rawValue)
         .overlay(
             NotificationView()
         )
