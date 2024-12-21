@@ -1,10 +1,12 @@
-# 1.8.0 - Notch integration, sleeker UI and others
+# 2.0.0 - Notch integration, new mini player, sleeker UI and much more
 
 -   New notch integration now allows you to control the music from notch. For non-notch Macs, this is available on hovering over new song notification
 -   New music slider which now looks and feels native
 -   New popover and mini player background type
 -   New UI animations so the app feels more fluid
--   Enhanced onboarding
+-   New horizontal mini player type
+-   New ability to resize mini player to 3 sizes - regular, small, and large
+-   Enhanced onboarding experience
 -   Refactored the logic that fetches song information which makes the app feel snappier
 -   Fixed the bug when Spotify was opened in the background even if killed by the user
 -   Fixed the bug when mini player floating preference was ignored on app restart

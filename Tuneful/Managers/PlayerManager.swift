@@ -353,7 +353,7 @@ public class PlayerManager: ObservableObject {
     // MARK: Seeker
 
     func getCurrentSeekerPosition() {
-        if !isRunning { return }
+        if !musicApp.isRunning() { return }
         if isDraggingPlaybackPositionView { return }
 
         musicApp.refreshInfo {
@@ -403,6 +403,7 @@ public class PlayerManager: ObservableObject {
     // MARK: Volume
 
     func getVolume() {
+        if !musicApp.isRunning() { return }
         volume = musicApp.volume
     }
 
