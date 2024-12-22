@@ -20,14 +20,5 @@ enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
         case .vertical: "Vertical"
         }
     }
-    
-    @ViewBuilder
-    var view: some View {
-        switch self {
-        case .minimal: CompactMiniPlayerView()
-        case .horizontal: HorizontalMiniPlayerView()
-        case .vertical: VerticalMiniPlayerView()
-        }
-    }
 }
 

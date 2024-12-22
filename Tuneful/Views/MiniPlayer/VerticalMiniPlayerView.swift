@@ -32,7 +32,7 @@ struct VerticalMiniPlayerView: View {
                 }
             }
             
-            VStack(spacing: 5 * miniPlayerScaleFactor.rawValue) {
+            VStack(spacing: 10 * miniPlayerScaleFactor.rawValue) {
                 Button(action: playerManager.openMusicApp) {
                     VStack {
                         Text(playerManager.track.title)
@@ -58,7 +58,6 @@ struct VerticalMiniPlayerView: View {
             }
             .padding(.bottom, 5)
             .frame(width: self.imageSize * miniPlayerScaleFactor.rawValue)
-            .opacity(0.75)
         }
     }
 }

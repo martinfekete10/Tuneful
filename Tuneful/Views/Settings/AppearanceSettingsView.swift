@@ -135,9 +135,6 @@ struct AppearanceSettingsView: View {
                                 Text(value.localizedName).tag(value)
                             }
                         }
-                        .onChange(of: miniPlayerScaleFactor) { _ in
-                            NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
-                        }
                         .frame(width: 150)
                         .disabled(!showPlayerWindow)
                     }

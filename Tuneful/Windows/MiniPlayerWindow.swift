@@ -10,18 +10,16 @@ import AppKit
 import Defaults
 
 class MiniPlayerWindow: NSWindow {
-    init() {
-        let position = NSPoint.fromString(Defaults[.windowPosition]) ?? NSPoint(x: 10, y: 10)
-        
+    init(playerManager: PlayerManager) {
         super.init(
-            contentRect: NSRect(x: position.x, y: position.y, width: 300, height: 145),
+            contentRect: .zero,
             styleMask: [.borderless],
             backing: .buffered,
             defer: false
         )
         
         self.isMovableByWindowBackground = true
-        self.level = .floating
+        self.level = Defaults[.miniPlayerWindowOnTop] ? .floating : .normal
         self.collectionBehavior = [.canJoinAllSpaces, .fullScreenNone]
         self.isReleasedWhenClosed = false
         self.backgroundColor = NSColor.clear

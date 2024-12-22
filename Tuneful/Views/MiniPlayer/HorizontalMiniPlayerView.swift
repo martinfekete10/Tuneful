@@ -57,7 +57,6 @@ struct HorizontalMiniPlayerView: View {
                 PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, spacing: 12.5 * miniPlayerScaleFactor.rawValue)
             }
             .frame(width: imageSize * miniPlayerScaleFactor.rawValue) // Both sides should be the same
-            .opacity(0.75)
         }
     }
 }

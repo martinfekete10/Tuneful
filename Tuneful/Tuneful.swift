@@ -17,7 +17,7 @@ import Defaults
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // Windows
     private var onboardingWindow: OnboardingWindow!
-    private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
+    private var miniPlayerWindow: MiniPlayerWindow!
     
     // Popover
     private var popover: NSPopover!
@@ -125,6 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
+        self.miniPlayerWindow = MiniPlayerWindow(playerManager: playerManager)
         
         NotificationCenter.default.addObserver(
             self,
@@ -272,19 +273,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @objc func toggleMiniPlayer() {
-        self.showHideMiniPlayer(self.statusBarMenu.item(withTitle: "Show mini player")!)
+        showHideMiniPlayer(statusBarMenu.item(withTitle: "Show mini player")!)
     }
     
     @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
-            Defaults[.showPlayerWindow] = false
-            self.playerManager.timerStopSignal.send()
-            self.miniPlayerWindow.close()
+            shouldShowMiniPlayer(show: false)
         } else {
             sender.state = .on
+            shouldShowMiniPlayer(show: true)
+        }
+    }
+    
+    private func shouldShowMiniPlayer(show: Bool) {
+        if !show {
+            Defaults[.showPlayerWindow] = false
+            playerManager.timerStopSignal.send()
+            miniPlayerWindow.close()
+        } else {
             Defaults[.showPlayerWindow] = true
-            self.setupMiniPlayer()
+            miniPlayerWindow.makeKeyAndOrderFront(nil)
+            NSApplication.shared.activate(ignoringOtherApps: true)
         }
     }
     
@@ -399,27 +409,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Mini player
     
     @objc func setupMiniPlayer() {
-        let windowFrame = miniPlayerWindow.frame
-        let windowPosition = windowFrame.origin
-        let windowSize = windowFrame.size
-        
-        miniPlayerWindow.setFrame(
-            NSRect(origin: windowPosition, size: windowSize),
-            display: true,
-            animate: false
-        )
-        
-        let rootView = MiniPlayerView().cornerRadius(15).environmentObject(self.playerManager)
+        let rootView = MiniPlayerView()
+            .cornerRadius(15)
+            .environmentObject(playerManager)
         miniPlayerWindow.contentView = NSHostingView(rootView: rootView)
-        toggleMiniPlayerWindowLevel()
         
-        miniPlayerWindow.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        
-        playerManager.timerStartSignal.send()
-        if !Defaults[.showPlayerWindow] {
-            playerManager.timerStopSignal.send()
-            miniPlayerWindow.close()
+        // This is ugly but we can't correctly set the frame as window is not fully loaded
+        // Running this one sec later should ensure we have the window fully loaded -> correctly placed
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let position = NSPoint.fromString(Defaults[.windowPosition]) ?? NSPoint(x: 10, y: 10)
+            self.miniPlayerWindow.setFrameOrigin(position)
+            self.shouldShowMiniPlayer(show: Defaults[.showPlayerWindow])
         }
     }
     

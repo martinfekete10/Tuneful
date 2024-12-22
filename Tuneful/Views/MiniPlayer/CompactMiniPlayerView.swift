@@ -21,22 +21,24 @@ struct CompactMiniPlayerView: View {
     private var playPauseButtonSize: CGFloat = 25.0
 
     var body: some View {
-        ZStack {
-            AlbumArtView(imageSize: self.imageSize * miniPlayerScaleFactor.rawValue)
-                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
-                .dragWindowWithClick()
-            
-            PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, hideShuffleAndRepeat: true, spacing: 17.5 * miniPlayerScaleFactor.rawValue)
-                .padding(15 * miniPlayerScaleFactor.rawValue)
-                .background(
-                    VisualEffectView(material: .popover, blendingMode: .withinWindow)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                                .strokeBorder(.quaternary, lineWidth: 1)
-                        }
-                )
-                .cornerRadius(cornerRadius)
-                .opacity(isShowingPlaybackControls ? 1 : 0)
+        VStack {
+            ZStack {
+                AlbumArtView(imageSize: self.imageSize * miniPlayerScaleFactor.rawValue)
+                    .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                    .dragWindowWithClick()
+                
+                PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, hideShuffleAndRepeat: true, spacing: 17.5 * miniPlayerScaleFactor.rawValue)
+                    .padding(15 * miniPlayerScaleFactor.rawValue)
+                    .background(
+                        VisualEffectView(material: .popover, blendingMode: .withinWindow)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                                    .strokeBorder(.quaternary, lineWidth: 1)
+                            }
+                    )
+                    .cornerRadius(cornerRadius)
+                    .opacity(isShowingPlaybackControls ? 1 : 0)
+            }
         }
         .onHover { _ in
             withAnimation(.linear(duration: 0.2)) {
