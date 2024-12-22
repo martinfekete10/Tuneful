@@ -28,7 +28,7 @@
 		FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */; };
 		FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */; };
 		FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */; };
-		FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F72A7C3B1A006B2D59 /* Helper.swift */; };
+		FE3189F82A7C3B1A006B2D59 /* PermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F72A7C3B1A006B2D59 /* PermissionHelper.swift */; };
 		FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */; };
 		FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */; };
 		FE31AED02CF50708002818ED /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */; };
@@ -134,7 +134,7 @@
 		FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliderView.swift; sourceTree = "<group>"; };
 		FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Extension.swift"; sourceTree = "<group>"; };
 		FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
-		FE3189F72A7C3B1A006B2D59 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		FE3189F72A7C3B1A006B2D59 /* PermissionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionHelper.swift; sourceTree = "<group>"; };
 		FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 		FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
@@ -414,7 +414,7 @@
 			children = (
 				FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */,
 				FE6BFD052A73ACFD00D3321F /* Constants.swift */,
-				FE3189F72A7C3B1A006B2D59 /* Helper.swift */,
+				FE3189F72A7C3B1A006B2D59 /* PermissionHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -591,7 +591,7 @@
 				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
 				FE08CE192CFCC76E00F047CB /* AppearanceSettingsView.swift in Sources */,
-				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
+				FE3189F82A7C3B1A006B2D59 /* PermissionHelper.swift in Sources */,
 				FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
 				FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */,

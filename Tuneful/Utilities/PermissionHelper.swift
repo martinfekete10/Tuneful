@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Helper {
+class PermissionHelper {
     enum PermissionStatus {
         case closed, granted, notPrompted, denied
     }

@@ -60,7 +60,7 @@ struct GeneralSettingsView: View {
                             .frame(width: 150)
                             
                             Button {
-                                let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                                let consent = PermissionHelper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
                                 switch consent {
                                 case .closed:
                                     alertTitle = Text("\(Text(connectedApp.localizedName)) is not opened")

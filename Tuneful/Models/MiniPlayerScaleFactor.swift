@@ -20,4 +20,12 @@ enum MiniPlayerScaleFactor: Double, Equatable, CaseIterable, Defaults.Serializab
         case .large: return "Large"
         }
     }
+    
+    var trackFontSize: Font {
+        switch self {
+        case .small: return .system(size: 10)
+        case .regular: return .system(size: 13)
+        case .large: return .system(size: 16)
+        }
+    }
 }

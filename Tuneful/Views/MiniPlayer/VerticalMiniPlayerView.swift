@@ -32,7 +32,7 @@ struct VerticalMiniPlayerView: View, MiniPlayerViewProtocol {
             } else {
                 VStack(spacing: 10 * miniPlayerScaleFactor.rawValue) {
                     ZStack {
-                        AlbumArtView(imageSize: self.imageSize * miniPlayerScaleFactor.rawValue)
+                        AlbumArtView(imageSize: imageSize * miniPlayerScaleFactor.rawValue)
                             .dragWindowWithClick()
                         
                         AddToFavoritesView()
@@ -50,12 +50,12 @@ struct VerticalMiniPlayerView: View, MiniPlayerViewProtocol {
                         Button(action: playerManager.openMusicApp) {
                             VStack {
                                 Text(playerManager.track.title)
-                                    .font(.body)
+                                    .font(miniPlayerScaleFactor.trackFontSize)
                                     .bold()
                                     .lineLimit(1)
                                 
                                 Text(playerManager.track.artist)
-                                    .font(.body)
+                                    .font(miniPlayerScaleFactor.trackFontSize)
                                     .lineLimit(1)
                             }
                             .tapAnimation() {
@@ -63,6 +63,7 @@ struct VerticalMiniPlayerView: View, MiniPlayerViewProtocol {
                             }
                         }
                         .pressButtonStyle()
+                        .frame(maxWidth: self.imageSize * miniPlayerScaleFactor.rawValue)
                     }
                     .opacity(0.75)
                 }
@@ -76,7 +77,11 @@ struct VerticalMiniPlayerView: View, MiniPlayerViewProtocol {
             GeometryReader { proxy in
                 ZStack {
                     VisualEffectView(material: .popover, blendingMode: .behindWindow)
-                    BackgroundView(background: miniPlayerBackground, yOffset: -80)
+                    BackgroundView(
+                        background: miniPlayerBackground,
+                        albumArtSize: imageSize * miniPlayerScaleFactor.rawValue,
+                        yOffset: -80 * miniPlayerScaleFactor.rawValue
+                    )
                 }
                 .onAppear {
                     size = proxy.size

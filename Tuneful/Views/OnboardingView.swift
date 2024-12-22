@@ -178,7 +178,7 @@ struct Details: View {
             .multilineTextAlignment(.center)
             
             Button("Enable permissions") {
-                let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                let consent = PermissionHelper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
                 switch consent {
                 case .granted:
                     alertTitle = Text("You are all set up!")
