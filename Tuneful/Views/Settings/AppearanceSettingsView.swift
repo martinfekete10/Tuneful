@@ -104,9 +104,6 @@ struct AppearanceSettingsView: View {
                             }
                         }
                         .frame(width: 150)
-                        .onChange(of: miniPlayerType) { _ in
-                            NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
-                        }
                         .disabled(!showPlayerWindow)
                     }
                     .padding(8)

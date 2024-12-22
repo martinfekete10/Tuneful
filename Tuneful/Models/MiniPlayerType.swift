@@ -29,16 +29,5 @@ enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
         case .vertical: VerticalMiniPlayerView()
         }
     }
-    
-    var size: CGSize {
-        switch self {
-        case .minimal:
-            return CompactMiniPlayerView().size
-        case .horizontal:
-            return HorizontalMiniPlayerView().size
-        case .vertical:
-            return VerticalMiniPlayerView().size
-        }
-    }
 }
 

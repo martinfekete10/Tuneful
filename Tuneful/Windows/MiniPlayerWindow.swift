@@ -25,7 +25,7 @@ class MiniPlayerWindow: NSWindow {
         self.collectionBehavior = [.canJoinAllSpaces, .fullScreenNone]
         self.isReleasedWhenClosed = false
         self.backgroundColor = NSColor.clear
-        self.hasShadow = false
+        self.hasShadow = true
         
         NotificationCenter.default.addObserver(
             self,
@@ -79,17 +79,14 @@ class MiniPlayerWindow: NSWindow {
 
     @objc func setHorizontalMiniPlayer(_ sender: Any) {
         Defaults[.miniPlayerType] = .horizontal
-        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
 
     @objc func setCompactMiniPlayer(_ sender: Any) {
         Defaults[.miniPlayerType] = .minimal
-        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
     
     @objc func setVerticalMiniPlayer(_ sender: Any) {
         Defaults[.miniPlayerType] = .vertical
-        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
     }
     
     @objc func setTintBg(_ sender: Any) {

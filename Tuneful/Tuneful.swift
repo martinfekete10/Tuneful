@@ -399,19 +399,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Mini player
     
     @objc func setupMiniPlayer() {
-        let windowPosition = miniPlayerWindow.frame.origin
-
-        setupMiniPlayerWindow(
-            position: windowPosition,
-            size: Defaults[.miniPlayerType].size,
-            view: Defaults[.miniPlayerType].view
+        let windowFrame = miniPlayerWindow.frame
+        let windowPosition = windowFrame.origin
+        let windowSize = windowFrame.size
+        
+        miniPlayerWindow.setFrame(
+            NSRect(origin: windowPosition, size: windowSize),
+            display: true,
+            animate: false
         )
+        
+        let rootView = MiniPlayerView().cornerRadius(15).environmentObject(self.playerManager)
+        miniPlayerWindow.contentView = NSHostingView(rootView: rootView)
+        toggleMiniPlayerWindowLevel()
         
         miniPlayerWindow.makeKeyAndOrderFront(nil)
         NSApplication.shared.activate(ignoringOtherApps: true)
         
         playerManager.timerStartSignal.send()
-        
         if !Defaults[.showPlayerWindow] {
             playerManager.timerStopSignal.send()
             miniPlayerWindow.close()
@@ -425,27 +430,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.miniPlayerWindow.level = .normal
         }
     }
-    
-    private func setupMiniPlayerWindow<Content: View>(position: CGPoint, size: CGSize, view: Content) {
-        let currentFrame = self.miniPlayerWindow.frame
-        let newPosition = NSPoint(
-            x: position.x,
-            y: position.y + (currentFrame.height - size.height)
-        )
-        
-        self.miniPlayerWindow.setFrame(
-            NSRect(origin: newPosition, size: size),
-            display: true,
-            animate: false
-        )
-        
-        let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
-        let miniPlayerView = NSHostingView(rootView: rootView)
-        miniPlayerWindow.contentView = miniPlayerView
-        toggleMiniPlayerWindowLevel()
-    }
 
-    
     // MARK: New settings
     
     @objc func openNewSettings() {
