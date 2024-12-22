@@ -32,9 +32,7 @@ struct VerticalMiniPlayerView: View {
                 }
             }
             
-            VStack(spacing: 10 * miniPlayerScaleFactor.rawValue) {
-                PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, hideShuffleAndRepeat: true, spacing: 17.5 * miniPlayerScaleFactor.rawValue)
-                
+            VStack(spacing: 5 * miniPlayerScaleFactor.rawValue) {
                 Button(action: playerManager.openMusicApp) {
                     VStack {
                         Text(playerManager.track.title)
@@ -51,7 +49,14 @@ struct VerticalMiniPlayerView: View {
                     }
                 }
                 .pressButtonStyle()
+                
+                if playerManager.musicApp.playbackSeekerEnabled {
+                    PlaybackPositionView()
+                }
+                
+                PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, spacing: 15 * miniPlayerScaleFactor.rawValue)
             }
+            .padding(.bottom, 5)
             .frame(width: self.imageSize * miniPlayerScaleFactor.rawValue)
             .opacity(0.75)
         }

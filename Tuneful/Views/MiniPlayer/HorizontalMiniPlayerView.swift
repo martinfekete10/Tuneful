@@ -36,12 +36,12 @@ struct HorizontalMiniPlayerView: View {
                 Button(action: playerManager.openMusicApp) {
                     VStack {
                         Text(playerManager.track.title)
-                            .font(.body)
+                            .font(miniPlayerScaleFactor.trackFontSize)
                             .bold()
                             .lineLimit(1)
                         
                         Text(playerManager.track.artist)
-                            .font(.body)
+                            .font(miniPlayerScaleFactor.trackFontSize)
                             .lineLimit(1)
                     }
                     .tapAnimation() {
