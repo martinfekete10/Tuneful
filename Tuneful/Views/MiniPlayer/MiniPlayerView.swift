@@ -31,10 +31,13 @@ struct MiniPlayerView: View {
                 switch miniPlayerType {
                 case .horizontal:
                     HorizontalMiniPlayerView()
+                        .transition(.blur.animation(.bouncy))
                 case .vertical:
                     VerticalMiniPlayerView()
+                        .transition(.blur.animation(.bouncy))
                 case .minimal:
                     CompactMiniPlayerView()
+                        .transition(.blur.animation(.bouncy))
                 }
             }
         }
