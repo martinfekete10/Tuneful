@@ -41,7 +41,7 @@ struct CompactMiniPlayerView: View {
             }
         }
         .onHover { _ in
-            withAnimation(.linear(duration: 0.2)) {
+            withAnimation(Animation.timingCurve(0.16, 1, 0.3, 1, duration: 0.7)) {
                 self.isShowingPlaybackControls.toggle()
             }
         }

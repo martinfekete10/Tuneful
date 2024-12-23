@@ -13,11 +13,12 @@ class MiniPlayerWindow: NSWindow {
     init(playerManager: PlayerManager) {
         super.init(
             contentRect: .zero,
-            styleMask: [.borderless],
+            styleMask: [.fullSizeContentView, .borderless, .utilityWindow, .nonactivatingPanel],
             backing: .buffered,
-            defer: false
+            defer: true
         )
         
+        self.isOpaque = false
         self.isMovableByWindowBackground = true
         self.level = Defaults[.miniPlayerWindowOnTop] ? .floating : .normal
         self.collectionBehavior = [.canJoinAllSpaces, .fullScreenNone]
@@ -56,7 +57,7 @@ class MiniPlayerWindow: NSWindow {
         windowStyleMenuItem.submenu = windowMenu
         menu.addItem(windowStyleMenuItem)
         
-        let backgroundStyleMenuItem = NSMenuItem(title: "Background style", action: nil, keyEquivalent: "")
+        let backgroundStyleMenuItem = NSMenuItem(title: "Background", action: nil, keyEquivalent: "")
         let backgroundMenu = NSMenu()
         backgroundMenu
             .addItem(withTitle: "Tint", action: #selector(setTintBg(_:)), keyEquivalent: "")
@@ -69,6 +70,20 @@ class MiniPlayerWindow: NSWindow {
             .state = Defaults[.miniPlayerBackground] == .albumArt ? .on : .off
         backgroundStyleMenuItem.submenu = backgroundMenu
         menu.addItem(backgroundStyleMenuItem)
+        
+        let sizeMenuItem = NSMenuItem(title: "Size", action: nil, keyEquivalent: "")
+        let sizeMenu = NSMenu()
+        sizeMenu
+            .addItem(withTitle: "Small", action: #selector(setSmallWindow(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerScaleFactor] == .small ? .on : .off
+        sizeMenu
+            .addItem(withTitle: "Regular", action: #selector(setRegularWindow(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerScaleFactor] == .regular ? .on : .off
+        sizeMenu
+            .addItem(withTitle: "Large", action: #selector(setLargeWindow(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerScaleFactor] == .large ? .on : .off
+        sizeMenuItem.submenu = sizeMenu
+        menu.addItem(sizeMenuItem)
         
         menu.addItem(withTitle: "Settings...", action: #selector(settings(_:)), keyEquivalent: "")
 
@@ -97,6 +112,18 @@ class MiniPlayerWindow: NSWindow {
     
     @objc func setTransparentBg(_ sender: Any) {
         Defaults[.miniPlayerBackground] = .transparent
+    }
+    
+    @objc func setSmallWindow(_ sender: Any) {
+        Defaults[.miniPlayerScaleFactor] = .small
+    }
+
+    @objc func setRegularWindow(_ sender: Any) {
+        Defaults[.miniPlayerScaleFactor] = .regular
+    }
+    
+    @objc func setLargeWindow(_ sender: Any) {
+        Defaults[.miniPlayerScaleFactor] = .large
     }
     
     @objc func hideWindow(_ sender: Any?) {

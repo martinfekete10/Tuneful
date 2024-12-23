@@ -16,48 +16,73 @@ struct MiniPlayerView: View {
     @Default(.miniPlayerBackground) private var miniPlayerBackground
     
     private var imageSize: CGFloat = 140.0
-    
+
     var body: some View {
-        ZStack {
-            if !playerManager.isRunning || playerManager.track.isEmpty() {
-                Text("Please open \(playerManager.name) to use Tuneful")
-                    .foregroundColor(.primary.opacity(0.4))
-                    .font(.system(size: 14, weight: .regular))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .multilineTextAlignment(.center)
-                    .padding(15)
-                    .padding(.bottom, 20)
-            } else {
-                switch miniPlayerType {
-                case .horizontal:
-                    HorizontalMiniPlayerView()
-                        .transition(.blur.animation(.bouncy))
-                case .vertical:
-                    VerticalMiniPlayerView()
-                        .transition(.blur.animation(.bouncy))
-                case .minimal:
-                    CompactMiniPlayerView()
-                        .transition(.blur.animation(.bouncy))
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                ZStack {
+                    if !playerManager.isRunning || playerManager.track.isEmpty() {
+                        Text("Please open \(playerManager.name) to use Tuneful")
+                            .foregroundColor(.primary.opacity(0.4))
+                            .font(.system(size: 14, weight: .regular))
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .multilineTextAlignment(.center)
+                            .padding(15)
+                            .padding(.bottom, 20)
+                    } else {
+                        switch miniPlayerType {
+                        case .horizontal:
+                            HorizontalMiniPlayerView()
+                                .transition(.blur.animation(.bouncy))
+                        case .vertical:
+                            VerticalMiniPlayerView()
+                                .transition(.blur.animation(.bouncy))
+                        case .minimal:
+                            CompactMiniPlayerView()
+                                .transition(.blur.animation(.bouncy))
+                        }
+                    }
                 }
-            }
-        }
-        .padding(10 * miniPlayerScaleFactor.rawValue)
-        .overlay(
-            NotificationView()
-        )
-        .background(
-            ZStack {
-                VisualEffectView(material: .popover, blendingMode: .behindWindow)
-                BackgroundView(
-                    background: miniPlayerBackground,
-                    albumArtSize: imageSize * miniPlayerScaleFactor.rawValue,
-                    yOffset: -80 * miniPlayerScaleFactor.rawValue
+                .fixedSize()
+                .clipShape(.rect(cornerRadius: 15))
+                .padding(10 * miniPlayerScaleFactor.rawValue)
+                .overlay(
+                    NotificationView()
+                )
+                .background(
+                    ZStack {
+                        VisualEffectView(material: .popover, blendingMode: .behindWindow)
+                        getBackgroundView()
+                    }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+                            .strokeBorder(.quaternary, lineWidth: 1.5)
+                    }
                 )
             }
-            .overlay {
-                RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .strokeBorder(.quaternary, lineWidth: 1.5)
-            }
-        )
+        }
+    }
+    
+    @ViewBuilder
+    func getBackgroundView() -> some View {
+        switch miniPlayerType {
+        case .minimal:
+            BackgroundView(
+                background: miniPlayerBackground,
+                albumArtSize: imageSize * miniPlayerScaleFactor.rawValue * 0.9
+            )
+        case .horizontal:
+            BackgroundView(
+                background: miniPlayerBackground,
+                albumArtSize: imageSize * miniPlayerScaleFactor.rawValue,
+                xOffset: -75 * miniPlayerScaleFactor.rawValue
+            )
+        case .vertical:
+            BackgroundView(
+                background: miniPlayerBackground,
+                albumArtSize: imageSize * miniPlayerScaleFactor.rawValue,
+                yOffset: -45 * miniPlayerScaleFactor.rawValue
+            )
+        }
     }
 }

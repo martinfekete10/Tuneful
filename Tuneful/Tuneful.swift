@@ -293,6 +293,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             miniPlayerWindow.close()
         } else {
             Defaults[.showPlayerWindow] = true
+            playerManager.timerStartSignal.send()
             miniPlayerWindow.makeKeyAndOrderFront(nil)
             NSApplication.shared.activate(ignoringOtherApps: true)
         }
@@ -409,9 +410,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Mini player
     
     @objc func setupMiniPlayer() {
-        let rootView = MiniPlayerView()
-            .cornerRadius(15)
-            .environmentObject(playerManager)
+        let rootView = MiniPlayerView().environmentObject(playerManager)
         miniPlayerWindow.contentView = NSHostingView(rootView: rootView)
         
         // This is ugly but we can't correctly set the frame as window is not fully loaded
@@ -419,6 +418,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let position = NSPoint.fromString(Defaults[.windowPosition]) ?? NSPoint(x: 10, y: 10)
             self.miniPlayerWindow.setFrameOrigin(position)
+            self.miniPlayerWindow.contentView?.layer?.cornerRadius = 15
+            self.miniPlayerWindow.contentView?.layer?.masksToBounds = true
             self.shouldShowMiniPlayer(show: Defaults[.showPlayerWindow])
         }
     }
