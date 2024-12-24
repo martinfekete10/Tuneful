@@ -87,7 +87,6 @@
 		FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */; };
 		FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */; };
 		FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */; };
-		FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A742AF8010300CE4981 /* Sparkle */; };
 		FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */; };
 		FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */; };
 		FEFFE54D2B49EF97000887B5 /* MenuBarSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* MenuBarSettingsView.swift */; };
@@ -207,7 +206,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */,
 				FEF32F9E2CBD49610084BDAD /* Luminare in Frameworks */,
 				FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */,
 				FE5B56E82D037EEF0077527C /* DefaultsMacros in Frameworks */,
@@ -510,7 +508,6 @@
 			packageProductDependencies = (
 				FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */,
 				FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */,
-				FEF53A742AF8010300CE4981 /* Sparkle */,
 				FEFFE54F2B4AA04B000887B5 /* Settings */,
 				FEF0660E2B51910700A514F2 /* KeyboardShortcuts */,
 				FEF32F9D2CBD49610084BDAD /* Luminare */,
@@ -549,7 +546,6 @@
 			packageReferences = (
 				FE3F67FC2AAD02D100CCE841 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 				FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */,
-				FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */,
 				FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */,
@@ -926,14 +922,6 @@
 				kind = branch;
 			};
 		};
-		FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.1;
-			};
-		};
 		FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/Settings";
@@ -974,11 +962,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */;
 			productName = ISSoundAdditions;
-		};
-		FEF53A742AF8010300CE4981 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		FEFFE54F2B4AA04B000887B5 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;

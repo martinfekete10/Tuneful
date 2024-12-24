@@ -8,15 +8,8 @@
 import SwiftUI
 import Settings
 import Luminare
-import Sparkle
 
 struct AboutSettingsView: View {
-    private let updateController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
-
     var body: some View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
@@ -34,11 +27,6 @@ struct AboutSettingsView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            Button("Check for updates...") {
-                                updateController.checkForUpdates(nil)
-                            }
-                            .buttonStyle(LuminareCompactButtonStyle())
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
                         

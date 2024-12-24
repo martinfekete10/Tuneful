@@ -7,7 +7,6 @@
 
 import os
 import SwiftUI
-import Sparkle
 import KeyboardShortcuts
 import Settings
 import Luminare
@@ -31,12 +30,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var playerManager: PlayerManager!
     private var statusBarItemManager: StatusBarItemManager!
     private var statusBarPlaybackManager: StatusBarPlaybackManager!
-    
-    private let updateController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
     
     // MARK: Settings
     
@@ -236,15 +229,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             action: #selector(openSettings),
             keyEquivalent: ""
         )
-        
-        
-        let updates = NSMenuItem(
-            title: "Check for updates...",
-            action: #selector(updateController.updater.checkForUpdates),
-            keyEquivalent: ""
-        )
-        updates.target = updateController.updater
-        statusBarMenu.addItem(updates)
         
         statusBarMenu.addItem(.separator())
         
