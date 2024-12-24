@@ -10,11 +10,7 @@ import Settings
 import Luminare
 import Defaults
 
-struct AppearanceSettingsView: View {
-    @Default(.popoverIsEnabled) private var popoverIsEnabled
-    @Default(.popoverType) private var popoverType
-    @Default(.popoverBackground) private var popoverBackground
-    
+struct MiniPlayerSettingsView: View {
     @Default(.showPlayerWindow) private var showPlayerWindow
     @Default(.miniPlayerWindowOnTop) private var miniPlayerWindowOnTop
     @Default(.miniPlayerType) private var miniPlayerType
@@ -24,50 +20,7 @@ struct AppearanceSettingsView: View {
     var body: some View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
-                LuminareSection("Popover") {
-                    LuminareToggle(
-                        "Enable popover",
-                        isOn: $popoverIsEnabled
-                    )
-                    
-                    HStack {
-                        Text("Popover style")
-                            .foregroundStyle(popoverIsEnabled ? .primary : .tertiary)
-                        
-                        Spacer()
-                        
-                        Picker("", selection: $popoverType) {
-                            ForEach(PopoverType.allCases, id: \.self) { value in
-                                Text(value.localizedName).tag(value)
-                            }
-                        }
-                        .frame(width: 150)
-                        .onChange(of: popoverType) { _ in
-                            NSApplication.shared.sendAction(#selector(AppDelegate.setupPopover), to: nil, from: nil)
-                        }
-                        .disabled(!popoverIsEnabled)
-                    }
-                    .padding(8)
-                    
-                    HStack {
-                        Text("Background")
-                            .foregroundStyle(popoverIsEnabled ? .primary : .tertiary)
-                        
-                        Spacer()
-                        
-                        Picker("", selection: $popoverBackground) {
-                            ForEach(BackgroundType.allCases, id: \.self) { value in
-                                Text(value.localizedName).tag(value)
-                            }
-                        }
-                        .frame(width: 150)
-                        .disabled(!popoverIsEnabled)
-                    }
-                    .padding(8)
-                }
-                .padding(.bottom, 10)
-                
-                LuminareSection("Mini player") {
+                LuminareSection {
                     LuminareToggle(
                         "Show mini player",
                         isOn: $showPlayerWindow

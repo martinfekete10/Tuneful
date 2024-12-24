@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		FE08CE132CFC74E200F047CB /* SettingsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */; };
 		FE08CE172CFCC53500F047CB /* NotchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */; };
-		FE08CE192CFCC76E00F047CB /* AppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE182CFCC76700F047CB /* AppearanceSettingsView.swift */; };
+		FE08CE192CFCC76E00F047CB /* MiniPlayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE182CFCC76700F047CB /* MiniPlayerSettingsView.swift */; };
 		FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */; };
 		FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */; };
 		FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F82CBC1B09001C13CE /* NSScreen+Extensions.swift */; };
@@ -71,6 +71,7 @@
 		FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */; };
 		FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */; };
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
+		FEB21FB82D1AC71400849679 /* PopoverSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */; };
 		FEBA35EA2D17566E0081A3F2 /* VerticalMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */; };
 		FEBA35EC2D1766790081A3F2 /* MiniPlayerScaleFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
@@ -114,7 +115,7 @@
 /* Begin PBXFileReference section */
 		FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindow.swift; sourceTree = "<group>"; };
 		FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchSettingsView.swift; sourceTree = "<group>"; };
-		FE08CE182CFCC76700F047CB /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
+		FE08CE182CFCC76700F047CB /* MiniPlayerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerSettingsView.swift; sourceTree = "<group>"; };
 		FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedAlbumArt.swift; sourceTree = "<group>"; };
 		FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurModifier.swift; sourceTree = "<group>"; };
 		FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotch.swift; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 		FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyManager.swift; sourceTree = "<group>"; };
 		FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicManager.swift; sourceTree = "<group>"; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
+		FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverSettingsView.swift; sourceTree = "<group>"; };
 		FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMiniPlayerView.swift; sourceTree = "<group>"; };
 		FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerScaleFactor.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
@@ -457,7 +459,8 @@
 		FEF0660A2B51905200A514F2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				FE08CE182CFCC76700F047CB /* AppearanceSettingsView.swift */,
+				FE08CE182CFCC76700F047CB /* MiniPlayerSettingsView.swift */,
+				FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */,
 				FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */,
 				FEFFE54C2B49EF97000887B5 /* MenuBarSettingsView.swift */,
 				FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */,
@@ -586,7 +589,7 @@
 				FE7B09D22CB997F600FBB6F8 /* AppIcons.swift in Sources */,
 				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
-				FE08CE192CFCC76E00F047CB /* AppearanceSettingsView.swift in Sources */,
+				FE08CE192CFCC76E00F047CB /* MiniPlayerSettingsView.swift in Sources */,
 				FE3189F82A7C3B1A006B2D59 /* PermissionHelper.swift in Sources */,
 				FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
@@ -650,6 +653,7 @@
 				FE25549B2CA95F87003DAB77 /* AddToFavoritesView.swift in Sources */,
 				FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */,
 				FE8CE1542C1E03F30053FDEA /* CompactPopoverView.swift in Sources */,
+				FEB21FB82D1AC71400849679 /* PopoverSettingsView.swift in Sources */,
 				FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */,
 				FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */,
 				FE1F7E952B89E92A00B702AD /* StatusBarPlaybackManager.swift in Sources */,

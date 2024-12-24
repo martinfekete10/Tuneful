@@ -59,13 +59,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
-    let AppearanceSettingsViewController: () -> SettingsPane = {
+    let PopoverSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
-            identifier: .appearance,
-            title: "Appearance",
-            toolbarIcon: NSImage(systemSymbolName: "paintbrush", accessibilityDescription: "Appearance settings")!
+            identifier: .popover,
+            title: "Popover",
+            toolbarIcon: NSImage(systemSymbolName: "square", accessibilityDescription: "Popover settings")!
         ) {
-            AppearanceSettingsView()
+            PopoverSettingsView()
+        }
+        
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let MiniPlayerSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .miniPlayer,
+            title: "Mini player",
+            toolbarIcon: NSImage(systemSymbolName: "play.rectangle.on.rectangle.fill", accessibilityDescription: "Mini player settings")!
+        ) {
+            MiniPlayerSettingsView()
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -430,7 +442,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         SettingsWindowController(
             panes: [
                 GeneralSettingsViewController(),
-                AppearanceSettingsViewController(),
+                PopoverSettingsViewController(),
+                MiniPlayerSettingsViewController(),
                 MenuBarSettingsViewController(),
                 NotchSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
