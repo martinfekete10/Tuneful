@@ -31,12 +31,21 @@ struct AboutSettingsView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         
                         HStack {
-                            Link("❤️ Support", destination: URL(string: "https://ko-fi.com/martinfekete")!)
-                                .buttonStyle(LuminareCompactButtonStyle())
-                            Link("🧑‍💻 GitHub", destination: URL(string: "https://github.com/martinfekete10/Tuneful")!)
-                                .buttonStyle(LuminareCompactButtonStyle())
-                            Link("🌐 Website", destination: URL(string: "https://martinfekete.com/Tuneful")!)
-                                .buttonStyle(LuminareCompactButtonStyle())
+                            IconButton(
+                                buttonText: "Support",
+                                url: "https://ko-fi.com/martinfekete",
+                                image: .heart
+                            )
+                            IconButton(
+                                buttonText: "GitHub",
+                                url: "https://github.com/martinfekete10/Tuneful",
+                                image: .github
+                            )
+                            IconButton(
+                                buttonText: "Website",
+                                url: "https://tuneful.dev",
+                                image: .globe
+                            )
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
