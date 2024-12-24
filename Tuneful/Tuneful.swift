@@ -130,7 +130,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
-        self.miniPlayerWindow = MiniPlayerWindow(playerManager: playerManager)
+        self.miniPlayerWindow = MiniPlayerWindow()
         
         NotificationCenter.default.addObserver(
             self,
@@ -144,6 +144,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         } else {
             self.mainSetup()
         }
+        
+        #if DEBUG
+        MiniPlayerPreviewHelper.setupMiniPlayers(playerManager: playerManager)
+        #endif
     }
     
     func windowShouldClose(_ sender: NSWindow) -> Bool {

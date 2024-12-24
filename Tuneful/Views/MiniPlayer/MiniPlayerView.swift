@@ -11,11 +11,15 @@ import Defaults
 struct MiniPlayerView: View {
     @EnvironmentObject var playerManager: PlayerManager
     
-    @Default(.miniPlayerType) private var miniPlayerType
     @Default(.miniPlayerScaleFactor) private var miniPlayerScaleFactor
     @Default(.miniPlayerBackground) private var miniPlayerBackground
     
+    private var miniPlayerType: MiniPlayerType
     private var imageSize: CGFloat = 140.0
+    
+    init(miniPlayerType: MiniPlayerType? = nil) {
+        self.miniPlayerType = miniPlayerType ?? Defaults[.miniPlayerType]
+    }
 
     var body: some View {
         VStack(spacing: 0) {

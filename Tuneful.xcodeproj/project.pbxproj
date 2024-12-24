@@ -73,6 +73,7 @@
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
 		FEB21FB82D1AC71400849679 /* PopoverSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */; };
 		FEB21FBA2D1ACDCD00849679 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FB92D1ACDCA00849679 /* IconButton.swift */; };
+		FEB21FBD2D1AD6C400849679 /* MiniPlayerPreviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FBC2D1AD6B400849679 /* MiniPlayerPreviewHelper.swift */; };
 		FEBA35EA2D17566E0081A3F2 /* VerticalMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */; };
 		FEBA35EC2D1766790081A3F2 /* MiniPlayerScaleFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
@@ -182,6 +183,7 @@
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverSettingsView.swift; sourceTree = "<group>"; };
 		FEB21FB92D1ACDCA00849679 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
+		FEB21FBC2D1AD6B400849679 /* MiniPlayerPreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerPreviewHelper.swift; sourceTree = "<group>"; };
 		FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMiniPlayerView.swift; sourceTree = "<group>"; };
 		FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerScaleFactor.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 		FE6BFCE52A72F37800D3321F /* Tuneful */ = {
 			isa = PBXGroup;
 			children = (
+				FEB21FBB2D1AD66B00849679 /* Helpers */,
 				FE5B56EB2D0386EC0077527C /* Defaults */,
 				FEFFE5532B4FDDEA000887B5 /* Extensions */,
 				FEA6FB212B04168000DACC43 /* AudioDevices */,
@@ -354,7 +357,6 @@
 				FE37A0312A82960F006FBA5B /* Buttons */,
 				FE3189FB2A7C3CEC006B2D59 /* Windows */,
 				FE3189DB2A7B9D0B006B2D59 /* Views */,
-				FE6BFD042A73ACEE00D3321F /* Utilities */,
 				FE6BFCFF2A73AB5800D3321F /* ScriptingBridge */,
 				FE6BFCFC2A73A87600D3321F /* Managers */,
 				FE6BFCF92A73A7CA00D3321F /* Models */,
@@ -412,16 +414,6 @@
 			path = ScriptingBridge;
 			sourceTree = "<group>";
 		};
-		FE6BFD042A73ACEE00D3321F /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */,
-				FE6BFD052A73ACFD00D3321F /* Constants.swift */,
-				FE3189F72A7C3B1A006B2D59 /* PermissionHelper.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		FE6F65F62AB62AFB00CE4D96 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,6 +438,17 @@
 				FEA6FB222B04169B00DACC43 /* AudioDevice.swift */,
 			);
 			path = AudioDevices;
+			sourceTree = "<group>";
+		};
+		FEB21FBB2D1AD66B00849679 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FEB21FBC2D1AD6B400849679 /* MiniPlayerPreviewHelper.swift */,
+				FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */,
+				FE6BFD052A73ACFD00D3321F /* Constants.swift */,
+				FE3189F72A7C3B1A006B2D59 /* PermissionHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		FEE486E32B5D173A00AB712F /* MiniPlayer */ = {
@@ -619,6 +622,7 @@
 				FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */,
 				FE5B3CA22AB0AC700038B6E4 /* PopoverView.swift in Sources */,
 				FE6BFD0C2A73B2D400D3321F /* NSImage+Extension.swift in Sources */,
+				FEB21FBD2D1AD6C400849679 /* MiniPlayerPreviewHelper.swift in Sources */,
 				FE6BFD022A73AB9A00D3321F /* MusicApplication.swift in Sources */,
 				FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */,
 				FEBA35EC2D1766790081A3F2 /* MiniPlayerScaleFactor.swift in Sources */,

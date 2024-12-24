@@ -10,7 +10,7 @@ import AppKit
 import Defaults
 
 class MiniPlayerWindow: NSWindow {
-    init(playerManager: PlayerManager) {
+    init() {
         super.init(
             contentRect: .zero,
             styleMask: [.fullSizeContentView, .borderless, .utilityWindow, .nonactivatingPanel],
