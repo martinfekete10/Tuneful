@@ -44,7 +44,7 @@ struct MiniPlayerView: View {
                     }
                 }
                 .fixedSize()
-                .clipShape(.rect(cornerRadius: 15))
+                .clipShape(.rect(cornerRadius: 12.5))
                 .padding(10 * miniPlayerScaleFactor.rawValue)
                 .overlay(
                     NotificationView()
@@ -55,7 +55,7 @@ struct MiniPlayerView: View {
                         getBackgroundView()
                     }
                     .overlay {
-                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+                        RoundedRectangle(cornerRadius: 12.5, style: .continuous)
                             .strokeBorder(.quaternary, lineWidth: 1.5)
                     }
                 )

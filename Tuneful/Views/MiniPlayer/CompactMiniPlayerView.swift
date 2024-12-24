@@ -16,7 +16,7 @@ struct CompactMiniPlayerView: View {
     @Default(.miniPlayerBackground) private var miniPlayerBackground
     
     private var imageSize: CGFloat = 140.0
-    private var cornerRadius: CGFloat = 12.5
+    private var cornerRadius: CGFloat = 15
     private var playbackButtonSize: CGFloat = 15.0
     private var playPauseButtonSize: CGFloat = 25.0
 
@@ -24,7 +24,6 @@ struct CompactMiniPlayerView: View {
         VStack {
             ZStack {
                 AlbumArtView(imageSize: self.imageSize * miniPlayerScaleFactor.rawValue)
-                    .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                     .dragWindowWithClick()
                 
                 PlaybackButtonsView(playButtonSize: 17.5 * miniPlayerScaleFactor.rawValue, hideShuffleAndRepeat: true, spacing: 17.5 * miniPlayerScaleFactor.rawValue)

@@ -418,7 +418,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let position = NSPoint.fromString(Defaults[.windowPosition]) ?? NSPoint(x: 10, y: 10)
             self.miniPlayerWindow.setFrameOrigin(position)
-            self.miniPlayerWindow.contentView?.layer?.cornerRadius = 15
+            self.miniPlayerWindow.contentView?.layer?.cornerRadius = 12.5
             self.miniPlayerWindow.contentView?.layer?.masksToBounds = true
             self.shouldShowMiniPlayer(show: Defaults[.showPlayerWindow])
         }
