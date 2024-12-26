@@ -16,10 +16,6 @@ struct MiniPlayerView: View {
     @Default(.miniPlayerType) private var miniPlayerType
     
     private var imageSize: CGFloat = 140.0
-    
-    init(miniPlayerType: MiniPlayerType? = nil) {
-        self.miniPlayerType = miniPlayerType ?? Defaults[.miniPlayerType]
-    }
 
     var body: some View {
         VStack(spacing: 0) {

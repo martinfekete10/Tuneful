@@ -147,9 +147,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 //        }
 //#endif
 //#if DEBUG
-//        MiniPlayerPreviewHelper.setupMiniPlayers(playerManager: playerManager)
-//#endif
-//#if DEBUG
 //        DynamicNotchInfo(playerManager: playerManager).show(for: 5)
 //#endif
     }
