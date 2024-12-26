@@ -70,6 +70,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
+    let NotchSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .notch,
+            title: "Notch",
+            toolbarIcon: NSImage(systemSymbolName: "macbook.gen2", accessibilityDescription: "Notch settings")!
+        ) {
+            NotchSettingsView()
+        }
+        
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
     let MenuBarSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .menuBar,
@@ -456,6 +468,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 GeneralSettingsViewController(),
                 MenuBarSettingsViewController(),
                 PopoverSettingsViewController(),
+                NotchSettingsViewController(),
                 MiniPlayerSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
@@ -472,6 +485,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 GeneralSettingsViewController(),
                 MenuBarSettingsViewController(),
                 PopoverSettingsViewController(),
+                NotchSettingsViewController(),
                 MiniPlayerSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()

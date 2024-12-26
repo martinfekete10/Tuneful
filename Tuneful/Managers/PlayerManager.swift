@@ -16,6 +16,7 @@ class PlayerManager: ObservableObject {
     @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
     @AppStorage("showSongNotification") private var showSongNotification = true
     @AppStorage("notificationDuration") private var notificationDuration = 2.0
+    @AppStorage("showNotchOnPlayPause") private var showNotchOnPlayPause = true
     
     var musicApp: PlayerProtocol!
     var playerAppProvider: PlayerAppProvider!
@@ -201,38 +202,43 @@ class PlayerManager: ObservableObject {
         popoverIsShown = false
     }
     
-    @objc func test(_ sender: NSNotification?) {
-        print("rerererere")
-    }
-    
     // MARK: Notification Handlers
     
     @objc func playStateOrTrackDidChange(_ sender: NSNotification?) {
         Logger.main.log("Play state or track changed")
         
-        let musicAppKilled = sender?.userInfo?["Player State"] as? String == "Stopped"
-        let isRunningFromNotification = !musicAppKilled && isRunning
+        let playerState = sender?.userInfo?["Player State"] as? String;
 
         self.musicApp.refreshInfo {  // Needs to be refreshed for system player to load song info asynchronously
             self.getPlayState()
             self.updateFormattedDuration()
-            self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+            self.updateMenuBarText(playerState: playerState)
             
             // Get track info before it's loaded in getNewSongInfo() and compare
             // If previous song == current song => play state not changed
             let notificationTrack = self.musicApp.getTrackInfo()
-            if self.track == notificationTrack { return }
+            let songHasChanged = self.track != notificationTrack
             
+            let isPlayPause = playerState == "Playing" || playerState == "Paused";
+            if (!songHasChanged) {
+                if (isPlayPause && self.showNotchOnPlayPause) {
+                    self.showNotch();
+                }
+                return
+            }
             self.getPlaybackSettingInfo()
             self.getNewSongInfo()
         }
     }
     
-    private func updateMenuBarText(playerAppIsRunning: Bool) {
+    private func updateMenuBarText(playerState: String? = "nil") {
+        let isNotStopped = playerState != "Stopped";
+        let isRunning = self.isRunning && isNotStopped;
+        
         DispatchQueue.main.async {
             NotificationCenter.default.post(
                 name: NSNotification.Name(rawValue: "UpdateMenuBarItem"), object: nil,
-                userInfo: ["PlayerAppIsRunning": playerAppIsRunning])
+                userInfo: ["PlayerAppIsRunning": isRunning])
         }
     }
     
@@ -283,17 +289,17 @@ class PlayerManager: ObservableObject {
         musicApp.getAlbumArt { result in
             if result.isAlbumArt {
                 self.updateAlbumArt(newAlbumArt: result.image)
-                self.updateMenuBarText(playerAppIsRunning: self.isRunning)
+                self.updateMenuBarText()
                 self.updateNotchInfo(albumArt: result)
             } else if retryCount > 0 {
                 self.updateAlbumArt(newAlbumArt: result.image)
-                self.updateMenuBarText(playerAppIsRunning: self.isRunning)
+                self.updateMenuBarText()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     self.fetchAlbumArt(retryCount: retryCount - 1)
                 }
             } else {
                 self.updateAlbumArt(newAlbumArt: self.musicApp.defaultAlbumArt)
-                self.updateMenuBarText(playerAppIsRunning: self.isRunning)
+                self.updateMenuBarText()
                 Logger.main.log("Failed to fetch album art")
             }
         }
@@ -319,7 +325,11 @@ class PlayerManager: ObservableObject {
             description: self.track.album,
             onTap: self.openMusicApp
         )
-        self.notchInfo.show(for: notificationDuration)
+        self.showNotch()
+    }
+    
+    func showNotch() {
+        self.notchInfo?.show(for: self.notificationDuration)
     }
 
     // MARK: Controls
