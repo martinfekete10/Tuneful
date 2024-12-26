@@ -122,10 +122,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
-//        if let bundleID = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-//        }
-        
         self.settingsWindow.isReleasedWhenClosed = false
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
@@ -145,9 +141,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.mainSetup()
         }
         
-        #if DEBUG
-        MiniPlayerPreviewHelper.setupMiniPlayers(playerManager: playerManager)
-        #endif
+//#if DEBUG
+//        if let bundleID = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+//        }
+//#endif
+//#if DEBUG
+//        MiniPlayerPreviewHelper.setupMiniPlayers(playerManager: playerManager)
+//#endif
+//#if DEBUG
+//        DynamicNotchInfo(playerManager: playerManager).show(for: 5)
+//#endif
     }
     
     func windowShouldClose(_ sender: NSWindow) -> Bool {

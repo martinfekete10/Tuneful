@@ -73,8 +73,9 @@ struct NotchlessView<Content>: View where Content: View {
                             }
                     }
                 }
-                .offset(y: dynamicNotch.isVisible ? 0 : -windowHeight)
+                .offset(y: dynamicNotch.isVisible ? dynamicNotch.notchHeight : -windowHeight)
                 .animation(dynamicNotch.animation, value: dynamicNotch.contentID)
+                .transition(.blur.animation(.smooth))
 
                 Spacer()
             }

@@ -13,8 +13,8 @@ struct MiniPlayerView: View {
     
     @Default(.miniPlayerScaleFactor) private var miniPlayerScaleFactor
     @Default(.miniPlayerBackground) private var miniPlayerBackground
+    @Default(.miniPlayerType) private var miniPlayerType
     
-    private var miniPlayerType: MiniPlayerType
     private var imageSize: CGFloat = 140.0
     
     init(miniPlayerType: MiniPlayerType? = nil) {
