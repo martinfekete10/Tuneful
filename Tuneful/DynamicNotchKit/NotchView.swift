@@ -20,7 +20,7 @@ struct NotchView<Content>: View where Content: View {
                     Spacer()
                         .frame(width: dynamicNotch.notchWidth, height: dynamicNotch.notchHeight)
                     
-                    if !dynamicNotch.isMouseInside && dynamicNotch.isNotificationVisible {
+                    if dynamicNotch.isNotificationVisible {
                         NotchInfoView(playerManager: dynamicNotch.playerManager, minimumNotchWidth: dynamicNotch.notchWidth)
                             .safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: 15) }
                             .safeAreaInset(edge: .leading, spacing: 0) { Color.clear.frame(width: 15) }
@@ -55,6 +55,7 @@ struct NotchView<Content>: View where Content: View {
                 .onChange(of: dynamicNotch.isMouseInside) { isMouseInside in
                     if isMouseInside {
                         dynamicNotch.playerManager.startTimer()
+                        dynamicNotch.isNotificationVisible = false
                     } else {
                         dynamicNotch.playerManager.stopTimer()
                     }
