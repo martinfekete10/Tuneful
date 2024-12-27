@@ -81,10 +81,6 @@ public class PlayerManager: ObservableObject {
     private var notchInfo: DynamicNotchInfo!
     
     init() {
-        // TODO: Media remote framework for other music players
-//        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
-//        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
-//        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
         
         // Music app and observers
         self.playerAppProvider = PlayerAppProvider(notificationSubject: self.notificationSubject)
@@ -95,6 +91,7 @@ public class PlayerManager: ObservableObject {
         // Updating player state every 1 sec
         self.timerStartSignal.sink {
             self.getCurrentSeekerPosition()
+            self.getVolume()
             self.updatePlayerStateCancellable = Timer.publish(
                 every: 1, on: .main, in: .common
             )
@@ -130,25 +127,14 @@ public class PlayerManager: ObservableObject {
         
         // Clean up existing observers
         cleanupObservers()
-        
-        // TODO: System player
-//        if connectedApp == .system {
-//            MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
-//            
-//            NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
-//                .sink { [weak self] _ in
-//                    self!.playStateOrTrackDidChange(nil)
-//                }
-//                .store(in: &cancellables)
-//        } else {
-            DistributedNotificationCenter.default().addObserver(
-                self,
-                selector: #selector(playStateOrTrackDidChange),
-                name: NSNotification.Name(rawValue: musicApp.appNotification),
-                object: nil,
-                suspensionBehavior: .deliverImmediately
-            )
-//        }
+
+        DistributedNotificationCenter.default().addObserver(
+            self,
+            selector: #selector(playStateOrTrackDidChange),
+            name: NSNotification.Name(rawValue: musicApp.appNotification),
+            object: nil,
+            suspensionBehavior: .deliverImmediately
+        )
         
         observer = UserDefaults.standard.observe(\.connectedApp, options: [.old, .new]) {
             defaults, change in
@@ -180,21 +166,15 @@ public class PlayerManager: ObservableObject {
     }
     
     @objc private func popoverIsOpening(_ notification: NSNotification) {
-        if !Defaults[.showPlayerWindow] {
-            self.startTimer()
-        }
+        self.startTimer()
         self.audioDevices = AudioDevice.output.filter { $0.transportType != .virtual }
         self.getVolume()
         self.getPlaybackSettingInfo()
-        
         popoverIsShown = true
     }
     
     @objc private func popoverIsClosing(_ notification: NSNotification) {
-        if !Defaults[.showPlayerWindow] {
-            self.stopTimer()
-        }
-        
+        self.stopTimer()
         popoverIsShown = false
     }
     
@@ -392,12 +372,14 @@ public class PlayerManager: ObservableObject {
     
     func startTimer() {
         if !musicApp.isRunning() { return }
-        self.timerStartSignal.send()
+        timerStopSignal.send() // So we don't invoke the timer more frequently
+        timerStartSignal.send()
     }
     
     func stopTimer() {
         if !musicApp.isRunning() { return }
-        self.timerStopSignal.send()
+        if popoverIsShown || notchInfo.isVisible || Defaults[.showPlayerWindow] { return }
+        timerStopSignal.send()
     }
 
     // MARK: Volume

@@ -31,6 +31,9 @@ internal final class DynamicNotchInfoPublisher: ObservableObject {
 
 public class DynamicNotchInfo {
     @Published var playerManager: PlayerManager
+    public var isVisible: Bool {
+        get { internalDynamicNotch.isVisible }
+    }
     private var internalDynamicNotch: DynamicNotch<InfoView>
 
     public init(contentID: UUID = .init(), style: DynamicNotch<InfoView>.Style = .auto, playerManager: PlayerManager) {
