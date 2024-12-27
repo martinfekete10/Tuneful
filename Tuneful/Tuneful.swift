@@ -196,7 +196,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         KeyboardShortcuts.onKeyUp(for: .showMiniPlayer) {
-            self.toggleMiniPlayer()
+            Defaults[.showPlayerWindow] = !Defaults[.showPlayerWindow]
         }
         
         KeyboardShortcuts.onKeyUp(for: .changeMusicPlayer) {
@@ -280,23 +280,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
         if sender.state == .on {
             sender.state = .off
-            shouldShowMiniPlayer(show: false)
+            Defaults[.showPlayerWindow] = false
         } else {
             sender.state = .on
-            shouldShowMiniPlayer(show: true)
-        }
-    }
-    
-    private func shouldShowMiniPlayer(show: Bool) {
-        if !show {
-            Defaults[.showPlayerWindow] = false
-            playerManager.timerStopSignal.send()
-            miniPlayerWindow.close()
-        } else {
             Defaults[.showPlayerWindow] = true
-            playerManager.timerStartSignal.send()
-            miniPlayerWindow.makeKeyAndOrderFront(nil)
-            NSApplication.shared.activate(ignoringOtherApps: true)
         }
     }
     
@@ -421,7 +408,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.miniPlayerWindow.setFrameOrigin(position)
             self.miniPlayerWindow.contentView?.layer?.cornerRadius = 12.5
             self.miniPlayerWindow.contentView?.layer?.masksToBounds = true
-            self.shouldShowMiniPlayer(show: Defaults[.showPlayerWindow])
+            self.miniPlayerWindow.makeKeyAndOrderFront(nil)
+            NSApplication.shared.activate(ignoringOtherApps: true)
         }
     }
     

@@ -16,9 +16,6 @@ public class PlayerManager: ObservableObject {
     var musicApp: PlayerProtocol!
     var playerAppProvider: PlayerAppProvider!
     
-    // TODO: Media remote framework for other music players
-//    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
-    
     var name: String { musicApp.appName }
     var isRunning: Bool { musicApp.isRunning() }
     var notification: String { musicApp.appNotification }

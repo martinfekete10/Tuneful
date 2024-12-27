@@ -21,13 +21,16 @@ struct MiniPlayerSettingsView: View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
                 LuminareSection {
-                    LuminareToggle(
-                        "Show mini player",
-                        isOn: $showPlayerWindow
-                    )
-                    .onChange(of: showPlayerWindow) { _ in
-                        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
+                    HStack {
+                        Text("Show mini player")
+                        
+                        Spacer()
+                        
+                        Defaults.Toggle("", key: .showPlayerWindow)
+                            .toggleStyle(.switch)
+                            .controlSize(.small)
                     }
+                    .padding(8)
                     
                     HStack {
                         Text("Mini player window always on top of other apps")

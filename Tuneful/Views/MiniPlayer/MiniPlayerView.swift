@@ -11,6 +11,7 @@ import Defaults
 struct MiniPlayerView: View {
     @EnvironmentObject var playerManager: PlayerManager
     
+    @Default(.showPlayerWindow) private var showPlayerWindow
     @Default(.miniPlayerScaleFactor) private var miniPlayerScaleFactor
     @Default(.miniPlayerBackground) private var miniPlayerBackground
     @Default(.miniPlayerType) private var miniPlayerType
@@ -59,6 +60,14 @@ struct MiniPlayerView: View {
                             .strokeBorder(.quaternary, lineWidth: 1.5)
                     }
                 )
+                .opacity(showPlayerWindow ? 1 : 0)
+                .onChange(of: showPlayerWindow) { show in
+                    if show {
+                        playerManager.startTimer()
+                    } else {
+                        playerManager.stopTimer()
+                    }
+                }
             }
         }
     }
