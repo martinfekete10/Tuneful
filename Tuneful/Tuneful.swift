@@ -270,16 +270,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func toggleMiniPlayerAndPlayerMenuItem() {
         toggleMiniPlayer()
-        togglePlayerMenuItem()
+        toggleMiniPlayerMenuItem()
     }
     
     @objc func toggleMiniPlayer() {
         Defaults[.showPlayerWindow] = !Defaults[.showPlayerWindow]
     }
     
-    @objc func togglePlayerMenuItem() {
+    @objc func toggleMiniPlayerMenuItem() {
         let item = statusBarMenu.item(withTitle: "Show mini player")!
-        if item.state == .on {
+        if !Defaults[.showPlayerWindow] {
             item.state = .off
         } else {
             item.state = .on

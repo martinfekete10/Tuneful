@@ -29,9 +29,6 @@ struct MiniPlayerSettingsView: View {
                         Defaults.Toggle("", key: .showPlayerWindow)
                             .toggleStyle(.switch)
                             .controlSize(.small)
-                            .onChange(of: showPlayerWindow) { _ in
-                                NSApplication.shared.sendAction(#selector(AppDelegate.togglePlayerMenuItem), to: nil, from: nil)
-                            }
                     }
                     .padding(8)
                     
