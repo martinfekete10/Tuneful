@@ -15,8 +15,6 @@ struct CompactPopoverView: View {
     
     var body: some View {
         ZStack {
-            BackgroundView(background: popoverBackground, yOffset: -30)
-            
             if !playerManager.isRunning || playerManager.track.isEmpty() {
                 Text("Please open \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
@@ -27,7 +25,7 @@ struct CompactPopoverView: View {
             } else {
                 VStack {
                     ZStack {
-                        AlbumArtView(imageSize: 185)
+                        AlbumArtView(imageSize: 190)
             
                         AddToFavoritesView()
                             .opacity(isShowingPlaybackControls ? 1 : 0)
@@ -47,7 +45,7 @@ struct CompactPopoverView: View {
                                 }
                             }
                             .padding(10)
-                            .frame(width: 170)
+                            .frame(width: 180)
                             .background(
                                 VisualEffectView(material: .popover, blendingMode: .withinWindow)
                                     .overlay {
@@ -59,36 +57,21 @@ struct CompactPopoverView: View {
                             .opacity(isShowingPlaybackControls ? 1 : 0)
                         }
                     }
-                    .offset(x: -1, y: -3)
                     
-                    Button(action: playerManager.openMusicApp) {
-                        VStack(alignment: .center) {
-                            Text(playerManager.track.title)
-                                .foregroundColor(.primary.opacity(Constants.Opacity.primaryOpacity))
-                                .font(.system(size: 15, weight: .bold))
-                                .lineLimit(1)
-                            Text(playerManager.track.artist)
-                                .foregroundColor(.primary.opacity(Constants.Opacity.primaryOpacity2))
-                                .font(.system(size: 12, weight: .medium))
-                                .lineLimit(1)
-                        }
-                    }
-                    .pressButtonStyle()
-                    .opacity(0.8)
-                    .padding(.vertical, 5)
-                    .frame(width: 180)
+                    TrackDetailsView()
+                        .padding(.horizontal, 5)
                 }
-                .padding(50) // To force background coloring to whole popover
             }
         }
+        .padding(10)
         .overlay(
             NotificationView()
-                .padding(.top, 15)
+                .padding(.top, 20)
         )
-        .frame(
-            width: AppDelegate.popoverWidth,
-            height: playerManager.musicApp.playbackSeekerEnabled ? 260 : 250
-        )
+        .background {
+            BackgroundView(background: popoverBackground, yOffset: -60)
+                .offset(y: -20) // To color the tip of the popover
+        }
         .onHover { _ in
             withAnimation(.linear(duration: 0.2)) {
                 self.isShowingPlaybackControls.toggle()

@@ -127,7 +127,7 @@ class MiniPlayerWindow: NSWindow {
     }
     
     @objc func hideWindow(_ sender: Any?) {
-        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
+        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayerAndPlayerMenuItem), to: nil, from: nil)
     }
     
     @objc func settings(_ sender: Any?) {

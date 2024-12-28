@@ -17,7 +17,7 @@ struct AlbumArtView: View {
             playerManager.track.albumArt
                 .resizable()
                 .frame(width: self.imageSize, height: self.imageSize)
-                .cornerRadius(12.5)
+                .cornerRadius(10)
                 .shadow(color: .black.opacity(0.3), radius: 5, x: 0, y: 2)
                 .tapAnimation(scale: 1.2, duration: 0.4) {
                     self.playerManager.openMusicApp()
