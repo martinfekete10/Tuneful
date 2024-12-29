@@ -28,8 +28,10 @@ struct MiniPlayerView: View {
                             .font(.system(size: 14, weight: .regular))
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .multilineTextAlignment(.center)
-                            .padding(15)
-                            .padding(.bottom, 20)
+                            .frame(
+                                width: miniPlayerType == .horizontal ? 260 : 130,
+                                height: miniPlayerType == .vertical ? 260 : 130
+                            )
                     } else {
                         switch miniPlayerType {
                         case .horizontal:
