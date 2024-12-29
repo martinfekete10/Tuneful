@@ -1,5 +1,4 @@
 import SwiftUI
-import Luminare
 
 struct SettingsView: View {
     @State private var selectedCategory: SettingsCategory = .general

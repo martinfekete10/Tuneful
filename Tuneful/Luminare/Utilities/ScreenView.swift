@@ -77,7 +77,7 @@ public struct ScreenView<Content>: View where Content: View {
         }
 
         if let newImage = NSImage.resize(url, width: 300) {
-            await withAnimation(LuminareConstants.fastAnimation) {
+            withAnimation(LuminareConstants.fastAnimation) {
                 image = newImage
             }
         }

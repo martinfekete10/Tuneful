@@ -8,7 +8,6 @@
 import SwiftUI
 import Settings
 import KeyboardShortcuts
-import Luminare
 
 struct KeyboardShortcutsSettingsView: View {
     var body: some View {

@@ -73,6 +73,15 @@ struct MiniPlayerView: View {
                 .onAppear {
                     playerManager.startTimer()
                 }
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            print("press")
+                        } label: {
+                            Image(systemName: "bookmark.fill")
+                        }
+                    }
+                }
             }
         }
     }

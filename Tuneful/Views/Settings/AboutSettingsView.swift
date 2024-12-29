@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Settings
-import Luminare
 
 struct AboutSettingsView: View {
     var body: some View {

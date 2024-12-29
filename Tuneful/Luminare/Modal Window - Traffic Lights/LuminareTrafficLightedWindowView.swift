@@ -51,7 +51,7 @@ struct LuminareTrafficLightedWindowView<Content>: View where Content: View {
                 GeometryReader { proxy in
                     Color.clear
                         .onChange(of: proxy.size) { _ in
-                            guard let modalWindow = floatingPanel as? LuminareTrafficLightedWindow<Content> else { return }
+                            let modalWindow = floatingPanel as LuminareTrafficLightedWindow<Content>
                             modalWindow.updateShadow(for: 0.5)
                         }
                 }

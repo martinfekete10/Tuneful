@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import Luminare
 import Defaults
 
 enum ConnectedApps: String, Equatable, CaseIterable, LuminarePickerData, Defaults.Serializable {

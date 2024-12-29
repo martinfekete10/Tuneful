@@ -8,7 +8,6 @@
 import SwiftUI
 import Settings
 import LaunchAtLogin
-import Luminare
 import Defaults
 
 struct GeneralSettingsView: View {

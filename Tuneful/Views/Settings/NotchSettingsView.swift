@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Settings
-import Luminare
 import Defaults
 
 struct NotchSettingsView: View {

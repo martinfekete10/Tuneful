@@ -8,7 +8,6 @@
 import SwiftUI
 import ScriptingBridge
 import KeyboardShortcuts
-import Luminare
 import Defaults
 
 struct OnboardingView: View {

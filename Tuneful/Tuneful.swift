@@ -9,7 +9,6 @@ import os
 import SwiftUI
 import KeyboardShortcuts
 import Settings
-import Luminare
 import Combine
 import Defaults
 

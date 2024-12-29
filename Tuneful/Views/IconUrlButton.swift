@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Luminare
 
 struct IconUrlButton: View {
     var buttonText: String
