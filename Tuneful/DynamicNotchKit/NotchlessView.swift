@@ -61,6 +61,13 @@ struct NotchlessView<Content>: View where Content: View {
                         action: { NSApplication.shared.sendAction(#selector(AppDelegate.openSettings), to: nil, from: nil) },
                         label: { Text("Settings...") }
                     )
+                    
+                    Divider()
+                    
+                    Button(
+                        action: { NSApplication.shared.sendAction(#selector(AppDelegate.quit), to: nil, from: nil) },
+                        label: { Text("Quit") }
+                    )
                 }
                 .clipShape(.rect(cornerRadius: 20))
                 .shadow(color: .black.opacity(0.5), radius: dynamicNotch.isVisible ? 10 : 0)

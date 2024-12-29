@@ -12,6 +12,16 @@ import Settings
 import Combine
 import Defaults
 
+@main
+struct Tuneful: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    var body: some Scene {
+        Settings {
+        }
+    }
+}
+
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // Windows
     private var onboardingWindow: OnboardingWindow!
@@ -22,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // Status bar
     private var statusBarItem: NSStatusItem!
-    public var statusBarMenu: NSMenu!
+    private var statusBarMenu: NSMenu!
     
     // Managers
     private var playerManager: PlayerManager!
@@ -476,15 +486,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func quit() {
         NSApplication.shared.terminate(self)
-    }
-}
-
-@main
-struct Tuneful: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
-    var body: some Scene {
-        Settings {
-        }
     }
 }

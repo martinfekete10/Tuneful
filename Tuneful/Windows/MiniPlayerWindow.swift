@@ -85,7 +85,13 @@ class MiniPlayerWindow: NSWindow {
         sizeMenuItem.submenu = sizeMenu
         menu.addItem(sizeMenuItem)
         
+        menu.addItem(.separator())
+        
         menu.addItem(withTitle: "Settings...", action: #selector(settings(_:)), keyEquivalent: "")
+        
+        menu.addItem(.separator())
+        
+        menu.addItem(withTitle: "Quit", action: #selector(quit(_:)), keyEquivalent: "")
 
         NSMenu.popUpContextMenu(menu, with: event, for: self.contentView!)
     }
@@ -132,6 +138,10 @@ class MiniPlayerWindow: NSWindow {
     
     @objc func settings(_ sender: Any?) {
         NSApplication.shared.sendAction(#selector(AppDelegate.openSettings), to: nil, from: nil)
+    }
+    
+    @objc func quit(_ sender: Any?) {
+        NSApplication.shared.sendAction(#selector(AppDelegate.quit), to: nil, from: nil)
     }
     
     @objc func windowDidMove(_ notification: Notification) {

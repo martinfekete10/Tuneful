@@ -48,7 +48,7 @@ struct MiniPlayerView: View {
                 }
                 .fixedSize()
                 .clipShape(.rect(cornerRadius: 12.5))
-                .padding(10 * miniPlayerScaleFactor.rawValue)
+                .padding(7.5 * miniPlayerScaleFactor.rawValue)
                 .overlay(
                     NotificationView()
                 )
@@ -72,15 +72,6 @@ struct MiniPlayerView: View {
                 }
                 .onAppear {
                     playerManager.startTimer()
-                }
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button {
-                            print("press")
-                        } label: {
-                            Image(systemName: "bookmark.fill")
-                        }
-                    }
                 }
             }
         }

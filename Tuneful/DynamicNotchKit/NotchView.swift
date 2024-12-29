@@ -70,6 +70,13 @@ struct NotchView<Content>: View where Content: View {
                         action: { NSApplication.shared.sendAction(#selector(AppDelegate.openSettings), to: nil, from: nil) },
                         label: { Text("Settings...") }
                     )
+                    
+                    Divider()
+                    
+                    Button(
+                        action: { NSApplication.shared.sendAction(#selector(AppDelegate.quit), to: nil, from: nil) },
+                        label: { Text("Quit") }
+                    )
                 }
                 .mask {
                     GeometryReader { _ in // This helps with positioning everything
