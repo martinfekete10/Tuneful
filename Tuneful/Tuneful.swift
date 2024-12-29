@@ -243,7 +243,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusBarMenu.addItem(
             withTitle: "Quit",
-            action: #selector(NSApplication.terminate),
+            action: #selector(quit),
             keyEquivalent: ""
         )
         
@@ -475,6 +475,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     @objc func hideNotch() {
         playerManager.deinitializeNotch()
+    }
+    
+    // MARK: Misc
+    
+    @objc func quit() {
+        NSApplication.shared.terminate(self)
     }
 }
 

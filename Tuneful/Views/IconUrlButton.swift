@@ -8,7 +8,7 @@
 import SwiftUI
 import Luminare
 
-struct IconButton: View {
+struct IconUrlButton: View {
     var buttonText: String
     var url: String
     var image: ImageResource

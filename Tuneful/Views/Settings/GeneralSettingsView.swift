@@ -93,6 +93,23 @@ struct GeneralSettingsView: View {
                         }
                     }
                 }
+                
+                Button(action: {
+                    NSApplication.shared.sendAction(#selector(AppDelegate.quit), to: nil, from: nil)
+                }) {
+                    HStack(spacing: 5) {
+                        Image(systemName: "power")
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(.secondary)
+                            .frame(width: 15, height: 16)
+                        
+                        Text("Quit")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .buttonStyle(LuminareCompactButtonStyle())
             }
         }
     }

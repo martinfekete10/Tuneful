@@ -31,17 +31,17 @@ struct AboutSettingsView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         
                         HStack {
-                            IconButton(
+                            IconUrlButton(
                                 buttonText: "Support",
                                 url: "https://ko-fi.com/martinfekete",
                                 image: .heart
                             )
-                            IconButton(
+                            IconUrlButton(
                                 buttonText: "GitHub",
                                 url: "https://github.com/martinfekete10/Tuneful",
                                 image: .github
                             )
-                            IconButton(
+                            IconUrlButton(
                                 buttonText: "Website",
                                 url: "https://tuneful.dev",
                                 image: .globe

@@ -42,6 +42,28 @@
 		FE478BFD2CB288430033D272 /* SystemPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */; };
 		FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */; };
 		FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */; };
+		FE4AA05D2D214FFD00A1A480 /* LuminareModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA04F2D214FFD00A1A480 /* LuminareModalView.swift */; };
+		FE4AA05F2D214FFD00A1A480 /* LuminareValueAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0432D214FFD00A1A480 /* LuminareValueAdjuster.swift */; };
+		FE4AA0602D214FFD00A1A480 /* ScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0582D214FFD00A1A480 /* ScreenView.swift */; };
+		FE4AA0612D214FFD00A1A480 /* LuminareButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03B2D214FFD00A1A480 /* LuminareButtonStyle.swift */; };
+		FE4AA0632D214FFD00A1A480 /* DividedVStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03A2D214FFD00A1A480 /* DividedVStack.swift */; };
+		FE4AA0662D214FFD00A1A480 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0552D214FFD00A1A480 /* Color+Extensions.swift */; };
+		FE4AA0672D214FFD00A1A480 /* LuminareToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0422D214FFD00A1A480 /* LuminareToggle.swift */; };
+		FE4AA0692D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0522D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift */; };
+		FE4AA06A2D214FFD00A1A480 /* LuminareModalWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0502D214FFD00A1A480 /* LuminareModalWindow.swift */; };
+		FE4AA06B2D214FFD00A1A480 /* PopoverHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0372D214FFD00A1A480 /* PopoverHolder.swift */; };
+		FE4AA06C2D214FFD00A1A480 /* LuminareSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03F2D214FFD00A1A480 /* LuminareSection.swift */; };
+		FE4AA06D2D214FFD00A1A480 /* StringFormatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0592D214FFD00A1A480 /* StringFormatStyle.swift */; };
+		FE4AA06E2D214FFD00A1A480 /* LuminareList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03D2D214FFD00A1A480 /* LuminareList.swift */; };
+		FE4AA06F2D214FFD00A1A480 /* LuminareSliderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0402D214FFD00A1A480 /* LuminareSliderPicker.swift */; };
+		FE4AA0712D214FFD00A1A480 /* LuminareBackgroundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0572D214FFD00A1A480 /* LuminareBackgroundEffect.swift */; };
+		FE4AA0722D214FFD00A1A480 /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0562D214FFD00A1A480 /* EnvironmentValues.swift */; };
+		FE4AA0752D214FFD00A1A480 /* PopoverPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0382D214FFD00A1A480 /* PopoverPanel.swift */; };
+		FE4AA0762D214FFD00A1A480 /* LuminareTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0412D214FFD00A1A480 /* LuminareTextField.swift */; };
+		FE4AA0772D214FFD00A1A480 /* LuminarePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03E2D214FFD00A1A480 /* LuminarePicker.swift */; };
+		FE4AA0792D214FFD00A1A480 /* LuminareInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03C2D214FFD00A1A480 /* LuminareInfoView.swift */; };
+		FE4AA07D2D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0532D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift */; };
+		FE4AA0812D21522B00A1A480 /* LuminareConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0802D21522700A1A480 /* LuminareConstants.swift */; };
 		FE4C92172B61459F00FF79BE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C92162B61459F00FF79BE /* String+Extension.swift */; };
 		FE5B3CA22AB0AC700038B6E4 /* FullPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B3CA12AB0AC700038B6E4 /* FullPopoverView.swift */; };
 		FE5B56E62D037EEF0077527C /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = FE5B56E52D037EEF0077527C /* Defaults */; };
@@ -73,7 +95,7 @@
 		FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */; };
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
 		FEB21FB82D1AC71400849679 /* PopoverSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */; };
-		FEB21FBA2D1ACDCD00849679 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FB92D1ACDCA00849679 /* IconButton.swift */; };
+		FEB21FBA2D1ACDCD00849679 /* IconUrlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FB92D1ACDCA00849679 /* IconUrlButton.swift */; };
 		FEBA35EA2D17566E0081A3F2 /* VerticalMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */; };
 		FEBA35EC2D1766790081A3F2 /* MiniPlayerScaleFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
@@ -85,7 +107,6 @@
 		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
 		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
 		FEF32F9B2CBD05FE0084BDAD /* TapAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF32F9A2CBD05F90084BDAD /* TapAnimationModifier.swift */; };
-		FEF32F9E2CBD49610084BDAD /* Luminare in Frameworks */ = {isa = PBXBuildFile; productRef = FEF32F9D2CBD49610084BDAD /* Luminare */; };
 		FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */; };
 		FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */; };
 		FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */; };
@@ -150,6 +171,28 @@
 		FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPlayerManager.swift; sourceTree = "<group>"; };
 		FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsView.swift; sourceTree = "<group>"; };
 		FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		FE4AA0372D214FFD00A1A480 /* PopoverHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverHolder.swift; sourceTree = "<group>"; };
+		FE4AA0382D214FFD00A1A480 /* PopoverPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverPanel.swift; sourceTree = "<group>"; };
+		FE4AA03A2D214FFD00A1A480 /* DividedVStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividedVStack.swift; sourceTree = "<group>"; };
+		FE4AA03B2D214FFD00A1A480 /* LuminareButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareButtonStyle.swift; sourceTree = "<group>"; };
+		FE4AA03C2D214FFD00A1A480 /* LuminareInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareInfoView.swift; sourceTree = "<group>"; };
+		FE4AA03D2D214FFD00A1A480 /* LuminareList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareList.swift; sourceTree = "<group>"; };
+		FE4AA03E2D214FFD00A1A480 /* LuminarePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminarePicker.swift; sourceTree = "<group>"; };
+		FE4AA03F2D214FFD00A1A480 /* LuminareSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareSection.swift; sourceTree = "<group>"; };
+		FE4AA0402D214FFD00A1A480 /* LuminareSliderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareSliderPicker.swift; sourceTree = "<group>"; };
+		FE4AA0412D214FFD00A1A480 /* LuminareTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareTextField.swift; sourceTree = "<group>"; };
+		FE4AA0422D214FFD00A1A480 /* LuminareToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareToggle.swift; sourceTree = "<group>"; };
+		FE4AA0432D214FFD00A1A480 /* LuminareValueAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareValueAdjuster.swift; sourceTree = "<group>"; };
+		FE4AA04F2D214FFD00A1A480 /* LuminareModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareModalView.swift; sourceTree = "<group>"; };
+		FE4AA0502D214FFD00A1A480 /* LuminareModalWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareModalWindow.swift; sourceTree = "<group>"; };
+		FE4AA0522D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareTrafficLightedWindow.swift; sourceTree = "<group>"; };
+		FE4AA0532D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareTrafficLightedWindowView.swift; sourceTree = "<group>"; };
+		FE4AA0552D214FFD00A1A480 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		FE4AA0562D214FFD00A1A480 /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
+		FE4AA0572D214FFD00A1A480 /* LuminareBackgroundEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareBackgroundEffect.swift; sourceTree = "<group>"; };
+		FE4AA0582D214FFD00A1A480 /* ScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenView.swift; sourceTree = "<group>"; };
+		FE4AA0592D214FFD00A1A480 /* StringFormatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatStyle.swift; sourceTree = "<group>"; };
+		FE4AA0802D21522700A1A480 /* LuminareConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareConstants.swift; sourceTree = "<group>"; };
 		FE4C92162B61459F00FF79BE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		FE5B3CA12AB0AC700038B6E4 /* FullPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPopoverView.swift; sourceTree = "<group>"; };
 		FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Extensions.swift"; sourceTree = "<group>"; };
@@ -183,7 +226,7 @@
 		FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicManager.swift; sourceTree = "<group>"; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverSettingsView.swift; sourceTree = "<group>"; };
-		FEB21FB92D1ACDCA00849679 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
+		FEB21FB92D1ACDCA00849679 /* IconUrlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconUrlButton.swift; sourceTree = "<group>"; };
 		FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMiniPlayerView.swift; sourceTree = "<group>"; };
 		FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerScaleFactor.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
@@ -212,7 +255,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEF32F9E2CBD49610084BDAD /* Luminare in Frameworks */,
 				FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */,
 				FE5B56E82D037EEF0077527C /* DefaultsMacros in Frameworks */,
 				FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */,
@@ -285,7 +327,7 @@
 		FE3189DB2A7B9D0B006B2D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FEB21FB92D1ACDCA00849679 /* IconButton.swift */,
+				FEB21FB92D1ACDCA00849679 /* IconUrlButton.swift */,
 				FE5B56F12D059B350077527C /* BackgroundView.swift */,
 				FE31AEDB2CFBCB71002818ED /* SettingsView.swift */,
 				FE2554A12CA9CA93003DAB77 /* HoverButton.swift */,
@@ -318,6 +360,75 @@
 				FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */,
 			);
 			path = Buttons;
+			sourceTree = "<group>";
+		};
+		FE4AA0392D214FFD00A1A480 /* Popover */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0372D214FFD00A1A480 /* PopoverHolder.swift */,
+				FE4AA0382D214FFD00A1A480 /* PopoverPanel.swift */,
+			);
+			path = Popover;
+			sourceTree = "<group>";
+		};
+		FE4AA0442D214FFD00A1A480 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0392D214FFD00A1A480 /* Popover */,
+				FE4AA03A2D214FFD00A1A480 /* DividedVStack.swift */,
+				FE4AA03B2D214FFD00A1A480 /* LuminareButtonStyle.swift */,
+				FE4AA03C2D214FFD00A1A480 /* LuminareInfoView.swift */,
+				FE4AA03D2D214FFD00A1A480 /* LuminareList.swift */,
+				FE4AA03E2D214FFD00A1A480 /* LuminarePicker.swift */,
+				FE4AA03F2D214FFD00A1A480 /* LuminareSection.swift */,
+				FE4AA0402D214FFD00A1A480 /* LuminareSliderPicker.swift */,
+				FE4AA0412D214FFD00A1A480 /* LuminareTextField.swift */,
+				FE4AA0422D214FFD00A1A480 /* LuminareToggle.swift */,
+				FE4AA0432D214FFD00A1A480 /* LuminareValueAdjuster.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		FE4AA0512D214FFD00A1A480 /* Modal Window */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA04F2D214FFD00A1A480 /* LuminareModalView.swift */,
+				FE4AA0502D214FFD00A1A480 /* LuminareModalWindow.swift */,
+			);
+			path = "Modal Window";
+			sourceTree = "<group>";
+		};
+		FE4AA0542D214FFD00A1A480 /* Modal Window - Traffic Lights */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0522D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift */,
+				FE4AA0532D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift */,
+			);
+			path = "Modal Window - Traffic Lights";
+			sourceTree = "<group>";
+		};
+		FE4AA05B2D214FFD00A1A480 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0802D21522700A1A480 /* LuminareConstants.swift */,
+				FE4AA0552D214FFD00A1A480 /* Color+Extensions.swift */,
+				FE4AA0562D214FFD00A1A480 /* EnvironmentValues.swift */,
+				FE4AA0572D214FFD00A1A480 /* LuminareBackgroundEffect.swift */,
+				FE4AA0582D214FFD00A1A480 /* ScreenView.swift */,
+				FE4AA0592D214FFD00A1A480 /* StringFormatStyle.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		FE4AA05C2D214FFD00A1A480 /* Luminare */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0442D214FFD00A1A480 /* Components */,
+				FE4AA0512D214FFD00A1A480 /* Modal Window */,
+				FE4AA0542D214FFD00A1A480 /* Modal Window - Traffic Lights */,
+				FE4AA05B2D214FFD00A1A480 /* Utilities */,
+			);
+			path = Luminare;
 			sourceTree = "<group>";
 		};
 		FE5B56EB2D0386EC0077527C /* Defaults */ = {
@@ -365,6 +476,7 @@
 				FE6BFCEF2A72F37900D3321F /* Tuneful.entitlements */,
 				FE6BFCEC2A72F37900D3321F /* Preview Content */,
 				FE1A62FA2CBC1B09001C13CE /* DynamicNotchKit */,
+				FE4AA05C2D214FFD00A1A480 /* Luminare */,
 			);
 			path = Tuneful;
 			sourceTree = "<group>";
@@ -519,7 +631,6 @@
 				FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */,
 				FEFFE54F2B4AA04B000887B5 /* Settings */,
 				FEF0660E2B51910700A514F2 /* KeyboardShortcuts */,
-				FEF32F9D2CBD49610084BDAD /* Luminare */,
 				FE5B56E52D037EEF0077527C /* Defaults */,
 				FE5B56E72D037EEF0077527C /* DefaultsMacros */,
 			);
@@ -557,7 +668,6 @@
 				FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */,
 				FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */,
 				FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
-				FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */,
 				FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */,
 			);
 			productRefGroup = FE6BFCE42A72F37800D3321F /* Products */;
@@ -609,6 +719,27 @@
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
 				FE5B56EC2D0386EC0077527C /* Defaults+Extensions.swift in Sources */,
+				FE4AA05D2D214FFD00A1A480 /* LuminareModalView.swift in Sources */,
+				FE4AA05F2D214FFD00A1A480 /* LuminareValueAdjuster.swift in Sources */,
+				FE4AA0602D214FFD00A1A480 /* ScreenView.swift in Sources */,
+				FE4AA0612D214FFD00A1A480 /* LuminareButtonStyle.swift in Sources */,
+				FE4AA0632D214FFD00A1A480 /* DividedVStack.swift in Sources */,
+				FE4AA0662D214FFD00A1A480 /* Color+Extensions.swift in Sources */,
+				FE4AA0672D214FFD00A1A480 /* LuminareToggle.swift in Sources */,
+				FE4AA0692D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift in Sources */,
+				FE4AA06A2D214FFD00A1A480 /* LuminareModalWindow.swift in Sources */,
+				FE4AA06B2D214FFD00A1A480 /* PopoverHolder.swift in Sources */,
+				FE4AA06C2D214FFD00A1A480 /* LuminareSection.swift in Sources */,
+				FE4AA06D2D214FFD00A1A480 /* StringFormatStyle.swift in Sources */,
+				FE4AA06E2D214FFD00A1A480 /* LuminareList.swift in Sources */,
+				FE4AA06F2D214FFD00A1A480 /* LuminareSliderPicker.swift in Sources */,
+				FE4AA0712D214FFD00A1A480 /* LuminareBackgroundEffect.swift in Sources */,
+				FE4AA0722D214FFD00A1A480 /* EnvironmentValues.swift in Sources */,
+				FE4AA0752D214FFD00A1A480 /* PopoverPanel.swift in Sources */,
+				FE4AA0762D214FFD00A1A480 /* LuminareTextField.swift in Sources */,
+				FE4AA0772D214FFD00A1A480 /* LuminarePicker.swift in Sources */,
+				FE4AA0792D214FFD00A1A480 /* LuminareInfoView.swift in Sources */,
+				FE4AA07D2D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift in Sources */,
 				FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */,
 				FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */,
 				FE1A62FD2CBC1B09001C13CE /* DynamicNotchInfo.swift in Sources */,
@@ -655,7 +786,7 @@
 				FE6BFD062A73ACFD00D3321F /* Constants.swift in Sources */,
 				FEFFE55B2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift in Sources */,
 				FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */,
-				FEB21FBA2D1ACDCD00849679 /* IconButton.swift in Sources */,
+				FEB21FBA2D1ACDCD00849679 /* IconUrlButton.swift in Sources */,
 				FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */,
 				FE31AED02CF50708002818ED /* PlaybackPositionView.swift in Sources */,
 				FE25549B2CA95F87003DAB77 /* AddToFavoritesView.swift in Sources */,
@@ -664,6 +795,7 @@
 				FEB21FB82D1AC71400849679 /* PopoverSettingsView.swift in Sources */,
 				FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */,
 				FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */,
+				FE4AA0812D21522B00A1A480 /* LuminareConstants.swift in Sources */,
 				FE1F7E952B89E92A00B702AD /* StatusBarPlaybackManager.swift in Sources */,
 				FE6BFCFB2A73A7CA00D3321F /* SupportedApps.swift in Sources */,
 				FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */,
@@ -918,14 +1050,6 @@
 				minimumVersion = 1.16.1;
 			};
 		};
-		FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MrKai77/Luminare";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jbrinkman/ISSoundAdditions";
@@ -964,11 +1088,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
-		};
-		FEF32F9D2CBD49610084BDAD /* Luminare */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */;
-			productName = Luminare;
 		};
 		FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */ = {
 			isa = XCSwiftPackageProductDependency;
