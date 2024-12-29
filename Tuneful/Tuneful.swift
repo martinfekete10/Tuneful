@@ -131,10 +131,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-        return true
-    }
-    
     private func mainSetup() {
         self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)

@@ -18,6 +18,7 @@
 -   Fixed the bug when mini player floating preference was ignored on app restart
 -   Fixed the bug when Tuneful wasn't fetching Apple Music song favorite info correctly when changing songs
 -   Fixed the bug when previous song button didn't rewind the song to the beginning if some part already played for Apple Music
+-   Fixed bug when Cmd + comma shortcut opened blank window; now it opens settings window
 
 ### Performance Improvements
 
