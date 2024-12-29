@@ -249,7 +249,7 @@ public class PlayerManager: ObservableObject {
     func getNewSongInfo() {
         Logger.main.log("Getting track info")
         
-        withAnimation(Constants.SongTransitionAnimation) {
+        withAnimation(Constants.mainAnimation) {
             getCurrentSeekerPosition()
             track = musicApp.getTrackInfo()
         }

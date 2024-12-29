@@ -69,13 +69,15 @@ struct CompactPopoverView: View {
                 .padding(.top, 20)
         )
         .background {
-            BackgroundView(background: popoverBackground, yOffset: -60)
+            BackgroundView(background: popoverBackground, yOffset: -20)
                 .offset(y: -20) // To color the tip of the popover
+                .frame(height: 300)
         }
         .onHover { _ in
-            withAnimation(.linear(duration: 0.2)) {
+            withAnimation(Constants.mainAnimation) {
                 self.isShowingPlaybackControls.toggle()
             }
         }
+        .frame(width: Constants.popoverWidth, height: Constants.compactPopoverHeight)
     }
 }

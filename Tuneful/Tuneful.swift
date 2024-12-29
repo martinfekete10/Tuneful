@@ -20,7 +20,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     // Popover
     private var popover: NSPopover!
-    static let popoverWidth: CGFloat = 210
     
     // Status bar
     private var statusBarItem: NSStatusItem!
@@ -32,7 +31,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusBarPlaybackManager: StatusBarPlaybackManager!
     
     // MARK: Settings
-    
     private var settingsWindow = LuminareTrafficLightedWindow<SettingsView>(view: { SettingsView() })
     
     let GeneralSettingsViewController: () -> SettingsPane = {
@@ -125,8 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 //            UserDefaults.standard.removePersistentDomain(forName: bundleID)
 //        }
 //#endif
-        
-        NSApp.setActivationPolicy(.accessory)
+
         if !Defaults[.viewedOnboarding] {
             self.showOnboarding()
         } else {
@@ -349,15 +346,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func setupPopover() {
         let rootView: AnyView
         let frameSize: NSSize
-        let popoverWidth = 210
-        let popoverHeigth = 500
         
         switch Defaults[.popoverType] {
         case .full:
-            frameSize = NSSize(width: popoverWidth, height: popoverHeigth)
+            frameSize = NSSize(width: Constants.popoverWidth, height: Constants.fullPopoverHeight)
             rootView = AnyView(FullPopoverView().environmentObject(self.playerManager))
         case .minimal:
-            frameSize = NSSize(width: popoverWidth, height: popoverHeigth)
+            frameSize = NSSize(width: Constants.popoverWidth, height: Constants.compactPopoverHeight)
             rootView = AnyView(CompactPopoverView().environmentObject(self.playerManager))
         }
         

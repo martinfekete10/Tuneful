@@ -63,7 +63,7 @@ struct OnboardingView: View {
                     .frame(width: 300, height: 150)
                 }
                 .frame(width: 400, height: 250)
-                .animation(Constants.SongTransitionAnimation, value: step)
+                .animation(Constants.mainAnimation, value: step)
                 
                 HStack {
                     if step == .onDetails {

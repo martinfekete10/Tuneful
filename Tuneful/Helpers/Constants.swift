@@ -12,6 +12,9 @@ enum Constants {
     static let podcastThresholdDurationSec = 900.0
     static let podcastRewindDurationSec = 15.0
     static let playerAppChangedMessage = "Player app changed"
+    static let popoverWidth = 210.0
+    static let fullPopoverHeight = 345.0
+    static let compactPopoverHeight = 250.0
     
     enum Opacity {
         static let primaryOpacity = 0.8
@@ -37,7 +40,7 @@ enum Constants {
         static let imageWidth = 30.0
     }
     
-    static var SongTransitionAnimation: Animation {
+    static var mainAnimation: Animation {
         Animation.timingCurve(0.16, 1, 0.3, 1, duration: 0.7)
     }
 }
