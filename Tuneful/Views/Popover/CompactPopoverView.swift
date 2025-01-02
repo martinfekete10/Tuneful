@@ -33,7 +33,7 @@ struct CompactPopoverView: View {
                         
                         VStack {
                             Spacer()
-                                .frame(height: playerManager.musicApp.playbackSeekerEnabled ? 90 : 125)
+                                .frame(height: playerManager.musicApp.playbackSeekerEnabled ? 95 : 130)
                             
                             VStack(alignment: .center) {
                                 PlaybackButtonsView(playButtonSize: 20, spacing: 15)
@@ -59,7 +59,7 @@ struct CompactPopoverView: View {
                     }
                     
                     TrackDetailsView()
-                        .padding(.horizontal, 5)
+                        .padding(5)
                 }
             }
         }

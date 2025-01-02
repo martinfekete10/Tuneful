@@ -14,7 +14,7 @@ enum Constants {
     static let playerAppChangedMessage = "Player app changed"
     static let popoverWidth = 210.0
     static let fullPopoverHeight = 345.0
-    static let compactPopoverHeight = 250.0
+    static let compactPopoverHeight = 265.0
     
     enum Opacity {
         static let primaryOpacity = 0.8
