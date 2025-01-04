@@ -23,7 +23,7 @@ struct MiniPlayerView: View {
             HStack(spacing: 0) {
                 ZStack {
                     if !playerManager.isRunning || playerManager.track.isEmpty() {
-                        Text("Please open \(playerManager.name) to use Tuneful")
+                        Text("Play something in \(playerManager.name) to use Tuneful")
                             .foregroundColor(.primary.opacity(0.4))
                             .font(.system(size: 14, weight: .regular))
                             .frame(maxWidth: .infinity, maxHeight: .infinity)

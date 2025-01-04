@@ -163,6 +163,11 @@ public class PlayerManager: ObservableObject {
         if musicAppKilled || !musicApp.isRunning() {
             self.track = Track()
             self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+            
+            // Stop timer if the player is killed
+            self.updatePlayerStateCancellable?.cancel()
+            self.updatePlayerStateCancellable = nil
+            
             return
         }
 

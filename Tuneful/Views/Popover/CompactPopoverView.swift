@@ -16,7 +16,7 @@ struct CompactPopoverView: View {
     var body: some View {
         ZStack {
             if !playerManager.isRunning || playerManager.track.isEmpty() {
-                Text("Please open \(playerManager.name) to use Tuneful")
+                Text("Play something in \(playerManager.name) to use Tuneful")
                     .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
                     .font(.system(size: 14, weight: .regular))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -69,9 +69,11 @@ struct CompactPopoverView: View {
                 .padding(.top, 20)
         )
         .background {
-            BackgroundView(background: popoverBackground, yOffset: -20)
-                .offset(y: -20) // To color the tip of the popover
-                .frame(height: 300)
+            if playerManager.musicApp.isRunning() && !playerManager.track.isEmpty() {
+                BackgroundView(background: popoverBackground, yOffset: -20)
+                    .offset(y: -20) // To color the tip of the popover
+                    .frame(height: 300)
+            }
         }
         .onHover { _ in
             withAnimation(Constants.mainAnimation) {
