@@ -35,12 +35,6 @@ class SpotifyManager: PlayerProtocol {
         self.notificationSubject = notificationSubject
     }
     
-    func refreshInfo(completion: @escaping () -> Void) {
-        DispatchQueue.main.async() {
-            completion()
-        }
-    }
-    
     func getTrackInfo() -> Track {
         var track = Track()
         track.title = app.currentTrack?.name ?? "Unknown Title"

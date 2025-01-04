@@ -39,7 +39,6 @@
 		FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */; };
 		FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4414B72AB4999600A73246 /* Notification.Name.swift */; };
 		FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE445FE32A977D0E001CA55A /* Double+Extension.swift */; };
-		FE478BFD2CB288430033D272 /* SystemPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */; };
 		FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */; };
 		FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */; };
 		FE4AA05D2D214FFD00A1A480 /* LuminareModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA04F2D214FFD00A1A480 /* LuminareModalView.swift */; };
@@ -168,7 +167,6 @@
 		FE4414B72AB4999600A73246 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		FE445FE02A969E8D001CA55A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FE445FE32A977D0E001CA55A /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
-		FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPlayerManager.swift; sourceTree = "<group>"; };
 		FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsView.swift; sourceTree = "<group>"; };
 		FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		FE4AA0372D214FFD00A1A480 /* PopoverHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverHolder.swift; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 			children = (
 				FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */,
 				FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */,
-				FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */,
 				FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */,
 				FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */,
 			);
@@ -764,7 +761,6 @@
 				FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */,
 				FEFFE5592B4FE00D000887B5 /* NSError+Extension.swift in Sources */,
 				FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */,
-				FE478BFD2CB288430033D272 /* SystemPlayerManager.swift in Sources */,
 				FE8CE1582C1E0B140053FDEA /* PopoverType.swift in Sources */,
 				FEFFE55D2B4FE051000887B5 /* Comparable+Extension.swift in Sources */,
 				FE6BFCFE2A73A89600D3321F /* PlayerManager.swift in Sources */,

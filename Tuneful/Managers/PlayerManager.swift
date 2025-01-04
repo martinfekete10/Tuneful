@@ -78,32 +78,11 @@ public class PlayerManager: ObservableObject {
     private var notchInfo: DynamicNotchInfo!
     
     init() {
-        
         // Music app and observers
         self.playerAppProvider = PlayerAppProvider(notificationSubject: self.notificationSubject)
+        self.notchInfo = DynamicNotchInfo(playerManager: self)
         self.setupMusicAppsAndObservers()
         self.playStateOrTrackDidChange(nil)
-        self.notchInfo = DynamicNotchInfo(playerManager: self)
-        
-        // Updating player state every 1 sec
-        self.timerStartSignal.sink {
-            self.getCurrentSeekerPosition()
-            self.getVolume()
-            self.updatePlayerStateCancellable = Timer.publish(
-                every: 1, on: .main, in: .common
-            )
-            .autoconnect()
-            .sink { _ in
-                self.getVolume()
-                self.getCurrentSeekerPosition()
-            }
-        }
-        .store(in: &self.cancellables)
-        
-        self.timerStopSignal.sink {
-            self.updatePlayerStateCancellable = nil
-        }
-        .store(in: &self.cancellables)
     }
     
     deinit {
@@ -165,14 +144,12 @@ public class PlayerManager: ObservableObject {
     @objc private func popoverIsOpening(_ notification: NSNotification) {
         self.startTimer()
         self.audioDevices = AudioDevice.output.filter { $0.transportType != .virtual }
-        self.getVolume()
-        self.getPlaybackSettingInfo()
         popoverIsShown = true
     }
     
     @objc private func popoverIsClosing(_ notification: NSNotification) {
-        self.stopTimer()
         popoverIsShown = false
+        self.stopTimer()
     }
     
     // MARK: Notification Handlers
@@ -189,19 +166,17 @@ public class PlayerManager: ObservableObject {
             return
         }
 
-        self.musicApp.refreshInfo {  // Needs to be refreshed for system player to load song info asynchronously
-            self.getPlayState()
-            self.updateFormattedDuration()
-            self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
-            
-            // Get track info before it's loaded in getNewSongInfo() and compare
-            // If previous song == current song => play state not changed
-            let notificationTrack = self.musicApp.getTrackInfo()
-            if self.track == notificationTrack { return }
-            
-            self.getPlaybackSettingInfo()
-            self.getNewSongInfo()
-        }
+        self.getPlayState()
+        self.updateFormattedDuration()
+        self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+        
+        // Get track info before it's loaded in getNewSongInfo() and compare
+        // If previous song == current song => play state not changed
+        let notificationTrack = self.musicApp.getTrackInfo()
+        if self.track == notificationTrack { return }
+        
+        self.getPlaybackSettingInfo()
+        self.getNewSongInfo()
     }
     
     private func updateMenuBarText(playerAppIsRunning: Bool) {
@@ -239,16 +214,14 @@ public class PlayerManager: ObservableObject {
     }
     
     func getPlaybackSettingInfo() {
-        Logger.main.log("Getting playback setting info")
-        
-        shuffleIsOn = musicApp.shuffleIsOn // TODO: Doesn't seem to be working correctly for Spotify
-        shuffleContextEnabled = musicApp.shuffleContextEnabled
-        repeatContextEnabled = musicApp.repeatContextEnabled
+        if popoverIsShown || (Defaults[.showPlayerWindow] && Defaults[.miniPlayerType] != .minimal) {
+            shuffleIsOn = musicApp.shuffleIsOn // TODO: Doesn't seem to be working correctly for Spotify
+            shuffleContextEnabled = musicApp.shuffleContextEnabled
+            repeatContextEnabled = musicApp.repeatContextEnabled
+        }
     }
     
     func getNewSongInfo() {
-        Logger.main.log("Getting track info")
-        
         withAnimation(Constants.mainAnimation) {
             getCurrentSeekerPosition()
             track = musicApp.getTrackInfo()
@@ -283,7 +256,7 @@ public class PlayerManager: ObservableObject {
     }
     
     func showNotchNotification() {
-        if !Defaults[.notchEnabled] || !Defaults[.showSongNotification] || popoverIsShown {
+        if !Defaults[.notchEnabled] || !Defaults[.showSongNotification] || !Defaults[.viewedOnboarding] || popoverIsShown {
             return
         }
         
@@ -332,12 +305,8 @@ public class PlayerManager: ObservableObject {
     func getCurrentSeekerPosition() {
         if !musicApp.isRunning() { return }
         if isDraggingPlaybackPositionView { return }
-
-        musicApp.refreshInfo {
-            withAnimation {
-                self.seekerPosition = self.musicApp.getCurrentSeekerPosition()
-            }
-        }
+        
+        self.seekerPosition = self.musicApp.getCurrentSeekerPosition()
     }
 
     func seekTrack() {
@@ -369,21 +338,38 @@ public class PlayerManager: ObservableObject {
     
     func startTimer() {
         if !musicApp.isRunning() { return }
-        timerStopSignal.send() // So we don't invoke the timer more frequently
-        timerStartSignal.send()
+        
+        // So we don't invoke the timer more frequently
+        self.updatePlayerStateCancellable?.cancel()
+        self.updatePlayerStateCancellable = nil
+        
+        self.updatePlayerStateCancellable = Timer.publish(
+            every: 1, on: .main, in: .common
+        )
+        .autoconnect()
+        .sink { _ in
+            print("Timer running")
+            self.getVolume()
+            self.getCurrentSeekerPosition()
+            self.getPlaybackSettingInfo()
+        }
+
     }
     
     func stopTimer() {
-        if !musicApp.isRunning() { return }
         if popoverIsShown || notchInfo.isVisible || Defaults[.showPlayerWindow] { return }
-        timerStopSignal.send()
+        
+        self.updatePlayerStateCancellable?.cancel()
+        self.updatePlayerStateCancellable = nil
     }
 
     // MARK: Volume
 
     func getVolume() {
-        if !musicApp.isRunning() { return }
-        volume = musicApp.volume
+        // Only get volume if the full popover is shown
+        if popoverIsShown && Defaults[.popoverType] == .full {
+            volume = musicApp.volume
+        }
     }
 
     func setVolume(newVolume: Int) {

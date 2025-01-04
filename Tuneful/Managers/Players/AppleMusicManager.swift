@@ -35,12 +35,6 @@ class AppleMusicManager: PlayerProtocol {
         self.notificationSubject = notificationSubject
     }
     
-    func refreshInfo(completion: @escaping () -> Void) {
-        DispatchQueue.main.async() {
-            completion()
-        }
-    }
-    
     func getAlbumArt(completion: @escaping (FetchedAlbumArt?) -> Void) {
         guard let art = app.currentTrack?.artworks?()[0] as? MusicArtwork else {
             completion(nil)

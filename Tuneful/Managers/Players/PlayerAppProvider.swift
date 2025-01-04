@@ -17,14 +17,11 @@ class PlayerAppProvider {
     }
     
     func getPlayerApp() -> PlayerProtocol {
-        // TODO: System player
         switch Defaults[.connectedApp] {
         case .spotify:
             return SpotifyManager(notificationSubject: notificationSubject)
         case .appleMusic:
             return AppleMusicManager(notificationSubject: notificationSubject)
-//        case.system:
-//            return systemPlayer
         }
     }
 }

@@ -132,6 +132,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 //            UserDefaults.standard.removePersistentDomain(forName: bundleID)
 //        }
 //#endif
+        
+        self.playerManager = PlayerManager()
 
         if !Defaults[.viewedOnboarding] {
             self.showOnboarding()
@@ -141,12 +143,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     private func mainSetup() {
-        self.playerManager = PlayerManager()
         self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
         self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
         self.miniPlayerWindow = MiniPlayerWindow()
         
         self.settingsWindow.isReleasedWhenClosed = false
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.updateStatusBarItem),

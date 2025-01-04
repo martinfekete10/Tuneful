@@ -64,7 +64,7 @@ struct MiniPlayerView: View {
                 )
                 .opacity(showPlayerWindow ? 1 : 0)
                 .onChange(of: showPlayerWindow) { show in
-                    if !show {
+                    if show {
                         playerManager.startTimer()
                     } else {
                         playerManager.stopTimer()
