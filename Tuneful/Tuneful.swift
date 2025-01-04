@@ -127,14 +127,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-#if DEBUG
-        if let bundleID = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-        }
-#endif
+//#if DEBUG
+//        if let bundleID = Bundle.main.bundleIdentifier {
+//            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+//        }
+//#endif
         
         self.playerManager = PlayerManager()
-
+        
         if !Defaults[.viewedOnboarding] {
             self.showOnboarding()
         } else {
