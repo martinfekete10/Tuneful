@@ -19,7 +19,7 @@
 </div>
 
 <p align="center">
-  <a href="https://apps.apple.com/sk/app/tuneful/id6739804295?mt=12">
+  <a href="https://apps.apple.com/us/app/tuneful/id6739804295?mt=12">
     <img width="350" src="docs/images/download.png">
   </a>
 </p>
