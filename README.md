@@ -18,6 +18,11 @@
   </p>
 </div>
 
+<p align="center">
+  <a href="https://apps.apple.com/sk/app/tuneful/id6739804295?mt=12">
+    <img width="350" src="docs/images/download.png">
+  </a>
+</p>
 <h5 align="center">Tuneful requires macOS 13 Ventura or newer</h5>
 
 ## Screenshots
@@ -33,22 +38,6 @@
 <p align="center">
   <img src="docs/images/miniplayer.png">
 </p>
-
-## Installation
-
-> [!WARNING]
-> This app has not been notarized by Apple and a popup will be shown on first start. Click **Okay**, then go to **Settings > Privacy & Security** and scroll down and click on a **Open anyway** button next to **Tunfeul** - you'll need to do this only once.
-> If you're running macOS older than Sequoia, right-click on the app icon in Finder and select "Open". For more information, [visit project website](https://tuneful.dev/cant-open)
-
-### Tuneful can be installed using standard installation process
-
-1. Download the latest [releases](https://github.com/martinfekete10/Tuneful/releases/latest/download/Tuneful.dmg)
-2. Open the downloaded `.dmg` file and drag the app to your Applications folder
-3. Launch the app, select you preferred streaming service and enjoy!
-
-### Or using Homebrew
-
-`brew install martinfekete10/tap/tuneful`
 
 ## Feedback
 
