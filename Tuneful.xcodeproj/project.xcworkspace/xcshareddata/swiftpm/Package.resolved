@@ -1,6 +1,15 @@
 {
-  "originHash" : "98946b2d21c745a3204168b35d3b08adbb56968e101874e3d329784ab3132005",
+  "originHash" : "61e122680a565099cb88e758d0eec9f1f5823dacfd1100d916877c105a2eba93",
   "pins" : [
+    {
+      "identity" : "defaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/Defaults",
+      "state" : {
+        "revision" : "ef1b2318fb549002bb533bec3a8ad98ae09f2cb6",
+        "version" : "9.0.0"
+      }
+    },
     {
       "identity" : "issoundadditions",
       "kind" : "remoteSourceControl",
@@ -29,15 +38,6 @@
       }
     },
     {
-      "identity" : "luminare",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/MrKai77/Luminare",
-      "state" : {
-        "branch" : "main",
-        "revision" : "a9c1d600e972c5523c27eb7cd84637f4f05beaaa"
-      }
-    },
-    {
       "identity" : "settings",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/Settings",
@@ -47,12 +47,12 @@
       }
     },
     {
-      "identity" : "sparkle",
+      "identity" : "swift-syntax",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sparkle-project/Sparkle",
+      "location" : "https://github.com/swiftlang/swift-syntax",
       "state" : {
-        "revision" : "1f07f4096e52f19b5e7abaa697b7fc592b7ff57c",
-        "version" : "2.5.1"
+        "revision" : "0687f71944021d616d34d922343dcef086855920",
+        "version" : "600.0.1"
       }
     }
   ],

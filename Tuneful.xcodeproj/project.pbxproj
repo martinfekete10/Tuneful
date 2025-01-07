@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE08CE132CFC74E200F047CB /* SettingsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */; };
+		FE08CE172CFCC53500F047CB /* NotchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */; };
+		FE08CE192CFCC76E00F047CB /* MiniPlayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08CE182CFCC76700F047CB /* MiniPlayerSettingsView.swift */; };
 		FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */; };
 		FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */; };
 		FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A62F82CBC1B09001C13CE /* NSScreen+Extensions.swift */; };
@@ -21,27 +24,53 @@
 		FE25549B2CA95F87003DAB77 /* AddToFavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE25549A2CA95F6E003DAB77 /* AddToFavoritesView.swift */; };
 		FE2554A02CA9C4B9003DAB77 /* PlaybackButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE25549F2CA9C4B9003DAB77 /* PlaybackButtonsView.swift */; };
 		FE2554A22CA9CA93003DAB77 /* HoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2554A12CA9CA93003DAB77 /* HoverButton.swift */; };
+		FE26E5EA2D206E9F0035CF65 /* TrackDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE26E5E92D206E990035CF65 /* TrackDetailsView.swift */; };
 		FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */; };
-		FE2AEE302A8FC76500E8D576 /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */; };
 		FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */; };
 		FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */; };
 		FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */; };
-		FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F72A7C3B1A006B2D59 /* Helper.swift */; };
+		FE3189F82A7C3B1A006B2D59 /* PermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F72A7C3B1A006B2D59 /* PermissionHelper.swift */; };
 		FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */; };
 		FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */; };
+		FE31AED02CF50708002818ED /* PlaybackPositionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */; };
+		FE31AEDC2CFBCB76002818ED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE31AEDB2CFBCB71002818ED /* SettingsView.swift */; };
 		FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37A0322A829623006FBA5B /* MusicControl.swift */; };
 		FE37A0352A82982B006FBA5B /* PlayPauseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */; };
 		FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */; };
 		FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4414B72AB4999600A73246 /* Notification.Name.swift */; };
 		FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE445FE32A977D0E001CA55A /* Double+Extension.swift */; };
-		FE478BFD2CB288430033D272 /* SystemPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */; };
 		FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */; };
 		FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */; };
-		FE4C92152B6143CC00FF79BE /* MarqueeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C92142B6143CC00FF79BE /* MarqueeTextView.swift */; };
+		FE4AA05D2D214FFD00A1A480 /* LuminareModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA04F2D214FFD00A1A480 /* LuminareModalView.swift */; };
+		FE4AA05F2D214FFD00A1A480 /* LuminareValueAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0432D214FFD00A1A480 /* LuminareValueAdjuster.swift */; };
+		FE4AA0602D214FFD00A1A480 /* ScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0582D214FFD00A1A480 /* ScreenView.swift */; };
+		FE4AA0612D214FFD00A1A480 /* LuminareButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03B2D214FFD00A1A480 /* LuminareButtonStyle.swift */; };
+		FE4AA0632D214FFD00A1A480 /* DividedVStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03A2D214FFD00A1A480 /* DividedVStack.swift */; };
+		FE4AA0662D214FFD00A1A480 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0552D214FFD00A1A480 /* Color+Extensions.swift */; };
+		FE4AA0672D214FFD00A1A480 /* LuminareToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0422D214FFD00A1A480 /* LuminareToggle.swift */; };
+		FE4AA0692D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0522D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift */; };
+		FE4AA06A2D214FFD00A1A480 /* LuminareModalWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0502D214FFD00A1A480 /* LuminareModalWindow.swift */; };
+		FE4AA06B2D214FFD00A1A480 /* PopoverHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0372D214FFD00A1A480 /* PopoverHolder.swift */; };
+		FE4AA06C2D214FFD00A1A480 /* LuminareSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03F2D214FFD00A1A480 /* LuminareSection.swift */; };
+		FE4AA06D2D214FFD00A1A480 /* StringFormatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0592D214FFD00A1A480 /* StringFormatStyle.swift */; };
+		FE4AA06E2D214FFD00A1A480 /* LuminareList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03D2D214FFD00A1A480 /* LuminareList.swift */; };
+		FE4AA06F2D214FFD00A1A480 /* LuminareSliderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0402D214FFD00A1A480 /* LuminareSliderPicker.swift */; };
+		FE4AA0712D214FFD00A1A480 /* LuminareBackgroundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0572D214FFD00A1A480 /* LuminareBackgroundEffect.swift */; };
+		FE4AA0722D214FFD00A1A480 /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0562D214FFD00A1A480 /* EnvironmentValues.swift */; };
+		FE4AA0752D214FFD00A1A480 /* PopoverPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0382D214FFD00A1A480 /* PopoverPanel.swift */; };
+		FE4AA0762D214FFD00A1A480 /* LuminareTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0412D214FFD00A1A480 /* LuminareTextField.swift */; };
+		FE4AA0772D214FFD00A1A480 /* LuminarePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03E2D214FFD00A1A480 /* LuminarePicker.swift */; };
+		FE4AA0792D214FFD00A1A480 /* LuminareInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA03C2D214FFD00A1A480 /* LuminareInfoView.swift */; };
+		FE4AA07D2D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0532D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift */; };
+		FE4AA0812D21522B00A1A480 /* LuminareConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4AA0802D21522700A1A480 /* LuminareConstants.swift */; };
 		FE4C92172B61459F00FF79BE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4C92162B61459F00FF79BE /* String+Extension.swift */; };
-		FE5B3CA22AB0AC700038B6E4 /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */; };
+		FE5B3CA22AB0AC700038B6E4 /* FullPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B3CA12AB0AC700038B6E4 /* FullPopoverView.swift */; };
+		FE5B56E62D037EEF0077527C /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = FE5B56E52D037EEF0077527C /* Defaults */; };
+		FE5B56E82D037EEF0077527C /* DefaultsMacros in Frameworks */ = {isa = PBXBuildFile; productRef = FE5B56E72D037EEF0077527C /* DefaultsMacros */; };
+		FE5B56EC2D0386EC0077527C /* Defaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */; };
+		FE5B56F22D059B4F0077527C /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5B56F12D059B350077527C /* BackgroundView.swift */; };
 		FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE62A72F37800D3321F /* Tuneful.swift */; };
-		FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */; };
+		FE6BFCE92A72F37800D3321F /* HorizontalMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCE82A72F37800D3321F /* HorizontalMiniPlayerView.swift */; };
 		FE6BFCEB2A72F37900D3321F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE6BFCEA2A72F37900D3321F /* Assets.xcassets */; };
 		FE6BFCEE2A72F37900D3321F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE6BFCED2A72F37900D3321F /* Preview Assets.xcassets */; };
 		FE6BFCFB2A73A7CA00D3321F /* SupportedApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFCFA2A73A7CA00D3321F /* SupportedApps.swift */; };
@@ -57,29 +86,30 @@
 		FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE79554D2CA34BE6002026AA /* Logger+Extension.swift */; };
 		FE7B09D22CB997F600FBB6F8 /* AppIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */; };
 		FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */; };
+		FE81179B2D1851400038DC27 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE81179A2D18513B0038DC27 /* MiniPlayerView.swift */; };
 		FE8CE1542C1E03F30053FDEA /* CompactPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */; };
-		FE8CE1562C1E09C00053FDEA /* PopoverSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1552C1E09C00053FDEA /* PopoverSettingsView.swift */; };
 		FE8CE1582C1E0B140053FDEA /* PopoverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CE1572C1E0B140053FDEA /* PopoverType.swift */; };
 		FE9FCF212CAEC0290015DF4D /* PlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */; };
 		FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */; };
 		FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */; };
 		FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA6FB222B04169B00DACC43 /* AudioDevice.swift */; };
+		FEB21FB82D1AC71400849679 /* PopoverSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */; };
+		FEB21FBA2D1ACDCD00849679 /* IconUrlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB21FB92D1ACDCA00849679 /* IconUrlButton.swift */; };
+		FEBA35EA2D17566E0081A3F2 /* VerticalMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */; };
+		FEBA35EC2D1766790081A3F2 /* MiniPlayerScaleFactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */; };
 		FEBA3D022B5824D700E25A67 /* BackgroundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D012B5824D700E25A67 /* BackgroundType.swift */; };
 		FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA3D032B58303A00E25A67 /* View+Extension.swift */; };
 		FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */; };
 		FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */; };
-		FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */; };
 		FEE486E92B5D677400AB712F /* MiniPlayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE486E82B5D677400AB712F /* MiniPlayerType.swift */; };
 		FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */; };
 		FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FEF0660E2B51910700A514F2 /* KeyboardShortcuts */; };
 		FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */; };
 		FEF32F9B2CBD05FE0084BDAD /* TapAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF32F9A2CBD05F90084BDAD /* TapAnimationModifier.swift */; };
-		FEF32F9E2CBD49610084BDAD /* Luminare in Frameworks */ = {isa = PBXBuildFile; productRef = FEF32F9D2CBD49610084BDAD /* Luminare */; };
 		FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */; };
 		FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */; };
 		FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6B2AEFF3D600CE4981 /* NotificationView.swift */; };
 		FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */; };
-		FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = FEF53A742AF8010300CE4981 /* Sparkle */; };
 		FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE5482B488951000887B5 /* StatusBarItemManager.swift */; };
 		FEFFE54B2B4997BB000887B5 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54A2B4997BB000887B5 /* StatusBarIcon.swift */; };
 		FEFFE54D2B49EF97000887B5 /* MenuBarSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFFE54C2B49EF97000887B5 /* MenuBarSettingsView.swift */; };
@@ -105,6 +135,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindow.swift; sourceTree = "<group>"; };
+		FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchSettingsView.swift; sourceTree = "<group>"; };
+		FE08CE182CFCC76700F047CB /* MiniPlayerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerSettingsView.swift; sourceTree = "<group>"; };
 		FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedAlbumArt.swift; sourceTree = "<group>"; };
 		FE1A62F12CBC1B09001C13CE /* BlurModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurModifier.swift; sourceTree = "<group>"; };
 		FE1A62F22CBC1B09001C13CE /* DynamicNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNotch.swift; sourceTree = "<group>"; };
@@ -119,28 +152,52 @@
 		FE25549A2CA95F6E003DAB77 /* AddToFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFavoritesView.swift; sourceTree = "<group>"; };
 		FE25549F2CA9C4B9003DAB77 /* PlaybackButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackButtonsView.swift; sourceTree = "<group>"; };
 		FE2554A12CA9CA93003DAB77 /* HoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverButton.swift; sourceTree = "<group>"; };
+		FE26E5E92D206E990035CF65 /* TrackDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetailsView.swift; sourceTree = "<group>"; };
 		FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerWindow.swift; sourceTree = "<group>"; };
-		FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
 		FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSliderView.swift; sourceTree = "<group>"; };
 		FE2AEE332A8FE0F200E8D576 /* Settings+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+Extension.swift"; sourceTree = "<group>"; };
 		FE2AEE382A93A50900E8D576 /* PressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonStyle.swift; sourceTree = "<group>"; };
-		FE3189F72A7C3B1A006B2D59 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		FE3189F72A7C3B1A006B2D59 /* PermissionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionHelper.swift; sourceTree = "<group>"; };
 		FE3189F92A7C3B8C006B2D59 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
+		FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPositionView.swift; sourceTree = "<group>"; };
+		FE31AEDB2CFBCB71002818ED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FE37A0322A829623006FBA5B /* MusicControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControl.swift; sourceTree = "<group>"; };
 		FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButton.swift; sourceTree = "<group>"; };
 		FE4414B72AB4999600A73246 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		FE445FE02A969E8D001CA55A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FE445FE32A977D0E001CA55A /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
-		FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPlayerManager.swift; sourceTree = "<group>"; };
 		FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsView.swift; sourceTree = "<group>"; };
 		FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
-		FE4C92142B6143CC00FF79BE /* MarqueeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarqueeTextView.swift; sourceTree = "<group>"; };
+		FE4AA0372D214FFD00A1A480 /* PopoverHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverHolder.swift; sourceTree = "<group>"; };
+		FE4AA0382D214FFD00A1A480 /* PopoverPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverPanel.swift; sourceTree = "<group>"; };
+		FE4AA03A2D214FFD00A1A480 /* DividedVStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividedVStack.swift; sourceTree = "<group>"; };
+		FE4AA03B2D214FFD00A1A480 /* LuminareButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareButtonStyle.swift; sourceTree = "<group>"; };
+		FE4AA03C2D214FFD00A1A480 /* LuminareInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareInfoView.swift; sourceTree = "<group>"; };
+		FE4AA03D2D214FFD00A1A480 /* LuminareList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareList.swift; sourceTree = "<group>"; };
+		FE4AA03E2D214FFD00A1A480 /* LuminarePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminarePicker.swift; sourceTree = "<group>"; };
+		FE4AA03F2D214FFD00A1A480 /* LuminareSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareSection.swift; sourceTree = "<group>"; };
+		FE4AA0402D214FFD00A1A480 /* LuminareSliderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareSliderPicker.swift; sourceTree = "<group>"; };
+		FE4AA0412D214FFD00A1A480 /* LuminareTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareTextField.swift; sourceTree = "<group>"; };
+		FE4AA0422D214FFD00A1A480 /* LuminareToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareToggle.swift; sourceTree = "<group>"; };
+		FE4AA0432D214FFD00A1A480 /* LuminareValueAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareValueAdjuster.swift; sourceTree = "<group>"; };
+		FE4AA04F2D214FFD00A1A480 /* LuminareModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareModalView.swift; sourceTree = "<group>"; };
+		FE4AA0502D214FFD00A1A480 /* LuminareModalWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareModalWindow.swift; sourceTree = "<group>"; };
+		FE4AA0522D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareTrafficLightedWindow.swift; sourceTree = "<group>"; };
+		FE4AA0532D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareTrafficLightedWindowView.swift; sourceTree = "<group>"; };
+		FE4AA0552D214FFD00A1A480 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		FE4AA0562D214FFD00A1A480 /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
+		FE4AA0572D214FFD00A1A480 /* LuminareBackgroundEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareBackgroundEffect.swift; sourceTree = "<group>"; };
+		FE4AA0582D214FFD00A1A480 /* ScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenView.swift; sourceTree = "<group>"; };
+		FE4AA0592D214FFD00A1A480 /* StringFormatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatStyle.swift; sourceTree = "<group>"; };
+		FE4AA0802D21522700A1A480 /* LuminareConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminareConstants.swift; sourceTree = "<group>"; };
 		FE4C92162B61459F00FF79BE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
+		FE5B3CA12AB0AC700038B6E4 /* FullPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPopoverView.swift; sourceTree = "<group>"; };
+		FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Defaults+Extensions.swift"; sourceTree = "<group>"; };
+		FE5B56F12D059B350077527C /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		FE6BFCE32A72F37800D3321F /* Tuneful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tuneful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6BFCE62A72F37800D3321F /* Tuneful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuneful.swift; sourceTree = "<group>"; };
-		FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
+		FE6BFCE82A72F37800D3321F /* HorizontalMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMiniPlayerView.swift; sourceTree = "<group>"; };
 		FE6BFCEA2A72F37900D3321F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FE6BFCED2A72F37900D3321F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FE6BFCEF2A72F37900D3321F /* Tuneful.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tuneful.entitlements; sourceTree = "<group>"; };
@@ -157,8 +214,8 @@
 		FE79554D2CA34BE6002026AA /* Logger+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extension.swift"; sourceTree = "<group>"; };
 		FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcons.swift; sourceTree = "<group>"; };
 		FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumArtView.swift; sourceTree = "<group>"; };
+		FE81179A2D18513B0038DC27 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactPopoverView.swift; sourceTree = "<group>"; };
-		FE8CE1552C1E09C00053FDEA /* PopoverSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverSettingsView.swift; sourceTree = "<group>"; };
 		FE8CE1572C1E0B140053FDEA /* PopoverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverType.swift; sourceTree = "<group>"; };
 		FE9781822C0CC1A0007217A1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FE9781842C0CC1A0007217A1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -166,11 +223,14 @@
 		FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyManager.swift; sourceTree = "<group>"; };
 		FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicManager.swift; sourceTree = "<group>"; };
 		FEA6FB222B04169B00DACC43 /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
+		FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverSettingsView.swift; sourceTree = "<group>"; };
+		FEB21FB92D1ACDCA00849679 /* IconUrlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconUrlButton.swift; sourceTree = "<group>"; };
+		FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMiniPlayerView.swift; sourceTree = "<group>"; };
+		FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerScaleFactor.swift; sourceTree = "<group>"; };
 		FEBA3D012B5824D700E25A67 /* BackgroundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundType.swift; sourceTree = "<group>"; };
 		FEBA3D032B58303A00E25A67 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAppProvider.swift; sourceTree = "<group>"; };
 		FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMiniPlayerView.swift; sourceTree = "<group>"; };
-		FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerSettingsView.swift; sourceTree = "<group>"; };
 		FEE486E82B5D677400AB712F /* MiniPlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerType.swift; sourceTree = "<group>"; };
 		FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcutSettingsView.swift; sourceTree = "<group>"; };
 		FEF066102B51914900A514F2 /* KeyboardShortcuts+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardShortcuts+Extension.swift"; sourceTree = "<group>"; };
@@ -193,12 +253,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEF53A752AF8010300CE4981 /* Sparkle in Frameworks */,
-				FEF32F9E2CBD49610084BDAD /* Luminare in Frameworks */,
 				FEFFE5502B4AA04B000887B5 /* Settings in Frameworks */,
+				FE5B56E82D037EEF0077527C /* DefaultsMacros in Frameworks */,
 				FEF0660F2B51910700A514F2 /* KeyboardShortcuts in Frameworks */,
 				FE3F67FE2AAD02D100CCE841 /* LaunchAtLogin in Frameworks */,
 				FEF53A6A2AEEAC0D00CE4981 /* ISSoundAdditions in Frameworks */,
+				FE5B56E62D037EEF0077527C /* Defaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +270,6 @@
 			children = (
 				FEDD31192CBE4DA500653956 /* PlayerAppProvider.swift */,
 				FE9FCF202CAEC0260015DF4D /* PlayerProtocol.swift */,
-				FE478BFC2CB288350033D272 /* SystemPlayerManager.swift */,
 				FE9FCF242CAEC2740015DF4D /* AppleMusicManager.swift */,
 				FE9FCF222CAEC0C50015DF4D /* SpotifyManager.swift */,
 			);
@@ -234,9 +293,10 @@
 		FE25549D2CA9C471003DAB77 /* Playback */ = {
 			isa = PBXGroup;
 			children = (
+				FE26E5E92D206E990035CF65 /* TrackDetailsView.swift */,
 				FE25549F2CA9C4B9003DAB77 /* PlaybackButtonsView.swift */,
 				FE25549A2CA95F6E003DAB77 /* AddToFavoritesView.swift */,
-				FE2AEE2F2A8FC76500E8D576 /* PlaybackPositionView.swift */,
+				FE31AECF2CF50708002818ED /* PlaybackPositionView.swift */,
 				FE2AEE312A8FE08500E8D576 /* CustomSliderView.swift */,
 				FE7C5BD92AC050E000D1C253 /* AlbumArtView.swift */,
 				FEF53A632AEEA43600CE4981 /* VolumeControlView.swift */,
@@ -248,7 +308,6 @@
 			isa = PBXGroup;
 			children = (
 				FE7955462CA2C7A2002026AA /* AudioSpectrumView.swift */,
-				FE4C92142B6143CC00FF79BE /* MarqueeTextView.swift */,
 			);
 			path = MenuBar;
 			sourceTree = "<group>";
@@ -265,6 +324,9 @@
 		FE3189DB2A7B9D0B006B2D59 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FEB21FB92D1ACDCA00849679 /* IconUrlButton.swift */,
+				FE5B56F12D059B350077527C /* BackgroundView.swift */,
+				FE31AEDB2CFBCB71002818ED /* SettingsView.swift */,
 				FE2554A12CA9CA93003DAB77 /* HoverButton.swift */,
 				FE25549E2CA9C488003DAB77 /* MenuBar */,
 				FE25549D2CA9C471003DAB77 /* Playback */,
@@ -281,6 +343,7 @@
 		FE3189FB2A7C3CEC006B2D59 /* Windows */ = {
 			isa = PBXGroup;
 			children = (
+				FE08CE122CFC74DE00F047CB /* SettingsWindow.swift */,
 				FE3189FC2A7C3D01006B2D59 /* OnboardingWindow.swift */,
 				FE2AEE2D2A8FBE3200E8D576 /* MiniPlayerWindow.swift */,
 			);
@@ -294,6 +357,83 @@
 				FE37A0342A82982B006FBA5B /* PlayPauseButton.swift */,
 			);
 			path = Buttons;
+			sourceTree = "<group>";
+		};
+		FE4AA0392D214FFD00A1A480 /* Popover */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0372D214FFD00A1A480 /* PopoverHolder.swift */,
+				FE4AA0382D214FFD00A1A480 /* PopoverPanel.swift */,
+			);
+			path = Popover;
+			sourceTree = "<group>";
+		};
+		FE4AA0442D214FFD00A1A480 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0392D214FFD00A1A480 /* Popover */,
+				FE4AA03A2D214FFD00A1A480 /* DividedVStack.swift */,
+				FE4AA03B2D214FFD00A1A480 /* LuminareButtonStyle.swift */,
+				FE4AA03C2D214FFD00A1A480 /* LuminareInfoView.swift */,
+				FE4AA03D2D214FFD00A1A480 /* LuminareList.swift */,
+				FE4AA03E2D214FFD00A1A480 /* LuminarePicker.swift */,
+				FE4AA03F2D214FFD00A1A480 /* LuminareSection.swift */,
+				FE4AA0402D214FFD00A1A480 /* LuminareSliderPicker.swift */,
+				FE4AA0412D214FFD00A1A480 /* LuminareTextField.swift */,
+				FE4AA0422D214FFD00A1A480 /* LuminareToggle.swift */,
+				FE4AA0432D214FFD00A1A480 /* LuminareValueAdjuster.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		FE4AA0512D214FFD00A1A480 /* Modal Window */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA04F2D214FFD00A1A480 /* LuminareModalView.swift */,
+				FE4AA0502D214FFD00A1A480 /* LuminareModalWindow.swift */,
+			);
+			path = "Modal Window";
+			sourceTree = "<group>";
+		};
+		FE4AA0542D214FFD00A1A480 /* Modal Window - Traffic Lights */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0522D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift */,
+				FE4AA0532D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift */,
+			);
+			path = "Modal Window - Traffic Lights";
+			sourceTree = "<group>";
+		};
+		FE4AA05B2D214FFD00A1A480 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0802D21522700A1A480 /* LuminareConstants.swift */,
+				FE4AA0552D214FFD00A1A480 /* Color+Extensions.swift */,
+				FE4AA0562D214FFD00A1A480 /* EnvironmentValues.swift */,
+				FE4AA0572D214FFD00A1A480 /* LuminareBackgroundEffect.swift */,
+				FE4AA0582D214FFD00A1A480 /* ScreenView.swift */,
+				FE4AA0592D214FFD00A1A480 /* StringFormatStyle.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		FE4AA05C2D214FFD00A1A480 /* Luminare */ = {
+			isa = PBXGroup;
+			children = (
+				FE4AA0442D214FFD00A1A480 /* Components */,
+				FE4AA0512D214FFD00A1A480 /* Modal Window */,
+				FE4AA0542D214FFD00A1A480 /* Modal Window - Traffic Lights */,
+				FE4AA05B2D214FFD00A1A480 /* Utilities */,
+			);
+			path = Luminare;
+			sourceTree = "<group>";
+		};
+		FE5B56EB2D0386EC0077527C /* Defaults */ = {
+			isa = PBXGroup;
+			children = (
+				FE5B56EA2D0386EC0077527C /* Defaults+Extensions.swift */,
+			);
+			path = Defaults;
 			sourceTree = "<group>";
 		};
 		FE6BFCDA2A72F37800D3321F = {
@@ -316,6 +456,8 @@
 		FE6BFCE52A72F37800D3321F /* Tuneful */ = {
 			isa = PBXGroup;
 			children = (
+				FEB21FBB2D1AD66B00849679 /* Helpers */,
+				FE5B56EB2D0386EC0077527C /* Defaults */,
 				FEFFE5532B4FDDEA000887B5 /* Extensions */,
 				FEA6FB212B04168000DACC43 /* AudioDevices */,
 				FE6BFCE62A72F37800D3321F /* Tuneful.swift */,
@@ -324,7 +466,6 @@
 				FE37A0312A82960F006FBA5B /* Buttons */,
 				FE3189FB2A7C3CEC006B2D59 /* Windows */,
 				FE3189DB2A7B9D0B006B2D59 /* Views */,
-				FE6BFD042A73ACEE00D3321F /* Utilities */,
 				FE6BFCFF2A73AB5800D3321F /* ScriptingBridge */,
 				FE6BFCFC2A73A87600D3321F /* Managers */,
 				FE6BFCF92A73A7CA00D3321F /* Models */,
@@ -332,6 +473,7 @@
 				FE6BFCEF2A72F37900D3321F /* Tuneful.entitlements */,
 				FE6BFCEC2A72F37900D3321F /* Preview Content */,
 				FE1A62FA2CBC1B09001C13CE /* DynamicNotchKit */,
+				FE4AA05C2D214FFD00A1A480 /* Luminare */,
 			);
 			path = Tuneful;
 			sourceTree = "<group>";
@@ -347,6 +489,7 @@
 		FE6BFCF92A73A7CA00D3321F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FEBA35EB2D1766670081A3F2 /* MiniPlayerScaleFactor.swift */,
 				FE1A62EF2CBBE3ED001C13CE /* FetchedAlbumArt.swift */,
 				FEF53A6D2AEFF42300CE4981 /* AlertItem.swift */,
 				FE6BFCFA2A73A7CA00D3321F /* SupportedApps.swift */,
@@ -381,16 +524,6 @@
 			path = ScriptingBridge;
 			sourceTree = "<group>";
 		};
-		FE6BFD042A73ACEE00D3321F /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */,
-				FE6BFD052A73ACFD00D3321F /* Constants.swift */,
-				FE3189F72A7C3B1A006B2D59 /* Helper.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		FE6F65F62AB62AFB00CE4D96 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,7 +536,7 @@
 		FE8CE1522C1E03B10053FDEA /* Popover */ = {
 			isa = PBXGroup;
 			children = (
-				FE5B3CA12AB0AC700038B6E4 /* PopoverView.swift */,
+				FE5B3CA12AB0AC700038B6E4 /* FullPopoverView.swift */,
 				FE8CE1532C1E03F30053FDEA /* CompactPopoverView.swift */,
 			);
 			path = Popover;
@@ -417,10 +550,22 @@
 			path = AudioDevices;
 			sourceTree = "<group>";
 		};
+		FEB21FBB2D1AD66B00849679 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FE7B09D12CB997F300FBB6F8 /* AppIcons.swift */,
+				FE6BFD052A73ACFD00D3321F /* Constants.swift */,
+				FE3189F72A7C3B1A006B2D59 /* PermissionHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		FEE486E32B5D173A00AB712F /* MiniPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				FE6BFCE82A72F37800D3321F /* MiniPlayerView.swift */,
+				FE81179A2D18513B0038DC27 /* MiniPlayerView.swift */,
+				FE6BFCE82A72F37800D3321F /* HorizontalMiniPlayerView.swift */,
+				FEBA35E92D17566E0081A3F2 /* VerticalMiniPlayerView.swift */,
 				FEE486E42B5D174F00AB712F /* CompactMiniPlayerView.swift */,
 			);
 			path = MiniPlayer;
@@ -429,12 +574,13 @@
 		FEF0660A2B51905200A514F2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				FE08CE182CFCC76700F047CB /* MiniPlayerSettingsView.swift */,
+				FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */,
+				FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */,
 				FEFFE54C2B49EF97000887B5 /* MenuBarSettingsView.swift */,
 				FEF0660B2B51907200A514F2 /* KeyboardShortcutSettingsView.swift */,
 				FE4808F02B51BA400077BDAA /* AboutSettingsView.swift */,
 				FE4808F32B51C3870077BDAA /* GeneralSettingsView.swift */,
-				FEE486E62B5D51FB00AB712F /* MiniPlayerSettingsView.swift */,
-				FE8CE1552C1E09C00053FDEA /* PopoverSettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -480,10 +626,10 @@
 			packageProductDependencies = (
 				FE3F67FD2AAD02D100CCE841 /* LaunchAtLogin */,
 				FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */,
-				FEF53A742AF8010300CE4981 /* Sparkle */,
 				FEFFE54F2B4AA04B000887B5 /* Settings */,
 				FEF0660E2B51910700A514F2 /* KeyboardShortcuts */,
-				FEF32F9D2CBD49610084BDAD /* Luminare */,
+				FE5B56E52D037EEF0077527C /* Defaults */,
+				FE5B56E72D037EEF0077527C /* DefaultsMacros */,
 			);
 			productName = Tuneful;
 			productReference = FE6BFCE32A72F37800D3321F /* Tuneful.app */;
@@ -501,6 +647,7 @@
 				TargetAttributes = {
 					FE6BFCE22A72F37800D3321F = {
 						CreatedOnToolsVersion = 14.3.1;
+						LastSwiftMigration = 1610;
 					};
 				};
 			};
@@ -516,10 +663,9 @@
 			packageReferences = (
 				FE3F67FC2AAD02D100CCE841 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 				FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */,
-				FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */,
 				FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
-				FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */,
+				FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */,
 			);
 			productRefGroup = FE6BFCE42A72F37800D3321F /* Products */;
 			projectDirPath = "";
@@ -556,7 +702,8 @@
 				FE7B09D22CB997F600FBB6F8 /* AppIcons.swift in Sources */,
 				FEF0660C2B51907200A514F2 /* KeyboardShortcutSettingsView.swift in Sources */,
 				FEA6FB232B04169B00DACC43 /* AudioDevice.swift in Sources */,
-				FE3189F82A7C3B1A006B2D59 /* Helper.swift in Sources */,
+				FE08CE192CFCC76E00F047CB /* MiniPlayerSettingsView.swift in Sources */,
+				FE3189F82A7C3B1A006B2D59 /* PermissionHelper.swift in Sources */,
 				FE2368A02B62EB7400B43D8B /* ShowStatusBarTrackInfo.swift in Sources */,
 				FE2AEE392A93A50900E8D576 /* PressButtonStyle.swift in Sources */,
 				FEE486E52B5D174F00AB712F /* CompactMiniPlayerView.swift in Sources */,
@@ -565,8 +712,31 @@
 				FEF066112B51914900A514F2 /* KeyboardShortcuts+Extension.swift in Sources */,
 				FE1A62F02CBBE3F4001C13CE /* FetchedAlbumArt.swift in Sources */,
 				FE445FE42A977D0E001CA55A /* Double+Extension.swift in Sources */,
+				FEBA35EA2D17566E0081A3F2 /* VerticalMiniPlayerView.swift in Sources */,
 				FE37A0332A829623006FBA5B /* MusicControl.swift in Sources */,
 				FEF53A6E2AEFF42300CE4981 /* AlertItem.swift in Sources */,
+				FE5B56EC2D0386EC0077527C /* Defaults+Extensions.swift in Sources */,
+				FE4AA05D2D214FFD00A1A480 /* LuminareModalView.swift in Sources */,
+				FE4AA05F2D214FFD00A1A480 /* LuminareValueAdjuster.swift in Sources */,
+				FE4AA0602D214FFD00A1A480 /* ScreenView.swift in Sources */,
+				FE4AA0612D214FFD00A1A480 /* LuminareButtonStyle.swift in Sources */,
+				FE4AA0632D214FFD00A1A480 /* DividedVStack.swift in Sources */,
+				FE4AA0662D214FFD00A1A480 /* Color+Extensions.swift in Sources */,
+				FE4AA0672D214FFD00A1A480 /* LuminareToggle.swift in Sources */,
+				FE4AA0692D214FFD00A1A480 /* LuminareTrafficLightedWindow.swift in Sources */,
+				FE4AA06A2D214FFD00A1A480 /* LuminareModalWindow.swift in Sources */,
+				FE4AA06B2D214FFD00A1A480 /* PopoverHolder.swift in Sources */,
+				FE4AA06C2D214FFD00A1A480 /* LuminareSection.swift in Sources */,
+				FE4AA06D2D214FFD00A1A480 /* StringFormatStyle.swift in Sources */,
+				FE4AA06E2D214FFD00A1A480 /* LuminareList.swift in Sources */,
+				FE4AA06F2D214FFD00A1A480 /* LuminareSliderPicker.swift in Sources */,
+				FE4AA0712D214FFD00A1A480 /* LuminareBackgroundEffect.swift in Sources */,
+				FE4AA0722D214FFD00A1A480 /* EnvironmentValues.swift in Sources */,
+				FE4AA0752D214FFD00A1A480 /* PopoverPanel.swift in Sources */,
+				FE4AA0762D214FFD00A1A480 /* LuminareTextField.swift in Sources */,
+				FE4AA0772D214FFD00A1A480 /* LuminarePicker.swift in Sources */,
+				FE4AA0792D214FFD00A1A480 /* LuminareInfoView.swift in Sources */,
+				FE4AA07D2D214FFD00A1A480 /* LuminareTrafficLightedWindowView.swift in Sources */,
 				FE1A62FB2CBC1B09001C13CE /* DynamicNotch.swift in Sources */,
 				FE1A62FC2CBC1B09001C13CE /* NSScreen+Extensions.swift in Sources */,
 				FE1A62FD2CBC1B09001C13CE /* DynamicNotchInfo.swift in Sources */,
@@ -577,49 +747,55 @@
 				FE1A63022CBC1B09001C13CE /* BlurModifier.swift in Sources */,
 				FE1A63032CBC1B09001C13CE /* NotchlessView.swift in Sources */,
 				FE7955492CA2C9E8002026AA /* NSBezierPath+Extension.swift in Sources */,
-				FE8CE1562C1E09C00053FDEA /* PopoverSettingsView.swift in Sources */,
 				FE9FCF252CAEC2780015DF4D /* AppleMusicManager.swift in Sources */,
-				FE5B3CA22AB0AC700038B6E4 /* PopoverView.swift in Sources */,
+				FE5B3CA22AB0AC700038B6E4 /* FullPopoverView.swift in Sources */,
 				FE6BFD0C2A73B2D400D3321F /* NSImage+Extension.swift in Sources */,
 				FE6BFD022A73AB9A00D3321F /* MusicApplication.swift in Sources */,
-				FE2AEE302A8FC76500E8D576 /* PlaybackPositionView.swift in Sources */,
 				FEBA3D042B58303A00E25A67 /* View+Extension.swift in Sources */,
+				FEBA35EC2D1766790081A3F2 /* MiniPlayerScaleFactor.swift in Sources */,
 				FE6BFD032A73AB9A00D3321F /* SpotifyApplication.swift in Sources */,
+				FE26E5EA2D206E9F0035CF65 /* TrackDetailsView.swift in Sources */,
+				FE31AEDC2CFBCB76002818ED /* SettingsView.swift in Sources */,
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,
 				FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */,
-				FEE486E72B5D51FB00AB712F /* MiniPlayerSettingsView.swift in Sources */,
 				FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */,
 				FEFFE5592B4FE00D000887B5 /* NSError+Extension.swift in Sources */,
 				FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */,
-				FE478BFD2CB288430033D272 /* SystemPlayerManager.swift in Sources */,
 				FE8CE1582C1E0B140053FDEA /* PopoverType.swift in Sources */,
 				FEFFE55D2B4FE051000887B5 /* Comparable+Extension.swift in Sources */,
 				FE6BFCFE2A73A89600D3321F /* PlayerManager.swift in Sources */,
 				FE6BFD082A73AE5E00D3321F /* Track.swift in Sources */,
 				FE2AEE2E2A8FBE3200E8D576 /* MiniPlayerWindow.swift in Sources */,
 				FE4C92172B61459F00FF79BE /* String+Extension.swift in Sources */,
-				FE6BFCE92A72F37800D3321F /* MiniPlayerView.swift in Sources */,
+				FE6BFCE92A72F37800D3321F /* HorizontalMiniPlayerView.swift in Sources */,
+				FE5B56F22D059B4F0077527C /* BackgroundView.swift in Sources */,
 				FEFFE5492B488951000887B5 /* StatusBarItemManager.swift in Sources */,
 				FE2AEE322A8FE08500E8D576 /* CustomSliderView.swift in Sources */,
+				FE08CE132CFC74E200F047CB /* SettingsWindow.swift in Sources */,
 				FE2554A22CA9CA93003DAB77 /* HoverButton.swift in Sources */,
-				FE4C92152B6143CC00FF79BE /* MarqueeTextView.swift in Sources */,
 				FE4808F12B51BA400077BDAA /* AboutSettingsView.swift in Sources */,
 				FEE486E92B5D677400AB712F /* MiniPlayerType.swift in Sources */,
 				FE7C5BDA2AC050E000D1C253 /* AlbumArtView.swift in Sources */,
+				FE81179B2D1851400038DC27 /* MiniPlayerView.swift in Sources */,
 				FEFFE5552B4FDF96000887B5 /* CGFloat+Extension.swift in Sources */,
 				FE6BFD0A2A73B23700D3321F /* UserDefaults+Extension.swift in Sources */,
 				FE6BFD062A73ACFD00D3321F /* Constants.swift in Sources */,
 				FEFFE55B2B4FE028000887B5 /* DateComponentsFormatter+Extension.swift in Sources */,
 				FEF53A642AEEA43600CE4981 /* VolumeControlView.swift in Sources */,
+				FEB21FBA2D1ACDCD00849679 /* IconUrlButton.swift in Sources */,
 				FE9FCF232CAEC0C90015DF4D /* SpotifyManager.swift in Sources */,
+				FE31AED02CF50708002818ED /* PlaybackPositionView.swift in Sources */,
 				FE25549B2CA95F87003DAB77 /* AddToFavoritesView.swift in Sources */,
 				FE3189FA2A7C3B8C006B2D59 /* OnboardingView.swift in Sources */,
 				FE8CE1542C1E03F30053FDEA /* CompactPopoverView.swift in Sources */,
+				FEB21FB82D1AC71400849679 /* PopoverSettingsView.swift in Sources */,
 				FE2AEE342A8FE0F200E8D576 /* Settings+Extension.swift in Sources */,
 				FE4808F42B51C3870077BDAA /* GeneralSettingsView.swift in Sources */,
+				FE4AA0812D21522B00A1A480 /* LuminareConstants.swift in Sources */,
 				FE1F7E952B89E92A00B702AD /* StatusBarPlaybackManager.swift in Sources */,
 				FE6BFCFB2A73A7CA00D3321F /* SupportedApps.swift in Sources */,
 				FE6BFCE72A72F37800D3321F /* Tuneful.swift in Sources */,
+				FE08CE172CFCC53500F047CB /* NotchSettingsView.swift in Sources */,
 				FEF53A6C2AEFF3D600CE4981 /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -750,13 +926,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tuneful/Tuneful.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.9.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Tuneful/Preview Content\"";
 				DEVELOPMENT_TEAM = RM399ZL5B5;
@@ -774,8 +950,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.9.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Martin-Fekete.Tuneful";
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.martinfekete.tuneful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -787,13 +963,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Tuneful/Tuneful.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0.9.0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Tuneful/Preview Content\"";
 				DEVELOPMENT_TEAM = RM399ZL5B5;
@@ -811,8 +987,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.9.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Martin-Fekete.Tuneful";
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.martinfekete.tuneful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -852,6 +1028,14 @@
 				kind = branch;
 			};
 		};
+		FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
@@ -860,28 +1044,12 @@
 				minimumVersion = 1.16.1;
 			};
 		};
-		FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MrKai77/Luminare";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jbrinkman/ISSoundAdditions";
 			requirement = {
 				branch = master;
 				kind = branch;
-			};
-		};
-		FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.1;
 			};
 		};
 		FEFFE54E2B4AA04B000887B5 /* XCRemoteSwiftPackageReference "Settings" */ = {
@@ -900,25 +1068,25 @@
 			package = FE3F67FC2AAD02D100CCE841 /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
 			productName = LaunchAtLogin;
 		};
+		FE5B56E52D037EEF0077527C /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+		FE5B56E72D037EEF0077527C /* DefaultsMacros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FE5B56E42D037EEF0077527C /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = DefaultsMacros;
+		};
 		FEF0660E2B51910700A514F2 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FEF0660D2B51910700A514F2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
 		};
-		FEF32F9D2CBD49610084BDAD /* Luminare */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FEF32F9C2CBD49610084BDAD /* XCRemoteSwiftPackageReference "Luminare" */;
-			productName = Luminare;
-		};
 		FEF53A692AEEAC0D00CE4981 /* ISSoundAdditions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FEF53A682AEEAC0D00CE4981 /* XCRemoteSwiftPackageReference "ISSoundAdditions" */;
 			productName = ISSoundAdditions;
-		};
-		FEF53A742AF8010300CE4981 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FEF53A732AF8010300CE4981 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		FEFFE54F2B4AA04B000887B5 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;

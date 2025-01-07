@@ -9,12 +9,14 @@ import Foundation
 import SwiftUI
 
 struct Track: Equatable {
-    var title = ""
-    var artist = ""
-    var album = ""
-    var albumArt = NSImage()
+    var title: String = ""
+    var artist: String = ""
+    var album: String = ""
+    var albumArt: Image = Image(.defaultAlbumart)
+    var nsAlbumArt: NSImage = NSImage()
+    var avgAlbumColor: Color = .gray
     var duration: CGFloat = 0.0
-    var isLoved = false
+    var isLoved: Bool = false
     var isPodcast: Bool { self.duration > Constants.podcastThresholdDurationSec }
     
     static func == (lhs: Track, rhs: Track) -> Bool {

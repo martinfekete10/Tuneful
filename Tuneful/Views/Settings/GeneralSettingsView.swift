@@ -8,34 +8,19 @@
 import SwiftUI
 import Settings
 import LaunchAtLogin
-import Luminare
+import Defaults
 
 struct GeneralSettingsView: View {
-    @AppStorage("connectedApp") private var connectedAppAppStorage = ConnectedApps.appleMusic
-    @AppStorage("showSongNotification") private var showSongNotificationAppStorage = true
-    @AppStorage("notificationDuration") private var notificationDurationAppStorage = 2.0
+    @Default(.connectedApp) private var connectedApp
     
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
     @State private var showingAlert = false
-    @State private var connectedApp: ConnectedApps
-    @State private var showSongNotification: Bool
-    @State private var notificationDuration: Double
-    
-    init() {
-        @AppStorage("connectedApp") var connectedAppAppStorage = ConnectedApps.appleMusic
-        @AppStorage("showSongNotification") var showSongNotificationAppStorage = true
-        @AppStorage("notificationDuration") var notificationDurationAppStorage = 2.0
-        
-        self.connectedApp = connectedAppAppStorage
-        self.showSongNotification = showSongNotificationAppStorage
-        self.notificationDuration = notificationDurationAppStorage
-    }
     
     var body: some View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
-                LuminareSection("General") {
+                LuminareSection {
                     LuminareToggle(
                         "Launch at login",
                         isOn: Binding(
@@ -50,23 +35,34 @@ struct GeneralSettingsView: View {
                             
                             Spacer()
                             
-                            Picker("", selection: $connectedApp) {
-                                ForEach(ConnectedApps.allCases.filter { $0.isInstalled }, id: \.self) { value in
-                                    Text(value.localizedName)
-                                        .tag(value)
+                            HStack {
+                                ForEach(ConnectedApps.allCases, id: \.rawValue) { app in
+                                    LuminareSection() {
+                                        Button(action: { connectedApp = app }) {
+                                            app.getIcon
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 50, height: 50)
+                                        }
+                                        .disabled(!app.selectable)
+                                        .buttonStyle(PlainButtonStyle())
+                                        .frame(width: 50, height: 50)
+                                    }
+                                    .if(connectedApp == app) { button in
+                                        button.overlay(
+                                            RoundedRectangle(cornerRadius: 15)
+                                                .stroke(.secondary, lineWidth: 2)
+                                        )
+                                    }
                                 }
                             }
                             .frame(width: 150)
-                            .onChange(of: connectedApp) { _ in
-                                self.connectedAppAppStorage = connectedApp
-                            }
-                            .pickerStyle(.menu)
                             
                             Button {
-                                let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                                let consent = PermissionHelper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
                                 switch consent {
                                 case .closed:
-                                    alertTitle = Text("\(Text(connectedApp.localizedName)) is not open")
+                                    alertTitle = Text("\(Text(connectedApp.localizedName)) is not opened")
                                     alertMessage = Text("Please open \(Text(connectedApp.localizedName)) to enable permissions")
                                 case .granted:
                                     alertTitle = Text("Permission granted for \(Text(connectedApp.localizedName))")
@@ -88,28 +84,31 @@ struct GeneralSettingsView: View {
                         }
                         .padding(8)
                         
-                        if !ConnectedApps.spotify.isInstalled {
-                            Text("Apple Music is the only avaiable music app as Spotify was not found")
+                        if !ConnectedApps.spotify.selectable {
+                            Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                                 .padding(.bottom, 4)
                         }
                     }
                 }
-                    
-                LuminareSection("Notifications") {
-                    LuminareToggle("Show notification on song change", isOn: $showSongNotificationAppStorage)
-                    
-                    LuminareSliderPicker(
-                        "Notification duration",
-                        Array(stride(from: 0.5, through: 5.0, by: 0.5)),
-                        selection: $notificationDurationAppStorage
-                    ) { value in
-                        LocalizedStringKey("\(value, specifier: "%.1f") s")
+                
+                Button(action: {
+                    NSApplication.shared.sendAction(#selector(AppDelegate.quit), to: nil, from: nil)
+                }) {
+                    HStack(spacing: 5) {
+                        Image(systemName: "power")
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(.secondary)
+                            .frame(width: 15, height: 16)
+                        
+                        Text("Quit")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
-                    .disabled(!self.showSongNotificationAppStorage)
                 }
-                .padding(.top, 10)
+                .buttonStyle(LuminareCompactButtonStyle())
             }
         }
     }

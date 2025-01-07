@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Defaults
 
-enum ShowStatusBarTrackInfo: String, Equatable, CaseIterable {
+enum ShowStatusBarTrackInfo: String, Equatable, CaseIterable, Defaults.Serializable {
     
     case always = "Always"
     case whenPlaying = "When playing"

@@ -8,135 +8,105 @@
 import SwiftUI
 
 struct CustomSliderView: View {
-    
     @Environment(\.isEnabled) var isEnabled
 
     @Binding var value: CGFloat
     @Binding var isDragging: Bool
     
     @State var lastOffset: CGFloat = 0
+    @State var sliderHeight: CGFloat = 7
     
     let range: ClosedRange<CGFloat>
-    let knobDiameter: CGFloat
-    let knobColor: Color
-    let knobScaleEffectMagnitude: CGFloat
-    let leadingRectangleColor: Color
+    let leadingRectangleColor: Color = .playbackPositionLeadingRectangle
 
-    /// Called when the drag gesture ends.
+    // Called when the drag gesture ends.
     let onEndedDragging: ((DragGesture.Value) -> Void)?
-
-    let sliderHeight: CGFloat = 5
-
-    let knobAnimation: Animation?
-    let knobTransition = AnyTransition.scale
     
     init(
         value: Binding<CGFloat>,
         isDragging: Binding<Bool>,
         range: ClosedRange<CGFloat>,
-        knobDiameter: CGFloat,
-        knobColor: Color,
-        knobScaleEffectMagnitude: CGFloat = 1,
-        knobAnimation: Animation? = nil,
-        leadingRectangleColor: Color,
+        sliderHeight: CGFloat = 7,
         onEndedDragging: ((DragGesture.Value) -> Void)? = nil
     ) {
         self._value = value
         self._isDragging = isDragging
         self.range = range
-        self.knobDiameter = knobDiameter
-        self.knobColor = knobColor
-        self.knobScaleEffectMagnitude = knobScaleEffectMagnitude
-        self.knobAnimation = knobAnimation
-        self.leadingRectangleColor = leadingRectangleColor
+        self.sliderHeight = sliderHeight
         self.onEndedDragging = onEndedDragging
     }
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                HStack(spacing: 0) {
-                    // MARK: Leading Rectangle
-                    Capsule()
-                        .fill(leadingRectangleColor)
-                        .opacity(isEnabled ? 1 : 0.25)
-                        .frame(
-                            width: leadingRectangleWidth(geometry),
-                            height: sliderHeight
-                        )
-                    // MARK: Trailing Rectangle
-                    Capsule()
-                        .fill(Color.primary.opacity(0.25))
-                        .opacity(isEnabled ? 1 : 0.25)
-                        .frame(height: sliderHeight)
-                }
-                HStack(spacing: 0) {
-                    // MARK: Knob
-                    Circle()
-                        .fill(isEnabled ? knobColor : .gray)
-                        .frame(width: knobDiameter)
-                        .scaleEffect(isDragging ? knobScaleEffectMagnitude : 1)
-                        .shadow(radius: 5)
-                        .transition(knobTransition)
-                        .offset(x: knobOffset(geometry))
-                        .gesture(knobDragGesture(geometry))
-                    Spacer()
-                }
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(Color.primary.opacity(0.85))
+                    .opacity(isEnabled ? 1 : 0.25)
+                    .frame(height: sliderHeight)
+                    .cornerRadius(5)
+                    .mask(alignment: .leading) {
+                        Rectangle()
+                            .fill(leadingRectangleColor)
+                            .frame(
+                                width: leadingRectangleWidth(geometry),
+                                height: sliderHeight
+                            )
+                    }
+                
+                Rectangle()
+                    .fill(Color.primary.opacity(0.25))
+                    .opacity(isEnabled ? 1 : 0.25)
+                    .frame(height: sliderHeight)
+                    .cornerRadius(5)
             }
             .contentShape(Rectangle())
             .gesture(knobPositionDragGesture(geometry))
         }
-        .frame(height: knobDiameter + 2)
-        .padding(.horizontal, 5)
+        .frame(height: sliderHeight)
+        .onHover() { hovering in
+            withAnimation(Animation.timingCurve(0.16, 1, 0.3, 1, duration: 0.7)) {
+                if hovering {
+                    sliderHeight += 3
+                } else {
+                    sliderHeight -= 3
+                }
+            }
+        }
     }
     
     func knobOffset(_ geometry: GeometryProxy) -> CGFloat {
-        let maxKnobOffset = geometry.size.width - self.knobDiameter
+        let maxKnobOffset = geometry.size.width// - self.knobDiameter
         let result = max(0, self.value.map(from: self.range, to: 0...maxKnobOffset))
         return result
     }
     
     func leadingRectangleWidth(_ geometry: GeometryProxy) -> CGFloat {
-        let result = max(0, knobOffset(geometry) + knobDiameter / 2)
+        let result = max(0, knobOffset(geometry)/* + knobDiameter / 2*/)
         return result
     }
     
     func knobDragGesture(_ geometry: GeometryProxy) -> some Gesture {
         return DragGesture(minimumDistance: 0)
             .onChanged { dragValue in
-
-                if let animation = self.knobAnimation {
-                    withAnimation(animation) {
-                        self.isDragging = true
-                    }
-                }
-                else {
-                    self.isDragging = true
-                }
+                self.isDragging = true
                 
                 if abs(dragValue.translation.width) < 0.1 {
                     self.lastOffset = knobOffset(geometry)
                 }
                 
                 let knobOffsetMin: CGFloat = 0
-                let knobOffsetMax = geometry.size.width - self.knobDiameter
+                let knobOffsetMax = geometry.size.width
                 let knobOffsetRange = knobOffsetMin...knobOffsetMax
                 let offset = self.lastOffset + dragValue.translation.width
                 let knobOffset = offset.clamped(to: knobOffsetRange)
+                
                 self.value = knobOffset.map(
                     from: knobOffsetRange,
                     to: self.range
                 )
             }
             .onEnded { dragValue in
-                if let animation = self.knobAnimation {
-                    withAnimation(animation) {
-                        self.isDragging = false
-                    }
-                }
-                else {
-                    self.isDragging = false
-                }
+                self.isDragging = false
                 self.onEndedDragging?(dragValue)
             }
     }
@@ -144,36 +114,21 @@ struct CustomSliderView: View {
     func knobPositionDragGesture(_ geometry: GeometryProxy) -> some Gesture {
         return DragGesture(minimumDistance: 0)
             .onChanged { dragValue in
-                
-                if let animation = self.knobAnimation {
-                    withAnimation(animation) {
-                        self.isDragging = true
-                    }
-                }
-                else {
-                    self.isDragging = true
-                }
+                self.isDragging = true
 
-                let knobOffsetMin = knobDiameter / 2
-                let knobOffsetMax = geometry.size.width - knobDiameter / 2
-                let knobOffsetRange = knobOffsetMin...knobOffsetMax
+                let knobOffsetMax = geometry.size.width
+                let knobOffsetRange = 0...knobOffsetMax
                 let knobOffset = dragValue.location.x.clamped(
                     to: knobOffsetRange
                 )
-                self.value = knobOffset.map(
-                    from: knobOffsetRange,
-                    to: self.range
-                )
+                
+                    self.value = knobOffset.map(
+                        from: knobOffsetRange,
+                        to: self.range
+                    )
             }
             .onEnded { dragValue in
-                if let animation = self.knobAnimation {
-                    withAnimation(animation) {
-                        self.isDragging = false
-                    }
-                }
-                else {
-                    self.isDragging = false
-                }
+                self.isDragging = false
                 self.onEndedDragging?(dragValue)
             }
     }

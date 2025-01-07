@@ -10,6 +10,7 @@ import Combine
 import Foundation
 import AppKit
 import ScriptingBridge
+import SwiftUICore
 
 class AppleMusicManager: PlayerProtocol {
     var app: MusicApplication = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)!
@@ -23,7 +24,6 @@ class AppleMusicManager: PlayerProtocol {
     
     public var playerPosition: Double? { app.playerPosition }
     public var isPlaying: Bool { app.playerState == .playing }
-    public var isRunning: Bool { app.isRunning }
     public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) }
     public var isLikeAuthorized: Bool = true
     public var shuffleIsOn: Bool { app.shuffleEnabled ?? false }
@@ -35,24 +35,16 @@ class AppleMusicManager: PlayerProtocol {
         self.notificationSubject = notificationSubject
     }
     
-    func refreshInfo(completion: @escaping () -> Void) {
-        DispatchQueue.main.async() {
-            completion()
-        }
-    }
-    
-    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
-        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
-        
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt?) -> Void) {
         guard let art = app.currentTrack?.artworks?()[0] as? MusicArtwork else {
-            completion(defaultRestult)
+            completion(nil)
             return
         }
         
         if let image = art.data, !image.isEmpty() {
-            completion(FetchedAlbumArt(image: image, isAlbumArt: true))
+            completion(FetchedAlbumArt(image: Image(nsImage: image), nsImage: image))
         } else {
-            completion(defaultRestult)
+            completion(nil)
             return
         }
     }
@@ -62,6 +54,7 @@ class AppleMusicManager: PlayerProtocol {
         track.title = app.currentTrack?.name ?? "Unknown Title"
         track.artist = app.currentTrack?.artist ?? "Unknown Artist"
         track.album = app.currentTrack?.album ?? "Unknown Album"
+        track.isLoved = getIsLoved()
         track.duration = CGFloat(app.currentTrack?.duration ?? 0)
         return track
     }
@@ -71,7 +64,7 @@ class AppleMusicManager: PlayerProtocol {
     }
     
     func previousTrack() {
-        app.previousTrack?()
+        app.backTrack?()
     }
     
     func nextTrack() {
@@ -119,5 +112,23 @@ class AppleMusicManager: PlayerProtocol {
     
     func setVolume(volume: Int) {
         app.setSoundVolume?(volume)
+    }
+    
+    func isRunning() -> Bool {
+        let workspace = NSWorkspace.shared
+        
+        return workspace.runningApplications.contains { app in
+            app.bundleIdentifier == self.bundleId
+        }
+    }
+    
+    private func getIsLoved() -> Bool {
+        if let isLovedTrack = app.currentTrack?.loved {
+            return isLovedTrack
+        } else if let isLovedTrack = app.currentTrack?.favorited {
+            return isLovedTrack
+        } else {
+            return false
+        }
     }
 }

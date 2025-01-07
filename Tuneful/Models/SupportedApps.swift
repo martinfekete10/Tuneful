@@ -7,22 +7,29 @@
 
 import Foundation
 import SwiftUI
+import Defaults
 
-enum ConnectedApps: String, Equatable, CaseIterable {
-    case spotify = "Spotify"
+enum ConnectedApps: String, Equatable, CaseIterable, LuminarePickerData, Defaults.Serializable {
     case appleMusic = "Apple Music"
-//    case system = "System player"
+    case spotify = "Spotify"
     
     var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
     
-    var isInstalled: Bool {
+    var selectable: Bool {
         switch self {
         case .spotify:
-            print(FileManager.default.fileExists(atPath: "/Applications/Spotify.app"))
             return FileManager.default.fileExists(atPath: "/Applications/Spotify.app")
         case .appleMusic:
-            print(FileManager.default.fileExists(atPath: "/System/Applications/Music.app"))
             return FileManager.default.fileExists(atPath: "/System/Applications/Music.app")
+        }
+    }
+    
+    var getIcon: Image {
+        switch self {
+        case .spotify:
+             return Image(.spotifyIcon)
+        case .appleMusic:
+            return Image(.appleMusicIcon)
         }
     }
 }

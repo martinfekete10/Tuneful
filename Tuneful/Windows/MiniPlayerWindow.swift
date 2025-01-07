@@ -7,27 +7,20 @@
 
 import SwiftUI
 import AppKit
+import Defaults
 
 class MiniPlayerWindow: NSWindow {
-    
-    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
-    @AppStorage("windowPosition") var savedPosition: String = "10,0"
-    
     init() {
-        let userDefaults = UserDefaults.standard
-        let position = NSPoint.fromString(
-            userDefaults.string(forKey: "windowPosition") ?? "10,10"
-        ) ?? NSPoint(x: 10, y: 10)
-        
         super.init(
-            contentRect: NSRect(x: position.x, y: position.y, width: 300, height: 145),
-            styleMask: [.borderless],
+            contentRect: .zero,
+            styleMask: [.fullSizeContentView, .borderless, .utilityWindow, .nonactivatingPanel],
             backing: .buffered,
-            defer: false
+            defer: true
         )
         
+        self.isOpaque = false
         self.isMovableByWindowBackground = true
-        self.level = .floating
+        self.level = Defaults[.miniPlayerWindowOnTop] ? .floating : .normal
         self.collectionBehavior = [.canJoinAllSpaces, .fullScreenNone]
         self.isReleasedWhenClosed = false
         self.backgroundColor = NSColor.clear
@@ -41,52 +34,119 @@ class MiniPlayerWindow: NSWindow {
         )
     }
     
+    override var canBecomeKey: Bool {
+        return true
+    }
+    
     override func rightMouseDown(with event: NSEvent) {
         let menu = NSMenu()
         
         menu.addItem(withTitle: "Hide window", action: #selector(hideWindow(_:)), keyEquivalent: "")
 
-        let customizeMenuItem = NSMenuItem(title: "Window style", action: nil, keyEquivalent: "")
-        let customizeMenu = NSMenu()
-        customizeMenu
-            .addItem(withTitle: "Full", action: #selector(setFullPlayer(_:)), keyEquivalent: "")
-            .state = self.miniPlayerType == .full ? .on : .off
-        customizeMenu
-            .addItem(withTitle: "Minimal", action: #selector(setAlbumArtPlayer(_:)), keyEquivalent: "")
-            .state = self.miniPlayerType == .minimal ? .on : .off
-        customizeMenuItem.submenu = customizeMenu
+        let windowStyleMenuItem = NSMenuItem(title: "Window style", action: nil, keyEquivalent: "")
+        let windowMenu = NSMenu()
+        windowMenu
+            .addItem(withTitle: "Minimal", action: #selector(setCompactMiniPlayer(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerType] == .minimal ? .on : .off
+        windowMenu
+            .addItem(withTitle: "Horizontal", action: #selector(setHorizontalMiniPlayer(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerType] == .horizontal ? .on : .off
+        windowMenu
+            .addItem(withTitle: "Vertical", action: #selector(setVerticalMiniPlayer(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerType] == .vertical ? .on : .off
+        windowStyleMenuItem.submenu = windowMenu
+        menu.addItem(windowStyleMenuItem)
         
-        menu.addItem(customizeMenuItem)
+        let backgroundStyleMenuItem = NSMenuItem(title: "Background", action: nil, keyEquivalent: "")
+        let backgroundMenu = NSMenu()
+        backgroundMenu
+            .addItem(withTitle: "Tint", action: #selector(setTintBg(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerBackground] == .glow ? .on : .off
+        backgroundMenu
+            .addItem(withTitle: "Transparent", action: #selector(setTransparentBg(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerBackground] == .transparent ? .on : .off
+        backgroundMenu
+            .addItem(withTitle: "Album art", action: #selector(setAlbumArtBg(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerBackground] == .albumArt ? .on : .off
+        backgroundStyleMenuItem.submenu = backgroundMenu
+        menu.addItem(backgroundStyleMenuItem)
+        
+        let sizeMenuItem = NSMenuItem(title: "Size", action: nil, keyEquivalent: "")
+        let sizeMenu = NSMenu()
+        sizeMenu
+            .addItem(withTitle: "Small", action: #selector(setSmallWindow(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerScaleFactor] == .small ? .on : .off
+        sizeMenu
+            .addItem(withTitle: "Regular", action: #selector(setRegularWindow(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerScaleFactor] == .regular ? .on : .off
+        sizeMenu
+            .addItem(withTitle: "Large", action: #selector(setLargeWindow(_:)), keyEquivalent: "")
+            .state = Defaults[.miniPlayerScaleFactor] == .large ? .on : .off
+        sizeMenuItem.submenu = sizeMenu
+        menu.addItem(sizeMenuItem)
+        
+        menu.addItem(.separator())
+        
         menu.addItem(withTitle: "Settings...", action: #selector(settings(_:)), keyEquivalent: "")
+        
+        menu.addItem(.separator())
+        
+        menu.addItem(withTitle: "Quit", action: #selector(quit(_:)), keyEquivalent: "")
 
         NSMenu.popUpContextMenu(menu, with: event, for: self.contentView!)
     }
+
+    @objc func setHorizontalMiniPlayer(_ sender: Any) {
+        Defaults[.miniPlayerType] = .horizontal
+    }
+
+    @objc func setCompactMiniPlayer(_ sender: Any) {
+        Defaults[.miniPlayerType] = .minimal
+    }
     
-    override var canBecomeKey: Bool {
-        return true
+    @objc func setVerticalMiniPlayer(_ sender: Any) {
+        Defaults[.miniPlayerType] = .vertical
+    }
+    
+    @objc func setTintBg(_ sender: Any) {
+        Defaults[.miniPlayerBackground] = .glow
     }
 
-    @objc func setFullPlayer(_ sender: Any) {
-        miniPlayerType = .full
-        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
+    @objc func setAlbumArtBg(_ sender: Any) {
+        Defaults[.miniPlayerBackground] = .albumArt
+    }
+    
+    @objc func setTransparentBg(_ sender: Any) {
+        Defaults[.miniPlayerBackground] = .transparent
+    }
+    
+    @objc func setSmallWindow(_ sender: Any) {
+        Defaults[.miniPlayerScaleFactor] = .small
     }
 
-    @objc func setAlbumArtPlayer(_ sender: Any) {
-        miniPlayerType = .minimal
-        NSApplication.shared.sendAction(#selector(AppDelegate.setupMiniPlayer), to: nil, from: nil)
+    @objc func setRegularWindow(_ sender: Any) {
+        Defaults[.miniPlayerScaleFactor] = .regular
+    }
+    
+    @objc func setLargeWindow(_ sender: Any) {
+        Defaults[.miniPlayerScaleFactor] = .large
     }
     
     @objc func hideWindow(_ sender: Any?) {
-        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayer), to: nil, from: nil)
+        NSApplication.shared.sendAction(#selector(AppDelegate.toggleMiniPlayerAndPlayerMenuItem), to: nil, from: nil)
     }
     
     @objc func settings(_ sender: Any?) {
-        NSApplication.shared.sendAction(#selector(AppDelegate.openMiniPlayerAppearanceSettings), to: nil, from: nil)
+        NSApplication.shared.sendAction(#selector(AppDelegate.openSettings), to: nil, from: nil)
+    }
+    
+    @objc func quit(_ sender: Any?) {
+        NSApplication.shared.sendAction(#selector(AppDelegate.quit), to: nil, from: nil)
     }
     
     @objc func windowDidMove(_ notification: Notification) {
         let position = self.frame.origin
-        savedPosition = "\(position.x),\(position.y)"
+        Defaults[.windowPosition] = "\(position.x),\(position.y)"
     }
     
     deinit {

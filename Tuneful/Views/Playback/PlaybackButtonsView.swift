@@ -17,7 +17,7 @@ struct PlaybackButtonsView: View {
     var body: some View {
         HStack(spacing: spacing) {
             if !hideShuffleAndRepeat {
-                HoverButton(icon: "shuffle", iconSize: playButtonSize * 0.6) {
+                HoverButton(icon: "shuffle", iconSize: playButtonSize * 0.75) {
                     playerManager.setShuffle()
                 }
                 .font(playerManager.shuffleIsOn ? Font.title.weight(.black) : Font.title.weight(.ultraLight))
@@ -48,7 +48,7 @@ struct PlaybackButtonsView: View {
             }
 
             if !hideShuffleAndRepeat {
-                HoverButton(icon: "repeat", iconSize: playButtonSize * 0.6) {
+                HoverButton(icon: "repeat", iconSize: playButtonSize * 0.75) {
                     playerManager.setRepeat()
                 }
                 .font(playerManager.repeatIsOn ? Font.title.weight(.bold) : Font.title.weight(.light))

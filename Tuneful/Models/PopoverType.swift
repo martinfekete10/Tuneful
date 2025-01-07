@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
+import Defaults
 
-enum PopoverType: String, Equatable, CaseIterable {
-    
+enum PopoverType: String, Equatable, CaseIterable, Defaults.Serializable {
     case full = "Full"
     case minimal = "Minimal"
     

@@ -8,15 +8,14 @@
 import SwiftUI
 import ScriptingBridge
 import KeyboardShortcuts
+import Defaults
 
 struct OnboardingView: View {
-    
     private enum Steps {
-      case onAppPicker, onDetails, onShortcuts
+      case onAppPicker, onDetails, allDone
     }
     
-    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
-    
+    @Default(.viewedOnboarding) private var viewedOnboarding
     @State private var step: Steps = .onAppPicker
     @State private var finishedAlert = false
     
@@ -24,59 +23,63 @@ struct OnboardingView: View {
         VStack(alignment: .center) {
                 VStack {
                     VStack {
-                        Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                        
+                        HStack {
+                            Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                            
+                            if step == .onAppPicker {
+                                Text("Preferred music app")
+                                    .font(.largeTitle)
+                                    .fontWeight(.semibold)
+                            } else if step == .onDetails {
+                                Text("Permissions")
+                                    .font(.largeTitle)
+                                    .fontWeight(.semibold)
+                            } else if step == .allDone {
+                                Text("All done!")
+                                    .font(.largeTitle)
+                                    .fontWeight(.semibold)
+                            } else {
+                                EmptyView()
+                            }
+                        }
+                        .padding(.bottom, 10)
+                    }
+                    
+                    HStack {
                         if step == .onAppPicker {
-                            Text("1. Preferred Music App")
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                            AppPicker()
                         } else if step == .onDetails {
-                            Text("2. Permissions")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                        } else if step == .onShortcuts {
-                            Text("3. Global Keyboard Shortcuts")
-                                .font(.title2)
-                                .fontWeight(.semibold)
+                            Details(finishedAlert: $finishedAlert)
+                        } else if step == .allDone {
+                            AllDone()
                         } else {
                             EmptyView()
                         }
                     }
-                    .padding(.bottom, 10)
-                    
-                    if step == .onAppPicker {
-                        AppPicker()
-                    } else if step == .onDetails {
-                        Details(finishedAlert: $finishedAlert)
-                    } else if step == .onShortcuts {
-                        Shortcuts()
-                    } else {
-                        EmptyView()
-                    }
+                    .frame(width: 300, height: 150)
                 }
                 .frame(width: 400, height: 250)
-                .padding(.horizontal, 30)
-                .animation(.spring(), value: step)
-                
-                Divider()
-                    .frame(width: 250)
+                .animation(Constants.mainAnimation, value: step)
                 
                 HStack {
                     if step == .onDetails {
                         Button("Back") {
                             step = .onAppPicker
                         }
-                    } else if step == .onShortcuts {
+                        .buttonStyle(LuminareCompactButtonStyle())
+                    } else if step == .allDone {
                         Button("Back") {
                             step = .onDetails
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                     } else {
                         Button("Back") {
                             step = .onAppPicker
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                         .disabled(step == .onAppPicker)
                     }
                     
@@ -84,77 +87,97 @@ struct OnboardingView: View {
                         Button("Continue") {
                             step = .onDetails
                         }
-                        .keyboardShortcut(.defaultAction)
+                        .buttonStyle(LuminareCompactButtonStyle())
                     } else if step == .onDetails {
                         Button("Continue") {
-                            step = .onShortcuts
+                            step = .allDone
                         }
-                        .keyboardShortcut(.defaultAction)
+                        .buttonStyle(LuminareCompactButtonStyle())
                         .disabled(!finishedAlert)
                     } else {
                         Button("Finish") {
-                            self.viewedShortcutsSetup = true
+                            self.viewedOnboarding = true
                             NSApplication.shared.sendAction(#selector(AppDelegate.finishOnboarding), to: nil, from: nil)
                         }
+                        .buttonStyle(LuminareCompactButtonStyle())
                     }
                 }
-                .frame(width: 150, height: 50)
+                .frame(width: 300, height: 40)
             }
             .frame(width: 600, height: 500)
+            .background(
+                VisualEffectView(material: .popover, blendingMode: .behindWindow)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .strokeBorder(.quaternary, lineWidth: 1)
+            }
     }
 }
 
 struct AppPicker: View {
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
+    @Default(.connectedApp) private var connectedApp
     
     var body: some View {
         VStack(spacing: 10) {
-            Picker("", selection: $connectedApp) {
-                ForEach(ConnectedApps.allCases.filter { $0.isInstalled }, id: \.self) { value in
-                    Text(value.localizedName)
-                        .tag(value)
+            HStack {
+                ForEach(ConnectedApps.allCases, id: \.rawValue) { app in
+                    LuminareSection() {
+                        Button(action: {
+                            connectedApp = app
+                        }) {
+                            app.getIcon
+                                .resizable()
+                                .frame(width: 70, height: 70)
+                                .aspectRatio(1, contentMode: .fit)
+                        }
+                        .disabled(!app.selectable)
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(width: 80, height: 80)
+                    }
+                    .if(connectedApp == app) { button in
+                        button.overlay(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(.secondary, lineWidth: 2)
+                        )
+                    }
                 }
             }
-            .pickerStyle(.menu)
             
-            if !ConnectedApps.spotify.isInstalled {
-                Text("Apple Music is the only avaiable music app as Spotify was not found")
+            if !ConnectedApps.spotify.selectable {
+                Text("Apple Music is the only avaiable music app as Spotify was not found. It should be located at the top level of Applications folder.")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
         }
-        .frame(width: 250)
     }
 }
 
 struct Details: View {
-    
-    @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
+    @Default(.connectedApp) private var connectedApp
+    @Default(.viewedOnboarding) private var viewedOnboarding
     
     @Binding var finishedAlert: Bool
-    
     @State private var alertTitle = Text("Title")
     @State private var alertMessage = Text("Message")
     @State private var showAlert = false
     @State private var success = false
     
-    private var name: Text {
+    private var appName: Text {
         Text(connectedApp.localizedName)
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text("""
-                 Tuneful requires permission to control \(name) and display music data.
+                 Tuneful requires permission to control \(appName) and display music data.
                  
-                 Open \(name) and click 'Enable permissions' below and select OK in the alert that is presented.
+                 Open \(appName) and click 'Enable permissions' below and select OK in the alert that is presented.
              """)
-            .font(.caption)
             .multilineTextAlignment(.center)
             
             Button("Enable permissions") {
-                let consent = Helper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
+                let consent = PermissionHelper.promptUserForConsent(for: connectedApp == .spotify ? Constants.Spotify.bundleID : Constants.AppleMusic.bundleID)
                 switch consent {
                 case .granted:
                     alertTitle = Text("You are all set up!")
@@ -163,13 +186,13 @@ struct Details: View {
                     showAlert = true
                     viewedOnboarding = true
                 case .closed:
-                    alertTitle = Text("\(name) is not open")
-                    alertMessage = Text("Please open \(name) to enable permissions")
+                    alertTitle = Text("\(appName) is not opened")
+                    alertMessage = Text("Please open \(appName) to enable permissions")
                     showAlert = true
                     success = false
                 case .denied:
                     alertTitle = Text("Permission denied")
-                    alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(name) under Tuneful")
+                    alertMessage = Text("Please go to System Settings > Privacy & Security > Automation, and check \(appName) under Tuneful")
                     showAlert = true
                     success = false
                 case .notPrompted:
@@ -187,28 +210,13 @@ struct Details: View {
     }
 }
 
-struct Shortcuts: View {
+struct AllDone: View {
     var body: some View {
         VStack {
-            VStack(alignment: .center, content: {
-                Form {
-                    KeyboardShortcuts.Recorder("Play/pause:", name: .playPause)
-                    KeyboardShortcuts.Recorder("Next track:", name: .nextTrack)
-                    KeyboardShortcuts.Recorder("Previous track:", name: .previousTrack)
-                    KeyboardShortcuts.Recorder("Show/hide mini player:", name: .showMiniPlayer)
-                    KeyboardShortcuts.Recorder("Switch music player:", name: .changeMusicPlayer)
-                    KeyboardShortcuts.Recorder("Show/hide menu bar player:", name: .toggleMenuBarItemVisibility)
-                    KeyboardShortcuts.Recorder("Show/hide popover:", name: .togglePopover)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                
-                Text("You can always change these later")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .padding(.top, 5)
-            })
-            .padding(.horizontal, 50)
+            Text("""
+                 To fully customize Tuneful, right-click Tuneful icon in menu bar and go to Settings.
+             """)
+            .multilineTextAlignment(.center)
         }
-        .padding(.bottom, 90)
     }
 }

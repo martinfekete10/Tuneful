@@ -7,16 +7,8 @@
 
 import SwiftUI
 import Settings
-import Luminare
-import Sparkle
 
 struct AboutSettingsView: View {
-    private let updateController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
-
     var body: some View {
         Settings.Container(contentWidth: 400) {
             Settings.Section(title: "") {
@@ -34,23 +26,25 @@ struct AboutSettingsView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            Button("Check for updates...") {
-                                updateController.checkForUpdates(nil)
-                            }
-                            .buttonStyle(LuminareCompactButtonStyle())
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
                         
-                        Divider()
-                        
                         HStack {
-                            Link("♡ Support", destination: URL(string: "https://ko-fi.com/martinfekete")!)
-                                .buttonStyle(LuminareCompactButtonStyle())
-                            Link("GitHub", destination: URL(string: "https://github.com/martinfekete10/Tuneful")!)
-                                .buttonStyle(LuminareCompactButtonStyle())
-                            Link("Website", destination: URL(string: "https://martinfekete.com/Tuneful")!)
-                                .buttonStyle(LuminareCompactButtonStyle())
+                            IconUrlButton(
+                                buttonText: "Support",
+                                url: "https://ko-fi.com/martinfekete",
+                                image: .heart
+                            )
+                            IconUrlButton(
+                                buttonText: "GitHub",
+                                url: "https://github.com/martinfekete10/Tuneful",
+                                image: .github
+                            )
+                            IconUrlButton(
+                                buttonText: "Website",
+                                url: "https://tuneful.dev",
+                                image: .globe
+                            )
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)

@@ -5,46 +5,43 @@
 //  Created by Martin Fekete on 27/07/2023.
 //
 
+import os
 import SwiftUI
-import Sparkle
 import KeyboardShortcuts
 import Settings
+import Combine
+import Defaults
+
+@main
+struct Tuneful: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    var body: some Scene {
+        Settings {
+        }
+    }
+}
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
-    @AppStorage("popoverType") var popoverType: PopoverType = .full
-    @AppStorage("miniPlayerType") var miniPlayerType: MiniPlayerType = .minimal
-    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
-    @AppStorage("viewedOnboarding") var viewedOnboarding: Bool = false
-    @AppStorage("popoverIsEnabled") var popoverIsEnabled: Bool = true
-    @AppStorage("viewedShortcutsSetup") var viewedShortcutsSetup: Bool = false
-    @AppStorage("miniPlayerWindowOnTop") var miniPlayerWindowOnTop: Bool = true
-    @AppStorage("hideMenuBarItemWhenNotPlaying") var hideMenuBarItemWhenNotPlaying: Bool = false
-    @AppStorage("connectedApp") var connectedApp = ConnectedApps.appleMusic
-    
     // Windows
     private var onboardingWindow: OnboardingWindow!
-    private var miniPlayerWindow: MiniPlayerWindow = MiniPlayerWindow()
+    private var miniPlayerWindow: MiniPlayerWindow!
     
     // Popover
     private var popover: NSPopover!
-    static let popoverWidth: CGFloat = 210
     
     // Status bar
     private var statusBarItem: NSStatusItem!
-    public var statusBarMenu: NSMenu!
+    private var statusBarMenu: NSMenu!
     
     // Managers
     private var playerManager: PlayerManager!
     private var statusBarItemManager: StatusBarItemManager!
     private var statusBarPlaybackManager: StatusBarPlaybackManager!
     
-    private let updateController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
+    // MARK: Settings
+    private var settingsWindow = LuminareTrafficLightedWindow<SettingsView>(view: { SettingsView() })
     
-    // Settings
     let GeneralSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .general,
@@ -52,19 +49,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             toolbarIcon: NSImage(systemSymbolName: "switch.2", accessibilityDescription: "General settings")!
         ) {
             GeneralSettingsView()
-                .accentColor(.accentColor)
-        }
-        
-        return Settings.PaneHostingController(pane: paneView)
-    }
-    
-    let PopoverSettingsViewController: () -> SettingsPane = {
-        let paneView = Settings.Pane(
-            identifier: .popover,
-            title: "Popover",
-            toolbarIcon: NSImage(systemSymbolName: "rectangle.portrait", accessibilityDescription: "Popover settings")!
-        ) {
-            PopoverSettingsView()
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -82,6 +66,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
+    let PopoverSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .popover,
+            title: "Popover",
+            toolbarIcon: NSImage(systemSymbolName: "square", accessibilityDescription: "Popover settings")!
+        ) {
+            PopoverSettingsView()
+        }
+        
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
     let MiniPlayerSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .miniPlayer,
@@ -89,6 +85,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             toolbarIcon: NSImage(systemSymbolName: "play.rectangle.on.rectangle.fill", accessibilityDescription: "Mini player settings")!
         ) {
             MiniPlayerSettingsView()
+        }
+        
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
+    let NotchSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .notch,
+            title: "Notch",
+            toolbarIcon: NSImage(systemSymbolName: "button.roundedbottom.horizontal", accessibilityDescription: "Notch settings")!
+        ) {
+            NotchSettingsView()
         }
         
         return Settings.PaneHostingController(pane: paneView)
@@ -119,24 +127,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
-        
+//#if DEBUG
 //        if let bundleID = Bundle.main.bundleIdentifier {
 //            UserDefaults.standard.removePersistentDomain(forName: bundleID)
 //        }
+//#endif
         
         self.playerManager = PlayerManager()
-        self.statusBarItemManager = StatusBarItemManager()
-        self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.updateStatusBarItem),
-            name: NSNotification.Name("UpdateMenuBarItem"),
-            object: nil
-        )
-        
-        if !viewedOnboarding {
+        if !Defaults[.viewedOnboarding] {
             self.showOnboarding()
         } else {
             self.mainSetup()
@@ -144,26 +143,39 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     private func mainSetup() {
+        self.statusBarItemManager = StatusBarItemManager(playerManager: playerManager)
+        self.statusBarPlaybackManager = StatusBarPlaybackManager(playerManager: playerManager)
+        self.miniPlayerWindow = MiniPlayerWindow()
+        
+        self.settingsWindow.isReleasedWhenClosed = false
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.updateStatusBarItem),
+            name: NSNotification.Name("UpdateMenuBarItem"),
+            object: nil
+        )
+        
         self.setupPopover()
         self.setupMiniPlayer()
         self.setupMenuBar()
         self.updateStatusBarItem(nil)
         self.setupKeyboardShortcuts()
+        self.setupNotch()
     }
     
     // MARK: Music player
     
     private func changeMusicPlayer() {
-        if !ConnectedApps.spotify.isInstalled {
+        if !ConnectedApps.spotify.selectable {
             return
         }
         
-        // TODO: System player
-        switch connectedApp {
+        switch Defaults[.connectedApp] {
         case .spotify:
-            self.connectedApp = .appleMusic
+            Defaults[.connectedApp] = .appleMusic
         case .appleMusic:
-            self.connectedApp = .spotify
+            Defaults[.connectedApp] = .spotify
         }
     }
     
@@ -183,7 +195,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         
         KeyboardShortcuts.onKeyUp(for: .showMiniPlayer) {
-            self.toggleMiniPlayer()
+            Defaults[.showPlayerWindow] = !Defaults[.showPlayerWindow]
         }
         
         KeyboardShortcuts.onKeyUp(for: .changeMusicPlayer) {
@@ -196,6 +208,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         KeyboardShortcuts.onKeyUp(for: .togglePopover) {
             self.handlePopover(self.statusBarItem.button)
+        }
+        KeyboardShortcuts.onKeyUp(for: .openSettings) {
+            self.openSettings(self)
+        }
+        KeyboardShortcuts.onKeyUp(for: .likeSong) {
+            self.playerManager.toggleLoveTrack()
         }
     }
     
@@ -215,10 +233,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusBarMenu.addItem(
             withTitle: "Show mini player",
-            action: #selector(showHideMiniPlayer),
+            action: #selector(toggleMiniPlayerAndPlayerMenuItem),
             keyEquivalent: ""
         )
-        .state = showPlayerWindow ? .on : .off
+        .state = Defaults[.showPlayerWindow] ? .on : .off
         
         statusBarMenu.addItem(.separator())
         
@@ -228,20 +246,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             keyEquivalent: ""
         )
         
-        
-        let updates = NSMenuItem(
-            title: "Check for updates...",
-            action: #selector(updateController.updater.checkForUpdates),
-            keyEquivalent: ""
-        )
-        updates.target = updateController.updater
-        statusBarMenu.addItem(updates)
-        
         statusBarMenu.addItem(.separator())
         
         statusBarMenu.addItem(
             withTitle: "Quit",
-            action: #selector(NSApplication.terminate),
+            action: #selector(quit),
             keyEquivalent: ""
         )
         
@@ -263,20 +272,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    @objc func toggleMiniPlayer() {
-        self.showHideMiniPlayer(self.statusBarMenu.item(withTitle: "Show mini player")!)
+    @objc func toggleMiniPlayerAndPlayerMenuItem() {
+        toggleMiniPlayer()
+        toggleMiniPlayerMenuItem()
     }
     
-    @IBAction func showHideMiniPlayer(_ sender: NSMenuItem) {
-        if sender.state == .on {
-            sender.state = .off
-            self.showPlayerWindow = false
-            self.playerManager.timerStopSignal.send()
-            self.miniPlayerWindow.close()
+    @objc func toggleMiniPlayer() {
+        Defaults[.showPlayerWindow] = !Defaults[.showPlayerWindow]
+    }
+    
+    @objc func toggleMiniPlayerMenuItem() {
+        let item = statusBarMenu.item(withTitle: "Show mini player")!
+        if !Defaults[.showPlayerWindow] {
+            item.state = .off
         } else {
-            sender.state = .on
-            self.showPlayerWindow = true
-            self.setupMiniPlayer()
+            item.state = .on
         }
     }
     
@@ -297,7 +307,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Status bar item title
     
     @objc func updateStatusBarItem(_ notification: NSNotification?) {
-        guard viewedOnboarding else { return }
+        guard Defaults[.viewedOnboarding] else { return }
         
         var playerAppIsRunning = playerManager.isRunning
         if notification?.userInfo?["PlayerAppIsRunning"] != nil {
@@ -322,7 +332,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     @objc func toggleMenuBarItemVisibility() {
-        if hideMenuBarItemWhenNotPlaying && (!playerManager.isRunning || !playerManager.isPlaying) {
+        if Defaults[.hideMenuBarItemWhenNotPlaying] && (!playerManager.isRunning || !playerManager.isPlaying) {
             self.statusBarItem.isVisible = false
         } else {
             self.statusBarItem.isVisible = true
@@ -341,22 +351,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Popover
         
     @objc func setupPopover() {
-        let frameSize: NSSize
         let rootView: AnyView
-        let popoverWidth = 210
-        let popoverHeigth = 310
+        let frameSize: NSSize
         
-        switch popoverType {
+        switch Defaults[.popoverType] {
         case .full:
-            frameSize = NSSize(width: popoverWidth, height: popoverHeigth)
-            rootView = AnyView(PopoverView().environmentObject(self.playerManager))
+            frameSize = NSSize(width: Constants.popoverWidth, height: Constants.fullPopoverHeight)
+            rootView = AnyView(FullPopoverView().environmentObject(self.playerManager))
         case .minimal:
-            frameSize = NSSize(width: popoverWidth, height: popoverHeigth)
+            frameSize = NSSize(width: Constants.popoverWidth, height: Constants.compactPopoverHeight)
             rootView = AnyView(CompactPopoverView().environmentObject(self.playerManager))
         }
         
         let hostedContentView = NSHostingView(rootView: rootView)
-        hostedContentView.frame = NSRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
         
         popover = NSPopover()
         popover.contentSize = frameSize
@@ -364,13 +371,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popover.animates = true
         popover.contentViewController = NSViewController()
         popover.contentViewController?.view = hostedContentView
-        popover.contentViewController?.view.window?.makeKey()
         
         playerManager.popoverIsShown = popover.isShown
     }
     
     @objc func handlePopover(_ sender: NSStatusBarButton?) {
-        if self.popoverIsEnabled {
+        if Defaults[.popoverIsEnabled] {
             self.togglePopover(sender)
         } else {
             self.playerManager.openMusicApp()
@@ -391,61 +397,35 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: Mini player
     
     @objc func setupMiniPlayer() {
-        let windowPosition = miniPlayerWindow.frame.origin
+        let rootView = MiniPlayerView().environmentObject(playerManager)
+        miniPlayerWindow.contentView = NSHostingView(rootView: rootView)
         
-        switch miniPlayerType {
-        case .full:
-            setupMiniPlayerWindow(
-                size: NSSize(width: 300, height: 145),
-                position: windowPosition,
-                view: MiniPlayerView()
-            )
-        case .minimal:
-            setupMiniPlayerWindow(
-                size: NSSize(width: 145, height: 145),
-                position: windowPosition,
-                view: CompactMiniPlayerView()
-            )
-        }
-        
-        miniPlayerWindow.makeKeyAndOrderFront(nil)
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        
-        playerManager.timerStartSignal.send()
-        
-        if !showPlayerWindow {
-            playerManager.timerStopSignal.send()
-            miniPlayerWindow.close()
+        // This is ugly but we can't correctly set the frame as window is not fully loaded
+        // Running this one sec later should ensure we have the window fully loaded -> correctly placed
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let position = NSPoint.fromString(Defaults[.windowPosition]) ?? NSPoint(x: 10, y: 10)
+            self.miniPlayerWindow.setFrameOrigin(position)
+            self.miniPlayerWindow.contentView?.layer?.cornerRadius = 12.5
+            self.miniPlayerWindow.contentView?.layer?.masksToBounds = true
+            self.miniPlayerWindow.makeKeyAndOrderFront(nil)
+            NSApplication.shared.activate(ignoringOtherApps: true)
         }
     }
     
     @objc func toggleMiniPlayerWindowLevel() {
-        if self.miniPlayerWindowOnTop {
+        if Defaults[.miniPlayerWindowOnTop] {
             self.miniPlayerWindow.level = .floating
         } else {
             self.miniPlayerWindow.level = .normal
         }
     }
+
+    // MARK: New settings
     
-    private func setupMiniPlayerWindow<Content: View>(size: NSSize, position: CGPoint, view: Content) {
-        DispatchQueue.main.async {
-            // Calculate new position that maintains the same vertical alignment
-            let currentFrame = self.miniPlayerWindow.frame
-            let newPosition = NSPoint(
-                x: position.x,
-                y: position.y + (currentFrame.height - size.height) // Adjust Y position to maintain top alignment
-            )
-            
-            self.miniPlayerWindow.setFrame(
-                NSRect(origin: newPosition, size: size),
-                display: true,
-                animate: true
-            )
-        }
-        
-        let rootView = view.cornerRadius(15).environmentObject(self.playerManager)
-        let hostedOnboardingView = NSHostingView(rootView: rootView)
-        miniPlayerWindow.contentView = hostedOnboardingView
+    @objc func openNewSettings() {
+        settingsWindow.orderFrontRegardless()
+        settingsWindow.makeKeyAndOrderFront(nil)
+        NSApplication.shared.activate(ignoringOtherApps: true)
     }
     
     // MARK: Settings
@@ -454,9 +434,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         SettingsWindowController(
             panes: [
                 GeneralSettingsViewController(),
-                MenuBarSettingsViewController(),
                 PopoverSettingsViewController(),
                 MiniPlayerSettingsViewController(),
+                MenuBarSettingsViewController(),
+                NotchSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
                 AboutSettingsViewController()
             ],
@@ -466,28 +447,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ).show()
     }
     
-    @objc func openMiniPlayerAppearanceSettings(_ sender: AnyObject) {
-        SettingsWindowController(
-            panes: [
-                GeneralSettingsViewController(),
-                MenuBarSettingsViewController(),
-                PopoverSettingsViewController(),
-                MiniPlayerSettingsViewController(),
-                KeyboardShortcutsSettingsViewController(),
-                AboutSettingsViewController()
-            ],
-            style: .toolbarItems,
-            animated: true,
-            hidesToolbarForSingleItem: true
-        ).show(pane: .miniPlayer)
-    }
-    
     // MARK: Setup
     
     public func showOnboarding() {
         if onboardingWindow == nil {
             onboardingWindow = OnboardingWindow()
-            let rootView = OnboardingView()
+            let rootView = OnboardingView().cornerRadius(12.5)
             let hostedOnboardingView = NSHostingView(rootView: rootView)
             onboardingWindow.contentView = hostedOnboardingView
         }
@@ -501,15 +466,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         onboardingWindow.close()
         self.mainSetup()
     }
-}
-
-@main
-struct Tuneful: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    var body: some Scene {
-        Settings {
-            EmptyView()
+    // MARK: Notch
+    
+    private func setupNotch() {
+        let notchEnabled = Defaults[.notchEnabled]
+        if !notchEnabled {
+            hideNotch()
         }
+    }
+    
+    @objc func showNotch() {
+        playerManager.initializeNotch()
+    }
+    
+    @objc func hideNotch() {
+        playerManager.deinitializeNotch()
+    }
+    
+    // MARK: Misc
+    
+    @objc func quit() {
+        NSApplication.shared.terminate(self)
     }
 }

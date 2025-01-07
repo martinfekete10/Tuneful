@@ -11,20 +11,24 @@ import SwiftUI
 // MARK: - DynamicNotch
 
 public class DynamicNotch<Content>: ObservableObject where Content: View {
-
     public var windowController: NSWindowController? // Make public in case user wants to modify the NSPanel
+    
+    // Player manager
+    @Published var playerManager: PlayerManager
 
     // Content Properties
     @Published var content: () -> Content
     @Published var contentID: UUID
     @Published var isVisible: Bool = false // Used to animate the fading in/out of the user's view
+    @Published var isNotificationVisible: Bool = false // Used to animate the fading in/out of the user's view
 
     // Notch Size
     @Published var notchWidth: CGFloat = 0
     @Published var notchHeight: CGFloat = 0
 
     // Notch Closing Properties
-    @Published var isMouseInside: Bool = false // If the mouse is inside, the notch will not auto-hide
+    @Published var isMouseInside: Bool = false
+    
     private var timer: Timer?
     var workItem: DispatchWorkItem?
     private var subscription: AnyCancellable?
@@ -51,10 +55,11 @@ public class DynamicNotch<Content>: ObservableObject where Content: View {
     /// - Parameters:
     ///   - content: A SwiftUI View
     ///   - style: The popover's style. If unspecified, the style will be automatically set according to the screen.
-    public init(contentID: UUID = .init(), style: DynamicNotch.Style = .auto, @ViewBuilder content: @escaping () -> Content) {
+    public init(contentID: UUID = .init(), style: DynamicNotch.Style = .auto, playerManager: PlayerManager, @ViewBuilder content: @escaping () -> Content) {
         self.contentID = contentID
         self.content = content
         self.notchStyle = style
+        self.playerManager = playerManager
         self.subscription = NotificationCenter.default
             .publisher(for: NSApplication.didChangeScreenParametersNotification)
             .sink { [weak self] _ in
@@ -67,11 +72,28 @@ public class DynamicNotch<Content>: ObservableObject where Content: View {
 // MARK: - Public
 
 public extension DynamicNotch {
+    
+    func updateNotchWidth(isPlaying: Bool) {
+        withAnimation(self.animation) {
+            if isPlaying {
+                self.refreshNotchSize(NSScreen.screens[0])
+                self.notchWidth += 90
+            } else {
+                self.refreshNotchSize(NSScreen.screens[0])
+            }
+        }
+    }
 
     /// Set this DynamicNotch's content.
     /// - Parameter content: A SwiftUI View
     func setContent(contentID: UUID = .init(), content: @escaping () -> Content) {
         self.content = content
+        self.contentID = .init()
+    }
+    
+    /// Set this DynamicNotch's content.
+    /// - Parameter content: A SwiftUI View
+    func refreshContent(contentID: UUID = .init()) {
         self.contentID = .init()
     }
 
@@ -100,6 +122,7 @@ public extension DynamicNotch {
         DispatchQueue.main.async {
             withAnimation(self.animation) {
                 self.isVisible = true
+                self.isNotificationVisible = true
             }
         }
 
@@ -114,7 +137,7 @@ public extension DynamicNotch {
         guard isVisible else { return }
 
         guard !isMouseInside else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.hide()
             }
             return
@@ -122,13 +145,7 @@ public extension DynamicNotch {
 
         withAnimation(animation) {
             self.isVisible = false
-        }
-
-        timer = Timer.scheduledTimer(
-            withTimeInterval: maxAnimationDuration,
-            repeats: false
-        ) { _ in
-            self.deinitializeWindow()
+            self.isNotificationVisible = false
         }
     }
 
@@ -184,25 +201,40 @@ extension DynamicNotch {
 
         let view: NSView = {
             switch notchStyle {
-            case .notch: NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white))
-            case .floating: NSHostingView(rootView: NotchlessView(dynamicNotch: self))
-            case .auto: screen.hasNotch ? NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white)) : NSHostingView(rootView: NotchlessView(dynamicNotch: self))
+            case .notch:
+                NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white))
+            case .floating:
+                NSHostingView(rootView: NotchlessView(dynamicNotch: self))
+            case .auto:
+                screen.hasNotch
+                    ? NSHostingView(rootView: NotchView(dynamicNotch: self).foregroundStyle(.white))
+                    : NSHostingView(rootView: NotchlessView(dynamicNotch: self))
             }
         }()
 
         let panel = NSPanel(
             contentRect: .zero,
-            styleMask: [.borderless, .nonactivatingPanel],
+            styleMask: [.fullSizeContentView, .borderless, .utilityWindow, .nonactivatingPanel],
             backing: .buffered,
             defer: true
         )
-        panel.hasShadow = false
+        panel.isMovable = false
+        panel.isOpaque = false
+        panel.titleVisibility = .hidden
+        panel.titlebarAppearsTransparent = true
         panel.backgroundColor = .clear
-        panel.level = .screenSaver
-        panel.collectionBehavior = .canJoinAllSpaces
         panel.contentView = view
         panel.orderFrontRegardless()
         panel.setFrame(screen.frame, display: false)
+        panel.hasShadow = false
+        panel.isReleasedWhenClosed = false
+        panel.level = .mainMenu + 3
+        panel.collectionBehavior = [
+            .fullScreenAuxiliary,
+            .stationary,
+            .canJoinAllSpaces,
+            .ignoresCycle,
+        ]
 
         windowController = .init(window: panel)
     }

@@ -9,6 +9,7 @@ import os
 import Combine
 import Foundation
 import AppKit
+import SwiftUI
 import ScriptingBridge
 
 class SpotifyManager: PlayerProtocol {
@@ -23,7 +24,6 @@ class SpotifyManager: PlayerProtocol {
     
     public var playerPosition: Double? { app.playerPosition }
     public var isPlaying: Bool { app.playerState == .playing }
-    public var isRunning: Bool { app.isRunning }
     public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) }
     public var isLikeAuthorized: Bool = false
     public var shuffleIsOn: Bool { app.shuffling ?? false }
@@ -35,12 +35,6 @@ class SpotifyManager: PlayerProtocol {
         self.notificationSubject = notificationSubject
     }
     
-    func refreshInfo(completion: @escaping () -> Void) {
-        DispatchQueue.main.async() {
-            completion()
-        }
-    }
-    
     func getTrackInfo() -> Track {
         var track = Track()
         track.title = app.currentTrack?.name ?? "Unknown Title"
@@ -50,17 +44,16 @@ class SpotifyManager: PlayerProtocol {
         return track
     }
     
-    func getAlbumArt(completion: @escaping (FetchedAlbumArt) -> Void) {
+    func getAlbumArt(completion: @escaping (FetchedAlbumArt?) -> Void) {
         let urlString = app.currentTrack?.artworkUrl
-        let defaultRestult = FetchedAlbumArt(image: defaultAlbumArt, isAlbumArt: false)
         
         guard urlString != nil else {
-            completion(defaultRestult)
+            completion(nil)
             return
         }
         
         guard let url = URL(string: urlString!) else {
-            completion(defaultRestult)
+            completion(nil)
             return
         }
         
@@ -68,14 +61,14 @@ class SpotifyManager: PlayerProtocol {
             guard error == nil, let data = data, let image = NSImage(data: data) else {
                 Logger.main.log("Error fetching Spotify album image")
                 DispatchQueue.main.async {
-                    completion(defaultRestult)
+                    completion(nil)
                 }
                 return
             }
             
             DispatchQueue.main.async {
                 Logger.main.log("Spotify album image fetched")
-                completion(FetchedAlbumArt(image: image, isAlbumArt: true))
+                completion(FetchedAlbumArt(image: Image(nsImage: image), nsImage: image))
             }
             
         }.resume()
@@ -119,5 +112,13 @@ class SpotifyManager: PlayerProtocol {
     
     func setVolume(volume: Int) {
         app.setSoundVolume?(volume)
+    }
+    
+    func isRunning() -> Bool {
+        let workspace = NSWorkspace.shared
+        
+        return workspace.runningApplications.contains { app in
+            app.bundleIdentifier == self.bundleId
+        }
     }
 }

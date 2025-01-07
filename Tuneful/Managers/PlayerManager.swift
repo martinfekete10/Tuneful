@@ -10,21 +10,14 @@ import SwiftUI
 import Combine
 import ISSoundAdditions
 import ScriptingBridge
+import Defaults
 
-class PlayerManager: ObservableObject {
-    @AppStorage("connectedApp") private var connectedApp = ConnectedApps.appleMusic
-    @AppStorage("showPlayerWindow") private var showPlayerWindow: Bool = true
-    @AppStorage("showSongNotification") private var showSongNotification = true
-    @AppStorage("notificationDuration") private var notificationDuration = 2.0
-    
+public class PlayerManager: ObservableObject {
     var musicApp: PlayerProtocol!
     var playerAppProvider: PlayerAppProvider!
     
-    // TODO: Media remote framework for other music players
-//    private let MRMediaRemoteRegisterForNowPlayingNotifications: @convention(c) (DispatchQueue) -> Void
-    
     var name: String { musicApp.appName }
-    var isRunning: Bool { musicApp.isRunning }
+    var isRunning: Bool { musicApp.isRunning() }
     var notification: String { musicApp.appNotification }
     
     // Notifications
@@ -57,7 +50,7 @@ class PlayerManager: ObservableObject {
     @Published var repeatContextEnabled = false
     
     // Playback time
-    static let noPlaybackPositionPlaceholder = "- : -"
+    static let noPlaybackPositionPlaceholder = "--:--"
     var formattedDuration = PlayerManager.noPlaybackPositionPlaceholder
     var formattedPlaybackPosition = PlayerManager.noPlaybackPositionPlaceholder
     
@@ -85,34 +78,11 @@ class PlayerManager: ObservableObject {
     private var notchInfo: DynamicNotchInfo!
     
     init() {
-        // TODO: Media remote framework for other music players
-//        let bundle = CFBundleCreate(kCFAllocatorDefault, NSURL(fileURLWithPath: "/System/Library/PrivateFrameworks/MediaRemote.framework"))
-//        let MRMediaRemoteRegisterForNowPlayingNotificationsPointer = CFBundleGetFunctionPointerForName(bundle, "MRMediaRemoteRegisterForNowPlayingNotifications" as CFString)
-//        self.MRMediaRemoteRegisterForNowPlayingNotifications = unsafeBitCast(MRMediaRemoteRegisterForNowPlayingNotificationsPointer, to: (@convention(c) (DispatchQueue) -> Void).self)
-        
         // Music app and observers
         self.playerAppProvider = PlayerAppProvider(notificationSubject: self.notificationSubject)
+        self.notchInfo = DynamicNotchInfo(playerManager: self)
         self.setupMusicAppsAndObservers()
         self.playStateOrTrackDidChange(nil)
-        
-        // Updating player state every 1 sec
-        self.timerStartSignal.sink {
-            self.getCurrentSeekerPosition()
-            self.updatePlayerStateCancellable = Timer.publish(
-                every: 1, on: .main, in: .common
-            )
-            .autoconnect()
-            .sink { _ in
-                self.getVolume()
-                self.getCurrentSeekerPosition()
-            }
-        }
-        .store(in: &self.cancellables)
-        
-        self.timerStopSignal.sink {
-            self.updatePlayerStateCancellable = nil
-        }
-        .store(in: &self.cancellables)
     }
     
     deinit {
@@ -124,7 +94,7 @@ class PlayerManager: ObservableObject {
     private func setupMusicAppsAndObservers() {
         Logger.main.log("Setting up music app")
         
-        self.musicApp = playerAppProvider.getPlayerApp(connectedApp: self.connectedApp)
+        self.musicApp = playerAppProvider.getPlayerApp()
         self.setupObservers()
     }
     
@@ -133,25 +103,14 @@ class PlayerManager: ObservableObject {
         
         // Clean up existing observers
         cleanupObservers()
-        
-        // TODO: System player
-//        if connectedApp == .system {
-//            MRMediaRemoteRegisterForNowPlayingNotifications(DispatchQueue.main)
-//            
-//            NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingInfoDidChangeNotification"))
-//                .sink { [weak self] _ in
-//                    self!.playStateOrTrackDidChange(nil)
-//                }
-//                .store(in: &cancellables)
-//        } else {
-            DistributedNotificationCenter.default().addObserver(
-                self,
-                selector: #selector(playStateOrTrackDidChange),
-                name: NSNotification.Name(rawValue: musicApp.appNotification),
-                object: nil,
-                suspensionBehavior: .deliverImmediately
-            )
-//        }
+
+        DistributedNotificationCenter.default().addObserver(
+            self,
+            selector: #selector(playStateOrTrackDidChange),
+            name: NSNotification.Name(rawValue: musicApp.appNotification),
+            object: nil,
+            suspensionBehavior: .deliverImmediately
+        )
         
         observer = UserDefaults.standard.observe(\.connectedApp, options: [.old, .new]) {
             defaults, change in
@@ -183,26 +142,14 @@ class PlayerManager: ObservableObject {
     }
     
     @objc private func popoverIsOpening(_ notification: NSNotification) {
-        if !showPlayerWindow {
-            self.timerStartSignal.send()
-        }
+        self.startTimer()
         self.audioDevices = AudioDevice.output.filter { $0.transportType != .virtual }
-        self.getVolume()
-        self.getPlaybackSettingInfo()
-        
         popoverIsShown = true
     }
     
     @objc private func popoverIsClosing(_ notification: NSNotification) {
-        if !showPlayerWindow {
-            self.timerStopSignal.send()
-        }
-        
         popoverIsShown = false
-    }
-    
-    @objc func test(_ sender: NSNotification?) {
-        print("rerererere")
+        self.stopTimer()
     }
     
     // MARK: Notification Handlers
@@ -212,20 +159,29 @@ class PlayerManager: ObservableObject {
         
         let musicAppKilled = sender?.userInfo?["Player State"] as? String == "Stopped"
         let isRunningFromNotification = !musicAppKilled && isRunning
-
-        self.musicApp.refreshInfo {  // Needs to be refreshed for system player to load song info asynchronously
-            self.getPlayState()
-            self.updateFormattedDuration()
+        
+        if musicAppKilled || !musicApp.isRunning() {
+            self.track = Track()
             self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
             
-            // Get track info before it's loaded in getNewSongInfo() and compare
-            // If previous song == current song => play state not changed
-            let notificationTrack = self.musicApp.getTrackInfo()
-            if self.track == notificationTrack { return }
+            // Stop timer if the player is killed
+            self.updatePlayerStateCancellable?.cancel()
+            self.updatePlayerStateCancellable = nil
             
-            self.getPlaybackSettingInfo()
-            self.getNewSongInfo()
+            return
         }
+
+        self.getPlayState()
+        self.updateFormattedDuration()
+        self.updateMenuBarText(playerAppIsRunning: isRunningFromNotification)
+        
+        // Get track info before it's loaded in getNewSongInfo() and compare
+        // If previous song == current song => play state not changed
+        let notificationTrack = self.musicApp.getTrackInfo()
+        if self.track == notificationTrack { return }
+        
+        self.getPlaybackSettingInfo()
+        self.getNewSongInfo()
     }
     
     private func updateMenuBarText(playerAppIsRunning: Bool) {
@@ -263,63 +219,53 @@ class PlayerManager: ObservableObject {
     }
     
     func getPlaybackSettingInfo() {
-        Logger.main.log("Getting playback setting info")
-        
-        shuffleIsOn = musicApp.shuffleIsOn // TODO: Doesn't seem to be working correctly for Spotify
-        shuffleContextEnabled = musicApp.shuffleContextEnabled
-        repeatContextEnabled = musicApp.repeatContextEnabled
+        if popoverIsShown || (Defaults[.showPlayerWindow] && Defaults[.miniPlayerType] != .minimal) {
+            shuffleIsOn = musicApp.shuffleIsOn // TODO: Doesn't seem to be working correctly for Spotify
+            shuffleContextEnabled = musicApp.shuffleContextEnabled
+            repeatContextEnabled = musicApp.repeatContextEnabled
+        }
     }
     
     func getNewSongInfo() {
-        Logger.main.log("Getting track info")
-        
-        getCurrentSeekerPosition()
-        track = musicApp.getTrackInfo()
+        withAnimation(Constants.mainAnimation) {
+            getCurrentSeekerPosition()
+            track = musicApp.getTrackInfo()
+        }
+        showNotchNotification()
         fetchAlbumArt(retryCount: 5)
         updateFormattedDuration()
     }
     
     func fetchAlbumArt(retryCount: Int = 5) {
         musicApp.getAlbumArt { result in
-            if result.isAlbumArt {
-                self.updateAlbumArt(newAlbumArt: result.image)
+            if result != nil {
+                self.updateAlbumArt(newAlbumArt: result!)
                 self.updateMenuBarText(playerAppIsRunning: self.isRunning)
-                self.updateNotchInfo(albumArt: result)
             } else if retryCount > 0 {
-                self.updateAlbumArt(newAlbumArt: result.image)
-                self.updateMenuBarText(playerAppIsRunning: self.isRunning)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     self.fetchAlbumArt(retryCount: retryCount - 1)
                 }
             } else {
-                self.updateAlbumArt(newAlbumArt: self.musicApp.defaultAlbumArt)
                 self.updateMenuBarText(playerAppIsRunning: self.isRunning)
                 Logger.main.log("Failed to fetch album art")
             }
         }
     }
     
-    func updateAlbumArt(newAlbumArt: NSImage) {
-        DispatchQueue.main.async {
-            withAnimation(.none) {
-                self.track.albumArt = newAlbumArt
-            }
+    func updateAlbumArt(newAlbumArt: FetchedAlbumArt) {
+        withAnimation {
+            self.track.avgAlbumColor = Color(nsColor: newAlbumArt.nsImage.averageColor ?? .gray)
+            self.track.nsAlbumArt = newAlbumArt.nsImage
+            self.track.albumArt = newAlbumArt.image
         }
     }
     
-    func updateNotchInfo(albumArt: FetchedAlbumArt) {
-        if !showSongNotification || popoverIsShown {
+    func showNotchNotification() {
+        if !Defaults[.notchEnabled] || !Defaults[.showSongNotification] || !Defaults[.viewedOnboarding] || popoverIsShown {
             return
         }
         
-        self.notchInfo?.hide()
-        self.notchInfo = DynamicNotchInfo(
-            icon: Image(nsImage: albumArt.image.roundImage(withSize: NSSize(width: 70, height: 70), radius: 10)),
-            title: self.track.title,
-            description: self.track.album,
-            onTap: self.openMusicApp
-        )
-        self.notchInfo.show(for: notificationDuration)
+        self.notchInfo.show(for: Defaults[.notificationDuration])
     }
 
     // MARK: Controls
@@ -362,12 +308,10 @@ class PlayerManager: ObservableObject {
     // MARK: Seeker
 
     func getCurrentSeekerPosition() {
-        if !isRunning { return }
+        if !musicApp.isRunning() { return }
         if isDraggingPlaybackPositionView { return }
-
-        musicApp.refreshInfo {
-            self.seekerPosition = self.musicApp.getCurrentSeekerPosition()
-        }
+        
+        self.seekerPosition = self.musicApp.getCurrentSeekerPosition()
     }
 
     func seekTrack() {
@@ -394,11 +338,43 @@ class PlayerManager: ObservableObject {
     func draggingPlaybackPosition() {
         formattedPlaybackPosition = formattedTimestamp(seekerPosition)
     }
+    
+    // MARK: Timer
+    
+    func startTimer() {
+        if !musicApp.isRunning() { return }
+        
+        // So we don't invoke the timer more frequently
+        self.updatePlayerStateCancellable?.cancel()
+        self.updatePlayerStateCancellable = nil
+        
+        self.updatePlayerStateCancellable = Timer.publish(
+            every: 1, on: .main, in: .common
+        )
+        .autoconnect()
+        .sink { _ in
+            print("Timer running")
+            self.getVolume()
+            self.getCurrentSeekerPosition()
+            self.getPlaybackSettingInfo()
+        }
+
+    }
+    
+    func stopTimer() {
+        if popoverIsShown || notchInfo.isVisible || Defaults[.showPlayerWindow] { return }
+        
+        self.updatePlayerStateCancellable?.cancel()
+        self.updatePlayerStateCancellable = nil
+    }
 
     // MARK: Volume
 
     func getVolume() {
-        volume = musicApp.volume
+        // Only get volume if the full popover is shown
+        if popoverIsShown && Defaults[.popoverType] == .full {
+            volume = musicApp.volume
+        }
     }
 
     func setVolume(newVolume: Int) {
@@ -408,7 +384,9 @@ class PlayerManager: ObservableObject {
 
         musicApp.setVolume(volume: newVolume)
 
-        volume = CGFloat(newVolume)
+        withAnimation {
+            volume = CGFloat(newVolume)
+        }
     }
 
     func increaseVolume() {
@@ -453,5 +431,15 @@ class PlayerManager: ObservableObject {
 
     func isLikeAuthorized() -> Bool {
         return musicApp.isLikeAuthorized
+    }
+    
+    // MARK: Notch
+    
+    func deinitializeNotch() {
+        notchInfo.deinitializeNotchWindow()
+    }
+    
+    func initializeNotch() {
+        notchInfo.initializeNotchWindow()
     }
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 import Settings
 import KeyboardShortcuts
-import Luminare
 
 struct KeyboardShortcutsSettingsView: View {
     var body: some View {
@@ -23,8 +22,13 @@ struct KeyboardShortcutsSettingsView: View {
                         KeyboardShortcuts.Recorder("Switch music player", name: .changeMusicPlayer)
                         KeyboardShortcuts.Recorder("Show/hide menu bar player", name: .toggleMenuBarItemVisibility)
                         KeyboardShortcuts.Recorder("Show/hide popover", name: .togglePopover)
+                        VStack {
+                            KeyboardShortcuts.Recorder("Add song to favorites", name: .likeSong)
+                            Text("This shortcut only works for Apple Music for now")
+                                .font(.footnote)
+                                .foregroundColor(.primary.opacity(Constants.Opacity.secondaryOpacity))
+                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
         }

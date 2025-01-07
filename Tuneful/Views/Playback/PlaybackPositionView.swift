@@ -11,31 +11,48 @@ import SwiftUI
 
 struct PlaybackPositionView: View {
     @EnvironmentObject var playerManager: PlayerManager
-    @AppStorage("showPlayerWindow") var showPlayerWindow: Bool = true
+    var sliderHeight: CGFloat = 7
+    var inline: Bool = false
     
     var body: some View {
-        VStack(spacing: -5) {
-            CustomSliderView(
-                value: $playerManager.seekerPosition,
-                isDragging: $playerManager.isDraggingPlaybackPositionView,
-                range: 0...playerManager.track.duration,
-                knobDiameter: 10,
-                knobColor: .white,
-                knobScaleEffectMagnitude: 1.3,
-                knobAnimation: .linear(duration: 0.1),
-                leadingRectangleColor: .playbackPositionLeadingRectangle,
-                onEndedDragging: { _ in self.playerManager.seekTrack() }
-            )
-            .padding(.bottom, 5)
-            
-            HStack {
+        if !inline {
+            VStack(spacing: 0) {
+                CustomSliderView(
+                    value: $playerManager.seekerPosition,
+                    isDragging: $playerManager.isDraggingPlaybackPositionView,
+                    range: 0...playerManager.track.duration,
+                    sliderHeight: sliderHeight,
+                    onEndedDragging: { _ in self.playerManager.seekTrack() }
+                )
+                .padding(.bottom, 7)
+                .frame(height: 15)
+                
+                HStack {
+                    Text(playerManager.formattedPlaybackPosition)
+                        .font(.caption)
+                    Spacer()
+                    Text(playerManager.formattedDuration)
+                        .font(.caption)
+                }
+                .padding(.horizontal, 5)
+            }
+        } else {
+            HStack(spacing: 10) {
                 Text(playerManager.formattedPlaybackPosition)
                     .font(.caption)
-                Spacer()
+                
+                CustomSliderView(
+                    value: $playerManager.seekerPosition,
+                    isDragging: $playerManager.isDraggingPlaybackPositionView,
+                    range: 0...playerManager.track.duration,
+                    sliderHeight: sliderHeight,
+                    onEndedDragging: { _ in self.playerManager.seekTrack() }
+                )
+                .frame(height: 15)
+                
                 Text(playerManager.formattedDuration)
                     .font(.caption)
             }
-            .padding(.horizontal, 5)
         }
     }
 }

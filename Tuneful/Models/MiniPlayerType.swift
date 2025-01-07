@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import Defaults
 
-enum MiniPlayerType: String, Equatable, CaseIterable {
-    
-    case full = "Full"
+enum MiniPlayerType: String, Equatable, CaseIterable, Defaults.Serializable {
     case minimal = "Minimal"
+    case horizontal = "Full"
+    case vertical = "Vertical"
     
-    var localizedName: LocalizedStringKey { LocalizedStringKey(rawValue) }
+    var localizedName: String {
+        switch self {
+        case .minimal: "Minimal"
+        case .horizontal: "Horizontal"
+        case .vertical: "Vertical"
+        }
+    }
 }
 

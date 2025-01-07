@@ -5,9 +5,9 @@
 //  Created by Martin Fekete on 13/10/2024.
 //
 
-import AppKit
+import SwiftUI
 
 struct FetchedAlbumArt {
-    var image: NSImage
-    var isAlbumArt: Bool
+    var image: Image
+    var nsImage: NSImage
 }
