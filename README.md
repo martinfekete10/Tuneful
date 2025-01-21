@@ -25,8 +25,6 @@
 </p>
 <h5 align="center">Tuneful requires macOS 13 Ventura or newer</h5>
 
-## Screenshots
-
 <p align="center">
   <img width="950" src="docs/images/All.png">
 </p>
