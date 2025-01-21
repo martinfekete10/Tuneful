@@ -42,7 +42,8 @@ If you find this app useful, consider supporting its development by [donating](h
 -   Project is partly based on [Jukebox](https://github.com/Jaysce/Jukebox/tree/main)
 -   Launch at login is enabled by [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) package
 -   For Settings, the project uses [Settings](https://github.com/sindresorhus/Settings) package
--   Tuneful uses [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit) for notification animations
+-   Tuneful notch integration is based on [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
+-   Tuneful uses [Luminare](https://github.com/MrKai77/Luminare) for UI elements in settings
 
 ---
 
