@@ -28,15 +28,7 @@
 ## Screenshots
 
 <p align="center">
-  <img width="450" src="docs/images/popover.png">
-</p>
-
-<p align="center">
-  <img width="450" src="docs/images/popover-minimal.png">
-</p>
-
-<p align="center">
-  <img src="docs/images/miniplayer.png">
+  <img width="950" src="docs/images/All.png">
 </p>
 
 ## Feedback
@@ -50,12 +42,9 @@ If you find this app useful, consider supporting its development by [donating](h
 ## Acknowledgments
 
 -   Project is partly based on [Jukebox](https://github.com/Jaysce/Jukebox/tree/main)
--   This project uses [Sparkle](https://sparkle-project.org) for update delivery
 -   Launch at login is enabled by [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) package
--   GitHub Actions are based on repo from [Alex Perathoner](https://github.com/AlexPerathoner/SparkleReleaseTest)
 -   For Settings, the project uses [Settings](https://github.com/sindresorhus/Settings) package
--   Tuneful uses [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
-    for notification animations
+-   Tuneful uses [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit) for notification animations
 
 ---
 
