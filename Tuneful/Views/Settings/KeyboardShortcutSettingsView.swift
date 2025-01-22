@@ -11,7 +11,7 @@ import KeyboardShortcuts
 
 struct KeyboardShortcutsSettingsView: View {
     var body: some View {
-        Settings.Container(contentWidth: 400) {
+        Settings.Container(contentWidth: Constants.settingsWindowWidth) {
             Settings.Section(title: "") {
                 LuminareSection {
                     Form {

@@ -15,6 +15,7 @@ enum Constants {
     static let popoverWidth = 210.0
     static let fullPopoverHeight = 345.0
     static let compactPopoverHeight = 265.0
+    static let settingsWindowWidth: CGFloat = 500
     
     enum Opacity {
         static let primaryOpacity = 0.8
