@@ -81,6 +81,7 @@
 		FE6BFD082A73AE5E00D3321F /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFD072A73AE5E00D3321F /* Track.swift */; };
 		FE6BFD0A2A73B23700D3321F /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFD092A73B23700D3321F /* UserDefaults+Extension.swift */; };
 		FE6BFD0C2A73B2D400D3321F /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */; };
+		FE6DDC042D419DDC0047851D /* AcknowledgementsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6DDC032D419DDC0047851D /* AcknowledgementsSettingsView.swift */; };
 		FE7955472CA2C7A3002026AA /* AudioSpectrumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7955462CA2C7A2002026AA /* AudioSpectrumView.swift */; };
 		FE7955492CA2C9E8002026AA /* NSBezierPath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7955482CA2C9E2002026AA /* NSBezierPath+Extension.swift */; };
 		FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE79554D2CA34BE6002026AA /* Logger+Extension.swift */; };
@@ -209,6 +210,7 @@
 		FE6BFD072A73AE5E00D3321F /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		FE6BFD092A73B23700D3321F /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		FE6BFD0B2A73B2D400D3321F /* NSImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
+		FE6DDC032D419DDC0047851D /* AcknowledgementsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsSettingsView.swift; sourceTree = "<group>"; };
 		FE7955462CA2C7A2002026AA /* AudioSpectrumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSpectrumView.swift; sourceTree = "<group>"; };
 		FE7955482CA2C9E2002026AA /* NSBezierPath+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+Extension.swift"; sourceTree = "<group>"; };
 		FE79554D2CA34BE6002026AA /* Logger+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extension.swift"; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 		FEF0660A2B51905200A514F2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				FE6DDC032D419DDC0047851D /* AcknowledgementsSettingsView.swift */,
 				FE08CE182CFCC76700F047CB /* MiniPlayerSettingsView.swift */,
 				FEB21FB72D1AC71400849679 /* PopoverSettingsView.swift */,
 				FE08CE162CFCC51900F047CB /* NotchSettingsView.swift */,
@@ -758,6 +761,7 @@
 				FE31AEDC2CFBCB76002818ED /* SettingsView.swift in Sources */,
 				FE3189FD2A7C3D01006B2D59 /* OnboardingWindow.swift in Sources */,
 				FE79554E2CA34BF0002026AA /* Logger+Extension.swift in Sources */,
+				FE6DDC042D419DDC0047851D /* AcknowledgementsSettingsView.swift in Sources */,
 				FEDD311A2CBE4DAD00653956 /* PlayerAppProvider.swift in Sources */,
 				FEFFE5592B4FE00D000887B5 /* NSError+Extension.swift in Sources */,
 				FE4414B82AB4999600A73246 /* Notification.Name.swift in Sources */,

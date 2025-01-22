@@ -114,6 +114,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return Settings.PaneHostingController(pane: paneView)
     }
     
+    let AcknowledgementsSettingsViewController: () -> SettingsPane = {
+        let paneView = Settings.Pane(
+            identifier: .acknowledgements,
+            title: "Attributions",
+            toolbarIcon: NSImage(systemSymbolName: "heart", accessibilityDescription: "Acknowledgements settings")!
+        ) {
+            AcknowledgementsSettingsView()
+        }
+        
+        return Settings.PaneHostingController(pane: paneView)
+    }
+    
     let AboutSettingsViewController: () -> SettingsPane = {
         let paneView = Settings.Pane(
             identifier: .about,
@@ -439,6 +451,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 MenuBarSettingsViewController(),
                 NotchSettingsViewController(),
                 KeyboardShortcutsSettingsViewController(),
+                AcknowledgementsSettingsViewController(),
                 AboutSettingsViewController()
             ],
             style: .toolbarItems,

@@ -18,7 +18,7 @@ struct MenuBarSettingsView: View {
     @Default(.showEqWhenPlayingMusic) private var showEqWhenPlayingMusic
     
     var body: some View {
-        Settings.Container(contentWidth: 400) {
+        Settings.Container(contentWidth: Constants.settingsWindowWidth) {
             Settings.Section(title: "") {
                 LuminareSection("General") {
                     HStack {

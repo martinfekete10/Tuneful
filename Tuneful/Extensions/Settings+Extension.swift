@@ -17,6 +17,7 @@ extension Settings.PaneIdentifier {
     static let notch = Self("notch")
     static let keyboard = Self("keyboard")
     static let about = Self("about")
+    static let acknowledgements = Self("acknowledgements")
 }
 
 public extension SettingsWindowController {

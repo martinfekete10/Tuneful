@@ -18,7 +18,7 @@ struct GeneralSettingsView: View {
     @State private var showingAlert = false
     
     var body: some View {
-        Settings.Container(contentWidth: 400) {
+        Settings.Container(contentWidth: Constants.settingsWindowWidth) {
             Settings.Section(title: "") {
                 LuminareSection {
                     LuminareToggle(

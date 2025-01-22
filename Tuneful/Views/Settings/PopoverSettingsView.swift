@@ -15,7 +15,7 @@ struct PopoverSettingsView: View {
     @Default(.popoverBackground) private var popoverBackground
     
     var body: some View {
-        Settings.Container(contentWidth: 400) {
+        Settings.Container(contentWidth: Constants.settingsWindowWidth) {
             Settings.Section(title: "") {
                 LuminareSection {
                     LuminareToggle(
