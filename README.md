@@ -6,7 +6,7 @@
   <h3 align="center">Tuneful</h3>
 
   <p align="center">
-    Tuneful is a native macOS playback control app for Spotify and Apple Music which provides a convenient way to control your music from menu bar and optional mini player.
+    Tuneful is a native macOS playback control app for Spotify and Apple Music
     <br />
     <a href="https://tuneful.dev/">Website</a>
     ·
@@ -20,10 +20,11 @@
 
 <p align="center">
   <a href="https://apps.apple.com/us/app/tuneful/id6739804295?mt=12">
-    <img width="350" src="docs/images/download.png">
+    <img width="300" src="docs/images/download.png">
   </a>
 </p>
-<h5 align="center">Tuneful requires macOS 13 Ventura or newer</h5>
+
+## Screenshot
 
 <p align="center">
   <img width="950" src="docs/images/All.png">
@@ -44,7 +45,3 @@ If you find this app useful, consider supporting its development by [donating](h
 -   For Settings, the project uses [Settings](https://github.com/sindresorhus/Settings) package
 -   Tuneful notch integration is based on [DynamicNotchKit](https://github.com/MrKai77/DynamicNotchKit)
 -   Tuneful uses [Luminare](https://github.com/MrKai77/Luminare) for UI elements in settings
-
----
-
-_Thank you for using Tuneful!_
