@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/martinfekete10/Tuneful">
-    <img src="docs/images/icon.png" width="350">
+    <img src="docs/images/icon.png" width="250">
   </a>
 
   <h3 align="center">Tuneful</h3>
@@ -24,19 +24,17 @@
   </a>
 </p>
 
-## Screenshot
-
 <p align="center">
   <img width="950" src="docs/images/All.png">
 </p>
 
 ## Feedback
 
-Your feedback is important to us. If you encounter any issues or have suggestions for improvement, please [open an issue](https://github.com/martinfekete10/Tuneful/issues).
+If you encounter any issues or have suggestions for improvement, please [open an issue](https://github.com/martinfekete10/Tuneful/issues).
 
 ## Support
 
-If you find this app useful, consider supporting its development by [donating](https://ko-fi.com/martinfekete).
+If you find Tuneful useful, consider supporting its development by [donating](https://ko-fi.com/martinfekete).
 
 ## Acknowledgments
 
