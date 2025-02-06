@@ -25,7 +25,7 @@
 </p>
 
 <p align="center">
-  <img width="950" src="docs/images/All.png">
+  <img width="1000" src="docs/images/All.png">
 </p>
 
 ## Feedback
