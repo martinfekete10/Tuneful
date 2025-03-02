@@ -94,11 +94,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let paneView = Settings.Pane(
             identifier: .notch,
             title: "Notch",
-            toolbarIcon: NSImage(systemSymbolName: "button.roundedbottom.horizontal", accessibilityDescription: "Notch settings")!
-        ) {
-            NotchSettingsView()
-        }
-        
+            toolbarIcon: {
+                NSImage(systemSymbolName: "button.roundedbottom.horizontal", accessibilityDescription: "Notch settings") 
+                ?? NSImage(named: NSImage.actionTemplateName) ?? NSImage()
+            }(),
+            contentView: { NotchSettingsView() }
+        )
+    
         return Settings.PaneHostingController(pane: paneView)
     }
     
