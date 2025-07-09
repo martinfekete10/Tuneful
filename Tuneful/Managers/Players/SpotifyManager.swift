@@ -24,7 +24,7 @@ class SpotifyManager: PlayerProtocol {
     
     public var playerPosition: Double? { app.playerPosition }
     public var isPlaying: Bool { app.playerState == .playing }
-    public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) }
+    public var volume: CGFloat { CGFloat(app.soundVolume ?? 50) + 1 }
     public var isLikeAuthorized: Bool = false
     public var shuffleIsOn: Bool { app.shuffling ?? false }
     public var shuffleContextEnabled: Bool { app.shufflingEnabled ?? false }
