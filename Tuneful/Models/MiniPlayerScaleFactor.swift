@@ -6,7 +6,7 @@
 //
 
 import Defaults
-import SwiftUICore
+import SwiftUI
 
 enum MiniPlayerScaleFactor: Double, Equatable, CaseIterable, Defaults.Serializable {
     case small = 0.75

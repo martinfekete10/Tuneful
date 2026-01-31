@@ -10,7 +10,7 @@ import Combine
 import Foundation
 import AppKit
 import ScriptingBridge
-import SwiftUICore
+import SwiftUI
 
 class AppleMusicManager: PlayerProtocol {
     var app: MusicApplication = SBApplication(bundleIdentifier: Constants.AppleMusic.bundleID)!

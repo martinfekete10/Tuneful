@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 import AppKit
-import SwiftUICore
+import SwiftUI
 
 protocol PlayerProtocol {
     var notificationSubject: PassthroughSubject<AlertItem, Never> { get set }
